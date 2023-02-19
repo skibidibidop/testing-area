@@ -1,7 +1,8 @@
 'use strict';
 
-// Use ` ` if necessary. Otherwise, use ' '
+// Use ` ` if necessary (interpolation, multiline). Otherwise, use ' '
 
-let userName = prompt('What\'s your name?', ' ');
+let value = 1234;
+let value2 = String(value);
 
-alert(`You are ${userName}`);
+alert(typeof(value2));
