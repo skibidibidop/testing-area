@@ -24,3 +24,9 @@ neoDiv.style.backgroung = 'pink';
     neoDiv.appendChild(neoPara2);
     neoHead1.textContent = 'I\'m in a div!';
     neoPara2.textContent = 'Me too!';
+
+const btn = document.querySelector('#btn');
+btn.addEventListener('click', () =>
+{
+    alert('Hey!');
+});
