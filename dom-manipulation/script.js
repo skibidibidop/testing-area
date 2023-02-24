@@ -26,7 +26,12 @@ neoDiv.style.backgroung = 'pink';
     neoPara2.textContent = 'Me too!';
 
 const btn = document.querySelector('#btn');
-btn.addEventListener('click', () =>
+btn.addEventListener('click', function (e)
 {
-    alert('Hey!');
+    console.log(e.target);
+});
+
+btn.addEventListener('click', function (e)
+{
+    e.target.style.background = 'blue';
 });
