@@ -7,7 +7,7 @@
         <meta name="description" content="One of the places
             where I can do active learning about HTML">
         <meta name="viewport" content="width=device-width">
-        <!-- <link href="tables.css" rel="stylesheet"> --> <!-- Commented out to see effect of colgroup -->
+        <link href="tables.css" rel="stylesheet">
     </head>
 
     <body>
@@ -16,9 +16,11 @@
             <table>
                 <colgroup>
                     <col>
-                    <col style="background-color: yellow", span="4">
+                    <col style="background-color: yellow;">
+                    <col>
+                    <col style="background-color: green; border: 2px solid red;">
                 </colgroup>
-                
+
                 <tr>
                     <th colspan="5">Title of Table</th>
                 </tr>
