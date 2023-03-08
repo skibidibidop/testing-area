@@ -14,6 +14,10 @@
         <main>
             <h1>HTML Tables</h1>
             <table>
+                <caption>
+                    Using this table to learn about HTML tables
+                </caption>
+
                 <colgroup>
                     <col>
                     <col style="background-color: yellow;">
@@ -21,30 +25,41 @@
                     <col style="background-color: green; border: 2px solid red;">
                 </colgroup>
 
-                <tr>
-                    <th colspan="5">Title of Table</th>
-                </tr>
-                <tr>
-                    <td>&nbsp;</td>
-                    <td>R0, C1</td>
-                    <td>R0, C2</td>
-                    <td>R0, C3</td>
-                    <td>R0, C4</td>
-                </tr>
-                <tr>
-                    <th>Row 1 Header</th>
-                    <td>R1, C1</td>
-                    <td>R1, C2</td>
-                    <td>R1, C3</td>
-                    <td>R1, C4</td>
-                </tr>
-                <tr>
-                    <th>Row 2 Header</th>
-                    <td>R2, C1</td>
-                    <td>R2, C2</td>
-                    <td>R2, C3</td>
-                    <td>R2, C4</td>
-                </tr>
+                <thead>
+                    <tr>
+                        <th colspan="5">Title of Table</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>R0, C1</td>
+                        <td>R0, C2</td>
+                        <td>R0, C3</td>
+                        <td>R0, C4</td>
+                    </tr>
+                    <tr>
+                        <th>Row 1 Header</th>
+                        <td>R1, C1</td>
+                        <td>R1, C2</td>
+                        <td>R1, C3</td>
+                        <td>R1, C4</td>
+                    </tr>
+                    <tr>
+                        <th>Row 2 Header</th>
+                        <td>R2, C1</td>
+                        <td>R2, C2</td>
+                        <td>R2, C3</td>
+                        <td>R2, C4</td>
+                    </tr>
+                </tbody>
+
+                <tfooter>
+                    <tr>
+                        <th colspan="5">Table footer</th>
+                    </tr>
+                </tfooter>
             </table>
         </main>
     </body>
