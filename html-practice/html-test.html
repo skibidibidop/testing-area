@@ -7,13 +7,43 @@
         <meta name="description" content="One of the places
             where I can do active learning about HTML">
         <meta name="viewport" content="width=device-width">
-        <link href="tables.css" rel="stylesheet">
+        <!-- <link href="tables.css" rel="stylesheet"> --> <!-- Commented out to see effect of colgroup -->
     </head>
 
     <body>
         <main>
             <h1>HTML Tables</h1>
-
+            <table>
+                <colgroup>
+                    <col>
+                    <col style="background-color: yellow", span="4">
+                </colgroup>
+                
+                <tr>
+                    <th colspan="5">Title of Table</th>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>R0, C1</td>
+                    <td>R0, C2</td>
+                    <td>R0, C3</td>
+                    <td>R0, C4</td>
+                </tr>
+                <tr>
+                    <th>Row 1 Header</th>
+                    <td>R1, C1</td>
+                    <td>R1, C2</td>
+                    <td>R1, C3</td>
+                    <td>R1, C4</td>
+                </tr>
+                <tr>
+                    <th>Row 2 Header</th>
+                    <td>R2, C1</td>
+                    <td>R2, C2</td>
+                    <td>R2, C3</td>
+                    <td>R2, C4</td>
+                </tr>
+            </table>
         </main>
     </body>
 </html>
