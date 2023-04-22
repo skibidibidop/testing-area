@@ -14,7 +14,7 @@ int main(void) {
     }
 
 	output[i + 1] = '\0';
-  	printf("Line: %s\n", output);
+  	printf("Line: %s", output);
 
     return 0;
 }
