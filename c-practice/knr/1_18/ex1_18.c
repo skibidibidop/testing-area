@@ -28,7 +28,6 @@ int main(void) {
 		else {
 			m_storage[m_i] = character;
 		}
-
 		m_i++;
 	}
 
@@ -50,7 +49,7 @@ void trim_end(char *te_storage, int te_length) {
 			te_trailing = false;
 		}
 
-		if (te_trailing = true) {
+		if (te_trailing == true) {
 			*te_end = '\0';
 		}
 
@@ -61,19 +60,20 @@ void trim_end(char *te_storage, int te_length) {
 }
 
 void print_array(char *pa_storage, int pa_length) {
-	char *pa_prev;
+	char *pa_next;
 
 	for (int pa_i = 0; pa_i < pa_length; pa_i++) {
-		pa_storage += pa_i;
-		pa_prev = pa_storage - 1;
-		
-		if (*pa_storage == '\0' && *pa_prev != '\0') {
-			printf("\n");
+		pa_next = pa_storage + 1;
+
+		if (*pa_next == '\0' && *pa_storage != '\0') {
+			*pa_next = '\n';
 		}
 
 		if (*pa_storage != '\0') {
 			printf("%c", *pa_storage);
 		}
+
+		pa_storage++;
 	}
 
 	return;
