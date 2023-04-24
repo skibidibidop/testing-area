@@ -1,0 +1,22 @@
+#define MAXCHAR 1000
+
+Get input
+
+While input != EOF
+	Put in array
+
+	If input character == \n
+		Replace with \0
+
+
+void out_long(array[])
+	Iterate through array
+		length++
+
+		If element == \0 && length > 80
+			index_reset = index - (length - 2)
+			printf("%s\n", array[index_reset])
+			length = 0
+		else if element == \0 && length <= 80
+			length = 0
+
