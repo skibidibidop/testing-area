@@ -45,7 +45,7 @@ void trim_end(char *te_storage, int te_length) {
 		if (*te_end == '\0') {
 			te_trailing = true;
 		}
-		else if (!isblank(*te_end) || *te_end != '\0') {
+		else if ( isalnum(*te_end) || ispunct(*te_end) ) {
 			te_trailing = false;
 		}
 
