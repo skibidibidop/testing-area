@@ -8,8 +8,8 @@
 
 #define MAXCHAR 10000
 
-void trim_end(char *te_storage, int te_length) {
-void print_array(char *pa_storage, int pa_length) {
+void trim_end(char *te_storage, int te_length);
+void print_array(char *pa_storage, int pa_length);
 
 int main(void) {
 	char character;
@@ -63,7 +63,7 @@ void trim_end(char *te_storage, int te_length) {
 void print_array(char *pa_storage, int pa_length) {
 	char *pa_prev;
 
-	for (int pa_i = o; pa_i < pa_length; pa_i++) {
+	for (int pa_i = 0; pa_i < pa_length; pa_i++) {
 		pa_storage += pa_i;
 		pa_prev = pa_storage - 1;
 		
