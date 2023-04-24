@@ -38,8 +38,12 @@ void out_long(char o_storage[], int store_size) {
 
 		if (o_storage[o_i] == '\0' && o_length > 80) {
 			o_indexreset = o_i - (o_length - 1);
-			printf("%s", o_storage[o_indexreset]); // starting in the middle of string with %s
-							       // is not working
+
+			while (o_storage[o_indexreset] != '\0') {
+				printf("%c", o_storage[o_indexreset++]);
+			}
+			printf("\n");
+
 			o_length = 0;
 		}
 		else if (o_storage[o_i] == '\0' && o_length <= 80) {
