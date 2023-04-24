@@ -65,7 +65,7 @@ void print_array(char *pa_storage, int pa_length) {
 	for (int pa_i = 0; pa_i < pa_length; pa_i++) {
 		pa_next = pa_storage + 1;
 
-		if (*pa_next == '\0' && *pa_storage != '\0') {
+		if ( *pa_next == '\0' && ( isalnum(*pa_storage) || ispunct(*pa_storage) ) ) {
 			*pa_next = '\n';
 		}
 
