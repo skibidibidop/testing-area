@@ -1,3 +1,13 @@
 # Write a function that reverses a character string
 # Reverse input one line at a time
 
+Get input
+While input != EOF
+    array[i] = character
+
+    if character == \n
+        /* print string backwards */
+        for (i -= 1; i < 0; i--)
+            printf(%c, array[i])
+        
+        printf(\n)
