@@ -3,6 +3,30 @@
 
 #include <stdio.h>
 
-int main(void) {
+#define MAXCHAR 10000
 
+int main(void) {
+    printf("***STRING REVERSER***\n");
+    printf("Provide string to reverse. ");
+    printf("Ctrl + d to exit.\nInput:\n");
+
+    int i = 0;
+    char character;
+    char arr[MAXCHAR];
+
+    while ( (character = getchar()) != EOF ) {
+        arr[i] = character;
+
+        if (character == '\n') {
+            for (i = i - 1; i >= 0; i--) {
+                printf("%c", arr[i]);
+            }
+
+            printf("\n");
+        }
+
+        i++;
+    }
+
+    return 0;
 }
