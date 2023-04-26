@@ -15,7 +15,19 @@ If input is 'verylongwordmorethaneight\t', output:
 
 #include <stdio.h>
 
+# define TABSTOP 8
+# define MAXCHAR 10000
+
 int main(void) {
-	
+	int character;
+	int arr[MAXCHAR];
+	int i = 0;
+	int spaces = 0;
+
+	while ( (character = getchar()) != EOF) {
+		if (character == '\t') {
+			spaces = TABSTOP - ((counter + 1) % TABSTOP);
+		}
+	}
 }
 
