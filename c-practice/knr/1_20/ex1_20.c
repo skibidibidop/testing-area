@@ -1,6 +1,6 @@
 /*
 Assumed space per tab stop: 8
-	Assign to a (variable / symbolic parameter?)
+	Assign to a (variable (no) / symbolic parameter (yes) )
 Replace tabs in input with correct number of '-' up to
 	the next tab stop
 If input is 'one\t', output should be one-----
@@ -12,3 +12,10 @@ If input is 'verylongwordmorethaneight\t', output:
 	1234567|1234567|1234567|1234567|
 	verylongwordmorethaneight-------
 */
+
+#include <stdio.h>
+
+int main(void) {
+	
+}
+
