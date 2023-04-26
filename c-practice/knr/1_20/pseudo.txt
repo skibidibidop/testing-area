@@ -8,5 +8,19 @@ If input is 'one\t', output should be one-----
 If input is '\tone\t', output should be --------one-----
 	8 dashes because input was started with \t
 If input is 'verylongwordmorethaneight\t', output:
-	1234567|1234567|1234567|1234567|
+	0123456|0123456|0123456|0123456|
 	verylongwordmorethaneight-------
+
+// counter % 8 to track number of ' ' to be printed?
+#define TABSTOP 8
+
+Get input until EOF
+	Increment counter per character
+	If character is \t
+		spaces = TABSTOP - ((counter + 1) % TABSTOP)
+		
+		loop (spaces) times
+			print('-')
+	else
+		print(character)
+
