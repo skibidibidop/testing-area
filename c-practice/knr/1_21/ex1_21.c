@@ -15,5 +15,10 @@ If no. of consecutive spaces >= TABSTOP
 #define TABSTOP 8
 
 int main(void) {
+	int arr[MAXCHAR];
+	int character;
 
+	while ( (character = getchar()) != EOF ) {
+
+	}
 }
