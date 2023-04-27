@@ -1,8 +1,40 @@
 Put string input in array
 Replace strings of blanks w/ min. no. of \t & - to achieve
 	the same spacing. Use the same TABSTOP (8) in 1-20
-If no. of consecutive spaces >= TABSTOP
-	no. of \\t to print = TABSTOP / 8
-		The printed \t is a representation of an
-		actual tab which is 8 characters wide
-	no. of - to print  = TABSTOP % 8
+
+Loop for storing input into array
+
+bool print_status = false
+
+Loop while not end of array
+	if current character != ' '
+		print character
+		ch_counter++
+
+	if current character == ' ' && next character == ' '
+		space_counter++
+
+	if current character == ' ' && next character != ' '
+		space_counter++
+		space_to_tabstop = TABSTOP - (ch_counter % TABSTOP)
+		space_counter = space_counter - space_to_tabstop
+		remaining_spaces = space_counter % TABSTOP
+		
+		entab(space_to_tabstop, space_counter, remaining_spaces)
+
+		space_counter = 0
+
+function entab(e_tabstop, e_space_counter, e_trailing)
+	if e_tabstop == TABSTOP
+		print \\t
+	else
+		print '-' (e_tabstop) times
+	
+	if e_space_counter >= 0
+		e_tabs = e_space_counter / TABSTOP
+
+	print \\t (e_tabs) times
+
+	if e_spaces > 0
+		print \\t
+
