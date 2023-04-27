@@ -4,8 +4,6 @@ Replace strings of blanks w/ min. no. of \t & - to achieve
 
 Loop for storing input into array
 
-bool print_status = false
-
 Loop while not end of array
 	if current character != ' '
 		print character
