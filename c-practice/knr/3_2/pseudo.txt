@@ -1,0 +1,10 @@
+Function turn_visible(string a, string b):
+	store string a in string b
+	use switch, convert escape sequence characters to
+	visible escape sequences
+Function turn_invisible(string a, string b):
+	store string b in string a
+	use switch, convert invisible escape sequences
+
+
+
