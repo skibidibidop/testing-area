@@ -1,18 +1,17 @@
 Fold long input lines into 2 or more shorter lines
 Lines will fold before a set column
 
-Counter++ for every character
-Make \n every 20 characters
+i++ for every character
+array[i]
 
-If 20th character is blank
+loop until array[i] == \0
+if i % 20 == 0 && !isblank(array[i])
+	print "-\n"
+	print array[i]
+
+else if char_counter % 20 == 0 && isblank(array[i])
 	print \n
-	Reset counter
-	Go to start of next word
-	Count and print at start of next word
+	print array[i]
+else
+	print array[i]
 
-
-If 20th character is not blank
-	Go back to start of word
-	Print \n
-	Reset counter
-	Count and print at start of word
