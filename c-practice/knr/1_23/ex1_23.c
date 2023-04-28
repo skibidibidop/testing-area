@@ -7,7 +7,14 @@
 int main(void) {
 	int storage[MAXCHAR];
 
+	printf("***Comment Scrubber***\n");
+	printf("Input C program. Ctrl + d to end input.\n");
+	printf("Input:\n");
+
 	store_input(storage);
+	remove_comments(storage);
+
+	return;
 }
 
 void store_input(si_arr[]) {
@@ -23,4 +30,8 @@ void store_input(si_arr[]) {
 	si_arr[si_i] = '\0';
 
 	return;
+}
+
+void remove_comments(rc_arr[]) {
+	
 }
