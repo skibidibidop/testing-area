@@ -1,0 +1,11 @@
+Remove all comments from a C program
+
+bool print_flag = true
+
+if arr[i] == / && arr[i + 1] == *
+	print_flag = false
+else if arr[i] == * && arr[i + 1] == /
+	print_flag = true
+	i++
+
+print character
