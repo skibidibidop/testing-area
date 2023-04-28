@@ -8,4 +8,5 @@ else if arr[i] == * && arr[i + 1] == /
 	print_flag = true
 	i++
 
-print character
+if print_flag = true
+	print arr[i]
