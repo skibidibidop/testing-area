@@ -21,6 +21,7 @@ int main(void) {
 	return 0;
 }
 
+/* Store input in array */
 void store_input(int s_arr[]) {
 	int s_char;
 	int s_i = 0;
@@ -36,6 +37,7 @@ void store_input(int s_arr[]) {
 	return;
 }
 
+/* Remove comments and print */
 void remove_comments(int r_arr[]) {
 	bool r_printflag = true;
 
