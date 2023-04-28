@@ -47,10 +47,10 @@ void remove_comments(int r_arr[]) {
 		}
 		else if (r_arr[r_i] == '*' && r_arr[r_i + 1] == '/') {
 			r_printflag = true;
-			r_i++;
+			r_i += 2;
 		}
 
-		if (r_printflag = true) {
+		if (r_printflag) {
 			printf("%c", r_arr[r_i]);
 		}
 	}
