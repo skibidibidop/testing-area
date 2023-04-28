@@ -18,7 +18,7 @@ int main(void) {
 	store_input(storage);
 	remove_comments(storage);
 
-	return;
+	return 0;
 }
 
 void store_input(int s_arr[]) {
@@ -26,7 +26,7 @@ void store_input(int s_arr[]) {
 	int s_i = 0;
 
 	while ( ( s_char = getchar() ) != EOF ) {
-		s_arr[si_i] = s_char;
+		s_arr[s_i] = s_char;
 		s_i++;
 	}
 
