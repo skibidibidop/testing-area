@@ -1,20 +1,29 @@
 /*
 Store input in array0.
-Convert escape sequences to their visible representations.
+Convert '\n' & '\t' to their visible representations.
 Store in array1, and then print. Newline character will be
 printed as \n, etc.
-Convert escape sequences in array1 back to how they are
-supposed to be displayed. Store in array2, then print.
+Convert consecutive '\', 'n' & '\', 't' in array1 back to
+how they are supposed to be displayed. Store in array2,
+then print.
 */
 
 #include <stdio.h>
 
 #define MAXCHAR 10000
 
+void turn_visible(int tv_arr[], int tv_visible[]);
+void store_input(int s_arr[]);
+
 int main(void) {
 	int storage[MAXCHAR];
+	int visible_escape[MAXCHAR];
 
 	store_input(storage);
+	turn_visible(storage, visible_escape);
+
+	printf("Original: %ls\n", storage);
+	printf("Visible: %ls\n", visible_escape);
 
 	return 0;
 }
@@ -34,9 +43,32 @@ void store_input(int s_arr[]) {
 	return;
 }
 
-// Convert escape sequences to 2 separate characters,
-// then prints
+// Convert '\n' and '\t' to 2 separate characters,
+// then print
 // Example: newline character will occupy 2 elements in
 // the new array as '\' and 'n'
-void turn_visible
+void turn_visible(int tv_arr[], int tv_visible[]) {
+	int tv_i = 0; // counter for tv_arr[]
+	int tv_j = 0; // counter for tv_visible[]
+
+	for ( ; tv_arr[tv_i] != '\0'; tv_i++, tv_j++) {
+		switch (tv_arr[tv_i]) {
+			case '\t' :
+				tv_visible[tv_j] = '\\';
+				tv_visible[tv_j + 1] = 't';
+				tv_j++;
+				continue;
+			case '\n' :
+				tv_visible[tv_j] = '\\';
+				tv_visible[tv_j + 1] = 'n';
+				tv_j++;
+				continue;
+			default:
+				tv_visible[tv_j] = tv_arr[tv_i];
+				continue;
+		}
+	}
+
+	return;
+}
 
