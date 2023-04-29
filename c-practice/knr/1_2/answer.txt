@@ -1,0 +1,2 @@
+Adding '\c' will cause an error because '\c' is an unknown escape
+	sequence.
