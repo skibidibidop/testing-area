@@ -19,6 +19,7 @@ int main(void) {
 	return 0;
 }
 
+// Store input in array
 void store_input(int s_arr[]) {
 	int s_char;
 	int s_i = 0;
@@ -32,4 +33,10 @@ void store_input(int s_arr[]) {
 
 	return;
 }
+
+// Convert escape sequences to 2 separate characters,
+// then prints
+// Example: newline character will occupy 2 elements in
+// the new array as '\' and 'n'
+void turn_visible
 
