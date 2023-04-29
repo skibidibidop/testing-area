@@ -12,6 +12,24 @@ supposed to be displayed. Store in array2, then print.
 #define MAXCHAR 10000
 
 int main(void) {
+	int storage[MAXCHAR];
 
+	store_input(storage);
+
+	return 0;
+}
+
+void store_input(int s_arr[]) {
+	int s_char;
+	int s_i = 0;
+
+	while ( (s_char = getchar()) != EOF) {
+		s_arr[s_i] = s_char;
+		s_i++;
+	}
+
+	s_arr[s_i + 1] = '\0';
+
+	return;
 }
 
