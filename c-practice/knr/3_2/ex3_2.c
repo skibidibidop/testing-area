@@ -18,9 +18,11 @@ void store_input(int s_arr[]);
 int main(void) {
 	int storage[MAXCHAR];
 	int visible_escape[MAXCHAR];
+	int invisible_escape[MAXCHAR];
 
 	store_input(storage);
 	turn_visible(storage, visible_escape);
+	turn_invisible(visible_escape, invisible_escape);
 
 	printf("Original: %ls\n", storage);
 	printf("Visible: %ls\n", visible_escape);
@@ -72,3 +74,8 @@ void turn_visible(int tv_arr[], int tv_visible[]) {
 	return;
 }
 
+// Convert consecutive '\', 'n' or '\', 't' to '\n' or
+// '\t', then store in new array. Print new array.
+void turn_invisible(int ti_vis[], int ti_invis[]) {
+	
+}
