@@ -7,5 +7,11 @@ Convert escape sequences in array1 back to how they are
 supposed to be displayed. Store in array2, then print.
 */
 
+#include <stdio.h>
 
+#define MAXCHAR 10000
+
+int main(void) {
+
+}
 
