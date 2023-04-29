@@ -1,0 +1,7 @@
+How would you test the word count program? What kinds of input are
+	most likely to uncover bugs if there are any?
+
+Numbers will be counted as words
+Test edge/corner cases such as:
+	No words, just newlines, spaces, or tabs
+	No input
