@@ -12,13 +12,17 @@ then print.
 
 #define MAXCHAR 10000
 
-void turn_visible(int tv_arr[], int tv_visible[]);
 void store_input(int s_arr[]);
+void turn_visible(int tv_arr[], int tv_visible[]);
+void turn_invisible(int ti_vis[], int ti_invis[]);
 
 int main(void) {
 	int storage[MAXCHAR];
 	int visible_escape[MAXCHAR];
 	int invisible_escape[MAXCHAR];
+
+	printf("Provide input. Ctrl + d to end.\n");
+	printf("Input:\n");
 
 	store_input(storage);
 	turn_visible(storage, visible_escape);
@@ -26,6 +30,7 @@ int main(void) {
 
 	printf("Original: %ls\n", storage);
 	printf("Visible: %ls\n", visible_escape);
+	printf("Invisible: %ls\n", invisible_escape);
 
 	return 0;
 }
@@ -81,7 +86,7 @@ void turn_invisible(int ti_vis[], int ti_invis[]) {
 	int ti_j = 0; // counter for ti_invis[]
 
 	for ( ; ti_vis[ti_i] != '\0'; ti_i++, ti_j++) {
-		if (ti_vis[ti_i] == '\') {
+		if (ti_vis[ti_i] == '\\') {
 			switch (ti_vis[ti_i + 1]) {
 				case 'n':
 					ti_invis[ti_j] = '\n';
@@ -94,7 +99,7 @@ void turn_invisible(int ti_vis[], int ti_invis[]) {
 			}
 		}
 		else {
-			ti_invis[ti_j] = ti_invis[ti_i];
+			ti_invis[ti_j] = ti_vis[ti_i];
 		}
 	}
 
