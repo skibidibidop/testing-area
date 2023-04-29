@@ -77,5 +77,27 @@ void turn_visible(int tv_arr[], int tv_visible[]) {
 // Convert consecutive '\', 'n' or '\', 't' to '\n' or
 // '\t', then store in new array. Print new array.
 void turn_invisible(int ti_vis[], int ti_invis[]) {
-	
+	int ti_i = 0; // counter for ti_vis[]
+	int ti_j = 0; // counter for ti_invis[]
+
+	for ( ; ti_vis[ti_i] != '\0'; ti_i++, ti_j++) {
+		if (ti_vis[ti_i] == '\') {
+			switch (ti_vis[ti_i + 1]) {
+				case 'n':
+					ti_invis[ti_j] = '\n';
+					ti_i++;
+					continue;
+				case 't':
+					ti_invis[ti_j] = '\t';
+					ti_i++;
+					continue;
+			}
+		}
+		else {
+			ti_invis[ti_j] = ti_invis[ti_i];
+		}
+	}
+
+	return;
 }
+
