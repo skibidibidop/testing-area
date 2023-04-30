@@ -5,6 +5,10 @@
 
 #define MAXCHAR 10000
 
+void initialize(int i_count[]);
+int store_input(char s_storage[], int s_count[]);
+void print_histogram(char p_storage[], int p_count[], int p_length);
+
 int main(void) {
 	char storage[MAXCHAR];
 	int count[MAXCHAR];
