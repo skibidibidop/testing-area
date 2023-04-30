@@ -1,0 +1,30 @@
+Print histogram of character frequencies in input
+
+char storage[]
+int count[]
+int length = 0
+int i
+bool existing;
+
+store 0's in all of count[]'s elements
+
+get character while ! EOF
+	length++
+	existing = false
+
+	loop while i < length
+		if storage[i] == character
+			count[i]++
+			existing = true
+
+	if existing == false
+		storage[length] = input
+		count[length]++
+
+loop while j < length
+	print storage[j]
+	
+	loop
+		print '|' count[k] times
+
+
