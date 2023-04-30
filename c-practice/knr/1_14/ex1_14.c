@@ -9,8 +9,12 @@ int main(void) {
 	char storage[MAXCHAR];
 	int count[MAXCHAR];
 
+	printf("Provide input. Ctrl + d to end.\n");
+	printf("Input:\n");
+
 	initialize(count);
 	int length = store_input(storage, count);
+	print_histogram(storage, count, length);
 
 	return 0;
 }
@@ -43,14 +47,25 @@ int store_input(char s_storage[], int s_count[]) {
 		}
 
 		if (s_existing == false) {
-			s_storage[length] = s_char;
-			s_count[length]++;
+			s_storage[s_length] = s_char;
+			s_count[s_length]++;
 		}
 	}
 
 	return s_length;
 }
 
-void print_histogram(char p_storage[], int p_count[]) {
+void print_histogram(char p_storage[], int p_count[], int p_length) {
+	printf("Frequency of each character in the input:\n");
+	for (int p_i = 1; p_i <= p_length; p_i++) {
+		printf("%3c  :", p_storage[p_i]);
+		
+		for (int p_j = 0; p_j < p_count[p_i]; p_j++) {
+			printf("|");
+		}
 
+		printf("\n");
+	}
+
+	return;
 }
