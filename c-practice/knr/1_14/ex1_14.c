@@ -17,11 +17,15 @@ int main(void) {
 
 // Initialize all elements to 0
 void initialize(int i_count[]) {
+	for (int i_i = 0; i_i < MAXCHAR; i_i++) {
+		i_count[i_i] = 0;
+	}
 
+	return;
 }
 
 // Store characters and character count in separate
 // arrays. Return character array length
 int store_input(char s_storage[], int s_count[]) {
-
+	
 }
