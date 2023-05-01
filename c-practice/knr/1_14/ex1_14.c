@@ -39,7 +39,7 @@ int store_input(char s_storage[], int s_count[]) {
 	int s_length = 0;
 	bool s_existing;
 
-	while ( (s_char = getchar()) != EOF ) {
+	while ( (s_char = getchar()) != '\n' ) {
 		s_existing = false;
 
 		for (int s_i = 0; s_i < s_length; s_i++) {
@@ -61,7 +61,7 @@ int store_input(char s_storage[], int s_count[]) {
 
 void print_histogram(char p_storage[], int p_count[], int p_length) {
 	printf("Frequency of each character in the input:\n");
-	for (int p_i = 0; p_i <= p_length; p_i++) {
+	for (int p_i = 0; p_i < p_length; p_i++) {
 		printf("%3c  :", p_storage[p_i]);
 		
 		for (int p_j = 0; p_j < p_count[p_i]; p_j++) {
