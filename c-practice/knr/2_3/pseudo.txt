@@ -1,0 +1,42 @@
+Write htoi(s)
+Convert hex to decimal, then print
+Allow optional Ox or OX
+Allowed input: 0 to 9, a to f, and A to F
+
+Prompt, get input
+	Store in array
+
+	Convert alphabetical elements to lowercase
+
+	Terminate if an element is not allowed input
+	Include 'x' in allowed input
+
+	if array[0] == '0' && array[1] == 'x'
+		Convert only until array[2]
+		Store converted in array2
+		print array2
+		break
+
+	Convert hex to dec
+	print
+
+Conversion algorithm
+Places: 
+i = length of array - 1
+float base = 16.0
+float place = 0.0
+multiplier = pow(base, place)
+
+	if isdigit
+		digit * multiplier
+		add product to converted amount
+			(should this be long?)
+
+	else if isalpha
+		
+
+place += 1.0
+
+Conversion function arguments:
+	last index to convert
+	array
