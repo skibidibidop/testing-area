@@ -1,0 +1,18 @@
+any(string1, string2)
+If a character from string2 matches a character from string1 for
+	the first time, return the location of the element from
+	string1
+Return -1 if no matches
+
+char string1, string2
+int string3
+
+Iterate through string1
+	Iterate through string2
+		If string1[i] == string2[j]
+			string3[i] = j
+			break
+
+		string3[i] = -1
+
+print string1 and string3 to show match locations
