@@ -10,15 +10,15 @@
 void store_input(char si_arr[]);
 
 int main(void) {
-	char string1[MAXCHAR];
-	char string2[MAXCHAR];
-	int string3[MAXCHAR];
+	char to_process[MAXCHAR];
+	char reference[MAXCHAR];
+	int locations[MAXCHAR];
 
 	printf("***MATCH LOCATOR***\n");
 	printf("Input reference: ");
-	store_input(string2);
+	store_input(reference);
 	printf("Input string for processing: ");
-	store_input(string2);
+	store_input(to_process);
 
 	return 0;
 }
@@ -37,3 +37,5 @@ void store_input(char si_arr[]) {
 
 	return;
 }
+
+
