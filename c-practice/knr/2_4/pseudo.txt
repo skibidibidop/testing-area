@@ -1,0 +1,13 @@
+Take string1 and string2
+Delete any character in string1 that matches a character
+	in string2
+
+Iterate through string1 until /0
+	Iterate through string2 until /0
+		If string1[i] != string2[i]
+			string1[j] = string1[i]
+			j++
+
+string1[j] = \0
+
+print string1
