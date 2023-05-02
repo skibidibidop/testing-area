@@ -8,15 +8,12 @@
 
 #define MAXCHAR 1000
 
-void store_input(char s_input[]);
-bool check_prefix(char cp_input[]);
+bool store_input(char s_input[]);
 
 int main(void) {
 	char input[MAXCHAR];
 
-	store_input(input);
-	bool prefix = check_prefix(input);
-	verify_input(input, prefix);
+	bool prefix = store_input(input);
 
 	printf("%s\n", input);
 
@@ -24,7 +21,8 @@ int main(void) {
 }
 
 // Convert input to lowercase, store in array
-void store_input(char s_input[]) {
+// Identify if input has 0x prefix
+bool store_input(char s_input[]) {
 	char s_element;
 	int s_i = 0;
 
@@ -35,19 +33,10 @@ void store_input(char s_input[]) {
 
 	s_input[s_i++] = '\0';
 
-	return;
-}
-
-bool check_prefix(char cp_input[]) {
-	if (cp_input[0] == '0' && cp_input[1] == 'x') {
+	if (s_input[0] == '0' && s_input[1] == 'x') {
 		return true;
 	}
 
 	return false;
 }
 
-void verify_input(char v_input[], bool v_prefix) {
-	if (v_prefix == true) {
-		
-	}
-}
