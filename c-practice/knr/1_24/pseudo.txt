@@ -1,0 +1,17 @@
+Check C program for syntax errors:
+	Unbalanced parentheses, brackets, braces,
+	single and double quotes, escape sequences,
+	and comments
+
+Use array as stack
+
+Get input, iterate through
+	If character == '(' or '[' or '{' or '\'' or
+			'\"' or '\\' or '/*'
+		Store in open[]
+	
+	If character == 
+
+
+
+Print errors:
