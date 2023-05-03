@@ -1,0 +1,11 @@
+Create program to convert upper case
+    letters to lower case. Use conditional
+    expressions instead of if-else
+
+#define CASEGAP 32
+
+Get input, iterate through each character
+    array[i] = (character >= 'A' && character <= 'Z') ? character + CASEGAP :
+                                                        character;
+
+Print array
