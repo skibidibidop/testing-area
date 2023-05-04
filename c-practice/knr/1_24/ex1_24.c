@@ -119,21 +119,19 @@ void check_input(char stack[], char storage[]) {
 		}
 
 		// Detect closing chars
-		switch (storage[k]) {
-			case ')' : case ']' : case '}' :
-				// Pop off the stack
-				if (storage[k] == stack[i - 1]) {
-					stack[i - 1] = '\0';
-					i--;
-				}
-				// Push to stack, can't be
-				// popped off
-				else {
-					stack[i] = storage[k];
-					i++;
-				}
-
-				continue;
+		// Pop off the stack
+		if ( (storage[k] == ')' && stack[i - 1] == '(') ||
+		     (storage[k] == ']' && stack[i - 1] == '[') ||
+		     (storage[k] == '}' && stack[i - 1] == '{') ) {
+			stack[i - 1] = '\0';
+			i--;
+		}
+		// Push to stack, can't be popped off
+		else if ( (storage[k] == ')' && stack[i - 1] != '(') ||
+			  (storage[k] == ']' && stack[i - 1] != '[') ||
+			  (storage[k] == '}' && stack[i - 1] != '{') ) {
+			stack[i] = storage[k];
+			i++;
 		}
 	}
 
