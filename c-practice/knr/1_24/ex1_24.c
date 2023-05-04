@@ -6,12 +6,22 @@
 
 #define MAXCHAR 10000
 
+void store_input(char storage[]);
+void check_input(char stack[], char storage[]);
+
 int main(void) {
 	char stack[MAXCHAR];
 	char storage[MAXCHAR];
 
+	printf("Checks unclosed (), [], {}, \'\', \"\", ");
+	printf("/**/, and incomplete escape sequences.\n");
+	printf("Provide C program. Ctrl + d to end input.\n");
+	printf("Input:\n");
+
 	store_input(storage);
 	check_input(stack, storage);
+
+	printf("Stack: %s\n", stack);
 
 	return 0;
 }
