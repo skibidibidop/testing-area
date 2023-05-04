@@ -14,11 +14,53 @@ Get input, iterate through
 		i++
 		continue
 
-	If stack[i - 1] is /
-		If character is *
+*** TRY SWITCH ***
+for loop, i++ ?
+	j = i - 1
+	switch (character) {
+		case / \ ( [ { (expand this in code) :
 			stack[i] = character
+			continue
+		case ' :
+			switch (stack[j]) {
+				case ' :
+					stack[j] = \0
+					i--
+				default :
+					stack[i] = character
+			}
+		case " :
+			switch (stack[j]) {
+				case " :
+					stack[j] = \0
+					i--
+				default :
+					stack[j] = character
+			}
+	}
 
-	i++
+	switch (stack[j]) {
+		case / :
+			switch (character) {
+				case * :
+					stack[i] = character
+					continue
+			}
+		case * :
+			switch (character) {
+				case *
+			}
+		case \:
+			switch (character) {
+				case a b f n r t v \ ? ' " 0
+				(expand this in code) :
+					pop \ off stack
+			}
+		case
+	}
+
+
+******************
 
 Print errors:
 	"Line # %d: unclosed %c\n", line, stack[]
