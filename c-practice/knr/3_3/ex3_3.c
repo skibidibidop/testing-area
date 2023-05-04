@@ -15,6 +15,8 @@ The whole list is 0-9, then A-Z, then a-z
 #define PATTERN2 2
 #define PATTERN3 3
 #define INVALID 4
+#define UPPERCASEA 65
+#define LOWERCASEA 97
 
 int main(void) {
 	char shorthand[MAXCHAR];
@@ -67,5 +69,33 @@ int verify_input(char shorthand[]) {
 }
 
 void expand(char shorthand[], char expanded[], int flag) {
+	char low, high;
 
+	if (flag == PATTERN1) {
+		low = shorthand[0];
+		high = shorthand[2];
+	}
+	else if (flag == PATTERN2) {
+		low = '0';
+		high = shorthand[1];
+	}
+	else if (flag == PATTERN3) {
+		low = shorthand[0];
+		high = 'z';
+	}
+
+	for (int i = low, j = 0; i <= high; i++, j++) {
+		if (i == DIGITLIMIT) {
+			i = UPPERCASEA;
+		}
+		else if (i == UPPERCASELIMIT) {
+			i = LOWERCASEA;
+		}
+
+		expanded[j] = i;
+	}
+
+	expanded[++j] = '\0';
+
+	return;
 }
