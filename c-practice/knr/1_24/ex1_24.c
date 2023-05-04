@@ -37,6 +37,7 @@ void check_input(char stack[], char storage[]) {
 	for (i = 0, k = 0; storage[k] != '\0'; k++) {
 		// Detect opening chars
 		switch (storage[k]) {
+			// Push to stack
 			case '(' : case '[' : case '{' :
 				stack[i] = storage[k];
 				i++;
@@ -45,10 +46,12 @@ void check_input(char stack[], char storage[]) {
 
 		// Detect single & double quotes
 		if (storage[k] == ''' || storage[k] == '"') {
+			// Pop off the stack
 			if (stack[i - 1] == storage[k]) {
 				stack[i - 1] = '\0';
 				i--;
 			}
+			// Push to stack
 			else {
 				stack[i] = storage[k];
 				i++;
@@ -59,7 +62,7 @@ void check_input(char stack[], char storage[]) {
 
 		// Detect comments
 		if (storage[k] == '*') {
-			// Unclosed /*, add to stack
+			// Unclosed /*, push to stack
 			if (storage[k - 1] == '/') {
 				stack[i] = '*';
 				i++;
@@ -82,10 +85,29 @@ void check_input(char stack[], char storage[]) {
 		}
 
 		// Detect escape sequences
+		if (storage[k] == '\\') {
+			switch (storage[k + 1]) {
+				// Don't do anything if correct
+				// escape sequence
+				case 'a' : case 'b' : case 'f' :
+				case 'n' : case 'r' : case 't' :
+				case 'v' : case '\\' : case '?' :
+				case ''' : case '"' : case '0' :
+					continue;
+				// Push to stack, can't be
+				// popped off
+				default :
+					stack[i] = '\\';
+					i++;
+					continue;
+			}
+		}
 
 		// Detect closing chars
 		switch (storage[k]) {
 			case '
 		}
 	}
+
+	return;
 }
