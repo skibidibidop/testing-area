@@ -1,17 +1,24 @@
 Check C program for syntax errors:
-	Unbalanced parentheses, brackets, braces,
-	single and double quotes, escape sequences,
-	and comments
 
-Use array as stack
+Unclosed (), [], {}, '', "", /**/
+
+Incomplete escape sequences
+
+stack[]
+line[]
+i = 0
 
 Get input, iterate through
-	If character == '(' or '[' or '{' or '\'' or
-			'\"' or '\\' or '/*'
-		Store in open[]
-	
-	If character == 
+	If i == 0
+		stack[i] = character
+		i++
+		continue
 
+	If stack[i - 1] is /
+		If character is *
+			stack[i] = character
 
+	i++
 
 Print errors:
+	"Line # %d: unclosed %c\n", line, stack[]
