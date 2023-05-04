@@ -33,8 +33,13 @@ void store_input(char storage[]) {
 void check_input(char stack[], char storage[]) {
 	int i; // stack counter
 	int k; // storage counter
+	int line = 1;
 
 	for (i = 0, k = 0; storage[k] != '\0'; k++) {
+		if (storage[k] == '\n') {
+			line++;
+		}
+
 		// Detect opening chars
 		switch (storage[k]) {
 			// Push to stack
@@ -105,9 +110,24 @@ void check_input(char stack[], char storage[]) {
 
 		// Detect closing chars
 		switch (storage[k]) {
-			case '
+			case ')' : case ']' : case '}' :
+				// Pop off the stack
+				if (storage[k] == stack[i - 1]) {
+					stack[i - 1] = '\0';
+					i--;
+				}
+				// Push to stack, can't be
+				// popped off
+				else {
+					stack[i] = storage[k];
+					i++;
+				}
+
+				continue;
 		}
 	}
+
+	stack[i] = '\0';
 
 	return;
 }
