@@ -11,7 +11,7 @@ int main(void) {
 	char storage[MAXCHAR];
 
 	store_input(storage);
-	check_input(stack);
+	check_input(stack, storage);
 
 	return 0;
 }
@@ -30,43 +30,61 @@ void store_input(char storage[]) {
 	return;
 }
 
-void check_input(char stack[]) {
-	char ci_char;
-	char prev;
-	int i;
-	int j;
+void check_input(char stack[], char storage[]) {
+	int i; // stack counter
+	int k; // storage counter
 
-	for (i = 0; (ci_char = getchar()) != EOF; i++) {
-		j = i - 1;
-
+	for (i = 0, k = 0; storage[k] != '\0'; k++) {
 		// Detect opening chars
-		switch (ci_char) {
-			case '\\' : case '(' :
-			case '[' : case '{' :
-				stack[i] = ci_char;
+		switch (storage[k]) {
+			case '(' : case '[' : case '{' :
+				stack[i] = storage[k];
+				i++;
 				continue;
 		}
 
-		// Detect chars that can be closed by
-		// identical char
-		if (ci_char == ''' || c_char == '"') {
-			if (stack[j] == ci_char) {
-				stack[j] = '\0';
-				i -= 2;
-				continue;
+		// Detect single & double quotes
+		if (storage[k] == ''' || storage[k] == '"') {
+			if (stack[i - 1] == storage[k]) {
+				stack[i - 1] = '\0';
+				i--;
 			}
 			else {
-				stack[i] = ci_char;
-				continue;
+				stack[i] = storage[k];
+				i++;
 			}
+
+			continue;
 		}
 
 		// Detect comments
-		if (ci_char == '*') {
+		if (storage[k] == '*') {
+			// Unclosed /*, add to stack
+			if (storage[k - 1] == '/') {
+				stack[i] = '*';
+				i++;
+			}
+			// Pop off the stack
+			else if (storage[k + 1] == '/' &&
+				 stack[i - 1] == '*') {
+				stack[i - 1] = '\0';
+				i--;
+			}
+			// Unclosed */, can't be popped
+			// off the stack
+			else if (storage[k + 1] == '/' &&
+				 stack[i - 1] != '*') {
+				stack[i] = '/';
+				i++;
+			}
 
+			continue;
 		}
+
+		// Detect escape sequences
+
 		// Detect closing chars
-		switch (ci_char) {
+		switch (storage[k]) {
 			case '
 		}
 	}
