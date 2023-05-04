@@ -1,0 +1,46 @@
+expand(s1, s2)
+Expand shorthand notation in s1 like a-z to abc...xyz in s2
+Allowed input: 0 to 9, A to Z, a to z, '-'
+Reject input that doesn't follow input format
+If leading '-', start at 0 and end at specified character
+If trailing '-', start at specified character and end on z
+If only '-', print whole range
+
+Prompt for input, display allowed characters. No ' ' allowed
+Get input, store in array
+
+Check if input is acceptable
+	if isalnum(s1[0]) && s1[1] == '-' && isalnum(s1[2])
+		flag = 1
+	else if s1[0] == '-' && isalnum(s1[1])
+		flag = 2
+	else if isalnum(s1[0]) && s1[1] == '-'
+		flag = 3
+	else
+		terminate
+
+Check range, expand
+	char low
+	char high
+
+	if flag = 1
+		low = s1[0]
+		high = s1[2]
+	else if flag = 2
+		low = '0'
+		high = s1[1]
+	else
+		low = s1[0]
+		high = 'z'
+
+	for (i = low, j= 0; i <= high; i++, j++)
+		if i == 58 (define DIGITLIMIT)
+			i = 65
+		else if i == 91 (define UPPERCASELIMIT)
+			i = 97
+
+		s2[j] = i
+	
+	s2[j + 1] = \0
+
+Printf s2
