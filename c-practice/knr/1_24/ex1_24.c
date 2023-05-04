@@ -3,15 +3,18 @@
 // Incomplete escape sequences
 
 #include <stdio.h>
+#include <string.h>
 
 #define MAXCHAR 10000
 
 void store_input(char storage[]);
-void check_input(char stack[], char storage[]);
+void check_input(char stack[], char storage[], int line[]);
+void print_errors(char stack[], int line[]);
 
 int main(void) {
 	char stack[MAXCHAR];
 	char storage[MAXCHAR];
+	int line[MAXCHAR];
 
 	printf("Checks unclosed (), [], {}, \'\', \"\", ");
 	printf("/**/, and incomplete escape sequences.\n");
@@ -19,9 +22,8 @@ int main(void) {
 	printf("Input:\n");
 
 	store_input(storage);
-	check_input(stack, storage);
-
-	printf("Stack: %s\n", stack);
+	check_input(stack, storage, line);
+	print_errors(stack, line);
 
 	return 0;
 }
@@ -40,14 +42,14 @@ void store_input(char storage[]) {
 	return;
 }
 
-void check_input(char stack[], char storage[]) {
+void check_input(char stack[], char storage[], int line[]) {
 	int i; // stack counter
 	int k; // storage counter
-	int line = 1;
+	int line_num = 1;
 
 	for (i = 0, k = 0; storage[k] != '\0'; k++) {
 		if (storage[k] == '\n') {
-			line++;
+			line_num++;
 		}
 
 		// Detect opening chars
@@ -55,6 +57,7 @@ void check_input(char stack[], char storage[]) {
 			// Push to stack
 			case '(' : case '[' : case '{' :
 				stack[i] = storage[k];
+				line[i] = line_num;
 				i++;
 				continue;
 		}
@@ -64,11 +67,13 @@ void check_input(char stack[], char storage[]) {
 			// Pop off the stack
 			if (stack[i - 1] == storage[k]) {
 				stack[i - 1] = '\0';
+				line[i - 1] = '\0';
 				i--;
 			}
 			// Push to stack
 			else {
 				stack[i] = storage[k];
+				line[i] = line_num;
 				i++;
 			}
 
@@ -80,12 +85,14 @@ void check_input(char stack[], char storage[]) {
 			// Unclosed /*, push to stack
 			if (storage[k - 1] == '/') {
 				stack[i] = '*';
+				line[i] = line_num;
 				i++;
 			}
 			// Pop off the stack
 			else if (storage[k + 1] == '/' &&
 				 stack[i - 1] == '*') {
 				stack[i - 1] = '\0';
+				line[i - 1] = '\0';
 				i--;
 			}
 			// Unclosed */, can't be popped
@@ -93,6 +100,7 @@ void check_input(char stack[], char storage[]) {
 			else if (storage[k + 1] == '/' &&
 				 stack[i - 1] != '*') {
 				stack[i] = '/';
+				line[i] = line_num;
 				i++;
 			}
 
@@ -113,6 +121,7 @@ void check_input(char stack[], char storage[]) {
 				// popped off
 				default :
 					stack[i] = '\\';
+					line[i] = line_num;
 					i++;
 					continue;
 			}
@@ -124,6 +133,7 @@ void check_input(char stack[], char storage[]) {
 		     (storage[k] == ']' && stack[i - 1] == '[') ||
 		     (storage[k] == '}' && stack[i - 1] == '{') ) {
 			stack[i - 1] = '\0';
+			line[i - 1] = '\0';
 			i--;
 		}
 		// Push to stack, can't be popped off
@@ -131,11 +141,29 @@ void check_input(char stack[], char storage[]) {
 			  (storage[k] == ']' && stack[i - 1] != '[') ||
 			  (storage[k] == '}' && stack[i - 1] != '{') ) {
 			stack[i] = storage[k];
+			line[i] = line_num;
 			i++;
 		}
 	}
 
 	stack[i] = '\0';
+	line[i] = '\0';
 
 	return;
 }
+
+void print_errors(char stack[], int line[]) {
+	int length = strlen(stack);
+
+	if (length == 0) {
+		printf("No errors. Congratulations!\n");
+		return;
+	}
+
+	for (int i = 0; stack[i] != '\0'; i++) {
+		printf("Line # %d: unclosed %c\n", line[i], stack[i]);
+	}
+
+	return;
+}
+
