@@ -14,9 +14,8 @@ The whole list is 0-9, then A-Z, then a-z
 #define PATTERN1 1
 #define PATTERN2 2
 #define PATTERN3 3
-#define INVALID 4
-#define UPPERCASEA 65
-#define LOWERCASEA 97
+#define PATTERN4 4
+#define INVALID 5
 
 void store_input(char shorthand[]);
 int verify_input(char shorthand[]);
@@ -48,8 +47,9 @@ int main(void) {
 
 void store_input(char shorthand[]) {
 	char s_char;
+	int i;
 
-	for (int i = 0; (s_char = getchar()) != '\n'; i++) {
+	for (i = 0; (s_char = getchar()) != '\n'; i++) {
 		shorthand[i] = s_char;
 	}
 
@@ -59,15 +59,21 @@ void store_input(char shorthand[]) {
 }
 
 int verify_input(char shorthand[]) {
-	if ( isalnum(shorthand[0]) && shorthand[1] == '-' &&
-	     isalnum(shorthand[2]) ) {
+	if ( ( isalnum(shorthand[0]) && shorthand[1] == '-' &&
+		isalnum(shorthand[2]) ) &&
+		(shorthand[0] < shorthand[2]) ) {
 		return PATTERN1;
 	}
-	else if ( shorthand[0] == '-' && isalnum(shorthand[1]) ) {
+	else if (shorthand[0] == '-' && isalnum(shorthand[1]) &&
+		 shorthand[2] == '\0') {
 		return PATTERN2;
 	}
-	else if (isalnum(shorthand[0]) && shorthand[1] == '-') {
+	else if (isalnum(shorthand[0]) && shorthand[1] == '-' &&
+		 shorthand[2] == '\0') {
 		return PATTERN3;
+	}
+	else if (shorthand[0] == '-' && shorthand[1] == '\0') {
+		return PATTERN4;
 	}
 
 	return INVALID;
@@ -75,6 +81,7 @@ int verify_input(char shorthand[]) {
 
 void expand(char shorthand[], char expanded[], int flag) {
 	char low, high;
+	int i, j;
 
 	if (flag == PATTERN1) {
 		low = shorthand[0];
@@ -88,13 +95,17 @@ void expand(char shorthand[], char expanded[], int flag) {
 		low = shorthand[0];
 		high = 'z';
 	}
+	else if (flag == PATTERN4) {
+		low = '0';
+		high = 'z';
+	}
 
-	for (int i = low, j = 0; i <= high; i++, j++) {
+	for (i = low, j = 0; i <= high; i++, j++) {
 		if (i == DIGITLIMIT) {
-			i = UPPERCASEA;
+			i = 'A';
 		}
 		else if (i == UPPERCASELIMIT) {
-			i = LOWERCASEA;
+			i = 'a';
 		}
 
 		expanded[j] = i;
