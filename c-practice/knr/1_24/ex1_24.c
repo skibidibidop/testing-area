@@ -60,7 +60,7 @@ void check_input(char stack[], char storage[]) {
 		}
 
 		// Detect single & double quotes
-		if (storage[k] == ''' || storage[k] == '"') {
+		if (storage[k] == '\'' || storage[k] == '\"') {
 			// Pop off the stack
 			if (stack[i - 1] == storage[k]) {
 				stack[i - 1] = '\0';
@@ -107,7 +107,7 @@ void check_input(char stack[], char storage[]) {
 				case 'a' : case 'b' : case 'f' :
 				case 'n' : case 'r' : case 't' :
 				case 'v' : case '\\' : case '?' :
-				case ''' : case '"' : case '0' :
+				case '\'' : case '\"' : case '0' :
 					continue;
 				// Push to stack, can't be
 				// popped off
