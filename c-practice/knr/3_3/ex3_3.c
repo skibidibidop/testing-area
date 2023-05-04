@@ -6,6 +6,7 @@ The whole list is 0-9, then A-Z, then a-z
 */
 
 #include <stdio.h>
+#include <ctype.h>
 
 #define DIGITLIMIT 58
 #define UPPERCASELIMIT 91
@@ -13,6 +14,7 @@ The whole list is 0-9, then A-Z, then a-z
 #define PATTERN1 1
 #define PATTERN2 2
 #define PATTERN3 3
+#define INVALID 4
 
 int main(void) {
 	char shorthand[MAXCHAR];
@@ -26,6 +28,12 @@ int main(void) {
 
 	store_input(shorthand);
 	int flag = verify_input(shorthand);
+
+	if (flag == INVALID) {
+		printf("Invalid input.\n");
+		return INVALID;
+	}
+
 	expand(shorthand, expanded, flag);
 
 	return 0;
@@ -44,6 +52,20 @@ void store_input(char shorthand[]) {
 }
 
 int verify_input(char shorthand[]) {
-	if (isalnum(shorthand[0]
-	
+	if ( isalnum(shorthand[0]) && shorthand[1] == '-' &&
+	     isalnum(shorthand[2]) ) {
+		return PATTERN1;
+	}
+	else if ( shorthand[0] == '-' && isalnum(shorthand[1]) ) {
+		return PATTERN2;
+	}
+	else if (isalnum(shorthand[0]) && shorthand[1] == '-') {
+		return PATTERN3;
+	}
+
+	return INVALID;
+}
+
+void expand(char shorthand[], char expanded[], int flag) {
+
 }
