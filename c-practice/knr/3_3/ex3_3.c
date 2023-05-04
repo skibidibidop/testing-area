@@ -18,6 +18,10 @@ The whole list is 0-9, then A-Z, then a-z
 #define UPPERCASEA 65
 #define LOWERCASEA 97
 
+void store_input(char shorthand[]);
+int verify_input(char shorthand[]);
+void expand(char shorthand[], char expanded[], int flag);
+
 int main(void) {
 	char shorthand[MAXCHAR];
 	char expanded[MAXCHAR];
@@ -37,6 +41,7 @@ int main(void) {
 	}
 
 	expand(shorthand, expanded, flag);
+	printf("Expanded: %s\n", expanded);
 
 	return 0;
 }
