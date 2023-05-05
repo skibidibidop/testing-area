@@ -22,3 +22,16 @@ int main(void) {
 
 	return 0;
 }
+
+void get_pattern(char pattern[]) {
+	char c;
+	int i;
+
+	for (i = 0; (c = getchar()) != '\n'; i++) {
+		pattern[i] = c;
+	}
+
+	pattern[++i] = '\0';
+
+	return;
+}
