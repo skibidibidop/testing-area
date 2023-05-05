@@ -62,17 +62,17 @@ int strrindex(char input[], char pattern[]) {
 	int j = strlen(pattern) - 1;
 	int k = j;
 
-	for ( ; i < 0 || j < 0; i--) {
+	for ( ; i >= 0; i--) {
 		if (input[i] == pattern[j]) {
 			j--;
 		}
 		else {
 			j = k;
 		}
-	}
 
-	if (j == 0) {
-		return i;
+		if (j == 0) {
+			return i;
+		}
 	}
 
 	return -1;
