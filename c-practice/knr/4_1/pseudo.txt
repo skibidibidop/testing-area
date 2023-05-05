@@ -1,0 +1,25 @@
+strrindex(s, t)
+Return position of rightmost occurrence of t in s
+Return -1 if none
+
+char input[]
+char pattern[]
+
+Get pattern until \n, replace \n with \0
+
+Get input until \n, replace \n with \0
+
+i = strlen(input) - 1
+j = strlen(pattern) - 1
+k = j
+
+Loop input[i] until j < 0 || i < 0; i--
+	if input[i] == pattern[j]
+		j--
+	else
+		j = k
+	
+if j == 0
+	return i
+
+return -1
