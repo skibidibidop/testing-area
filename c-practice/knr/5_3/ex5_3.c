@@ -1,9 +1,7 @@
 // strcat(s, t) using pointers
-// Append string to to string s
+// Append string t to string s
 
 #include <stdio.h>
-
-#define MAXCHAR 10000
 
 void strcat2(char *s, char *t);
 
@@ -11,7 +9,8 @@ int main(void) {
     char s[] = "string1";
     char t[] = "string2";
 
-    strcat2(&s, &t);
+    strcat2(s, t);
+    printf("%s\n", s);
 
     return 0;
 }
