@@ -1,0 +1,3 @@
+Rewrite strcat(s, t) from Chapter 2. Use pointers
+strcat copies string t to the end of string s
+
