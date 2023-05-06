@@ -8,8 +8,8 @@
 void strcat2(char *s, char *t);
 
 int main(void) {
-    char s[] = "string1"
-    char t[] = "string2"
+    char s[] = "string1";
+    char t[] = "string2";
 
     strcat2(&s, &t);
 
