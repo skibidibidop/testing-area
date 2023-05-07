@@ -56,6 +56,7 @@ void store_input(char *input) {
 }
 
 int store_num(char *num) {
+	char *n_start = num;
 	char n;
 
 	while ( (n = getchar()) != '\n' ) {
@@ -64,7 +65,7 @@ int store_num(char *num) {
 
 	*num = '\0';
 
-	return atoi(num);
+	return atoi(n_start);
 }
 
 // strncpy(s, ct, n): copy at most n characters of string ct
