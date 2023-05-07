@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #define MAXCHAR 10000
 
 void store_input(char *input);
+int store_num(char *num);
 char * strncpy2(char *s, char *ct, int n);
 char * strncat2(char *s, char *ct, int n);
 
@@ -11,13 +13,13 @@ int main(void) {
 	// Copy
 	char copy_this[MAXCHAR];
 	char copy_holder[MAXCHAR];
-	int copy_n = 0;
+	char copy_num[MAXCHAR];
 
 	printf("COPIER\n");
 	printf("String to copy: ");
 	store_input(copy_this);
 	printf("No. of characters: ");
-	scanf("%i", &copy_n);
+	int copy_n = store_num(copy_num);
 
 	strncpy2(copy_holder, copy_this, copy_n);
 	printf("String copied: %s\n\n", copy_holder);
@@ -25,7 +27,7 @@ int main(void) {
 	// Concatenate
 	char cat_first[MAXCHAR];
 	char cat_second[MAXCHAR];
-	int cat_n = 0;
+	char cat_num[MAXCHAR];
 
 	printf("CONCATENATOR\n");
 	printf("First string: ");
@@ -33,7 +35,7 @@ int main(void) {
 	printf("Second string: ");
 	store_input(cat_second);
 	printf("No. of characters from 2nd string to concatenate: ");
-	scanf("%i", &cat_n);
+	int cat_n = store_num(cat_num);
 
 	strncat2(cat_first, cat_second, cat_n);
 	printf("Concatenated string: %s\n\n", cat_first);
@@ -51,6 +53,18 @@ void store_input(char *input) {
 	*input = '\0';
 
 	return;
+}
+
+int store_num(char *num) {
+	char n;
+
+	while ( (n = getchar()) != '\n' ) {
+		*num++ = n;
+	}
+
+	*num = '\0';
+
+	return atoi(num);
 }
 
 // strncpy(s, ct, n): copy at most n characters of string ct
