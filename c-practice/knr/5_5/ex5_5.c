@@ -4,7 +4,7 @@
 #define MAXCHAR 10000
 
 void store_input(char *input);
-char *strncpy2(char *s, char *ct, int n);
+char * strncpy2(char *s, char *ct, int n);
 
 int main(void) {
     char copy_this[MAXCHAR];
@@ -16,8 +16,8 @@ int main(void) {
     store_input(copy_this);
     printf("No. of characters: ");
     scanf("%i", &copy_n);
-    char *copied = strncpy2(copy_holder, copy_this, copy_n);
-    printf("String copied: %s\n\n", copied);
+    strncpy2(copy_holder, copy_this, copy_n);
+    printf("String copied: %s\n\n", copy_holder);
     
     // char cat_first[MAXCHAR];
     // char cat_second[MAXCHAR];
@@ -44,14 +44,16 @@ void store_input(char *input) {
 
 // strncpy(s, ct, n): copy at most n characters of string ct
 // to s, return s. Pad with \0 if ct < n characters
-char *strncpy2(char *s, char *ct, int n) {
-    char *limit = ct + n;
+char * strncpy2(char *s, char *ct, int n) {
+    char *s_start = s;
+    char *limit = ct + (n - 1);
     int length = strlen(ct);
-    char *padding_start = ct + length;
+    char *padding_start = ct + (length - 1);
 
     while (ct <= limit) {
-        if (n > length && ct > padding_start) {
+        if (ct > padding_start) {
             *s++ = '\0';
+            ct++;
         }
         else {
             *s++ = *ct++;
@@ -60,7 +62,7 @@ char *strncpy2(char *s, char *ct, int n) {
 
     *s = '\0';
 
-    return s;
+    return s_start;
 }
 
 // strncat(s, ct, n): concatenate at most n characters of ct
