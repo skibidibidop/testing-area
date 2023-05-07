@@ -5,3 +5,12 @@
 int main(void) {
     
 }
+
+// strncpy(s, ct, n): copy at most n characters of string ct
+// to s, return s. Pad with \0 if ct < n characters
+
+// strncat(s, ct, n): concatenate at most n characters of ct
+// to end of s, terminate with \0, return s
+
+//strncmp(cs, ct, n): compare at most n characters of cs to
+// ct, return <0 if cs < ct, 0 if cs == ct, >0 if cs > ct
