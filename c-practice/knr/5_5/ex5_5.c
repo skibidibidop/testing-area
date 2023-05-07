@@ -9,7 +9,7 @@ int store_num(char *num);
 char * strncpy2(char *s, char *ct, int n);
 char * strncat2(char *s, char *ct, int n);
 int strncmp2(char *cs, char *ct, int n);
-void print_comp_result(int result, int comp_n, char *cs, char *ct):
+void print_comp_result(int result, int comp_n, char *cs, char *ct);
 
 int main(void) {
 	// Copy
@@ -150,7 +150,7 @@ void print_comp_result(int result, int comp_n, char *cs, char *ct) {
 	}
 	else {
 		printf("The first %i characters of %s ", comp_n, cs);
-		printf("& %s are different.\n" ct);
+		printf("& %s are different.\n", ct);
 	}
 
 	return;
