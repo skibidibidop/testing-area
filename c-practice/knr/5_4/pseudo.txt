@@ -15,4 +15,8 @@ length_t
         ps--
         pt--
 
-    return 0
+    return 1
+
+
+samplestring1\0
+---------ing1\0
