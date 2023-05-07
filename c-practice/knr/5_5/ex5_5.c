@@ -1,6 +1,10 @@
 #include <stdio.h>
+#include <string.h>
 
 #define MAXCHAR 10000
+
+void store_input(char *input);
+char *strncpy2(char *s, char *ct, int n);
 
 int main(void) {
     char copy_this[MAXCHAR];
@@ -12,7 +16,7 @@ int main(void) {
     store_input(copy_this);
     printf("No. of characters: ");
     scanf("%i", &copy_n);
-    char *copied = strncpy(copy_holder, copy_this, copy_n);
+    char *copied = strncpy2(copy_holder, copy_this, copy_n);
     printf("String copied: %s\n\n", copied);
     
     // char cat_first[MAXCHAR];
@@ -40,9 +44,9 @@ void store_input(char *input) {
 
 // strncpy(s, ct, n): copy at most n characters of string ct
 // to s, return s. Pad with \0 if ct < n characters
-char *strncpy(char *s, char *ct, int n) {
+char *strncpy2(char *s, char *ct, int n) {
     char *limit = ct + n;
-    int length = strlen(*ct);
+    int length = strlen(ct);
     char *padding_start = ct + length;
 
     while (ct <= limit) {
