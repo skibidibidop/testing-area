@@ -9,7 +9,7 @@ int main(void) {
 
     printf("COPIER\n");
     printf("String to copy: ");
-    store_input(copy_this);
+    scanf
     printf("No. of characters: ");
     scanf("%i", &copy_n);
     char *copied = strncpy(copy_holder, copy_this, copy_n);
