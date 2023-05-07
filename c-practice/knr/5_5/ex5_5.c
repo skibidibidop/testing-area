@@ -132,10 +132,11 @@ char * strncat2(char *s, char *ct, int n) {
 int strncmp2(char *cs, char *ct, int n) {
 	char *limit1 = cs + (n - 1);
 	char *limit2 = ct + (n + 1);
+	
 	int result = 0;
 
 	while (cs <= limit1 && ct <= limit2) {
-		result = *cs - *ct;
+		result += *cs - *ct;
 		cs++;
 		ct++;
 	}
@@ -144,7 +145,7 @@ int strncmp2(char *cs, char *ct, int n) {
 }
 
 void print_comp_result(int result, int comp_n, char *cs, char *ct) {
-	if (result < 0) {
+	if (result == 0) {
 		printf("The first %i characters of %s ", comp_n, cs);
 		printf("& %s are the same.\n", ct);
 	}
