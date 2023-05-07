@@ -3,7 +3,26 @@
 #define MAXCHAR 10000
 
 int main(void) {
+    char copy_this[MAXCHAR];
+    char copy_holder[MAXCHAR];
+    int copy_n = 0;
+
+    printf("COPIER\n");
+    printf("String to copy: ");
+    store_input(copy_this);
+    printf("No. of characters: ");
+    scanf("%i", &copy_n);
+    char *copied = strncpy(copy_holder, copy_this, copy_n);
+    printf("String copied: %s\n\n", copied);
     
+    char cat_first[MAXCHAR];
+    char cat_second[MAXCHAR];
+    int cat_n = 0;
+
+
+    printf("CONCATENATOR\n");
+    char *concatenated = strncat()
+    return 0;
 }
 
 // strncpy(s, ct, n): copy at most n characters of string ct
