@@ -1,0 +1,7 @@
+Write versions of library functions strncpy, strncat, strncmp
+Descriptions at Appendix B
+The functions will operate on at most the first n characters
+    of their argument strings
+Example: strncpy(s, t, n) will copy n number of characters from
+    t to the end of s
+
