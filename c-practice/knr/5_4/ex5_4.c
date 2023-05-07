@@ -61,7 +61,7 @@ void print_result(int result, char *s, char *t) {
         printf("%s does not occur at the end of %s.\n", t, s);
     }
     else {
-        printf("%s can be found in the end of %s.\n", t, s)
+        printf("%s can be found in the end of %s.\n", t, s);
     }
 
     return;
