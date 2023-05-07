@@ -1,0 +1,18 @@
+strend(s, t)
+Return 1 if string t occurs at end of string s
+Return 0 otherwise
+
+length_s
+length_t
+
+*ps = end of s
+*pt = end of t
+
+    Loop until pt < t
+        if *ps != *pt
+            return 0
+        
+        ps--
+        pt--
+
+    return 0
