@@ -40,6 +40,22 @@ int main(void) {
 	strncat2(cat_first, cat_second, cat_n);
 	printf("Concatenated string: %s\n\n", cat_first);
 
+	// Compare
+	char comp_first[MAXCHAR];
+	char comp_second[MAXCHAR];
+	char comp_num[MAXCHAR];
+
+	printf("COMPARER\n");
+	printf("First string: ");
+	store_input(comp_first);
+	printf("Second string: ");
+	store_input(comp_second);
+	printf("Number of characters to compare: ");
+	int comp_n = store_num(comp_num);
+
+	int comp_result = strncmp2(comp_first, comp_second, comp_n);
+	print_comp_result(comp_result, comp_n, comp_first, comp_second);
+
 	return 0;
 }
 
@@ -111,4 +127,20 @@ char * strncat2(char *s, char *ct, int n) {
 
 //strncmp(cs, ct, n): compare at most n characters of cs to
 // ct, return <0 if cs < ct, 0 if cs == ct, >0 if cs > ct
+int strncmp2(char *cs, char *ct, int n) {
+	
+	return
+}
 
+void print_comp_result(int result, int comp_n, char *cs, char *ct) {
+	if (result < 0) {
+		printf("The first %i characters of %s ", comp_n, cs);
+		printf("& %s are the same.\n", ct);
+	}
+	else {
+		printf("The first %i characters of %s ", comp_n, cs);
+		printf("& %s are different.\n" ct);
+	}
+
+	return;
+}
