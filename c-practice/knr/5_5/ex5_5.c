@@ -55,6 +55,8 @@ void store_input(char *input) {
 	return;
 }
 
+// First string input for Concatenator is being skipped
+// when using scanf
 int store_num(char *num) {
 	char *n_start = num;
 	char n;
@@ -109,3 +111,4 @@ char * strncat2(char *s, char *ct, int n) {
 
 //strncmp(cs, ct, n): compare at most n characters of cs to
 // ct, return <0 if cs < ct, 0 if cs == ct, >0 if cs > ct
+
