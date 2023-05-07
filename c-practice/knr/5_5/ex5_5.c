@@ -9,7 +9,7 @@ int main(void) {
 
     printf("COPIER\n");
     printf("String to copy: ");
-    scanf
+    store_input(copy_this);
     printf("No. of characters: ");
     scanf("%i", &copy_n);
     char *copied = strncpy(copy_holder, copy_this, copy_n);
@@ -23,6 +23,18 @@ int main(void) {
     printf("CONCATENATOR\n");
     char *concatenated = strncat()
     return 0;
+}
+
+void store_input(char *input) {
+    char c;
+
+    while ( (c = getchar()) != '\n') {
+        *input++ = c;
+    }
+
+    *input = '\0';
+
+    return;
 }
 
 // strncpy(s, ct, n): copy at most n characters of string ct
