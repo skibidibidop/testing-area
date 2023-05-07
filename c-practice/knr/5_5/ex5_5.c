@@ -7,62 +7,63 @@ void store_input(char *input);
 char * strncpy2(char *s, char *ct, int n);
 
 int main(void) {
-    char copy_this[MAXCHAR];
-    char copy_holder[MAXCHAR];
-    int copy_n = 0;
+	// Copy
+	char copy_this[MAXCHAR];
+	char copy_holder[MAXCHAR];
+	int copy_n = 0;
 
-    printf("COPIER\n");
-    printf("String to copy: ");
-    store_input(copy_this);
-    printf("No. of characters: ");
-    scanf("%i", &copy_n);
-    strncpy2(copy_holder, copy_this, copy_n);
-    printf("String copied: %s\n\n", copy_holder);
-    
-    // char cat_first[MAXCHAR];
-    // char cat_second[MAXCHAR];
-    // int cat_n = 0;
+	printf("COPIER\n");
+	printf("String to copy: ");
+	store_input(copy_this);
+	printf("No. of characters: ");
+	scanf("%i", &copy_n);
+	strncpy2(copy_holder, copy_this, copy_n);
+	printf("String copied: %s\n\n", copy_holder);
 
+	// Concatenate
+	char cat_first[MAXCHAR];
+	char cat_second[MAXCHAR];
+	int cat_n = 0;
 
-    // printf("CONCATENATOR\n");
-    // char *concatenated = strncat(
+	printf("CONCATENATOR\n");
+	char *concatenated = strncat(
 
-    return 0;
+	return 0;
 }
 
 void store_input(char *input) {
-    char c;
+	char c;
 
-    while ( (c = getchar()) != '\n') {
-        *input++ = c;
-    }
+	while ( (c = getchar()) != '\n') {
+	*input++ = c;
+	}
 
-    *input = '\0';
+	*input = '\0';
 
-    return;
+	return;
 }
 
 // strncpy(s, ct, n): copy at most n characters of string ct
 // to s, return s. Pad with \0 if ct < n characters
 char * strncpy2(char *s, char *ct, int n) {
-    char *s_start = s;
-    char *limit = ct + (n - 1);
-    int length = strlen(ct);
-    char *padding_start = ct + (length - 1);
+	char *s_start = s;
+	char *limit = ct + (n - 1);
+	int length = strlen(ct);
+	char *padding_start = ct + (length - 1);
 
-    while (ct <= limit) {
-        if (ct > padding_start) {
-            *s++ = '\0';
-            ct++;
-        }
-        else {
-            *s++ = *ct++;
-        }
-    }
+	while (ct <= limit) {
+		if (ct > padding_start) {
+		    *s++ = '\0';
+		    ct++;
+		}
+		else {
+		    *s++ = *ct++;
+		}
+	}
 
-    *s = '\0';
+	*s = '\0';
 
-    return s_start;
+	return s_start;
 }
 
 // strncat(s, ct, n): concatenate at most n characters of ct
