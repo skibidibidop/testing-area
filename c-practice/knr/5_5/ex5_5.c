@@ -8,6 +8,8 @@ void store_input(char *input);
 int store_num(char *num);
 char * strncpy2(char *s, char *ct, int n);
 char * strncat2(char *s, char *ct, int n);
+int strncmp2(char *cs, char *ct, int n);
+void print_comp_result(int result, int comp_n, char *cs, char *ct):
 
 int main(void) {
 	// Copy
@@ -128,8 +130,17 @@ char * strncat2(char *s, char *ct, int n) {
 //strncmp(cs, ct, n): compare at most n characters of cs to
 // ct, return <0 if cs < ct, 0 if cs == ct, >0 if cs > ct
 int strncmp2(char *cs, char *ct, int n) {
-	
-	return
+	char *limit1 = cs + (n - 1);
+	char *limit2 = ct + (n + 1);
+	int result = 0;
+
+	while (cs <= limit1 && ct <= limit2) {
+		result = *cs - *ct;
+		cs++;
+		ct++;
+	}
+
+	return result;
 }
 
 void print_comp_result(int result, int comp_n, char *cs, char *ct) {
