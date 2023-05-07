@@ -15,13 +15,14 @@ int main(void) {
     char *copied = strncpy(copy_holder, copy_this, copy_n);
     printf("String copied: %s\n\n", copied);
     
-    char cat_first[MAXCHAR];
-    char cat_second[MAXCHAR];
-    int cat_n = 0;
+    // char cat_first[MAXCHAR];
+    // char cat_second[MAXCHAR];
+    // int cat_n = 0;
 
 
-    printf("CONCATENATOR\n");
-    char *concatenated = strncat()
+    // printf("CONCATENATOR\n");
+    // char *concatenated = strncat(
+
     return 0;
 }
 
@@ -39,6 +40,24 @@ void store_input(char *input) {
 
 // strncpy(s, ct, n): copy at most n characters of string ct
 // to s, return s. Pad with \0 if ct < n characters
+char *strncpy(char *s, char *ct, int n) {
+    char *limit = ct + n;
+    int length = strlen(*ct);
+    char *padding_start = ct + length;
+
+    while (ct <= limit) {
+        if (n > length && ct > padding_start) {
+            *s++ = '\0';
+        }
+        else {
+            *s++ = *ct++;
+        }
+    }
+
+    *s = '\0';
+
+    return s;
+}
 
 // strncat(s, ct, n): concatenate at most n characters of ct
 // to end of s, terminate with \0, return s
