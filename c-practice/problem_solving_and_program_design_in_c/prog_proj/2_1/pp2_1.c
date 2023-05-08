@@ -7,6 +7,10 @@
 
 #include <stdio.h>
 
+#define DOLLAR_PER_MILE 0.35
+
+void reimburse(long double prev_odo, long double curr_odo);
+
 int main(void) {
     long double prev_odo;
     long double curr_odo;
@@ -23,5 +27,11 @@ int main(void) {
 }
 
 void reimburse(long double prev_odo, long double curr_odo) {
+    long double traveled = curr_odo - prev_odo;
+    printf("You traveled %Lf miles.\n", traveled);
 
+    long double reimbursement = traveled * DOLLAR_PER_MILE;
+    printf("Your reimbursement: %Lf\n", reimbursement);
+
+    return;
 }
