@@ -28,10 +28,10 @@ int main(void) {
 
 void reimburse(long double prev_odo, long double curr_odo) {
     long double traveled = curr_odo - prev_odo;
-    printf("You traveled %Lf miles.\n", traveled);
+    printf("You traveled %.2Lf miles.\n", traveled);
 
     long double reimbursement = traveled * DOLLAR_PER_MILE;
-    printf("Your reimbursement: %Lf\n", reimbursement);
+    printf("Your reimbursement: $%.2Lf\n", reimbursement);
 
     return;
 }
