@@ -17,9 +17,9 @@ int main(void) {
 
     printf("***MILEAGE REIMBURSEMENT CALCULATOR***\n");
     printf("Enter beginning odometer reading: ");
-    scanf("%lf", &prev_odo);
+    scanf("%Lf", &prev_odo);
     printf("Enter current odometer reading: ");
-    scanf("%lf", &curr_odo);
+    scanf("%Lf", &curr_odo);
 
     reimburse(prev_odo, curr_odo);
 
