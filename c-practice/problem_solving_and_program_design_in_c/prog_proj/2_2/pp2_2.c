@@ -5,3 +5,9 @@
  * Get power (MW) assuming that 90% of work done by the falling
  * water is converted to electricity
  */
+
+#include <stdio.h>
+
+int main(void) {
+    
+}
