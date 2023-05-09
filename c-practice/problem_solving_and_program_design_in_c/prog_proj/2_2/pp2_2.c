@@ -44,8 +44,8 @@ int main(void) {
 /* Print title and instructions */
 void print_details(void) {
 	printf("Hydroelectric Power Calculator\n");
-	printf("Provide the height of the dam and the flow rate\
-		in cubic meters to get power in MW.\n");
+	printf("Provide the height of the dam and the flow rate ");
+	printf("in cubic meters to get power in MW.\n");
 
 	return;
 }
