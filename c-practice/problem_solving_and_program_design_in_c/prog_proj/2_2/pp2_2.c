@@ -26,7 +26,7 @@ int main(void) {
 	printf("Flow (in cubic meters): ");
 	scanf("\n%lf", &flow);
 
-	double mass = flow * CUBIC_TO_KG;
+	double mass = flow * CUBICM_TO_KG;
 	double work = mass * GRAVITY * height;
 
 	/* Get 90% of work done by gravity on the water
@@ -36,7 +36,7 @@ int main(void) {
 	/* Convert watts to Megawatts */
 	work /= W_TO_MW;
 
-	printf("Power: %lf MW\n");
+	printf("Power: %lf MW\n", work);
 
 	return 0;
 }
@@ -44,7 +44,7 @@ int main(void) {
 /* Print title and instructions */
 void print_details(void) {
 	printf("Hydroelectric Power Calculator\n");
-	printf("Provide the height of the dam and the flow rate
+	printf("Provide the height of the dam and the flow rate\
 		in cubic meters to get power in MW.\n");
 
 	return;
