@@ -8,6 +8,11 @@
 
 #include <stdio.h>
 
+#define GRAVITY 9.8
+#define CUBICM_TO_KG 1000
+#define W_TO_MW 1000
+#define NINETY_PERCENT 0.9
+
 int main(void) {
-    
+
 }
