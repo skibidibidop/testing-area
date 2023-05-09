@@ -1,0 +1,37 @@
+Hydroelectric dam design
+
+Details:
+    Mass of 1 cubic meter of water is 1000 kg
+
+    Gravitational constant (g) = 9.8 m/(s^2)
+
+    w = (mass)(gravity)(height)
+        unit is J
+
+    Power (in watts) = Joule / s
+        or 1 w = 1J / s
+
+What's needed
+    Compute power (in Megawatts) if 90% of the work done on
+        the water by gravity is converted to electricity
+
+Pseudo:
+    Get height of dam
+        assign to double height
+
+    Get flow (m^3/s)
+        assign to double flow
+    
+    Get mass from flow
+        double mass = flow * 1000<-(define as CUBICM_TO_KG) 
+
+    Calculate w = mgh
+        double work = mass * gravity * height
+
+    Get 90% of work
+        work = work * .9
+
+    Convert 90% of work to Power in MW
+        work = work / 1000
+
+    Print work
