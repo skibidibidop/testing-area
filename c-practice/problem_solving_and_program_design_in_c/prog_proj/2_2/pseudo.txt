@@ -21,7 +21,7 @@ Pseudo:
 
     Get flow (m^3/s)
         assign to double flow
-    
+
     Get mass from flow
         double mass = flow * 1000<-(define as CUBICM_TO_KG) 
 
