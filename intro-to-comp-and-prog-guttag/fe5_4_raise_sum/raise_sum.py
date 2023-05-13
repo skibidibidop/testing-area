@@ -16,7 +16,11 @@ def raise_sum_all(list1, list2):
     to the power of the element in the same index in list2.
     """
 
+    sum = 0
+    for i in map(lambda base, pow: base**pow, list1, list2):
+        sum += i
 
+    return sum
 
- = raise_sum_all([1,2], [2,3])
-print(
+total = raise_sum_all([3,5], [3,2])
+print(total)
