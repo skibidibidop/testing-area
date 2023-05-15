@@ -6,10 +6,5 @@ Author: Mark Beltran
 Date: May 15, 2023
 
 Compute the distance from the origin (0, 0)
-to the provided point (x, y).
+to the provided point.
 |#
-
-(define (get_distance x y)
-  (sqrt
-   (+ (sqr x)
-      (sqr y))))
