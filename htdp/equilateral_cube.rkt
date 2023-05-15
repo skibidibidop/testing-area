@@ -6,5 +6,16 @@ Author: Mark Beltran
 Date: May 15, 2023
 
 Input: length of a side of an equilateral cube
-Output: the equilateral cube's volume and surface area
-#|
+Output: the equilateral cube's volume and surface
+|#
+
+(define SIDES 6)
+(define POWER_OF_2 2)
+(define POWER_OF_3 3)
+
+(define (cvolume length)
+  (string-append "Volume: "
+                 (number->string (expt length POWER_OF_3))))
+
+(define (csurface length)
+  (string-append "Surface 
