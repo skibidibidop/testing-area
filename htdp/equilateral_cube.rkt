@@ -10,7 +10,6 @@ Output: the equilateral cube's volume and surface
 |#
 
 (define SIDES 6)
-(define POWER_OF_2 2)
 (define POWER_OF_3 3)
 
 (define (cvolume length)
@@ -18,4 +17,6 @@ Output: the equilateral cube's volume and surface
                  (number->string (expt length POWER_OF_3))))
 
 (define (csurface length)
-  (string-append "Surface 
+  (string-append "Surface: "
+                 (number->string (* SIDES
+                              (sqr length)))))
