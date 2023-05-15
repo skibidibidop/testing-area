@@ -1,0 +1,19 @@
+#|
+Author: Mark Beltran
+Date: May 15, 2023
+
+Check if image is tall or wide.
+Tall if height >= width.
+|#
+
+(require 2htdp/image)
+
+; Measurements
+(define HEIGHT 30)
+(define WIDTH 20)
+
+(define image
+  (rectangle WIDTH HEIGHT))
+
+(if (image-height image)
+
