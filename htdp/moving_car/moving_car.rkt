@@ -12,7 +12,7 @@ Animation of a moving car. Stops when out of scene.
 (require 2htdp/universe)
 
 ; Change the wheel size to change the scale
-(define WHEEL_RADIUS 20)
+(define WHEEL_RADIUS 40)
 
 (define SCENE_WIDTH (* 20 WHEEL_RADIUS))
 (define SCENE_HEIGHT (* 10 WHEEL_RADIUS))
@@ -63,7 +63,7 @@ Animation of a moving car. Stops when out of scene.
                   (image-height WHEEL)))
 
 ; The car
-(define CAR
+(define a_car
   (place-images
    (list BOTH_WHEELS
          DRIVER_SEAT
@@ -77,12 +77,27 @@ Animation of a moving car. Stops when out of scene.
 ; Car's fixed y-coordinate
 (define Y_CAR
   (- SCENE_HEIGHT
-     (/ (image-height CAR) 2)))
+     (/ (image-height a_car) 2)))
+
+; The tree
+(define tree
+  (underlay/xy (circle
+                (* 2 WHEEL_RADIUS)
+                "solid" "green")
+               (* 1.5 WHEEL_RADIUS)
+               (* 2 WHEEL_RADIUS)
+               (rectangle
+                (* 1 WHEEL_RADIUS)
+                (* 4 WHEEL_RADIUS)
+                "solid" "brown")))
 
 ; The background
 (define BACKGROUND
-  ;( PLACE IMAGE OF TREE WITH EMPTY SCENE HERE
-  (empty-scene SCENE_WIDTH SCENE_HEIGHT))
+  (place-image tree
+               (/ SCENE_WIDTH 2)
+               (- SCENE_HEIGHT
+                  (/ (image-height tree) 2))
+               (empty-scene SCENE_WIDTH SCENE_HEIGHT)))
 
 ; The car's starting x-coordinate
 (define START 50)
@@ -90,20 +105,19 @@ Animation of a moving car. Stops when out of scene.
 ; Stop when the car is fully outside of BACKGROUND
 (define STOP
   (+ SCENE_WIDTH
-     (/ (image-width CAR) 1.5)))
+     (/ (image-width a_car) 1.5)))
 
-; Function definitions
+; FUNCTION DEFINITIONS
 
 ; WorldState -> Image
 ; places CAR in BACKGROUND according to
 ; the given world state
 (check-expect (render 60)
-              (place-image CAR 60 Y_CAR BACKGROUND))
+              (place-image a_car 60 Y_CAR BACKGROUND))
 (check-expect (render 200)
-              (place-image CAR 200 Y_CAR BACKGROUND))
+              (place-image a_car 200 Y_CAR BACKGROUND))
 (define (render x_pos)
-  (place-image CAR x_pos Y_CAR BACKGROUND))
-
+  (place-image a_car x_pos Y_CAR BACKGROUND))
 
 ; Number -> Number
 ; increment given number by 3
@@ -119,7 +133,7 @@ Animation of a moving car. Stops when out of scene.
 (define (stop? n)
   (>= n STOP))
 
-; Main
+; MAIN
 (big-bang START
   [to-draw render]
   [on-tick add3]
