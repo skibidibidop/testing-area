@@ -7,3 +7,13 @@ Date: May 18, 2023
 
 Count the number of pixels in a given image.
 |#
+
+(require 2htdp/image)
+
+; Image -> Number
+; count pixels in given image
+; given: (square 10 "solid" "red")
+; expected: 100
+(define (image_area img)
+  (* (image-height img)
+     (image-width img)))
