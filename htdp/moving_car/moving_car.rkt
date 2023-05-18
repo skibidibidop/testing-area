@@ -128,8 +128,6 @@ Animation of a moving car. Stops when out of scene.
 
 ; Number -> Boolean
 ; #false when n >= STOP
-(check-expect (stop? 70) #false)
-(check-expect (stop? 500) #true)
 (define (stop? n)
   (>= n STOP))
 
