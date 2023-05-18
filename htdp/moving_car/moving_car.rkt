@@ -17,14 +17,14 @@ Animation of a moving car. Stops when out of scene.
 (define SCENE_WIDTH (* 20 WHEEL_RADIUS))
 (define SCENE_HEIGHT (* 10 WHEEL_RADIUS))
 
-; Images
+; Image components
 (define WHEEL
   (circle WHEEL_RADIUS "solid" "black"))
 
 (define BETWEEN_WHEELS
   (rectangle (* 1.5 WHEEL_RADIUS)
              (* 0.5 WHEEL_RADIUS)
-             "solid" "white"))
+             0 "white"))
 
 (define BOTH_WHEELS
   (beside WHEEL BETWEEN_WHEELS WHEEL))
@@ -36,8 +36,7 @@ Animation of a moving car. Stops when out of scene.
    "solid" "blue"))
 
 (define DRIVER_SEAT
-  (square (* 3 WHEEL_RADIUS)
-          "solid" "blue"))
+  (square (* 3 WHEEL_RADIUS) "solid" "blue"))
 
 ; Car image dimensions
 (define CAR_WIDTH (image-width BODY))
@@ -45,7 +44,7 @@ Animation of a moving car. Stops when out of scene.
                       (/ (image-height WHEEL) 2)
                       (/ (image-height DRIVER_SEAT) 2)))
 
-; Initial positions
+; Initial component positions
 (define X_DRIVER_SEAT
   (- (image-width BODY)
      (/ (image-width BODY) 2)))
@@ -54,8 +53,7 @@ Animation of a moving car. Stops when out of scene.
      (+ (/ (image-height WHEEL) 2)
         (image-height BODY))))
 
-(define X_BOTH_WHEELS
-  (/ (image-width BODY) 2))
+(define X_BOTH_WHEELS (/ (image-width BODY) 2))
 (define Y_BOTH_WHEELS
   (- CAR_HEIGHT
      (/ (image-height BOTH_WHEELS) 2)))
@@ -76,5 +74,25 @@ Animation of a moving car. Stops when out of scene.
    (rectangle CAR_WIDTH CAR_HEIGHT
               0 "white")))
 
-; Main
+; Car's fixed y-coordinate
+(define Y_CAR
+  (- SCENE_HEIGHT
+     (/ (image-height CAR) 2)))
+
+; The background
+(define BACKGROUND
+  (empty-scene SCENE_WIDTH SCENE_HEIGHT))
+
+; Function definitions
+
+; WorldState -> Image
+; places CAR in BACKGROUND according to
+; the given world state
+(check-expect (render 60)
+              (place-image CAR 60 Y_CAR BACKGROUND))
+(check-expect (render 200)
+              (place-image CAR 200 Y_CAR BACKGROUND))
+(define (render x_pos)
+  (place-image CAR x_pos Y_CAR BACKGROUND))
+
 
