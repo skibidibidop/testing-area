@@ -81,7 +81,16 @@ Animation of a moving car. Stops when out of scene.
 
 ; The background
 (define BACKGROUND
+  ;( PLACE IMAGE OF TREE WITH EMPTY SCENE HERE
   (empty-scene SCENE_WIDTH SCENE_HEIGHT))
+
+; The car's starting x-coordinate
+(define START 50)
+
+; Stop when the car is fully outside of BACKGROUND
+(define STOP
+  (+ SCENE_WIDTH
+     (/ (image-width CAR) 1.5)))
 
 ; Function definitions
 
@@ -96,3 +105,22 @@ Animation of a moving car. Stops when out of scene.
   (place-image CAR x_pos Y_CAR BACKGROUND))
 
 
+; Number -> Number
+; increment given number by 3
+(check-expect (add3 1)
+              4)
+(define (add3 n)
+  (+ n 3))
+
+; Number -> Boolean
+; #false when n >= STOP
+(check-expect (stop? 70) #false)
+(check-expect (stop? 500) #true)
+(define (stop? n)
+  (>= n STOP))
+
+; Main
+(big-bang START
+  [to-draw render]
+  [on-tick add3]
+  [stop-when stop?])
