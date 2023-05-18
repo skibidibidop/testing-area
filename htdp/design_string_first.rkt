@@ -5,5 +5,12 @@
 Author: Mark Beltran
 Date: May 18, 2023
 
-Extract the last character from non-empty string.
+Extract the first character from non-empty string.
 |#
+
+; String -> 1String
+; extracts the first character from the given string
+; given: "hello!" expect: "h"
+; given: "1test?" expect "1"
+(define (string_first s)
+  (string-ith s 0))
