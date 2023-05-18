@@ -7,3 +7,12 @@ Date: May 18, 2023
 
 Extract last character from non-empty string.
 |#
+
+; String -> 1String
+; extract last 1String from given string
+; given: "hello" expect: "o"
+; given: "1hi!" expect: "!"
+; given: "huh?2" expect: "2"
+(define (string_last s)
+  (string-ith s
+              (- (string-length s) 1)))
