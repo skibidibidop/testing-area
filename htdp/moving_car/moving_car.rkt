@@ -14,6 +14,8 @@ Image of a polygon car(?)
 ; Change the wheel size to change the scale
 (define WHEEL_RADIUS 30)
 
+(define CAR_WIDTH (* 6 WHEEL_RADIUS))
+(define CAR_HEIGHT (* 4.5 WHEEL_RADIUS))
 (define WIDTH (* 20 WHEEL_RADIUS))
 (define HEIGHT (* 10 WHEEL_RADIUS))
 
@@ -58,12 +60,12 @@ Image of a polygon car(?)
 (define Y_BODY (- HEIGHT
                   (image-height WHEEL)))
 
-; Main
-(place-images
- (list BOTH_WHEELS
-       DRIVER_SEAT
-       BODY)
- (list (make-posn X_BOTH_WHEELS Y_BOTH_WHEELS)
-       (make-posn X_DRIVER_SEAT Y_DRIVER_SEAT)
-       (make-posn X_BODY Y_BODY))
- (empty-scene WIDTH HEIGHT))
+(define CAR
+  (place-images
+   (list BOTH_WHEELS
+         DRIVER_SEAT
+         BODY)
+   (list (make-posn X_BOTH_WHEELS Y_BOTH_WHEELS)
+         (make-posn X_DRIVER_SEAT Y_DRIVER_SEAT)
+         (make-posn X_BODY Y_BODY))
+   (empty-scene CAR_WIDTH CAR_HEIGHT)))
