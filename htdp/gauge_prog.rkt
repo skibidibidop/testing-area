@@ -7,3 +7,24 @@ Date: May 19, 2023
 
 Happiness gauge for cat
 |#
+
+(require 2htdp/image)
+(require 2htdp/universe)
+
+; MEASUREMENTS
+(define scale 1)
+(define SCENE_WIDTH (* scale 100))
+(define SCENE_HEIGHT (* scale 10))
+
+; IMAGES
+(define gauge
+  (rectangle SCENE_WIDTH SCENE_HEIGHT
+             "solid" "red"))
+
+; FUNCTION DEFINITIONS /////////////////////
+; A WorldState is a Number
+; Interpretation: no. of pixels between
+; the rectangle's right side and the right
+; border
+
+; WorldState -> Image
