@@ -73,10 +73,20 @@ rocket with countdown.
 ; LRCD -> LRCD
 ; raise the rocket by YDELTA after countdown
 ; or if already moving
-(define (fly x) ...)
+(check-expect (fly "resting") "resting")
+(check-expect (fly -3) -2)
+(check-expect (fly -2) -1)
+(check-expect (fly -1) 0)
+(check-expect (fly 1) 4)
+(define (fly cw)
+  (cond
+    [(string? cw) "resting"]
+    [(<= -3 cw -1) (add1 cw)]
+    [(>= cw 0) (if (= cw 0) 3 (+ cw 3))]))
 
 ; LRCD -> LRCD
 (define (main1 s)
   (big-bang s
     [to-draw show]
-    [on-key launch]))
+    [on-key launch]
+    [on-tick fly]))
