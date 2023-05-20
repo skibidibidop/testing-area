@@ -30,3 +30,12 @@ rocket countdown.
 ; Interpretation: a grounded rocket, in countdown mode,
 ; the distance (# of pixels) between the top of the
 ; canvas and the rocket
+
+; LRCD -> Image
+(define (show x) ...)
+
+; LRCD KeyEvent -> LRCD
+(define (launch x ke) ...)
+
+; LRCD -> LRCD
+(define (fly x) ...)
