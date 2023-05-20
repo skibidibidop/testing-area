@@ -3,7 +3,7 @@ Author: Mark Beltran
 Date: May 20, 2023
 
 Solve along with sample problem for launching
-rocket countdown.
+rocket with countdown.
 |#
 
 (require 2htdp/image)
@@ -48,18 +48,35 @@ rocket countdown.
 (check-expect (show 50) (put_rocket (- SCENE_HEIGHT
                                        (+ 50 ROCKET_CENTER))))
 (define (show cw)
-  (cond[(string? cw) (put_rocket STARTING_POS)]
-       [(<= -3 cw -1) (place-image (text (number->string cw) 20 "red")
-                                   XFIXED (* 3/4 SCENE_WIDTH)
-                                   (put_rocket STARTING_POS))]
-       [(>= cw 0) (put_rocket (- SCENE_HEIGHT
-                                 (+ cw ROCKET_CENTER)))]))
+  (cond
+    [(string? cw) (put_rocket STARTING_POS)]
+    [(<= -3 cw -1) (place-image (text (number->string cw) 20 "red")
+                                XFIXED (* 3/4 SCENE_WIDTH)
+                                (put_rocket STARTING_POS))]
+    [(>= cw 0) (put_rocket (- SCENE_HEIGHT
+                              (+ cw ROCKET_CENTER)))]))
 
 ; LRCD KeyEvent -> LRCD
 ; if rocket is still resting, begin countdown
-(define (launch x ke) ...)
+(check-expect (launch "resting" " ") -3)
+(check-expect (launch "resting" "a") "resting")
+(check-expect (launch -3 " ") -3)
+(check-expect (launch -1 " ") -1)
+(check-expect (launch 33 " ") 33)
+(check-expect (launch 33 "a") 33)
+(define (launch cw ke)
+  (cond
+    [(string? cw) (if (string=? " " ke) -3 cw)]
+    [(<= -3 cw -1) cw]
+    [(>= cw 0) cw]))
 
 ; LRCD -> LRCD
 ; raise the rocket by YDELTA after countdown
 ; or if already moving
 (define (fly x) ...)
+
+; LRCD -> LRCD
+(define (main1 s)
+  (big-bang s
+    [to-draw show]
+    [on-key launch]))
