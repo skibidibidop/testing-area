@@ -8,3 +8,25 @@ Date: May 20, 2023
 Solve along with sample problem for launching
 rocket countdown.
 |#
+
+(require 2htdp/image)
+(require 2htdp/universe)
+
+(define SCENE_HEIGHT 300)
+(define SCENE_WIDTH 100)
+(define YDELTA 3)
+
+(define BG (empty-scene WIDTH HEIGHT))
+(define ROCKET (rectangle 5 30 "solid" "red"))
+
+(define CENTER
+  (/ (image-height ROCKET) 2))
+
+; An LRCD (short for launching rocket countdown)
+; is one of:
+; -- "resting"
+; -- a Number between -3 and -1
+; -- a Nonnegative Number
+; Interpretation: a grounded rocket, in countdown mode,
+; the distance (# of pixels) between the top of the
+; canvas and the rocket
