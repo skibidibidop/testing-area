@@ -89,4 +89,4 @@ rocket with countdown.
   (big-bang s
     [to-draw show]
     [on-key launch]
-    [on-tick fly]))
+    [on-tick fly 0.3]))
