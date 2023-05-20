@@ -31,11 +31,15 @@ rocket countdown.
 ; canvas and the rocket
 
 ; LRCD -> Image
+; Render image based on value given by (show cw)
+(check-expect (put_rocket 30)
+              (place-image ROCKET XFIXED 30 BG))
 (define (put_rocket y_coord)
   (place-image ROCKET XFIXED y_coord BG))
 
 ; LRCD -> Image
-; Render image based on current world state
+; Checks current world state and gives appropriate value
+; to (put_rocket y_coord)
 (check-expect (show "resting") (put_rocket STARTING_POS))
 (check-expect (show -2)
               (place-image (text "-2" 20 "red")
