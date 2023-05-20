@@ -1,6 +1,3 @@
-;; The first three lines of this file were inserted by DrRacket. They record metadata
-;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-beginner-reader.ss" "lang")((modname launching_rocket_cd) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: May 20, 2023
@@ -15,12 +12,14 @@ rocket countdown.
 (define SCENE_HEIGHT 300)
 (define SCENE_WIDTH 100)
 (define YDELTA 3)
+(define XFIXED 10)
 
-(define BG (empty-scene WIDTH HEIGHT))
+(define BG (empty-scene SCENE_WIDTH SCENE_HEIGHT))
 (define ROCKET (rectangle 5 30 "solid" "red"))
 
-(define CENTER
+(define ROCKET_CENTER
   (/ (image-height ROCKET) 2))
+(define STARTING_POS (- SCENE_HEIGHT ROCKET_CENTER))
 
 ; An LRCD (short for launching rocket countdown)
 ; is one of:
@@ -32,27 +31,25 @@ rocket countdown.
 ; canvas and the rocket
 
 ; LRCD -> Image
+(define (put_rocket y_coord)
+  (place-image ROCKET XFIXED y_coord BG))
+
+; LRCD -> Image
 ; Render image based on current world state
-(check-expect (show "resting")
-              (place-image ROCKET 10 SCENE_HEIGHT BG))
+(check-expect (show "resting") (put_rocket STARTING_POS))
 (check-expect (show -2)
               (place-image (text "-2" 20 "red")
-                           10 (* 3/4 SCENE_WIDTH)
-                           (place-image ROCKET 10 SCENE_HEIGHT BG)))
-(check-expect (show 50)
-              (place-image ROCKET
-                           10 (- 50 CENTER)
-                           BG))
-(define (show x)
-  (cond[(string? x)
-        (place-image ROCKET 10 SCENE_HEIGHT BG)]
-       [(<= -3 x -1)
-        (place-image (text x 20 "red")
-                     10 (* 3/4 SCENE_WIDTH)
-                     (place-image ROCKET 10 SCENE_HEIGHT BG))]
-       [(>= x 0) (place-image ROCKET
-                              10 (-50 CENTER)
-                              BG)]))
+                           XFIXED (* 3/4 SCENE_WIDTH)
+                           (put_rocket STARTING_POS)))
+(check-expect (show 50) (put_rocket (- SCENE_HEIGHT
+                                       (+ 50 ROCKET_CENTER))))
+(define (show cw)
+  (cond[(string? cw) (put_rocket STARTING_POS)]
+       [(<= -3 cw -1) (place-image (text (number->string cw) 20 "red")
+                                   XFIXED (* 3/4 SCENE_WIDTH)
+                                   (put_rocket STARTING_POS))]
+       [(>= cw 0) (put_rocket (- SCENE_HEIGHT
+                                 (+ cw ROCKET_CENTER)))]))
 
 ; LRCD KeyEvent -> LRCD
 ; if rocket is still resting, begin countdown
