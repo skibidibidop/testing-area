@@ -1,6 +1,3 @@
-;; The first three lines of this file were inserted by DrRacket. They record metadata
-;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-beginner-reader.ss" "lang")((modname traffic_light_sim2) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: May 21, 2023
@@ -26,9 +23,8 @@ Studying FSM/FSA by simulating traffic lights.
 (define SCENE_WIDTH (* scaler 5))
 (define SCENE_HEIGHT (* scaler 7))
 (define SCENE_X_CENTER (/ SCENE_WIDTH 2))
-(define SCENE_Y_CENTER (/ SCENE_HEIGHT 2))
+(define SCENE_Y_CENTER (/ SCENE_WIDTH 2))
 
-(define bulb_radius 2)
 (define bg (empty-scene SCENE_WIDTH SCENE_HEIGHT))
 
 ; TrafficLight -> TrafficLight
@@ -53,22 +49,22 @@ Studying FSM/FSA by simulating traffic lights.
 ; Renders current state as an image
 (check-expect (tl_render RED)
               (place-image
-               (circle (* scaler bulb_radius) "solid" "red")
+               (circle (* scaler 4) "solid" "red")
                SCENE_X_CENTER SCENE_Y_CENTER
                bg))
 (check-expect (tl_render YELLOW)
               (place-image
-               (circle (* scaler bulb_radius) "solid" "yellow")
+               (circle (* scaler 4) "solid" "yellow")
                SCENE_X_CENTER SCENE_Y_CENTER
                bg))
 (check-expect (tl_render GREEN)
               (place-image
-               (circle (* scaler bulb_radius) "solid" "green")
+               (circle (* scaler 4) "solid" "green")
                SCENE_X_CENTER SCENE_Y_CENTER
                bg))
 (define (tl_render current_state)
   (place-image
-   (circle (* scaler bulb_radius) "solid"
+   (circle (* scaler 4) "solid"
            (color_decider current_state))
    SCENE_X_CENTER SCENE_Y_CENTER
    bg))
@@ -79,5 +75,3 @@ Studying FSM/FSA by simulating traffic lights.
   (big-bang init_state
     [to-draw tl_render]
     [on-tick tl_next 0.5]))
-
-(tl_sim YELLOW)
