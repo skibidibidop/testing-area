@@ -40,7 +40,7 @@ Studying FSM/FSA by simulating traffic lights.
 (check-expect (color_decider RED) "red")
 (check-expect (color_decider YELLOW) "yellow")
 (check-expect (color_decider GREEN) "green")
-(define (color_decider state)
+(define (color_decider current_state)
   (cond[(= current_state RED) "red"]
        [(= current_state YELLOW) "yellow"]
        [(= current_state GREEN) "green"]))
@@ -49,23 +49,25 @@ Studying FSM/FSA by simulating traffic lights.
 ; Renders current state as an image
 (check-expect (tl_render RED)
               (place-image
-               (circle (* scaler 4) "solid" "red"
-                       SCENE_X_CENTER SCENE_Y_CENTER)
+               (circle (* scaler 4) "solid" "red")
+               SCENE_X_CENTER SCENE_Y_CENTER
                bg))
 (check-expect (tl_render YELLOW)
               (place-image
-               (circle (* scaler 4) "solid" "yellow"
-                       SCENE_X_CENTER SCENE_Y_CENTER)
+               (circle (* scaler 4) "solid" "yellow")
+               SCENE_X_CENTER SCENE_Y_CENTER
                bg))
 (check-expect (tl_render GREEN)
               (place-image
-               (circle (* scaler 4) "solid" "green"
-                       SCENE_X_CENTER SCENE_Y_CENTER)
+               (circle (* scaler 4) "solid" "green")
+               SCENE_X_CENTER SCENE_Y_CENTER
                bg))
 (define (tl_render current_state)
-  (place-image (circle (* scaler 4) "solid"
-                       (color_decider current_state))
-               SCENE_X_CENTER SCENE_Y_CENTER bg))
+  (place-image
+   (circle (* scaler 4) "solid"
+           (color_decider current_state))
+   SCENE_X_CENTER SCENE_Y_CENTER
+   bg))
 
 ; TrafficLight -> TrafficLight
 ; Simulates a clock-based traffic light
