@@ -27,11 +27,11 @@ $1,000 to $9,999: 5% tax
 ; Computes the tax for p
 (check-expect (sales_tax 0) 0)
 (check-expect (sales_tax 545) (* 0 545))
-(check-expect (sales_tax 1000) (* 0.05 1000))
-(check-expect (sales_tax 5689) (* 0.05 5689))
-(check-expect (sales_tax 9999) (* 0.05 9999))
-(check-expect (sales_tax 10000) (* 0.08 10000))
-(check-expect (sales_tax 12341) (* 0.08 12341))
+(check-expect (sales_tax 1000) (* FIVE_PCENT 1000))
+(check-expect (sales_tax 5689) (* FIVE_PCENT 5689))
+(check-expect (sales_tax 9999) (* FIVE_PCENT 9999))
+(check-expect (sales_tax 10000) (* EIGHT_PCENT 10000))
+(check-expect (sales_tax 12341) (* EIGHT_PCENT 12341))
 (define (sales_tax p)
   (cond[(< p CHEAP_LIM) 0]
        [(<= CHEAP_LIM p MID_LIM) (* FIVE_PCENT p)]
