@@ -84,10 +84,25 @@ rocket with countdown.
     [(<= -3 cw -1) (add1 cw)]
     [(>= cw 0) (if (= cw 0) 3 (+ cw 3))]))
 
+; LCRD -> Boolean
+; Signals stop-when to stop the clock from ticking
+; if the rocket is out of the scene
+(check-expect (outside "resting") #false)
+(check-expect (outside -3) #false)
+(check-expect (outside -1) #false)
+(check-expect (outside SCENE_HEIGHT) #false)
+(check-expect (outside (+ SCENE_HEIGHT ROCKET_CENTER)) #true)
+(define (outside cw)
+  (cond
+    [(string? cw) #false]
+    [(>= cw (+ SCENE_HEIGHT
+               ROCKET_CENTER)) #true]
+    [else #false]))
+
 ; LRCD -> LRCD
 (define (main1 s)
   (big-bang s
     [to-draw show]
     [on-key launch]
-    [on-tick fly 0.1 (+ (/ SCENE_HEIGHT YDELTA)
-                        (/ ROCKET_CENTER YDELTA))]))
+    [on-tick fly 0.1]
+    [stop-when outside]))
