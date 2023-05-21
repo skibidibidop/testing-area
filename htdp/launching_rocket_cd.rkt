@@ -89,4 +89,5 @@ rocket with countdown.
   (big-bang s
     [to-draw show]
     [on-key launch]
-    [on-tick fly 0.3]))
+    [on-tick fly 0.1 (+ (/ SCENE_HEIGHT YDELTA)
+                        (/ ROCKET_CENTER YDELTA))]))
