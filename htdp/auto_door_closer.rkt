@@ -12,6 +12,7 @@ Closed can be locked with a key
 |#
 
 (require 2htdp/universe)
+(require 2htdp/image)
 
 ; A DoorState is one of the following:
 ; -- LOCKED: can be unlocked
@@ -61,12 +62,15 @@ Closed can be locked with a key
              
 ; DoorState -> Image
 ; Renders image based on current DoorState
-(define (door_render dr_ds) ...)
-#|
+(check-expect (door_render OPEN) (text OPEN 40 "red"))
+(define (door_render dr_ds)
+  (text dr_ds 40 "red"))
+
 ; DoorState -> DoorState
 (define (auto_close ac_ds)
-  (big-bang ac_ds)
+  (big-bang ac_ds
   [to-draw door_render]
   [on-tick door_closer 1]
-  [on-key door_action])
-|#
+  [on-key door_action]))
+
+(auto_close CLOSED)
