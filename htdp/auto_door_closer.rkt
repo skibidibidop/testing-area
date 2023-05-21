@@ -50,15 +50,23 @@ Closed can be locked with a key
 (check-expect (door_action OPEN OPEN_ACT) OPEN)
 (check-expect (door_action OPEN LOCK_ACT) OPEN)
 (check-expect (door_action OPEN UNLOCK_ACT) OPEN)
-(define (door_action da_ds da_ke) ...)
-
+(define (door_action da_ds da_ke)
+  (cond[(and (string=? LOCKED da_ds) (string=? UNLOCK_ACT da_ke))
+        CLOSED]
+       [(and (string=? CLOSED da_ds) (string=? LOCK_ACT da_ke))
+        LOCKED]
+       [(and (string=? CLOSED da_ds) (string=? OPEN_ACT da_ke))
+        OPEN]
+       [else da_ds]))
+             
 ; DoorState -> Image
 ; Renders image based on current DoorState
 (define (door_render dr_ds) ...)
-
+#|
 ; DoorState -> DoorState
 (define (auto_close ac_ds)
   (big-bang ac_ds)
   [to-draw door_render]
   [on-tick door_closer 1]
   [on-key door_action])
+|#
