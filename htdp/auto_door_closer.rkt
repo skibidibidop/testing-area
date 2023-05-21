@@ -34,5 +34,11 @@ Closed can be locked with a key
 (define (door_action da_ds da_ke) ...)
 
 ; DoorState -> Image
-; Renders image based on current DoorState)
-(define door_render dr_ds) ...)
+; Renders image based on current DoorState
+(define (door_render dr_ds) ...)
+
+; DoorState -> DoorState
+(big-bang bb_ds
+  [to-draw door_render]
+  [on-tick door_closer 1]
+  [on-key door_action])
