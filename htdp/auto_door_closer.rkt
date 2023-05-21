@@ -22,3 +22,17 @@ Closed can be locked with a key
 (define LOCKED "locked")
 (define CLOSED "closed")
 (define OPEN "open")
+
+; DoorState -> DoorState
+; If DoorState is OPEN, closes the
+; door during one tick
+(define (door_closer dc_ds) ...)
+
+; DoorState KeyEvent -> DoorState
+; Detects actions (key events) and determines
+; if they are valid based on current DoorState
+(define (door_action da_ds da_ke) ...)
+
+; DoorState -> Image
+; Renders image based on current DoorState)
+(define door_render dr_ds) ...)
