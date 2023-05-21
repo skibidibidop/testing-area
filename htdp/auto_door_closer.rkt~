@@ -6,19 +6,4 @@ Author: Mark Beltran
 Date: May 21, 2023
 
 Sample problem: automatic door closer.
-If locked, can be unlocked w/ a key
-Closed, unlocked can be opened by pushing
-Closed can be locked with a key
 |#
-
-(require 2htdp/universe)
-
-; A DoorState is one of the following:
-; -- LOCKED: can be unlocked
-; -- CLOSED: can be locked / pushed open
-; -- OPEN: automatically becomes CLOSED
-; after some time
-
-(define LOCKED "locked")
-(define CLOSED "closed")
-(define OPEN "open")
