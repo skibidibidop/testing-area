@@ -8,16 +8,3 @@ Date: May 22, 2023
 Move red dot on canvas with keys.
 Mouse click to reset.
 |#
-
-(require 2htdp/image)
-(require 2htdp/universe)
-
-(define scaler 10)
-
-(define BG (empty-scene (* scaler 10)
-                         (* scaler 10)))
-(define DOT (circle (* scaler 0.3)
-                    "solid" "red"))
-
-; A posn is a structure that represents the state
-; of the world.
