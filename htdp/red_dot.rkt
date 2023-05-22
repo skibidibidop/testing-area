@@ -6,18 +6,16 @@ Author: Mark Beltran
 Date: May 22, 2023
 
 Move red dot across canvas.
-Mouse click to reset.
-Use structures.
+Mouse click sets dot on the coordinates
+of the cursor.
 |#
 
 (require 2htdp/image)
 (require 2htdp/universe)
 
-(define scaler 10)
+(define scaler 30)
 (define SCENE_WIDTH (* scaler 10))
 (define SCENE_HEIGHT (* scaler 10))
-(define SCENE_XCENTER (/ SCENE_WIDTH 2))
-(define SCENE_YCENTER (/ SCENE_HEIGHT 2))
 
 (define BG (empty-scene SCENE_WIDTH
                         SCENE_HEIGHT))
@@ -41,8 +39,7 @@ Use structures.
 
 ; posn -> Image
 ; Renders DOT based on the current world state.
-(check-expect (put_dot (make-posn 5 SCENE_Y_CENTER)
-                       (place-image DOT 5 SCENE_Y_CENTER BG)))
+(check-expect (put_dot (make-posn 5 0)) (place-image DOT 5 0 BG))
 (define (put_dot current_state)
   (place-image DOT
                (posn-x current_state)
@@ -52,8 +49,18 @@ Use structures.
 ; posn -> posn
 ; Increases the x-coordinate of current_state by
 ; MOVE_SPEED (pixels/tick)
-(check-expect (x_move (make-posn 15 0) (make-posn (+ 15 MOVE_SPEED) 0)))
+(check-expect (x_move (make-posn 15 0)) (make-posn (+ 15 MOVE_SPEED) 0))
 (define (x_move current_state)
   (make-posn (+ (posn-x current_state) MOVE_SPEED) (posn-y current_state)))
 
+; posn Number Number MouseEvent -> posn
+; Sets current_state to x, y coordinates of mouse cursor when clicked
+(check-expect (reset_dot (make-posn 10 0) 39 2 "button-down")
+              (make-posn 39 2))
+(check-expect (reset_dot (make-posn 10 0) 12 30 "button-up")
+              (make-posn 10 0))
+(define (reset_dot current_state mouse_x mouse_y mouse_event)
+  (cond[(mouse=? mouse_event "button-down") (make-posn mouse_x mouse_y)]
+       [else current_state]))
 
+(main (make-posn 10 50))
