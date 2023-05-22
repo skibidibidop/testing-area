@@ -11,21 +11,3 @@ at varying speed.
 
 (require 2htdp/image)
 (require 2htdp/universe)
-
-; A vel is a structure:
-;    (make-vel deltax deltay)
-; Interpretation: velocity, with deltax and deltay
-; signifying direction and speed
-; A negative y-coordinate means upward movement
-
-; A posn is a structure:
-;    (make-posn x y)
-; Interpretation: x and y coordinates
-
-; A ufo is a structure:
-;    (make-ufo posn vel)
-; Interpretation: ufo is currently located at posn
-; moving at velocity v
-
-
-(define
