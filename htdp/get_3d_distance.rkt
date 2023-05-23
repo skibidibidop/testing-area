@@ -8,3 +8,12 @@ Date: May 23, 2023
 Computes the distance of objects in
 a 3D space to the origin.
 |#
+
+(define-struct r3 [x y z])
+; An R3 is a structure:
+; (make-r3 [Number Number Number])
+; Interpretation: has values for the
+; three directions
+
+(define ex1 (make-r3 1 2 13))
+(define ex2 (make-r3 -1 0 3))
