@@ -16,4 +16,15 @@ a 3D space to the origin.
 ; three directions
 
 (define ex1 (make-r3 1 2 13))
-(define ex2 (make-r3 -1 0 3))
+(define ex2 (make-r3 0 0 2))
+
+; R3 -> Number
+; Calculate distance from point (3D) to
+; origin (0, 0)
+(check-expect (get_dist ex2) 2)
+(define (get_dist coord_3d)
+  (sqrt (+ (sqr (r3-x coord_3d))
+           (sqr (r3-y coord_3d))
+           (sqr (r3-z coord_3d)))))
+
+(get_dist ex1)
