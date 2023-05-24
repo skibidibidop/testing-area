@@ -15,6 +15,7 @@ One line text editor
 (define ycenter (/ box_height 2))
 (define text_box (empty-scene box_width box_height))
 (define cursor (rectangle 1 box_height "solid" "red"))
+(define MAX_CHAR (* scaler 2))
 
 (define-struct editor [pre post])
 ; editor: a structure
@@ -114,6 +115,19 @@ One line text editor
 ; Interpretation: used to manipulate the text
 ; and cursor in the text box
 
+; editor -> Boolean
+; Checks if max no. of characters reached
+(check-expect (check_length
+               (make-editor "Hi" "there"))
+              (#true))
+(check-expect (check_length
+               (make-editor "123456789" "01234567890123"))
+              (#false))
+(define (check_length ed)
+  (<= (+ (string-length (editor-pre ed))
+         (string-length (editor-post ed)))
+      MAX_CHAR))
+
 ; editor keyevent -> editor
 ; If ke is \b, delete character to the left of the
 ; cursor (if any). If ke is a single character, add that
@@ -159,21 +173,25 @@ One line text editor
 (check-expect (edit (make-editor "Hi" "there") "\t")
               (make-editor "Hi" "there"))
 (define (edit ed ke)
-  (cond[(string=? ke "\b")
-        (make-editor
-         (rmv_last (editor-pre ed))
-         (editor-post ed))]
-       [(string=? ke "left") (to_left ed)]
-       [(string=? ke "right") (to_right ed)]
-       [(or (and (= (string-length ke) 1)
-                 (string-alphabetic? ke))
-            (string=? ke " ")
-            (string-numeric? ke))
-        (make-editor
-         (string-append
-          (editor-pre ed) ke)
-         (editor-post ed))]
-       [else ed]))
+  (cond[(<= (+ (string-length (editor-pre ed))
+               (string-length (editor-post ed)))
+            MAX_CHAR)
+        (cond[(string=? ke "\b")
+              (make-editor
+               (rmv_last (editor-pre ed))
+               (editor-post ed))]
+             [(string=? ke "left") (to_left ed)]
+             [(string=? ke "right") (to_right ed)]
+             [(or (and (= (string-length ke) 1)
+                       (string-alphabetic? ke))
+                  (string=? ke " ")
+                  (string-numeric? ke))
+              (make-editor
+               (string-append
+                (editor-pre ed) ke)
+               (editor-post ed))]
+             [else ed])]
+        [else ed]))
 
 ; editor ke -> editor
 (define (run ed)
