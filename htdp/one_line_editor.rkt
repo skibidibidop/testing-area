@@ -114,12 +114,51 @@ One line text editor
 ; character to the left of the cursor. If ke is "left" or
 ; "right", move cursor 1 character based on the direction
 ; if there are any characters left there.
-(check-expect (edit (make-editor "This is " "a test") "\b")
-              (make-editor "This is" "a test"))
+(check-expect (edit (make-editor "Test" "one") "\b")
+              (make-editor "Tes" "one"))
+(check-expect (edit (make-editor "Testtwo" "") "\b")
+              (make-editor "Testtw" ""))
+(check-expect (edit (make-editor "" "Testthree") "\b")
+              (make-editor "" "Testthree"))
+(check-expect (edit (make-editor "Test" "four") "left")
+              (make-editor "Tes" "tfour"))
+(check-expect (edit (make-editor "Testfive" "") "left")
+              (make-editor "Testfiv" "e"))
+(check-expect (edit (make-editor "" "Testsix") "left")
+              (make-editor "T" "estsix"))
+(check-expect (edit (make-editor "T" "estseven") "left")
+              (make-editor "" "Testseven"))
+(check-expect (edit (make-editor "" "") "left")
+              (make-editor "" ""))
+(check-expect (edit (make-editor "Test" "eight") "right")
+              (make-editor "Teste" "ight"))
+(check-expect (edit (make-editor "Testnine" "") "right")
+              (make-editor "Testnine" ""))
+(check-expect (edit (make-editor "" "Testten") "right")
+              (make-editor "T" "estten"))
+(check-expect (edit (make-editor "Testeleve" "n") "right")
+              (make-editor "Testeleven" ""))
+(check-expect (edit (make-editor "" "") "right")
+              (make-editor "" ""))
+(check-expect (edit (make-editor "Test" "twelve") " ")
+              (make-editor "Test " "twelve"))
+(check-expect (edit (make-editor "" "Test13") " ")
+              (make-editor " " "Test13"))
+(check-expect (edit (make-editor "Test14" "") " ")
+              (make-editor "Test14 " ""))
+(check-expect (edit (make-editor "" "") "a")
+              (make-editor "a" ""))
+(check-expect (edit (make-editor "Hello" "there") "\r")
+              (make-editor "Hello" "there"))
+(check-expect (edit (make-editor "Hi" "there") "\t")
+              (make-editor "Hi" "there"))
 (define (edit ed ke)
   (cond[(string=? ke "\b") (make-editor
                             (rmv_last (editor-pre ed))
                             (editor-post ed))]
        [(string=? ke "left") (to_left ed)]
-       [(string=? ke "right") (...)]
-       [else (...)])) ; string-append
+       [(string=? ke "right") (to_right ed)]
+       [(or (string=? ke "\r") (string=? ke "\t"))
+        ed]
+       [else (string-append
+              (editor-pre ed) ke)]))
