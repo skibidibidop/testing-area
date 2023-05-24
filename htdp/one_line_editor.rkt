@@ -28,19 +28,40 @@ One line text editor
 ; Puts text image and cursor in text box. Cursor
 ; position is based on data from editor
 (check-expect (render (make-editor "Hith" "ere!"))
-              (place-image (beside (text "Hith" 16 "black")
-                                   cursor
-                                   (text "ere!" 16 "black"))
-                           xcenter ycenter
-                           text_box))
-
-(define (render whole_txt)
-  (place-image (beside (text (editor-pre whole_txt) 16 "black")
-                        cursor
-                        (text (editor-post whole_txt) 16 "black"))
+              (place-image
+               (beside
+                (text "Hith" 16 "black")
+                cursor
+                (text "ere!" 16 "black"))
                xcenter ycenter
                text_box))
 
-(define input (make-editor "Testing1" "Testing2!"))
+(define (render whole_txt)
+  (place-image
+   (beside
+    (text (editor-pre whole_txt) 16 "black")
+    cursor
+    (text (editor-post whole_txt) 16 "black"))
+   xcenter ycenter
+   text_box))
 
-(render input)
+; string -> string
+; Removes the last character of a string
+(check-expect (rmv_last "Hello") "Hell")
+(define (rmv_last s)
+  (substring s
+             0
+             (- (string-length s) 1)))
+
+; editor keyevent -> editor
+; If ke is \b, delete character to the left of the
+; cursor (if any). If ke is a single character, add that
+; character to the left of the cursor. If ke is "left" or
+; "right", move cursor 1 character based on the direction
+; if there are any characters left there.
+(check-expect (edit (make-editor "This is " "a test") "\b")
+              "This isa test!")
+(define (edit ed ke)
+  (cond[(string=? ke "\b") (make-editor
+                            (rmv_last (editor-pre ed))
+                            (
