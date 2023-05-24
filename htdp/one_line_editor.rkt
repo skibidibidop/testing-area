@@ -1,6 +1,3 @@
-;; The first three lines of this file were inserted by DrRacket. They record metadata
-;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-beginner-reader.ss" "lang")((modname one_line_editor) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: May 24, 2023
@@ -108,6 +105,14 @@ One line text editor
           (editor-post ed)
           1 (string-length (editor-post ed))))]
        [else ed]))
+
+; A keyevent is one of the following:
+; -- "\b"
+; -- "left"
+; -- "right"
+; -- 1String that  isn't "\t" or "\r"
+; Interpretation: used to manipulate the text
+; and cursor in the text box
 
 ; editor keyevent -> editor
 ; If ke is \b, delete character to the left of the
