@@ -36,7 +36,6 @@ One line text editor
                 (text "ere!" 16 "black"))
                xcenter ycenter
                text_box))
-
 (define (render ed)
   (place-image
    (beside
@@ -116,7 +115,7 @@ One line text editor
                (make-editor "123456789" "01234567890123"))
               #false)
 (define (check_length ed)
-  (<= (+ (string-length (editor-pre ed))
+  (< (+ (string-length (editor-pre ed))
          (string-length (editor-post ed)))
       MAX_CHAR))
 
@@ -181,19 +180,18 @@ One line text editor
 (check-expect (edit (make-editor "Hi" "there") "\t")
               (make-editor "Hi" "there"))
 (define (edit ed ke)
-  (cond[(check_length ed)
         (cond[(string=? ke "\b")
               (make-editor
                (rmv_last (editor-pre ed))
                (editor-post ed))]
              [(string=? ke "left") (to_left ed)]
              [(string=? ke "right") (to_right ed)]
-             [(verify ke) (make-editor
-                           (string-append
-                            (editor-pre ed) ke)
-                           (editor-post ed))]
-             [else ed])]
-        [else ed]))
+             [(and (verify ke) (check_length ed))
+              (make-editor
+               (string-append
+                (editor-pre ed) ke)
+               (editor-post ed))]
+             [else ed]))
 
 ; editor ke -> editor
 (define (run ed)
