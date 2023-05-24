@@ -159,14 +159,24 @@ One line text editor
 (check-expect (edit (make-editor "Hi" "there") "\t")
               (make-editor "Hi" "there"))
 (define (edit ed ke)
-  (cond[(string=? ke "\b") (make-editor
-                            (rmv_last (editor-pre ed))
-                            (editor-post ed))]
+  (cond[(string=? ke "\b")
+        (make-editor
+         (rmv_last (editor-pre ed))
+         (editor-post ed))]
        [(string=? ke "left") (to_left ed)]
        [(string=? ke "right") (to_right ed)]
-       [(or (string=? ke "\r") (string=? ke "\t"))
-        ed]
-       [else (make-editor
-              (string-append
-               (editor-pre ed) ke)
-              (editor-post ed))]))
+       [(or (and (= (string-length ke) 1)
+                 (string-alphabetic? ke))
+            (string=? ke " ")
+            (string-numeric? ke))
+        (make-editor
+         (string-append
+          (editor-pre ed) ke)
+         (editor-post ed))]
+       [else ed]))
+
+; editor ke -> editor
+(define (run ed)
+  (big-bang ed
+    [to-draw render]
+    [on-key edit]))
