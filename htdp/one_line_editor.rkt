@@ -107,14 +107,6 @@ One line text editor
           1 (string-length (editor-post ed))))]
        [else ed]))
 
-; A keyevent is one of the following:
-; -- "\b"
-; -- "left"
-; -- "right"
-; -- 1String that  isn't "\t" or "\r"
-; Interpretation: used to manipulate the text
-; and cursor in the text box
-
 ; editor -> Boolean
 ; Checks if max no. of characters reached
 (check-expect (check_length
@@ -127,6 +119,22 @@ One line text editor
   (<= (+ (string-length (editor-pre ed))
          (string-length (editor-post ed)))
       MAX_CHAR))
+
+; keyevent -> string
+; Checks if keyevent can be inserted in
+; the textbox
+(check-expect (verify "\r") #false)
+(check-expect (verify "\t") #false)
+(check-expect (verify " ") #true)
+(check-expect (verify "z") #true)
+(check-expect (verify "escape") #false)
+(check-expect (verify "shift") #false)
+(check-expect (verify "1") #true)
+(define (verify ke)
+  (or (and (= (string-length ke) 1)
+           (string-alphabetic? ke))
+      (string=? ke " ")
+      (string-numeric? ke)))
 
 ; editor keyevent -> editor
 ; If ke is \b, delete character to the left of the
@@ -173,23 +181,17 @@ One line text editor
 (check-expect (edit (make-editor "Hi" "there") "\t")
               (make-editor "Hi" "there"))
 (define (edit ed ke)
-  (cond[(<= (+ (string-length (editor-pre ed))
-               (string-length (editor-post ed)))
-            MAX_CHAR)
+  (cond[(check_length ed)
         (cond[(string=? ke "\b")
               (make-editor
                (rmv_last (editor-pre ed))
                (editor-post ed))]
              [(string=? ke "left") (to_left ed)]
              [(string=? ke "right") (to_right ed)]
-             [(or (and (= (string-length ke) 1)
-                       (string-alphabetic? ke))
-                  (string=? ke " ")
-                  (string-numeric? ke))
-              (make-editor
-               (string-append
-                (editor-pre ed) ke)
-               (editor-post ed))]
+             [(verify ke) (make-editor
+                           (string-append
+                            (editor-pre ed) ke)
+                           (editor-post ed))]
              [else ed])]
         [else ed]))
 
