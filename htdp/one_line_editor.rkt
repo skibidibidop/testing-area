@@ -119,10 +119,10 @@ One line text editor
 ; Checks if max no. of characters reached
 (check-expect (check_length
                (make-editor "Hi" "there"))
-              (#true))
+              #true)
 (check-expect (check_length
                (make-editor "123456789" "01234567890123"))
-              (#false))
+              #false)
 (define (check_length ed)
   (<= (+ (string-length (editor-pre ed))
          (string-length (editor-post ed)))
