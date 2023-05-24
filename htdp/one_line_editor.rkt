@@ -1,3 +1,6 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname one_line_editor) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: May 24, 2023
@@ -36,22 +39,74 @@ One line text editor
                xcenter ycenter
                text_box))
 
-(define (render whole_txt)
+(define (render ed)
   (place-image
    (beside
-    (text (editor-pre whole_txt) 16 "black")
+    (text (editor-pre ed) 16 "black")
     cursor
-    (text (editor-post whole_txt) 16 "black"))
+    (text (editor-post ed) 16 "black"))
    xcenter ycenter
    text_box))
+
+; string -> integer
+; Get index number of the last string character
+(check-expect (last_index "Hi!") 2)
+(define (last_index str)
+  (- (string-length str) 1))
 
 ; string -> string
 ; Removes the last character of a string
 (check-expect (rmv_last "Hello") "Hell")
+(check-expect (rmv_last "e") "")
 (define (rmv_last s)
-  (substring s
-             0
-             (- (string-length s) 1)))
+  (cond[(> (string-length s) 0)
+        (substring s 0 (last_index s))]))
+
+; editor -> editor
+; Transfers the last character of editor-pre to the
+; beginning of editor-post
+(check-expect (to_left (make-editor "Tester" "one"))
+              (make-editor "Teste" "rone"))
+(check-expect (to_left (make-editor "one" ""))
+              (make-editor "on" "e"))
+(check-expect (to_left (make-editor "" "one"))
+              (make-editor "" "one"))
+(check-expect (to_left (make-editor "" ""))
+              (make-editor "" ""))
+(define (to_left ed)
+  (cond[(> (string-length (editor-pre ed)) 0)
+        (make-editor
+         (substring
+          (editor-pre ed)
+          0 (last_index (editor-pre ed)))
+         (string-append
+          (string-ith
+           (editor-pre ed)
+           (last_index (editor-pre ed)))
+          (editor-post ed)))]
+       [else ed]))
+
+; editor -> editor
+; Appends the first character of editor-post to
+; editor-pre
+(check-expect (to_right (make-editor "Tester" "one"))
+              (make-editor "Testero" "ne"))
+(check-expect (to_right (make-editor "one" ""))
+              (make-editor "one" ""))
+(check-expect (to_right (make-editor "" "one"))
+              (make-editor "o" "ne"))
+(check-expect (to_right (make-editor "" "" ))
+              (make-editor "" ""))
+(define (to_right ed)
+  (cond[(> (string-length (editor-post ed)) 0)
+        (make-editor
+         (string-append
+          (editor-pre ed)
+          (string-ith (editor-post ed) 0))
+         (substring
+          (editor-post ed)
+          1 (string-length (editor-post ed))))]
+       [else ed]))
 
 ; editor keyevent -> editor
 ; If ke is \b, delete character to the left of the
@@ -60,8 +115,11 @@ One line text editor
 ; "right", move cursor 1 character based on the direction
 ; if there are any characters left there.
 (check-expect (edit (make-editor "This is " "a test") "\b")
-              "This isa test!")
+              (make-editor "This is" "a test"))
 (define (edit ed ke)
   (cond[(string=? ke "\b") (make-editor
                             (rmv_last (editor-pre ed))
-                            (
+                            (editor-post ed))]
+       [(string=? ke "left") (to_left ed)]
+       [(string=? ke "right") (...)]
+       [else (...)])) ; string-append
