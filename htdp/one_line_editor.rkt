@@ -60,7 +60,8 @@ One line text editor
 (check-expect (rmv_last "e") "")
 (define (rmv_last s)
   (cond[(> (string-length s) 0)
-        (substring s 0 (last_index s))]))
+        (substring s 0 (last_index s))]
+       [else s]))
 
 ; editor -> editor
 ; Transfers the last character of editor-pre to the
@@ -125,7 +126,7 @@ One line text editor
 (check-expect (edit (make-editor "Testfive" "") "left")
               (make-editor "Testfiv" "e"))
 (check-expect (edit (make-editor "" "Testsix") "left")
-              (make-editor "T" "estsix"))
+              (make-editor "" "Testsix"))
 (check-expect (edit (make-editor "T" "estseven") "left")
               (make-editor "" "Testseven"))
 (check-expect (edit (make-editor "" "") "left")
@@ -160,5 +161,7 @@ One line text editor
        [(string=? ke "right") (to_right ed)]
        [(or (string=? ke "\r") (string=? ke "\t"))
         ed]
-       [else (string-append
-              (editor-pre ed) ke)]))
+       [else (make-editor
+              (string-append
+               (editor-pre ed) ke)
+              (editor-post ed))]))
