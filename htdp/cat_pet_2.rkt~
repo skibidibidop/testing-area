@@ -1,6 +1,3 @@
-;; The first three lines of this file were inserted by DrRacket. They record metadata
-;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-beginner-reader.ss" "lang")((modname cat_pet_2) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: May 25, 2023
@@ -11,7 +8,7 @@ Virtual Cat Pet 2: Electric Boogaloo
 (require 2htdp/image)
 (require 2htdp/universe)
 
-(define SCALER 20)
+(define SCALER 10)
 
 (define scn_width (* SCALER 10))
 (define scn_height (* SCALER 5))
@@ -44,7 +41,7 @@ Virtual Cat Pet 2: Electric Boogaloo
 ; If the right border is reached, movement direction is
 ; changed to leftward and vice versa.
 
-; wstate -> wstate
+; 
 (check-expect (time_step (make-wstate
                           scn_width scn_width
                           "right"))
