@@ -4,3 +4,90 @@ Date: May 25, 2023
 
 Virtual Cat Pet 2: Electric Boogaloo
 |#
+
+(require 2htdp/image)
+(require 2htdp/universe)
+
+(define SCALER 10)
+
+(define scn_width (* SCALER 10))
+(define scn_height (* SCALER 5))
+(define scn_xcenter (/ scn_width 2))
+(define scn_ycenter (/ scn_height 2))
+
+(define cat (circle (* SCALER 1) "solid" "brown"))
+(define hgauge
+  (place-image (rectangle
+                scn_width (* SCALER 0.5)
+                "solid" "red")
+               scn_width scn_height
+               (empty-scene scn_width scn_height)))
+(define bg (empty-scene scn_width scn_height))
+(define MOVSPD 3)
+
+(define-struct wstate [h x d])
+; wstate: a structure
+; (make-wstate Number Number String)
+; Interpretation: (make-wstate happiness x-coord direction)
+; h represents the distance between the happiness gauge's
+; right edge and the right border. Increases per tick to
+; signify decreasing happiness.
+; x represents the x-coordinate of the cat. This changes
+; by MOVSPD per tick.
+; d represents the movement direction of the cat which
+; changes when a border is reached.
+
+; wstate -> wstate
+; Per tick, increases the distance between the happiness
+; gauge's right edge and the right border.
+; Per tick, increases the cat's x-coordinate by MOVSPD.
+; If the right border is reached, movement direction is
+; changed to leftward and vice versa.
+
+; 
+(check-expect (time_step (make-wstate
+                          scn_width scn_width
+                          "right"))
+              (make-wstate
+               (- scn_width 1) (+ scn_width MOVSPD)
+               "left"))
+(check-expect (time_step (make-wstate
+                          scn_width (+ scn_width 1)
+                          "left"))
+              (make-wstate
+               (- scn_width 1) (- (+ scn_width 1) MOVSPD)
+               "left"))
+(check-expect (time_step (make-wstate
+                          scn_width 0
+                          "left"))
+              (make-wstate
+               (- scn_width 1) (- 0 MOVSPD)
+               "right"))
+(check-expect (time_step (make-wstate
+                         scn_width -3
+                         "right"))
+              (make-wstate
+               (- scn_width 1) (+ -3 MOVSPD)
+               "right"))
+(check-expect (time_step (make-wstate
+                          scn_width 5
+                          "left"))
+              (make-wstate
+               (- scn_width 1) (- 5 MOVSPD)
+               "left"))
+(check-expect (time_step (make-wstate
+                          scn_width 10
+                          "right"))
+              (make-wstate
+               (- scn_width 1) (+ 10 MOVSPD)
+               "right"))
+(define (time_step stat)
+  (make-wstate (- (wstate-h stat) 1)
+               (cond[(string=? (wstate-d stat) "right")
+                     (+ (wstate-x stat) MOVSPD)]
+                    [(string=? (wstate-d stat) "left")
+                     (- (wstate-x stat) MOVSPD)]
+                    [else (wstate-x stat)])
+               (cond[(>= (wstate-x stat) scn_width) "left"]
+                    [(<= (wstate-x stat) 0) "right"]
+                    [else (wstate-d stat)])))
