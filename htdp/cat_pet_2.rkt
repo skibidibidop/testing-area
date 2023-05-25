@@ -12,6 +12,7 @@ Virtual Cat Pet 2: Electric Boogaloo
 (require 2htdp/universe)
 
 (define SCALER 20)
+(define MOVSPD 3)
 
 (define scn_width (* SCALER 10))
 (define scn_height (* SCALER 5))
@@ -23,7 +24,7 @@ Virtual Cat Pet 2: Electric Boogaloo
 (define bg (empty-scene scn_width scn_height))
 (define cat_ypos (- scn_height (/ (image-height cat) 2)))
 (define hgauge_ypos (/ (image-height hgauge) 2))
-(define MOVSPD 3)
+(define hgauge_xpos (/ (image-width hgauge) 2))
 
 (define-struct wstate [h x d])
 ; wstate: a structure
@@ -43,8 +44,6 @@ Virtual Cat Pet 2: Electric Boogaloo
 ; Per tick, increases the cat's x-coordinate by MOVSPD.
 ; If the right border is reached, movement direction is
 ; changed to leftward and vice versa.
-
-; wstate -> wstate
 (check-expect (time_step (make-wstate
                           scn_width scn_width
                           "right"))
@@ -117,4 +116,4 @@ Virtual Cat Pet 2: Electric Boogaloo
     [on-tick time_step]))
 
 ; tester
-(main (make-wstate scn_width 0 "right"))
+(main (make-wstate hgauge_xpos 0 "right"))
