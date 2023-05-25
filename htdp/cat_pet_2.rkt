@@ -22,10 +22,11 @@ Virtual Cat Pet 2: Electric Boogaloo
 (define cat (circle (* SCALER 1) "solid" "brown"))
 (define xhalf_cat (/ (image-width cat) 2))
 (define hgauge (rectangle scn_width (* SCALER 0.5) "solid" "red"))
+(define xhalf_hgauge (/ (image-width hgauge) 2))
 (define bg (empty-scene scn_width scn_height))
 (define cat_ypos (- scn_height (/ (image-height cat) 2)))
 (define hgauge_ypos (/ (image-height hgauge) 2))
-(define hgauge_xpos (/ (image-width hgauge) 2))
+(define hgauge_maxpos scn_xcenter)
 
 (define-struct wstate [h x d])
 ; wstate: a structure
@@ -82,7 +83,9 @@ Virtual Cat Pet 2: Electric Boogaloo
                (- scn_width 1) (+ 10 MOVSPD)
                "right"))
 (define (time_step stat)
-  (make-wstate (- (wstate-h stat) 1)
+  (make-wstate (cond[(<= (- (wstate-h stat) 1) (- 0 xhalf_hgauge))
+                     (- 0 xhalf_hgauge)]
+                    [else (- (wstate-h stat) 1)])
                (cond[(string=? (wstate-d stat) "right")
                      (+ (wstate-x stat) MOVSPD)]
                     [(string=? (wstate-d stat) "left")
@@ -110,11 +113,48 @@ Virtual Cat Pet 2: Electric Boogaloo
          (make-posn (wstate-h stat) hgauge_ypos))
    bg))
 
+; String wstate -> number
+; Determines the proper amount to increment happiness gauge with
+; so that it doesn't exceed the max value (the center point
+; of the happiness gauge will not go past the center point of
+; the scene)
+(check-expect (increment  "down" (make-wstate hgauge_maxpos 50 "right"))
+              hgauge_maxpos)
+(define (increment ke stat)
+  (if (or (>= (+ (wstate-h stat) (/ scn_width 5))
+              hgauge_maxpos)    
+          (>= (+ (wstate-h stat) (/ scn_width 3))
+              hgauge_maxpos))
+      hgauge_maxpos
+      (if (key=? ke "up")
+          (+ (wstate-h stat) (/ scn_width 5))
+          (+ (wstate-h stat) (/ scn_width 3)))))
+
+; wstate String -> wstate
+; Keystroke "up" (petting): increase happiness gauge by 1/5
+; Keystroke "down" (feeding): increase happiness gauge by 1/3
+; Happiness gauge shouldn't exceed the max limit when these
+; actions are taken
+(check-expect (change_mood (make-wstate hgauge_maxpos xhalf_cat "right") "up")
+              (make-wstate hgauge_maxpos xhalf_cat "right"))
+(define (change_mood stat ke)
+  (cond[(>= (wstate-h stat) hgauge_maxpos) stat]
+       [else (cond[(key=? ke "up") (make-wstate
+                                    (increment ke stat)
+                                    (wstate-x stat)
+                                    (wstate-d stat))]
+                  [(key=? ke "down") (make-wstate
+                                      (increment ke stat)
+                                      (wstate-x stat)
+                                      (wstate-d stat))]
+                  [else stat])]))
+
 ; wstate -> wstate
 (define (main curr_state)
   (big-bang curr_state
     [to-draw render]
-    [on-tick time_step]))
+    [on-tick time_step]
+    [on-key change_mood]))
 
 ; tester
-(main (make-wstate hgauge_xpos 0 "right"))
+(main (make-wstate hgauge_maxpos xhalf_cat "right"))
