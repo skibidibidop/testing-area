@@ -16,13 +16,10 @@ Virtual Cat Pet 2: Electric Boogaloo
 (define scn_ycenter (/ scn_height 2))
 
 (define cat (circle (* SCALER 1) "solid" "brown"))
-(define hgauge
-  (place-image (rectangle
-                scn_width (* SCALER 0.5)
-                "solid" "red")
-               scn_width scn_height
-               (empty-scene scn_width scn_height)))
+(define hgauge (rectangle scn_width (* SCALER 0.5) "solid" "red"))
 (define bg (empty-scene scn_width scn_height))
+(define cat_ypos (- scn_height (/ (image-height cat) 2)))
+(define hgauge_ypos (/ (image-height hgauge) 2))
 (define MOVSPD 3)
 
 (define-struct wstate [h x d])
@@ -91,3 +88,30 @@ Virtual Cat Pet 2: Electric Boogaloo
                (cond[(>= (wstate-x stat) scn_width) "left"]
                     [(<= (wstate-x stat) 0) "right"]
                     [else (wstate-d stat)])))
+
+; wstate -> Image
+; Renders images of cat and happiness gauge based on
+; data from wstate
+(check-expect (render (make-wstate 50 10 "right"))
+              (place-images
+               (list cat
+                     hgauge)
+               (list (make-posn 10 cat_ypos)
+                     (make-posn 50 hgauge_ypos))
+               bg))
+(define (render stat)
+  (place-images
+   (list cat
+         hgauge)
+   (list (make-posn (wstate-x stat) cat_ypos)
+         (make-posn (wstate-h stat) hgauge_ypos))
+   bg))
+
+; wstate -> wstate
+(define (main curr_state)
+  (big-bang curr_state
+    [to-draw render]
+    [on-tick time_step]))
+
+; tester
+(main (make-wstate scn_width 0 "right"))
