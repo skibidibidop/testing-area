@@ -20,6 +20,7 @@ Virtual Cat Pet 2: Electric Boogaloo
 (define scn_ycenter (/ scn_height 2))
 
 (define cat (circle (* SCALER 1) "solid" "brown"))
+(define xhalf_cat (/ (image-width cat) 2))
 (define hgauge (rectangle scn_width (* SCALER 0.5) "solid" "red"))
 (define bg (empty-scene scn_width scn_height))
 (define cat_ypos (- scn_height (/ (image-height cat) 2)))
@@ -73,7 +74,7 @@ Virtual Cat Pet 2: Electric Boogaloo
                           "left"))
               (make-wstate
                (- scn_width 1) (- 5 MOVSPD)
-               "left"))
+               "right"))
 (check-expect (time_step (make-wstate
                           scn_width 10
                           "right"))
@@ -87,8 +88,8 @@ Virtual Cat Pet 2: Electric Boogaloo
                     [(string=? (wstate-d stat) "left")
                      (- (wstate-x stat) MOVSPD)]
                     [else (wstate-x stat)])
-               (cond[(>= (wstate-x stat) scn_width) "left"]
-                    [(<= (wstate-x stat) 0) "right"]
+               (cond[(>= (wstate-x stat) (- scn_width xhalf_cat)) "left"]
+                    [(<= (wstate-x stat) xhalf_cat) "right"]
                     [else (wstate-d stat)])))
 
 ; wstate -> Image
