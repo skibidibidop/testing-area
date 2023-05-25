@@ -149,12 +149,22 @@ Virtual Cat Pet 2: Electric Boogaloo
                                       (wstate-d stat))]
                   [else stat])]))
 
+; wstate -> Boolean
+; Stops the program when the cat is out of happiness
+(check-expect (h_death (make-wstate (- 0 hgauge_maxpos) 50 "left"))
+              #true)
+(define (h_death stat)
+  (cond[(<= (wstate-h stat) (- 0 hgauge_maxpos))
+        #true]
+       [else #false]))
+
 ; wstate -> wstate
 (define (main curr_state)
   (big-bang curr_state
     [to-draw render]
     [on-tick time_step]
-    [on-key change_mood]))
+    [on-key change_mood]
+    [stop-when h_death]))
 
 ; tester
 (main (make-wstate hgauge_maxpos xhalf_cat "right"))
