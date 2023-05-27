@@ -25,10 +25,11 @@ Date: May 26, 2023
 
 (define hgauge
   (rectangle SCN_MAXX SCALER "solid" "red"))
-(define hg_xpos (/ (image-width hgauge) 2))
+(define hg_xpos (/ SCN_MAXX 2))
 
 (define cham
   (rhombus (* SCALER 4) CHAM_ANGLE "outline" "black"))
+(define cham_xhalf (/ (image-width cham) 2))
 (define cham_xpos (/ SCN_MAXX 2))
 
 (define-struct vcham [hg x color])
@@ -46,12 +47,13 @@ Date: May 26, 2023
 ; Decreases vcham-hg by HUNGER per tick
 (check-expect (time_step (make-vcham hg_xpos cham_xpos "red"))
               (make-vcham (- hg_xpos HUNGER) (+ cham_xpos MOVSPD) "red"))
-(check-expect (time_step (make-vcham hg_xpos SCN_MAXX "red"))
-              (make-vcham (- hg_xpos HUNGER) SCN_MINX "red"))
+(check-expect (time_step (make-vcham hg_xpos (- SCN_MAXX cham_xhalf)  "red"))
+              (make-vcham (- hg_xpos HUNGER) cham_xhalf "red"))
 (define (time_step chamln)
-  (cond[(>= (vcham-x chamln) SCN_MAXX) (make-vcham (- (vcham-hg chamln) HUNGER)
-                                                   SCN_MINX
-                                                   (vcham-color chamln))]
+  (cond[(>= (vcham-x chamln) (- SCN_MAXX cham_xhalf))
+        (make-vcham (- (vcham-hg chamln) HUNGER)
+                    cham_xhalf
+                    (vcham-color chamln))]
        [else (make-vcham (- (vcham-hg chamln) HUNGER)
                          (+ (vcham-x chamln) MOVSPD)
                          (vcham-color chamln))]))
