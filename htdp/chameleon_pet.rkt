@@ -67,6 +67,7 @@ Date: May 26, 2023
 (check-expect (render chamln) ...)
 (define (render chamln) ...)
 
+#|
 ; vcham -> vcham
 ; Changes the following properties depending on the keystroke:
 ; - Happiness can be increased by HG_UP with "down".
@@ -75,3 +76,14 @@ Date: May 26, 2023
 ; - "g" turns the chameleon green.
 (check-expect (change_mood chamln) ...)
 (define (change_mood chamln) ...)
+
+; tester
+(define cham_start
+  (make-vcham 
+
+; vcham -> vcham
+(define (main cham_start)
+  [on-tick time_step]
+  [on-key change_mood]
+  [to-draw render])
+|#
