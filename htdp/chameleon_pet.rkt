@@ -1,6 +1,3 @@
-;; The first three lines of this file were inserted by DrRacket. They record metadata
-;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-beginner-reader.ss" "lang")((modname chameleon_pet) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: May 26, 2023
@@ -20,12 +17,19 @@ Date: May 26, 2023
 (define SCALER 10)
 (define MOVSPD 3)
 (define HUNGER 0.1)
-(define SCN_X (* SCALER 30))
-(define SCN_Y (* SCALER 10))
+(define SCN_MINX 0)
+(define SCN_MAXX (* SCALER 30))
+(define SCN_MINY 0)
+(define SCN_MAXY (* SCALER 10))
+(define CHAM_ANGLE 80)
 
 (define hgauge
-  (rectangle SCN_X SCALER "solid" "red"))
+  (rectangle SCN_MAXX SCALER "solid" "red"))
 (define hg_xpos (/ (image-width hgauge) 2))
+
+(define cham
+  (rhombus (* SCALER 4) CHAM_ANGLE "outline" "black"))
+(define cham_xpos (/ SCN_MAXX 2))
 
 (define-struct vcham [hg x color])
 ; vcham: a structure
@@ -40,4 +44,15 @@ Date: May 26, 2023
 ; wstate -> wstate
 ; Increases vcham-x by MOVSPD per tick 
 ; Decreases vcham-hg by HUNGER per tick
-(check-expect (time_step (make-vcham ...) ...))
+(check-expect (time_step (make-vcham hg_xpos cham_xpos "red"))
+              (make-vcham (- hg_xpos HUNGER) (+ cham_xpos MOVSPD) "red"))
+(check-expect (time_step (make-vcham hg_xpos SCN_MAXX "red"))
+              (make-vcham (- hg_xpos HUNGER) SCN_MINX "red"))
+(define (time_step chamln)
+  (cond[(>= (vcham-x chamln) SCN_MAXX) (make-vcham (- (vcham-hg chamln) HUNGER)
+                                                   SCN_MINX
+                                                   (vcham-color chamln))]
+       [else (make-vcham (- (vcham-hg chamln) HUNGER)
+                         (+ (vcham-x chamln) MOVSPD)
+                         (vcham-color chamln))]))
+                          
