@@ -33,7 +33,7 @@ Date: May 26, 2023
 (define hg_ypos (/ (image-height hgauge) 2))
 
 (define cham
-  (rhombus (* SCALER 4) CHAM_ANGLE "outline" "black"))
+  (rhombus (* SCALER 4) CHAM_ANGLE "outline" "red"))
 (define cham_xhalf (/ (image-width cham) 2))
 (define cham_xpos (/ SCN_MAXX 2))
 (define cham_ypos (- SCN_MAXY
@@ -70,17 +70,31 @@ Date: May 26, 2023
                          (+ (vcham-x chamln) MOVSPD)
                          (vcham-color chamln))]))
 
-; vcham ->Image
+; vcham -> image
+; Signals (render) to change the color of cham based on vcham-color
+(check-expect (change_color (make-vcham hg_xpos cham_xpos "red"))
+              (rhombus (* SCALER 4) CHAM_ANGLE "outline" "red"))
+(define (change_color chamln)
+              (cond[(string=? (vcham-color chamln) "red")
+                    (rhombus (* SCALER 4) CHAM_ANGLE "outline" "red")]
+                   [(string=? (vcham-color chamln) "blue")
+                    (rhombus (* SCALER 4) CHAM_ANGLE "outline" "blue")]
+                   [(string=? (vcham-color chamln) "green")
+                    (rhombus (* SCALER 4) CHAM_ANGLE "outline" "green")]))
+
+; vcham -> Image
 ; Renders images of the chameleon and happiness gauge depending
 ; on the current vcham.
 (check-expect (render (make-vcham hg_xpos cham_xpos "red"))
-              (place-images (list hgauge cham)
+              (place-images (list hgauge
+                                  (rhombus (* SCALER 4) CHAM_ANGLE "outline" "red"))
                             (list (make-posn hg_xpos hg_ypos)
                                   (make-posn cham_xpos cham_ypos))
                             bg))
 (define (render chamln)
   (place-images
-   (list hgauge cham)
+   (list hgauge
+         (change_color chamln))
    (list (make-posn (vcham-hg chamln) hg_ypos)
          (make-posn (vcham-x chamln) cham_ypos))
    bg))
