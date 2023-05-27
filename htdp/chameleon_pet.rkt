@@ -39,12 +39,14 @@ Date: May 26, 2023
 ; - vcham-hg is the happiness gauge's center point.
 ; The happiness gauge being completely out of the scene
 ; represents depleted happiness.
-; - vcham-x the chameleon's x-coordinate.
+; - vcham-x the chameleon's x-coordinate (center point).
 ; - vcham-color is the chameleon's color.
 
 ; wstate -> wstate
-; Increases vcham-x by MOVSPD per tick 
-; Decreases vcham-hg by HUNGER per tick
+; Increases vcham-x by MOVSPD per tick.
+; Decreases vcham-hg by HUNGER per tick.
+; The chameleon's position resets when its right side touches
+; the right border.
 (check-expect (time_step (make-vcham hg_xpos cham_xpos "red"))
               (make-vcham (- hg_xpos HUNGER) (+ cham_xpos MOVSPD) "red"))
 (check-expect (time_step (make-vcham hg_xpos (- SCN_MAXX cham_xhalf)  "red"))
@@ -57,4 +59,4 @@ Date: May 26, 2023
        [else (make-vcham (- (vcham-hg chamln) HUNGER)
                          (+ (vcham-x chamln) MOVSPD)
                          (vcham-color chamln))]))
-                          
+
