@@ -7,3 +7,14 @@ Date: May 27, 2023
 
 Simple space invaders game
 |#
+
+(require 2htdp/universe)
+(require 2htdp/image)
+
+(define SCALER 10)
+
+; Scene dimensions
+(define SCN_WIDTH (* SCALER 50))
+(define SCN_HEIGHT (* SCALER 100))
+
+; 
