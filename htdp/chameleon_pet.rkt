@@ -1,3 +1,6 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname chameleon_pet) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: May 26, 2023
@@ -36,7 +39,8 @@ Date: May 26, 2023
 (define cham_ypos (- SCN_MAXY
                      (/ (image-height cham) 2)))
 
-(define bg (empty-scene SCN_MAXX SCN_MAXY)) 
+(define bg (empty-scene SCN_MAXX SCN_MAXY))
+(define SCN_CENTER (/ (image-width bg) 2))
 
 (define-struct vcham [hg x color])
 ; vcham: a structure
@@ -76,21 +80,45 @@ Date: May 26, 2023
                             bg))
 (define (render chamln)
   (place-images
-   (list hgauge
-         cham)
+   (list hgauge cham)
    (list (make-posn (vcham-hg chamln) hg_ypos)
          (make-posn (vcham-x chamln) cham_ypos))
    bg))
 
+; (increment) tester values and results
+(define inc_t0 (make-vcham hg_xpos cham_xpos "red"))
+(define inc_r0 (make-vcham hg_xpos cham_xpos "red"))
+(define inc_t1 (make-vcham (- hg_xpos 1) cham_xpos "red"))
+(define inc_r1 (make-vcham hg_xpos cham_xpos "red"))
+(define inc_t2 (make-vcham (- hg_xpos 2) cham_xpos "red"))
+(define inc_r2 (make-vcham hg_xpos cham_xpos "red"))
+(define inc_t3 (make-vcham (- hg_xpos 3) cham_xpos "red"))
+(define inc_r3 (make-vcham (- hg_xpos 1) cham_xpos "red"))
+
+; vcham String -> vcham
+; Allows happiness to be increased up to the max level only (the gauge's
+; center point will never move past the scene's center point)
+(check-expect (increment inc_t0 "down") inc_r0)
+(check-expect (increment inc_t1 "down") inc_r1)
+(check-expect (increment inc_t2 "down") inc_r2)
+(check-expect (increment inc_t3 "down") inc_r3)
+(define (increment chamln ke)
+  (cond[(>= (+ (vcham-hg chamln) HG_UP) SCN_CENTER)
+        (make-vcham hg_xpos (vcham-x chamln) (vcham-color chamln))]
+       [else (make-vcham (+ (vcham-hg chamln) HG_UP)
+                         (vcham-x chamln)
+                         (vcham-color chamln))]))
+
 #|
-; vcham -> vcham
+; vcham String -> vcham
 ; Changes the following properties depending on the keystroke:
 ; - Happiness can be increased by HG_UP with "down".
 ; - "r" turns the chameleon red.
 ; - "b" turns the chameleon blue.
 ; - "g" turns the chameleon green.
-(check-expect (change_mood chamln) ...)
-(define (change_mood chamln) ...)
+(check-expect (change_mood (make-vcham hg_xpos cham_xpos "red") "down")
+              (make-vcham 
+(define (change_mood chamln ke) ...)
 
 ; tester
 (define cham_start
