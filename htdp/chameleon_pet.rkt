@@ -24,7 +24,7 @@ Date: May 26, 2023
 (define SCN_MAXX (* SCALER 30))
 (define SCN_MINY 0)
 (define SCN_MAXY (* SCALER 10))
-(define CHAM_ANGLE 30)
+(define CHAM_ANGLE 140)
 (define HG_UP 2)
 
 (define hgauge
@@ -40,7 +40,7 @@ Date: May 26, 2023
                      (/ (image-height cham) 2)))
 
 (define bg (empty-scene SCN_MAXX SCN_MAXY))
-(define SCN_CENTER (/ (image-width bg) 2))
+(define SCN_XCENTER (/ (image-width bg) 2))
 
 (define-struct vcham [hg x color])
 ; vcham: a structure
@@ -103,7 +103,7 @@ Date: May 26, 2023
 (check-expect (increment inc_t2 "down") inc_r2)
 (check-expect (increment inc_t3 "down") inc_r3)
 (define (increment chamln ke)
-  (cond[(>= (+ (vcham-hg chamln) HG_UP) SCN_CENTER)
+  (cond[(>= (+ (vcham-hg chamln) HG_UP) SCN_XCENTER)
         (make-vcham hg_xpos (vcham-x chamln) (vcham-color chamln))]
        [else (make-vcham (+ (vcham-hg chamln) HG_UP)
                          (vcham-x chamln)
@@ -145,15 +145,15 @@ Date: May 26, 2023
                                    "green")]
        [else chamln]))
 
-#|
-; tester
+; initial value for (main)
 (define cham_start
-  (make-vcham 
+  (make-vcham SCN_XCENTER cham_xhalf "red"))
 
 ; vcham -> vcham
-(define (main cham_start)
-  (big-bang cham_start
+(define (main cham_init)
+  (big-bang cham_init
     [on-tick time_step]
     [on-key change_mood]
     [to-draw render]))
-|#
+
+(main cham_start)
