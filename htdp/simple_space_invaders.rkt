@@ -6,6 +6,25 @@ Author: Mark Beltran
 Date: May 27, 2023
 
 Simple space invaders game
+Tank
+ * Controlled by player
+ * Can fire a missile
+ * Moves across canvas at constant velocity,
+   direction can be changed with arrow keys
+
+UFO
+ * Descends from top to bottom of canvas at
+   constant velocity
+ * Randomly makes small jumps (left or right)
+
+Missile
+ * Smaller than the tank
+ * Triggered by key event spacebar
+ * Ascends vertically at constant velocity, at
+ * least 2x as fast as UFO
+
+Win: missile collides with UFO
+Lose: UFO lands
 |#
 
 (require 2htdp/universe)
