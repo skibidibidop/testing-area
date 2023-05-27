@@ -27,11 +27,16 @@ Date: May 26, 2023
 (define hgauge
   (rectangle SCN_MAXX SCALER "solid" "red"))
 (define hg_xpos (/ SCN_MAXX 2))
+(define hg_ypos (/ (image-height hgauge) 2))
 
 (define cham
   (rhombus (* SCALER 4) CHAM_ANGLE "outline" "black"))
 (define cham_xhalf (/ (image-width cham) 2))
 (define cham_xpos (/ SCN_MAXX 2))
+(define cham_ypos (- SCN_MAXY
+                     (/ (image-height cham) 2)))
+
+(define bg (empty-scene SCN_MAXX SCN_MAXY)) 
 
 (define-struct vcham [hg x color])
 ; vcham: a structure
@@ -64,8 +69,18 @@ Date: May 26, 2023
 ; vcham ->Image
 ; Renders images of the chameleon and happiness gauge depending
 ; on the current vcham.
-(check-expect (render chamln) ...)
-(define (render chamln) ...)
+(check-expect (render (make-vcham hg_xpos cham_xpos "red"))
+              (place-images (list hgauge cham)
+                            (list (make-posn hg_xpos hg_ypos)
+                                  (make-posn cham_xpos cham_ypos))
+                            bg))
+(define (render chamln)
+  (place-images
+   (list hgauge
+         cham)
+   (list (make-posn (vcham-hg chamln) hg_ypos)
+         (make-posn (vcham-x chamln) cham_ypos))
+   bg))
 
 #|
 ; vcham -> vcham
@@ -83,7 +98,8 @@ Date: May 26, 2023
 
 ; vcham -> vcham
 (define (main cham_start)
-  [on-tick time_step]
-  [on-key change_mood]
-  [to-draw render])
+  (big-bang cham_start
+    [on-tick time_step]
+    [on-key change_mood]
+    [to-draw render]))
 |#
