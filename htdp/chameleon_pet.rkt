@@ -24,7 +24,7 @@ Date: May 26, 2023
 (define SCN_MAXX (* SCALER 30))
 (define SCN_MINY 0)
 (define SCN_MAXY (* SCALER 10))
-(define CHAM_ANGLE 80)
+(define CHAM_ANGLE 30)
 (define HG_UP 2)
 
 (define hgauge
@@ -109,17 +109,43 @@ Date: May 26, 2023
                          (vcham-x chamln)
                          (vcham-color chamln))]))
 
-#|
+; (change_mood) test values and results
+(define cm_t0 (make-vcham hg_xpos cham_xpos "red"))
+(define cm_t0_r0 (make-vcham hg_xpos cham_xpos "red"))
+(define cm_t0_rred (make-vcham hg_xpos cham_xpos "red"))
+(define cm_t1 (make-vcham (- hg_xpos 1) cham_xpos "red"))
+(define cm_t1_r1 (make-vcham hg_xpos cham_xpos "red"))
+(define cm_t1_rblue (make-vcham (- hg_xpos 1) cham_xpos "blue"))
+(define cm_t2 (make-vcham (- hg_xpos 3) cham_xpos "red"))
+(define cm_t2_r2 (make-vcham (- hg_xpos 1) cham_xpos "red"))
+(define cm_t2_rgreen (make-vcham (- hg_xpos 3) cham_xpos "green"))
+
 ; vcham String -> vcham
 ; Changes the following properties depending on the keystroke:
 ; - Happiness can be increased by HG_UP with "down".
 ; - "r" turns the chameleon red.
 ; - "b" turns the chameleon blue.
 ; - "g" turns the chameleon green.
-(check-expect (change_mood (make-vcham hg_xpos cham_xpos "red") "down")
-              (make-vcham 
-(define (change_mood chamln ke) ...)
+(check-expect (change_mood cm_t0 "down") cm_t0_r0)
+(check-expect (change_mood cm_t0 "r") cm_t0_rred)
+(check-expect (change_mood cm_t1 "down") cm_t1_r1)
+(check-expect (change_mood cm_t1 "b") cm_t1_rblue)
+(check-expect (change_mood cm_t2 "down") cm_t2_r2)
+(check-expect (change_mood cm_t2 "g") cm_t2_rgreen)
+(define (change_mood chamln ke)
+  (cond[(key=? ke "down") (increment chamln ke)]
+       [(key=? ke "r") (make-vcham (vcham-hg chamln)
+                                   (vcham-x chamln)
+                                   "red")]
+       [(key=? ke "b") (make-vcham (vcham-hg chamln)
+                                   (vcham-x chamln)
+                                   "blue")]
+       [(key=? ke "g") (make-vcham (vcham-hg chamln)
+                                   (vcham-x chamln)
+                                   "green")]
+       [else chamln]))
 
+#|
 ; tester
 (define cham_start
   (make-vcham 
