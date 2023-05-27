@@ -22,6 +22,7 @@ Date: May 26, 2023
 (define SCN_MINY 0)
 (define SCN_MAXY (* SCALER 10))
 (define CHAM_ANGLE 80)
+(define HG_UP 2)
 
 (define hgauge
   (rectangle SCN_MAXX SCALER "solid" "red"))
@@ -42,7 +43,7 @@ Date: May 26, 2023
 ; - vcham-x the chameleon's x-coordinate (center point).
 ; - vcham-color is the chameleon's color.
 
-; wstate -> wstate
+; vcham -> vcham
 ; Increases vcham-x by MOVSPD per tick.
 ; Decreases vcham-hg by HUNGER per tick.
 ; The chameleon's position resets when its right side touches
@@ -60,3 +61,17 @@ Date: May 26, 2023
                          (+ (vcham-x chamln) MOVSPD)
                          (vcham-color chamln))]))
 
+; vcham ->Image
+; Renders images of the chameleon and happiness gauge depending
+; on the current vcham.
+(check-expect (render chamln) ...)
+(define (render chamln) ...)
+
+; vcham -> vcham
+; Changes the following properties depending on the keystroke:
+; - Happiness can be increased by HG_UP with "down".
+; - "r" turns the chameleon red.
+; - "b" turns the chameleon blue.
+; - "g" turns the chameleon green.
+(check-expect (change_mood chamln) ...)
+(define (change_mood chamln) ...)
