@@ -53,8 +53,15 @@ Lose: UFO lands
   (empty-scene SWIDTH SHEIGHT))
 
 ; ufo: a posn
-; Interpretation: location of ufo
-(define (make-posn 5 30))
+; Interpretation: location of UFO_IMG
+(define ufo1 (make-posn 5 30))
 #;
 (define (fn_for_ufo u)
   (...(posn-x u) (posn-y u)))
+
+; tank: a posn
+; Interp.: location of TANK_IMG
+(define tank1(make-posn 10 100))
+#;
+(define (fn_for_tank t)
+  (...(posn-x t) (posn-y t)))
