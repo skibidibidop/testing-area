@@ -79,4 +79,9 @@ Lose: UFO lands
 (define (fn_for_tank tloc tvel)
   (...(posn-x tloc) (posn-y tloc) TANK_RMSPD))
 
-; missile 
+; missile: a posn
+; Interp.: location of MISSILE_IMG
+(define miss1 (make-posn 20 50))
+#;
+(define (fn_for_missile msl)
+  (...(posn-x msl) (posn-y msl)))
