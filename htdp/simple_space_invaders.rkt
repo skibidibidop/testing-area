@@ -39,6 +39,7 @@ Lose: UFO lands
 ; Tank image properties
 (define TANK_WIDTH (* SCALER 10))
 (define TANK_HEIGHT (* SCALER 3))
+(define TANK_YPOS (- SHEIGHT (/ TANK_HEIGHT 2)))
 (define TANK_RMSPD 4)
 (define TANK_LMSPD -4)
 (define TANK_IMG
@@ -68,16 +69,15 @@ Lose: UFO lands
 
 (define-struct tank [loc vel])
 ; tank: a structure
-; (make-tank posn Number)
-; Interp.: (make-tank loc vel)
-; location and velocity of TANK_IMG
-(define tank1 (make-tank (make-posn 30 100)
-                         TANK_RMSPD))
-(define tank2 (make-tank (make-posn 30 100)
-                         TANK_LMSPD))
+; (make-tank Number Number)
+; Interp.: (make-tank tank_x tank_dx)
+; tank's position is (x, TANK_YPOS)
+; tank's velocity is tank_dx pixels/tick
+(define tank1 (make-tank 29 TANK_RMSPD))
+(define tank2 (make-tank 40 TANK_LMSPD))
 #;
-(define (fn_for_tank tloc tvel)
-  (...(posn-x tloc) (posn-y tloc) TANK_RMSPD))
+(define (fn_for_tank t)
+  (...(tank-loc t) (tank-vel t)))
 
 ; missile: a posn
 ; Interp.: location of MISSILE_IMG
