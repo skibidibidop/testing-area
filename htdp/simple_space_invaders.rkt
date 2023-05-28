@@ -36,32 +36,47 @@ Lose: UFO lands
 (define SWIDTH (* SCALER 50))
 (define SHEIGHT (* SCALER 100))
 
-; Tank properties
+; Tank image properties
 (define TANK_WIDTH (* SCALER 10))
 (define TANK_HEIGHT (* SCALER 3))
-(define TANK_MSPD 4)
+(define TANK_RMSPD 4)
+(define TANK_LMSPD -4)
 (define TANK_IMG
   (rectangle TANK_WIDTH TANK_HEIGHT
              "solid" "light steel blue"))
 
-; UFO properties
+; UFO image properties
 (define UFO_IMG
   (rhombus (* SCALER 5) 45 "solid" "magenta"))
+(define DESCENT_SPD 1)
+
+; Missile image properties
+(define MISSILE_IMG
+  (isosceles-triangle SCALER 20 "solid" "red")) 
+(define ASCENT_SPD (* DESCENT_SPD 3))
 
 ; Background properties
 (define BG
   (empty-scene SWIDTH SHEIGHT))
 
 ; ufo: a posn
-; Interpretation: location of UFO_IMG
+; Interp.: location of UFO_IMG
 (define ufo1 (make-posn 5 30))
 #;
 (define (fn_for_ufo u)
   (...(posn-x u) (posn-y u)))
 
-; tank: a posn
-; Interp.: location of TANK_IMG
-(define tank1(make-posn 10 100))
+(define-struct tank [loc vel])
+; tank: a structure
+; (make-tank posn Number)
+; Interp.: (make-tank loc vel)
+; location and velocity of TANK_IMG
+(define tank1 (make-tank (make-posn 30 100)
+                         TANK_RMSPD))
+(define tank2 (make-tank (make-posn 30 100)
+                         TANK_LMSPD))
 #;
-(define (fn_for_tank t)
-  (...(posn-x t) (posn-y t)))
+(define (fn_for_tank tloc tvel)
+  (...(posn-x tloc) (posn-y tloc) TANK_RMSPD))
+
+; missile 
