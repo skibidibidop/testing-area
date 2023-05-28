@@ -1,3 +1,6 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname simple_space_invaders) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: May 27, 2023
@@ -30,21 +33,28 @@ Lose: UFO lands
 (define SCALER 10)
 
 ; Scene properties
-(define SCENE_WIDTH (* SCALER 50))
-(define SCENE_HEIGHT (* SCALER 100))
+(define SWIDTH (* SCALER 50))
+(define SHEIGHT (* SCALER 100))
 
 ; Tank properties
 (define TANK_WIDTH (* SCALER 10))
 (define TANK_HEIGHT (* SCALER 3))
 (define TANK_MSPD 4)
-(define TANK
+(define TANK_IMG
   (rectangle TANK_WIDTH TANK_HEIGHT
              "solid" "light steel blue"))
 
 ; UFO properties
-(define UFO
+(define UFO_IMG
   (rhombus (* SCALER 5) 45 "solid" "magenta"))
 
 ; Background properties
 (define BG
-  (empty-scene SCENE_WIDTH SCENE_HEIGHT))
+  (empty-scene SWIDTH SHEIGHT))
+
+; ufo: a posn
+; Interpretation: location of ufo
+(define (make-posn 5 30))
+#;
+(define (fn_for_ufo u)
+  (...(posn-x u) (posn-y u)))
