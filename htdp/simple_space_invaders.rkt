@@ -30,6 +30,8 @@ Lose: UFO lands
 (require 2htdp/universe)
 (require 2htdp/image)
 
+; IMAGES /////////////////////////////////////////
+
 (define SCALER 10)
 
 ; Scene properties
@@ -60,9 +62,11 @@ Lose: UFO lands
 (define BG
   (empty-scene SWIDTH SHEIGHT))
 
+; DATA DEFINITIONS ///////////////////////////////
+
 ; ufo: a posn
 ; Interp.: location of UFO_IMG
-(define ufo1 (make-posn 5 30))
+; (define ufo1 (make-posn 5 30))
 #;
 (define (fn_for_ufo u)
   (...(posn-x u) (posn-y u)))
@@ -73,15 +77,26 @@ Lose: UFO lands
 ; Interp.: (make-tank tank_x tank_dx)
 ; tank's position is (x, TANK_YPOS)
 ; tank's velocity is tank_dx pixels/tick
-(define tank1 (make-tank 29 TANK_RMSPD))
-(define tank2 (make-tank 40 TANK_LMSPD))
+; (define tank1 (make-tank 29 TANK_RMSPD))
+; (define tank2 (make-tank 40 TANK_LMSPD))
 #;
 (define (fn_for_tank t)
   (...(tank-loc t) (tank-vel t)))
 
 ; missile: a posn
 ; Interp.: location of MISSILE_IMG
-(define miss1 (make-posn 20 50))
+; (define miss1 (make-posn 20 50))
 #;
 (define (fn_for_missile msl)
   (...(posn-x msl) (posn-y msl)))
+
+(define-struct aim [ufo tank])
+; aim: a structure
+; Interp.: game state indicating that missile
+; hasn't been fired yet
+(define aim_state ((make-posn 
+
+(define-struct fired [ufo tank missile])
+
+; FUNCTION DEFINITIONS ///////////////////////////
+
