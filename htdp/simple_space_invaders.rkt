@@ -30,7 +30,7 @@ Lose: UFO lands
 (require 2htdp/universe)
 (require 2htdp/image)
 
-; IMAGES /////////////////////////////////////////
+; IMAGES ///////////////////////////////////////////////////
 
 (define SCALER 10)
 
@@ -62,7 +62,7 @@ Lose: UFO lands
 (define BG
   (empty-scene SWIDTH SHEIGHT))
 
-; DATA DEFINITIONS ///////////////////////////////
+; DATA DEFINITIONS /////////////////////////////////////////
 
 ; ufo: a posn
 ; Interp.: location of UFO_IMG
@@ -114,5 +114,22 @@ Lose: UFO lands
       (tank-loc t) (tank-vel t)
       (posn-x m) (posn-y m)))
 
-; FUNCTION DEFINITIONS ///////////////////////////
+; gstate is one of:
+; -- (make-aim ufo tank)
+; -- (make-fired ufo tank missile)
+; Interp.: represents complete state of space
+; invaders game
+;(define game_state1 (make-aim
+;                     (make-posn 30 40)
+;                     (make-tank 20 TANK_RMSPD)))
+;(define game_state2 (make-fired
+;                     (make-posn 30 40)
+;                     (make-tank 20 TANK_RMSPD)
+;                     (make-posn 20 50)))
+#;
+(define (fn_for_gstate gs)
+  (...(aim-ufo gs) (aim-tank gs)
+      (fired-ufo gs) (fired-tank gs) (fired-missle gs)))
+
+; FUNCTION DEFINITIONS /////////////////////////////////////
 
