@@ -94,7 +94,12 @@ Lose: UFO lands
 ; aim: a structure
 ; Interp.: game state indicating that missile
 ; hasn't been fired yet
-(define aim_state ((make-posn 
+; (define aim_state ((make-posn 20 10)
+;                    (make-tank 40 TANK_RMSPD)))
+#;
+(define (fn_for_aim u t)
+  (...(posn-x u) (posn-y u)
+      (tank-loc t) (tank-vel t)))
 
 (define-struct fired [ufo tank missile])
 
