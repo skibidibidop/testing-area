@@ -102,6 +102,17 @@ Lose: UFO lands
       (tank-loc t) (tank-vel t)))
 
 (define-struct fired [ufo tank missile])
+; fired: a structure
+; Interp.: game state indicating that the missile
+; has been fired
+; (define fired_state ((make-posn 20 10)
+;                      (make-tank 40 TANK_RMSPD)
+;                      (make-posn 30 30)))
+#;
+(define (fn_for_fired u t m)
+  (...(posn-x u) (posn-y u)
+      (tank-loc t) (tank-vel t)
+      (posn-x m) (posn-y m)))
 
 ; FUNCTION DEFINITIONS ///////////////////////////
 
