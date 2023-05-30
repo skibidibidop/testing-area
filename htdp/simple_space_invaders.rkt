@@ -173,9 +173,33 @@ Lose: UFO lands
                (posn-x m) (posn-y m)
                im))
 
+(define render_t1 (make-aim (make-posn 60 40)
+                            (make-tank 30 4)))
+(define render_t2 (make-fired (make-posn 50 50)
+                              (make-tank 30 -4)
+                              (make-posn 20 30)))
 ; gstate -> Image
 ; Renders UFO_IMG, TANK_IMG, and MISSILE_IMG on BG
 ; depending on data from gstate
+(check-expect (render render_t1)
+              (tank_render
+               (aim-tank render_t1)
+               (ufo_render (aim-ufo render_t1) BG)))
+(check-expect (render render_t2)
+              (tank_render
+               (fired-tank render_t2)
+               (ufo_render
+                (fired-ufo render_t2)
+                (missile_render
+                 (fired-missile render_t2) BG))))
+
+; (define (render gs) im)
+; (define (render gs)
+;   (cond[(aim? gs)
+;         (...(aim-tank gs) (aim-ufo gs) BG)]
+;        [(fired? gs)
+;         (...(fired-tank gs) (fired-ufo gs) BG)]))
+
 (define (render gs)
   (cond[(aim? gs)
         (tank_render (aim-tank gs)
@@ -187,3 +211,11 @@ Lose: UFO lands
           (fired-ufo gs)
           (missile_render
            (fired-missile gs) BG)))]))
+
+; gstate -> Boolean
+; Stops the game if the UFO land or is hit by the missile
+(check-expect (game_over gs)...)
+
+; (define (game_over gs) #true) 
+(define (game_over gs)
+  (cond[(aim? gs) (...)]))
