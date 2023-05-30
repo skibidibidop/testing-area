@@ -133,22 +133,45 @@ Lose: UFO lands
 ; Adds t to the given image im
 (check-expect (tank_render (make-tank 40 4) BG)
               (place-image TANK_IMG 44 TANK_YPOS BG))
+(check-expect (tank_render (make-tank 40 -4) BG)
+              (place-image TANK_IMG 36 TANK_YPOS BG))
 
 ; (define (tank_render t im) im)
-;(define (tank_render t im)
-;  (...(tank-loc t) (tank-vel t) im))
+; (define (tank_render t im)
+;   (...(tank-loc t) (tank-vel t) im))
+
 (define (tank_render t im)
   (place-image TANK_IMG
                (+ (tank-loc t) (tank-vel t)) TANK_YPOS
-               BG))
+               im))
 
 ; ufo Image -> Image
 ; Adds u to the given image im
-(define (ufo_render u im) im)
+(check-expect (ufo_render (make-posn 30 50) BG)
+              (place-image UFO_IMG 30 50 BG))
+
+; (define (ufo_render u im) im)
+; (define (ufo_render u im)
+;   (...(posn-x u) (posn-y u) im))
+
+(define (ufo_render u im)
+  (place-image UFO_IMG
+               (posn-x u) (posn-y u)
+               im)) 
 
 ; missile Image -> Image
 ; Adds m to the given image im
-(define (missile_render m im) im)
+(check-expect (missile_render (make-posn 30 20) BG)
+              (place-image MISSILE_IMG 30 20 BG))
+
+; (define (missile_render m im) im)
+; (define (missile_render m im)
+;   (...(posn-x m) (posn-y m) im))
+
+(define (missile_render m im)
+  (place-image MISSILE_IMG
+               (posn-x m) (posn-y m)
+               im))
 
 ; gstate -> Image
 ; Renders UFO_IMG, TANK_IMG, and MISSILE_IMG on BG
