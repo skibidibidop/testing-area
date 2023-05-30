@@ -131,7 +131,16 @@ Lose: UFO lands
 
 ; tank Image -> Image
 ; Adds t to the given image im
-(define (tank_render t im) im)
+(check-expect (tank_render (make-tank 40 4) BG)
+              (place-image TANK_IMG 44 TANK_YPOS BG))
+
+; (define (tank_render t im) im)
+;(define (tank_render t im)
+;  (...(tank-loc t) (tank-vel t) im))
+(define (tank_render t im)
+  (place-image TANK_IMG
+               (+ (tank-loc t) (tank-vel t)) TANK_YPOS
+               BG))
 
 ; ufo Image -> Image
 ; Adds u to the given image im
