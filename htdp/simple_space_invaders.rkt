@@ -126,10 +126,32 @@ Lose: UFO lands
 ;                     (make-posn 30 40)
 ;                     (make-tank 20 TANK_RMSPD)
 ;                     (make-posn 20 50)))
-#;
-(define (fn_for_gstate gs)
-  (...(aim-ufo gs) (aim-tank gs)
-      (fired-ufo gs) (fired-tank gs) (fired-missle gs)))
 
 ; FUNCTION DEFINITIONS /////////////////////////////////////
 
+; tank Image -> Image
+; Adds t to the given image im
+(define (tank_render t im) im)
+
+; ufo Image -> Image
+; Adds u to the given image im
+(define (ufo_render u im) im)
+
+; missile Image -> Image
+; Adds m to the given image im
+(define (missile_render m im) im)
+
+; gstate -> Image
+; Renders UFO_IMG, TANK_IMG, and MISSILE_IMG on BG
+; depending on data from gstate
+(define (render gs)
+  (cond[(aim? gs)
+        (tank_render (aim-tank gs)
+                     (ufo_render (aim-ufo gs) BG))]
+       [(fired? gs)
+        (tank_render
+         (fired-tank gs)
+         (ufo_render
+          (fired-ufo gs)
+          (missile_render
+           (fired-missile gs) BG)))]))
