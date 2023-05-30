@@ -173,25 +173,25 @@ Lose: UFO lands
                (posn-x m) (posn-y m)
                im))
 
-(define render_t1 (make-aim (make-posn 60 40)
+(define state_t1 (make-aim (make-posn 60 40)
                             (make-tank 30 4)))
-(define render_t2 (make-fired (make-posn 50 50)
+(define state_t2 (make-fired (make-posn 50 50)
                               (make-tank 30 -4)
                               (make-posn 20 30)))
 ; gstate -> Image
 ; Renders UFO_IMG, TANK_IMG, and MISSILE_IMG on BG
 ; depending on data from gstate
-(check-expect (render render_t1)
+(check-expect (render state_t1)
               (tank_render
-               (aim-tank render_t1)
-               (ufo_render (aim-ufo render_t1) BG)))
-(check-expect (render render_t2)
+               (aim-tank state_t1)
+               (ufo_render (aim-ufo state_t1) BG)))
+(check-expect (render state_t2)
               (tank_render
-               (fired-tank render_t2)
+               (fired-tank state_t2)
                (ufo_render
-                (fired-ufo render_t2)
+                (fired-ufo state_t2)
                 (missile_render
-                 (fired-missile render_t2) BG))))
+                 (fired-missile state_t2) BG))))
 
 ; (define (render gs) im)
 ; (define (render gs)
@@ -212,10 +212,30 @@ Lose: UFO lands
           (missile_render
            (fired-missile gs) BG)))]))
 
+(define state_t3 (make-fired (make-posn 30 SHEIGHT)
+                             (make-tank 30 4)
+                             (make-posn 40 10)))
+(define state_t4 (make-fired
+                  (make-posn 30 50)
+                  (make-tank 30 4)
+                  (make-posn
+                   (+ 29 ; 1 px less than ufo x-coord
+                      (/image-width UFO_IMG))
+                   (+ 50
+                      (/ image-height UFO_IMG)
+                      (/image-height MISSILE_IMG)))))
 ; gstate -> Boolean
 ; Stops the game if the UFO land or is hit by the missile
-(check-expect (game_over gs)...)
+(check-expect (game_over state_t1) #false)
+(check-expect (game_over state_t2) #false)
+(check-expect (game_over state_t3) #true)
+(check-expect (game_over state_t4) #true)
 
 ; (define (game_over gs) #true) 
+; (define (game_over gs)
+;   (cond[(aim? gs) (...(aim-ufo gs))]
+;        [(fired? gs) (...(fired-ufo gs)
+;                         (fired-missile gs))]))
+
 (define (game_over gs)
-  (cond[(aim? gs) (...)]))
+  (...)) ; create aux fn for values inside aim/fired
