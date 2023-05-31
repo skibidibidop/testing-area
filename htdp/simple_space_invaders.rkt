@@ -254,3 +254,35 @@ Lose: UFO lands
                        YTRIGGER)) #true]
              [else #false])]
        [else #false]))
+
+; gstate -> gstate
+; Moves UFO_IMG, TANK_IMG, and MISSILE_IMG per tick
+(check-random (move state_t2)
+              (make-fired (make-posn (random SWIDTH)
+                                     (+ 50 DESCENT_SPD))
+                          (make-tank 26 -4)
+                          (make-posn 20 (+ 30 ASCENT_SPD))))
+; (define (move gs) gs)
+(define (move gs)
+  (cond[(aim? gs)
+        (make-aim
+         (make-posn
+          (random SWIDTH)
+          (+ (posn-y (aim-ufo gs)) DESCENT_SPD))
+         (make-tank
+          (+ (tank-loc (aim-tank gs))
+             (tank-vel (aim-tank gs)))
+          (tank-vel (aim-tank gs))))]
+        [(fired? gs)
+         (make-fired
+          (make-posn
+           (random SWIDTH)
+           (+ (posn-y (fired-ufo gs)) DESCENT_SPD))
+          (make-tank
+           (+ (tank-loc (fired-tank gs))
+              (tank-vel (fired-tank gs)))
+           (tank-vel (fired-tank gs)))
+          (make-posn
+           (posn-x (fired-missile gs))
+           (+ (posn-y (fired-missile gs)) ASCENT_SPD)))]
+        [else gs]))
