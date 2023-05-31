@@ -20,6 +20,7 @@ to represent the game state.
 
 (define TANK_IMG (rectangle (* SCALER 3) SCALER
                             "solid" "light steel blue"))
+(define TANK_YPOS (- SHEIGHT (/ (image-height TANK_IMG) 2)))
 (define TANK_RMSPD 3)
 (define TANK_LMSPD -3)
 
@@ -29,6 +30,14 @@ to represent the game state.
 (define BG (empty-scene SWIDTH SHEIGHT))
 
 ; DATA DEFINITIONS /////////////////////////////////////////
+
+; ufo: a Posn
+; (make-posn Number Number)
+; Interp.: (make-posn xufo yufo)
+; Contains x and y coordinates of UFO_IMG
+#;
+(define (fn_for_ufo u)
+  (...(posn-x u) (posn-y u)))
 
 (define-struct tank [loc vel])
 ; tank: a structure
@@ -40,6 +49,8 @@ to represent the game state.
 (define (fn_for_tank t)
   (...(tank-loc t) (tank-vel t)))
 
-(define-struct gstate [ufo tank msl])
+(define-struct missile
+
+(define-struct gstate [ufo tank missile])
 ; gstate: a structure
 ; (make-gstate posn 
