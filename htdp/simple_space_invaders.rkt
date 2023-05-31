@@ -368,4 +368,4 @@ Lose: UFO lands
 
 (main (make-aim
        (make-posn SXCENTER 0)
-       (make-tank SXCENTER TANK_YPOS)))
+       (make-tank SXCENTER TANK_RMSPD)))
