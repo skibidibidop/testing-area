@@ -212,7 +212,14 @@ Lose: UFO lands
           (missile_render
            (fired-missile gs) BG)))]))
 
-(define state_t3 (make-fired (make-posn 30 SHEIGHT)
+(define XTRIGGER (/ (image-width UFO_IMG) 2))
+(define YTRIGGER (+ (/ (image-height UFO_IMG) 2)
+                    (/ (image-height MISSILE_IMG) 2)))
+(define UFO_YMAX (- SHEIGHT
+                    (/ (image-height UFO_IMG) 2)))
+
+(define state_t3 (make-fired (make-posn
+                              30 UFO_YMAX)
                              (make-tank 30 4)
                              (make-posn 40 10)))
 (define state_t4 (make-fired
@@ -220,22 +227,30 @@ Lose: UFO lands
                   (make-tank 30 4)
                   (make-posn
                    (+ 29 ; 1 px less than ufo x-coord
-                      (/image-width UFO_IMG))
+                      (/ (image-width UFO_IMG) 2))
                    (+ 50
-                      (/ image-height UFO_IMG)
-                      (/image-height MISSILE_IMG)))))
+                      (/ (image-height UFO_IMG) 2)
+                      (/ (image-height MISSILE_IMG) 2)))))
 ; gstate -> Boolean
-; Stops the game if the UFO land or is hit by the missile
+; Stops the game if the UFO lands or is hit by a missile
 (check-expect (game_over state_t1) #false)
 (check-expect (game_over state_t2) #false)
 (check-expect (game_over state_t3) #true)
 (check-expect (game_over state_t4) #true)
 
-; (define (game_over gs) #true) 
-; (define (game_over gs)
-;   (cond[(aim? gs) (...(aim-ufo gs))]
-;        [(fired? gs) (...(fired-ufo gs)
-;                         (fired-missile gs))]))
+; (define (game_over gs) #true)
 
 (define (game_over gs)
-  (...)) ; create aux fn for values inside aim/fired
+  (cond[(aim? gs)
+        (cond[(= (posn-y (aim-ufo gs)) UFO_YMAX) #true]
+             [else #false])]
+       [(fired? gs)
+        (cond[(= (posn-y (fired-ufo gs)) UFO_YMAX) #true]
+             [(and (<= (abs (- (posn-x (fired-ufo gs))
+                               (posn-x (fired-missile gs))))
+                       XTRIGGER)
+                   (<= (abs (- (posn-y (fired-ufo gs))
+                               (posn-y (fired-missile gs))))
+                       YTRIGGER)) #true]
+             [else #false])]
+       [else #false]))
