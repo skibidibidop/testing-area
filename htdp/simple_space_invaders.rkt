@@ -286,3 +286,82 @@ Lose: UFO lands
            (posn-x (fired-missile gs))
            (+ (posn-y (fired-missile gs)) ASCENT_SPD)))]
         [else gs]))
+
+; gstate KeyEvent -> gstate
+; -- Key event "left" makes tank move to the left
+; -- Key event "right makes tank move to the right
+; -- Key event " " launches missile if not yet fired
+; (check-expect (control ...)...)
+
+; (define (control gs ke) gs)
+(define (control gs ke)
+  (cond[(aim? gs)
+        (cond[(string=? ke "left")
+              (make-aim
+               (make-posn (random SWIDTH)
+                          (+ (posn-y (aim-ufo gs))
+                             DESCENT_SPD))
+               (make-tank (+ (tank-loc (aim-tank gs))
+                             (tank-vel (aim-tank gs)))
+                          TANK_LMSPD))]
+             [(string=? ke "right")
+              (make-aim
+               (make-posn (random SWIDTH)
+                          (+ (posn-y (aim-ufo gs))
+                             DESCENT_SPD))
+               (make-tank (+ (tank-loc (aim-tank gs))
+                             (tank-vel (aim-tank gs)))
+                          TANK_RMSPD))]
+             [(string=? ke " ")
+              (make-fired
+               (make-posn (random SWIDTH)
+                          (+ (posn-y (fired-ufo gs))
+                             DESCENT_SPD))
+               (make-tank (+ (tank-loc (fired-tank gs))
+                             (tank-vel (fired-tank gs)))
+                          (tank-vel (fired-tank gs)))
+               (make-posn (tank-loc (fired-tank gs))
+                          TANK_YPOS))]
+             [else gs])]
+       [(fired? gs)
+        (cond[(string=? ke "left")
+              (make-fired
+               (make-posn (random SWIDTH)
+                          (+ (posn-y (fired-ufo gs))
+                             DESCENT_SPD))
+               (make-tank (+ (tank-loc (fired-tank gs))
+                             (tank-vel (fired-tank gs)))
+                          (tank-vel (fired-tank gs)))
+               (make-posn (posn-x (fired-missile gs))
+                          (+ (posn-y (fired-missile gs))
+                             ASCENT_SPD)))]
+             [(string=? ke "right")
+              (make-fired
+               (make-posn (random SWIDTH)
+                          (+ (posn-y (fired-ufo gs))
+                             DESCENT_SPD))
+               (make-tank (+ (tank-loc (fired-tank gs))
+                             (tank-vel (fired-tank gs)))
+                          (tank-vel (fired-tank gs)))
+               (make-posn (posn-x (fired-missile gs))
+                          (+ (posn-y (fired-missile gs))
+                             ASCENT_SPD)))]
+             [(and (string=? ke " ")
+                   (<= (posn-y (fired-missile gs)) 0))
+              (make-fired
+               (make-posn (random SWIDTH )
+                          (+ (posn-y (fired-ufo gs))
+                             DESCENT_SPD))
+               (make-tank (+ (tank-loc (fired-tank gs))
+                             (tank-vel (fired-tank gs)))
+                          (tank-vel (fired-tank gs)))
+               (make-posn (tank-loc (fired-tank gs))
+                          TANK_YPOS))])]
+       [else gs]))
+
+(define (main init)
+  (big-bang init
+    [to-draw render]
+    [on-tick move]
+    [on-key control]
+    [stop-when game_over]))
