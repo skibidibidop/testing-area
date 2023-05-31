@@ -36,17 +36,18 @@ Lose: UFO lands
 
 ; Scene properties
 (define SWIDTH (* SCALER 50))
-(define SHEIGHT (* SCALER 100))
+(define SHEIGHT (* SCALER 50))
+(define SXCENTER (/ SWIDTH 2))
 
 ; Tank image properties
-(define TANK_WIDTH (* SCALER 10))
-(define TANK_HEIGHT (* SCALER 3))
+(define TANK_WIDTH (* SCALER 5))
+(define TANK_HEIGHT (* SCALER 2))
 (define TANK_YPOS (- SHEIGHT (/ TANK_HEIGHT 2)))
 (define TANK_RMSPD 4)
 (define TANK_LMSPD -4)
 (define TANK_IMG
   (rectangle TANK_WIDTH TANK_HEIGHT
-             "solid" "light steel blue"))
+             "solid" "red"))
 
 ; UFO image properties
 (define UFO_IMG
@@ -284,8 +285,7 @@ Lose: UFO lands
            (tank-vel (fired-tank gs)))
           (make-posn
            (posn-x (fired-missile gs))
-           (+ (posn-y (fired-missile gs)) ASCENT_SPD)))]
-        [else gs]))
+           (+ (posn-y (fired-missile gs)) ASCENT_SPD)))]))
 
 ; gstate KeyEvent -> gstate
 ; -- Key event "left" makes tank move to the left
@@ -362,6 +362,10 @@ Lose: UFO lands
 (define (main init)
   (big-bang init
     [to-draw render]
-    [on-tick move]
+    [on-tick move 0.1]
     [on-key control]
     [stop-when game_over]))
+
+(main (make-aim
+       (make-posn SXCENTER 0)
+       (make-tank SXCENTER TANK_YPOS)))
