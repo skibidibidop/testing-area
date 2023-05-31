@@ -217,7 +217,7 @@ Lose: UFO lands
 ; Generate random number [0, n), negative if even and
 ; positive if odd
 (define (rand_jump n)
-  (cond[(= (% (random n) 0)) (* (random n) -1)]
+  (cond[(= (modulo (random n) 2) 0) (* (random n) -1)]
        [else (random n)]))
 
 (define XTRIGGER (/ (image-width UFO_IMG) 2))
@@ -264,17 +264,18 @@ Lose: UFO lands
 
 ; gstate -> gstate
 ; Moves UFO_IMG, TANK_IMG, and MISSILE_IMG per tick
-(check-random (move state_t2)
-              (make-fired (make-posn (random SWIDTH)
-                                     (+ 50 DESCENT_SPD))
-                          (make-tank 26 -4)
-                          (make-posn 20 (+ 30 ASCENT_SPD))))
+;(check-random (move state_t2)
+;              (make-fired
+;               (make-posn (random SWIDTH)
+;                          (+ 50 DESCENT_SPD))
+;               (make-tank 26 -4)
+;               (make-posn 20 (+ 30 ASCENT_SPD))))
 ; (define (move gs) gs)
 (define (move gs)
   (cond[(aim? gs)
         (make-aim
          (make-posn
-          (random SWIDTH)
+          (+ (posn-x (aim-ufo gs)) (rand_jump 11))
           (+ (posn-y (aim-ufo gs)) DESCENT_SPD))
          (make-tank
           (+ (tank-loc (aim-tank gs))
@@ -283,7 +284,7 @@ Lose: UFO lands
         [(fired? gs)
          (make-fired
           (make-posn
-           (random SWIDTH)
+           (+ (posn-x (fired-ufo gs)) (rand_jump 11))
            (+ (posn-y (fired-ufo gs)) DESCENT_SPD))
           (make-tank
            (+ (tank-loc (fired-tank gs))
@@ -305,7 +306,8 @@ Lose: UFO lands
   (cond[(aim? gs)
         (cond[(string=? ke "left")
               (make-aim
-               (make-posn (random SWIDTH)
+               (make-posn (+ (posn-x (aim-ufo gs))
+                             (rand_jump 11))
                           (+ (posn-y (aim-ufo gs))
                              DESCENT_SPD))
                (make-tank (+ (tank-loc (aim-tank gs))
@@ -313,7 +315,8 @@ Lose: UFO lands
                           TANK_LMSPD))]
              [(string=? ke "right")
               (make-aim
-               (make-posn (random SWIDTH)
+               (make-posn (+ (posn-x (aim-ufo gs))
+                             (rand_jump 11))
                           (+ (posn-y (aim-ufo gs))
                              DESCENT_SPD))
                (make-tank (+ (tank-loc (aim-tank gs))
@@ -321,7 +324,8 @@ Lose: UFO lands
                           TANK_RMSPD))]
              [(string=? ke " ")
               (make-fired
-               (make-posn (random SWIDTH)
+               (make-posn (+ (posn-x (aim-ufo gs))
+                             (rand_jump 11))
                           (+ (posn-y (aim-ufo gs))
                              DESCENT_SPD))
                (make-tank (+ (tank-loc (aim-tank gs))
@@ -333,7 +337,8 @@ Lose: UFO lands
        [(fired? gs)
         (cond[(string=? ke "left")
               (make-fired
-               (make-posn (random SWIDTH)
+               (make-posn (+ (posn-x (fired-ufo gs))
+                             (rand_jump 11))
                           (+ (posn-y (fired-ufo gs))
                              DESCENT_SPD))
                (make-tank (+ (tank-loc (fired-tank gs))
@@ -344,7 +349,8 @@ Lose: UFO lands
                              ASCENT_SPD)))]
              [(string=? ke "right")
               (make-fired
-               (make-posn (random SWIDTH)
+               (make-posn (+ (posn-x (fired-ufo gs))
+                             (rand_jump 11))
                           (+ (posn-y (fired-ufo gs))
                              DESCENT_SPD))
                (make-tank (+ (tank-loc (fired-tank gs))
@@ -356,7 +362,8 @@ Lose: UFO lands
              [(and (string=? ke " ")
                    (<= (posn-y (fired-missile gs)) 0))
               (make-fired
-               (make-posn (random SWIDTH )
+               (make-posn (+ (posn-x (fired-ufo gs))
+                             (rand_jump 11))
                           (+ (posn-y (fired-ufo gs))
                              DESCENT_SPD))
                (make-tank (+ (tank-loc (fired-tank gs))
