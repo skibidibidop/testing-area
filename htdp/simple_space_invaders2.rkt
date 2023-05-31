@@ -49,8 +49,19 @@ to represent the game state.
 (define (fn_for_tank t)
   (...(tank-loc t) (tank-vel t)))
 
-(define-struct missile
+; a missile_stat is one of:
+; -- #false
+; -- Posn
+; Interp.:
+; #false    : missile is in tank
+; Posn      : position of missile after firing
+; (define mstat1 #false))
+; (define mstat2 (make-posn 30 20))
+#;
+(define (fn_for_missile_stat ms)
+  (cond[(false? ms) (...)]
+       [(posn? ms) (...(posn-x ms) (posn-y ms))]))
 
-(define-struct gstate [ufo tank missile])
+(define-struct gstate [u t m])
 ; gstate: a structure
 ; (make-gstate posn 
