@@ -79,3 +79,54 @@ to represent the game state.
    (posn-x (gstate-u gs)) (posn-y (gstate-u gs))
    (tank-loc (gstate-tank gs)) (tank-vel (gstate-tank gs))
    (posn-x (gstate-m gs)) (posn-y (gstate-m gs))))
+
+; FUNCTION DEFINITIONS /////////////////////////////////////
+
+(define rendert1 (make-gstate (make-posn 30 20)
+                              (make-tank 40 TANK_LMSPD)
+                              #false))
+(define rendert2 (make-gstate (make-posn 40 10)
+                              (make-tank 20 TANK_RMSPD)
+                              (make-posn 30 30)))
+; gstate -> Image
+; Renders UFO_IMG, TANK_IMG, MSL_IMG on BG depending on data
+; from gstate
+(check-expect (render rendert1)
+              (place-images
+               (list UFO_IMG TANK_IMG MSL_IMG)
+               (list (make-posn 30 20)
+                     (make-posn 40 TANK_YPOS)
+                     (make-posn 40 TANK_YPOS))
+               BG))
+(check-expect (render rendert2)
+              (place-images
+               (list UFO_IMG TANK_IMG MSL_IMG)
+               (list (make-posn 40 10)
+                     (make-posn 20 TANK_YPOS)
+                     (make-posn 30 30))
+               BG))
+
+; (define (render gs) gs)
+(define (render gs)
+  (place-images
+   (list UFO_IMG TANK_IMG MSL_IMG)
+   (list (make-posn
+          (posn-x (gstate-u gs))
+          (posn-y (gstate-u gs)))
+         (make-posn
+          (tank-loc (gstate-t gs))
+          TANK_YPOS)
+         (cond
+           ; Missile in tank while not launched
+           [(false? (gstate-m gs))
+            (make-posn
+             (tank-loc (gstate-t gs))
+             TANK_YPOS)]
+           ; Missile's position after launch
+           [(posn? (gstate-m gs))
+            (make-posn
+             (posn-x (gstate-m gs))
+             (posn-y (gstate-m gs)))]
+           [else gs]))
+   BG))
+         
