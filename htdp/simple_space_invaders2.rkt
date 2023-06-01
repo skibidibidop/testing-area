@@ -169,7 +169,6 @@ to represent the game state.
               (tank_render gs
                            (missile_render gs BG))))
 
-#|
 ; Test values for function (move)
 (define movet1 (make-gstate
                 (make-posn 30 30)
@@ -191,9 +190,7 @@ to represent the game state.
                (make-tank
                 (+ TANK_RMSPD 40)
                 TANK_RMSPD)
-               (make-posn
-                (+ TANK_RMSPD 40)
-                TANK_YPOS)))
+               #false))
 (check-random (move movet2)
               (make-gstate
                (make-posn
@@ -206,8 +203,6 @@ to represent the game state.
                 50
                 (+ MSL_UP_SPD 60))))
 
-; (define (move gs) gs)
-
 (define (move gs)
   (make-gstate
    (make-posn
@@ -217,10 +212,7 @@ to represent the game state.
     (+ (tank-loc (gstate-t gs))
        (tank-vel (gstate-t gs)))
     (tank-vel (gstate-t gs)))
-   (cond[(boolean? (gstate-m gs))
-         (make-posn (+ (tank-loc (gstate-t gs))
-                       (tank-vel (gstate-t gs)))
-                       TANK_YPOS)]
+   (cond[(boolean? (gstate-m gs)) #false]
         [(posn? (gstate-m gs))
          (make-posn (posn-x (gstate-m gs))
                     (+ MSL_UP_SPD
@@ -232,7 +224,7 @@ to represent the game state.
                    (make-posn 40 30)
                    (make-tank 50 TANK_RMSPD)
                    #false))
-(define control t2 (make-gstate
+(define controlt2 (make-gstate
                     (make-posn 20 30)
                     (make-tank 40 TANK_LMSPD)
                     (make-posn 50 50)))
@@ -242,27 +234,53 @@ to represent the game state.
 (check-expect (control controlt1 "right")
               (make-gstate
                (make-posn 40 30)
-               (make-tank (+ TANK_RMSPD 50)
-                          TANK_RMSPD)
+               (make-tank 50 TANK_RMSPD)
                #false))
 (check-expect (control controlt1 "left")
               (make-gstate
                (make-posn 40 30)
-               (make-tank (+ TANK_RMSPD 50)
-                          TANK_LMSPD)
+               (make-tank 50 TANK_LMSPD)
                #false))
 (check-expect (control controlt1 " ")
               (make-gstate
                (make-posn 40 30)
-               (make-tank ( + TANK_RMSPD 50)
-                          TANK_RMSPD)
-               (make-posn )))
+               (make-tank 50 TANK_RMSPD)
+               (make-posn 50 TANK_YPOS)))
 
-; #false to #false for all functions as long as no
-; " " ke, otherwise missile will launch even without
-; pressing " "
+(define (control gs ke)
+  (cond[(string=? ke "right")
+        (make-gstate
+         (make-posn
+          (posn-x (gstate-u gs))
+          (posn-y (gstate-u gs)))
+         (make-tank
+          (tank-loc (gstate-t gs))
+          TANK_RMSPD)
+         (gstate-m gs))]
+       [(string=? ke "left")
+        (make-gstate
+         (make-posn
+          (posn-x (gstate-u gs))
+          (posn-y (gstate-u gs)))
+         (make-tank
+          (tank-loc (gstate-t gs))
+          TANK_LMSPD)
+         (gstate-m gs))]
+       [(and (string=? ke " ")
+             (boolean? (gstate-m gs)))
+        (make-gstate
+         (make-posn
+          (posn-x (gstate-u gs))
+          (posn-y (gstate-u gs)))
+         (make-tank
+          (tank-loc (gstate-t gs))
+          (tank-vel (gstate-t gs)))
+         (make-posn
+          (tank-loc (gstate-t gs))
+          TANK_YPOS))]
+       [else gs]))
 
-
+#|
 (define (main init)
   (big-bang init
     [to-draw render]
