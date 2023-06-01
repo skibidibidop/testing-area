@@ -82,6 +82,7 @@ to represent the game state.
 
 ; FUNCTION DEFINITIONS /////////////////////////////////////
 
+; Test values for function (render)
 (define rendert1 (make-gstate (make-posn 30 20)
                               (make-tank 40 TANK_LMSPD)
                               #false))
@@ -118,7 +119,7 @@ to represent the game state.
           TANK_YPOS)
          (cond
            ; Missile in tank while not launched
-           [(false? (gstate-m gs))
+           [(boolean? (gstate-m gs))
             (make-posn
              (tank-loc (gstate-t gs))
              TANK_YPOS)]
@@ -129,4 +130,4 @@ to represent the game state.
              (posn-y (gstate-m gs)))]
            [else gs]))
    BG))
-         
+
