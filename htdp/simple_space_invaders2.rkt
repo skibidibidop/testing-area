@@ -64,4 +64,18 @@ to represent the game state.
 
 (define-struct gstate [u t m])
 ; gstate: a structure
-; (make-gstate posn 
+; (make-gstate Posn tank missile_stat)
+; Interp.: represents complete state of this simple space
+; invaders game
+; (define g1 (make-gstate (make-posn 30 20)
+;                         (make-tank 40 TANK_LMSPD)
+;                         #false))
+; (define g2 (make-gstate (make-posn 30 20)
+;                         (make-tank 50 TANK_RMSPD)
+;                         (make-posn 50 40)))
+#;
+(define (fn_for_gstate gs)
+  (..
+   (posn-x (gstate-u gs)) (posn-y (gstate-u gs))
+   (tank-loc (gstate-tank gs)) (tank-vel (gstate-tank gs))
+   (posn-x (gstate-m gs)) (posn-y (gstate-m gs))))
