@@ -16,12 +16,15 @@ to represent the game state.
 
 (define SCALER 10)
 
-(define SWIDTH (* SCALER 20))
-(define SHEIGHT (* SCALER 10))
+(define SWIDTH (* SCALER 50))
+(define SHEIGHT (* SCALER 50))
+(define S_XCENTER (/ SWIDTH 2))
 
 (define UFO_IMG (circle (* SCALER 2) "solid" "magenta"))
 (define UFO_DOWN_SPD 2)
 (define SIDE_JUMP_LIM 11)
+(define UFO_LANDED (- SHEIGHT
+                      (/ (image-height UFO_IMG) 2)))
 
 (define TANK_IMG (rectangle (* SCALER 3) SCALER
                             "solid" "light steel blue"))
@@ -169,6 +172,13 @@ to represent the game state.
               (tank_render gs
                            (missile_render gs BG))))
 
+; Number -> Number
+; Generate random number; negative if even, positive if odd
+(define (rand_jump n)
+  (cond[(= (modulo (random n) 2) 0)
+        (* (random n) -1)]
+       [else (random n)]))
+
 ; Test values for function (move)
 (define movet1 (make-gstate
                 (make-posn 30 30)
@@ -185,7 +195,7 @@ to represent the game state.
 (check-random (move movet1)
               (make-gstate
                (make-posn
-                (+ (random SIDE_JUMP_LIM) 30)
+                (+ (rand_jump SIDE_JUMP_LIM) 30)
                 (+ UFO_DOWN_SPD 30))
                (make-tank
                 (+ TANK_RMSPD 40)
@@ -194,7 +204,7 @@ to represent the game state.
 (check-random (move movet2)
               (make-gstate
                (make-posn
-                (+ (random SIDE_JUMP_LIM) 30)
+                (+ (rand_jump SIDE_JUMP_LIM) 30)
                 (+ UFO_DOWN_SPD 40))
                (make-tank
                 (+ TANK_LMSPD 30)
@@ -206,7 +216,7 @@ to represent the game state.
 (define (move gs)
   (make-gstate
    (make-posn
-    (+ (random SIDE_JUMP_LIM) (posn-x (gstate-u gs)))
+    (+ (rand_jump SIDE_JUMP_LIM) (posn-x (gstate-u gs)))
     (+ UFO_DOWN_SPD (posn-y (gstate-u gs))))
    (make-tank
     (+ (tank-loc (gstate-t gs))
@@ -214,9 +224,12 @@ to represent the game state.
     (tank-vel (gstate-t gs)))
    (cond[(boolean? (gstate-m gs)) #false]
         [(posn? (gstate-m gs))
-         (make-posn (posn-x (gstate-m gs))
-                    (+ MSL_UP_SPD
-                       (posn-y (gstate-m gs))))]
+         (cond[(<= (posn-y (gstate-m gs)) 0)
+               #false]
+              [else
+               (make-posn (posn-x (gstate-m gs))
+                          (+ MSL_UP_SPD
+                             (posn-y (gstate-m gs))))])]
         [else gs])))
 
 ; Test values for function (control)
@@ -280,7 +293,49 @@ to represent the game state.
           TANK_YPOS))]
        [else gs]))
 
-#|
+(define XTRIGGER (/ (image-width UFO_IMG) 2))
+(define YTRIGGER
+  (+ (/ (image-height UFO_IMG) 2)
+     (/ (image-height MSL_IMG) 2)))
+
+; gstate -> Boolean
+; Stops program if the UFO lands or if the UFO is hit
+; by the missile.
+(check-expect (game_over (make-gstate
+                          (make-posn 30 UFO_LANDED)
+                          (make-tank 50 TANK_YPOS)
+                          #false))
+              #true)
+(check-expect (game_over (make-gstate
+                          (make-posn 80 50)
+                          (make-tank 50 TANK_YPOS)
+                          (make-posn 89 59)))
+              #true)
+(check-expect (game_over (make-gstate
+                          (make-posn 80 50)
+                          (make-tank 50 TANK_YPOS)
+                          (make-posn 130 80)))
+              #false)
+
+(define (game_over gs)
+  (cond
+    [(and (boolean? (gstate-m gs))
+          (>= (posn-y (gstate-u gs)) UFO_LANDED))
+     #true]
+    [(posn? (gstate-m gs))
+     (cond
+       [(and (<= (abs
+                  (- (posn-x (gstate-u gs))
+                     (posn-x (gstate-m gs))))
+                 XTRIGGER)
+             (<= (abs
+                  (- (posn-y (gstate-u gs))
+                     (posn-y (gstate-m gs))))
+                 YTRIGGER))
+        #true]
+       [else #false])]
+     [else #false]))
+
 (define (main init)
   (big-bang init
     [to-draw render]
@@ -289,5 +344,7 @@ to represent the game state.
     [stop-when game_over]))
 
 (main (make-gstate
-       (make-posn...)))
-|#
+       (make-posn S_XCENTER
+                  (/ (image-height UFO_IMG) 2))
+       (make-tank S_XCENTER TANK_RMSPD)
+       #false))
