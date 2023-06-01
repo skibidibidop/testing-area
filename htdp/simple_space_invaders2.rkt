@@ -17,6 +17,8 @@ to represent the game state.
 (define SHEIGHT (* SCALER 10))
 
 (define UFO_IMG (circle (* SCALER 2) "solid" "magenta"))
+(define UFO_DOWN_SPD 2)
+(define SIDE_JUMP_LIM 11)
 
 (define TANK_IMG (rectangle (* SCALER 3) SCALER
                             "solid" "light steel blue"))
@@ -26,6 +28,7 @@ to represent the game state.
 
 (define MSL_IMG (isosceles-triangle
                  (* SCALER 0.5) 30 "solid" "red"))
+(define MSL_UP_SPD (* (* UFO_DOWN_SPD 5) -1))
 
 (define BG (empty-scene SWIDTH SHEIGHT))
 
@@ -89,6 +92,7 @@ to represent the game state.
 (define rendert2 (make-gstate (make-posn 40 10)
                               (make-tank 20 TANK_RMSPD)
                               (make-posn 30 30)))
+
 ; gstate -> Image
 ; Renders UFO_IMG, TANK_IMG, MSL_IMG on BG depending on data
 ; from gstate
@@ -131,3 +135,71 @@ to represent the game state.
            [else gs]))
    BG))
 
+; Test values for function (move)
+(define movet1 (make-gstate
+                (make-posn 30 30)
+                (make-tank 40 TANK_RMSPD)
+                #false))
+(define movet2 (make-gstate
+                (make-posn 30 40)
+                (make-tank 30 TANK_LMSPD)
+                (make-posn 50 60)))
+
+; gstate -> gstate
+; Provides updated locations for UFO_IMG, TANK_IMG,
+; and MSL_IMG per tick
+(check-random (move movet1)
+              (make-gstate
+               (make-posn
+                (+ (random SIDE_JUMP_LIM) 30)
+                (+ UFO_DOWN_SPD 30))
+               (make-tank
+                (+ TANK_RMSPD 40)
+                TANK_RMSPD)
+               (make-posn
+                (+ TANK_RMSPD 40)
+                TANK_YPOS)))
+(check-random (move movet2)
+              (make-gstate
+               (make-posn
+                (+ (random SIDE_JUMP_LIM) 30)
+                (+ UFO_DOWN_SPD 40))
+               (make-tank
+                (+ TANK_LMSPD 30)
+                TANK_LMSPD)
+               (make-posn
+                50
+                (+ MSL_UP_SPD 60))))
+
+; (define (move gs) gs)
+
+(define (move gs)
+  (make-gstate
+   (make-posn
+    (+ (random SIDE_JUMP_LIM) (posn-x (gstate-u gs)))
+    (+ UFO_DOWN_SPD (posn-y (gstate-u gs))))
+   (make-tank
+    (+ (tank-loc (gstate-t gs))
+       (tank-vel (gstate-t gs)))
+    (tank-vel (gstate-t gs)))
+   (cond[(boolean? (gstate-m gs))
+         (make-posn (+ (tank-loc (gstate-t gs))
+                       (tank-vel (gstate-t gs)))
+                       TANK_YPOS)]
+        [(posn? (gstate-m gs))
+         (make-posn (posn-x (gstate-m gs))
+                    (+ MSL_UP_SPD
+                       (posn-y (gstate-m gs))))]
+        [else gs])))
+
+#|
+(define (main init)
+  (big-bang init
+    [to-draw render]
+    [on-tick move]
+    [on-key control]
+    [stop-when game_over]))
+
+(main (make-gstate
+       (make-posn...)))
+|#
