@@ -88,7 +88,6 @@ to represent the game state.
 
 ; FUNCTION DEFINITIONS /////////////////////////////////////
 
-; Test values for functions (ufo_render) and (tank_render)
 (define rendert1
   (make-gstate
    (make-posn 30 40)
@@ -140,13 +139,37 @@ to represent the game state.
                      (posn-y (gstate-m gs))
                      img)]))
 
-#|
 ; gstate -> Image
 ; Render all images, with positions based on gstate
-(check-expect (render ...) ...)
+(check-expect (render
+               (make-gstate
+                (make-posn 50 80)
+                (make-tank 30 TANK_LMSPD)
+                #false))
+              (place-image
+               UFO_IMG 50 80
+               (place-image
+                TANK_IMG 30 TANK_YPOS
+                (place-image
+                 MSL_IMG 30 TANK_YPOS BG))))
+(check-expect (render
+               (make-gstate
+                (make-posn 30 50)
+                (make-tank 75 TANK_RMSPD)
+                (make-posn 80 90)))
+              (place-image
+               UFO_IMG 30 50
+               (place-image
+                TANK_IMG 75 TANK_YPOS
+                (place-image
+                 MSL_IMG 80 90 BG))))
 
-(define (render ...) ...)
+(define (render gs)
+  (ufo_render gs
+              (tank_render gs
+                           (missile_render gs BG))))
 
+#|
 ; Test values for function (move)
 (define movet1 (make-gstate
                 (make-posn 30 30)
