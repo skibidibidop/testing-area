@@ -34,6 +34,7 @@ Certain key strokes can change the chosen pet's mood.
 (define HGAUGE_YPOS (/ (image-height HGAUGE) 2))
 (define HGAUGE_FULL (/ SWIDTH 2))
 (define HGUAGE_EMPTY (- 0 (/ SWIDTH 2)))
+(define HGAUGE_DOWN 0.1)
 
 (define RIGHT_SPD 3)
 (define LEFT_SPD -3)
@@ -114,3 +115,33 @@ Certain key strokes can change the chosen pet's mood.
          (list (make-posn (vcham-hpos va) HGAUGE_YPOS)
                (make-posn (vcham-xpos va) CAT_YPOS))
          BG)]))
+
+; vanimal -> vanimal
+; Updates vcat/vcham per tick
+(check-expect (time_step (make-vcat 40 50 RIGHT_SPD))
+              (make-vcat (- 40 HGAUGE_DOWN)
+                         (+ 50 RIGHT_SPD)
+                         RIGHT_SPD))
+(check-expect (time_step (make-vcat 60 70 LEFT_SPD))
+              (make-vcat (- 60 HGAUGE_DOWN)
+                         (+ 70 LEFT_SPD)
+                         LEFT_SPD))
+(check-expect (time_step (make-vcham 20 30 RIGHT_SPD))
+              (make-vcham (- 20 HGAUGE_DOWN)
+                          (+ 30 RIGHT_SPD)
+                          RIGHT_SPD))
+(check-expect (time_step (make-vcham 10 20 LEFT_SPD))
+              (make-vcham (- 10 HGAUGE_DOWN)
+                          (+ 20 LEFT_SPD)
+                          LEFT_SPD))
+
+(define (time_step va)
+  (cond
+    [(vcat? va)
+     (make-vcat (- (vcat-hpos va) HGAUGE_DOWN)
+                (+ (vcat-xpos va) (vcat-vel va))
+                (vcat-vel va))]
+    [else
+     (make-vcham (- (vcham-hpos va) HGAUGE_DOWN)
+                 (+ (vcham-xpos va) (vcham-vel va))
+                 (vcham-vel va))]))
