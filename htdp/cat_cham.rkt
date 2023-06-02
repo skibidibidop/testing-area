@@ -32,7 +32,7 @@ Certain key strokes can change the chosen pet's mood.
 (define HGAUGE (rectangle SWIDTH SHEIGHT "solid" "red"))
 (define HGAUGE_YPOS (/ (image-height HGAUGE) 2))
 (define HGAUGE_FULL (/ SWIDTH 2))
-(define HGUAGE_EMPTY (- 1 (/ SWIDTH 2)))
+(define HGAUGE_EMPTY (- 1 (/ SWIDTH 2)))
 (define HGAUGE_DOWN 0.1)
 
 (define PET_HGUP 5)
@@ -294,7 +294,36 @@ Certain key strokes can change the chosen pet's mood.
        [else va])]
     [else va]))
 
+; vanimal -> Boolean
+; Signals program to terminate if HGAUGE_EMPTY
+(check-expect (sad (make-vcat HGAUGE_EMPTY 20 RIGHT_SPD))
+              #true)
+(check-expect (sad (make-vcat HGAUGE_FULL 20 RIGHT_SPD))
+              #false)
+(check-expect (sad (make-vcat (/ HGAUGE_FULL 2) 20
+                              RIGHT_SPD))
+              #false)
+(check-expect (sad (make-vcham HGAUGE_EMPTY 20
+                               RIGHT_SPD "red"))
+              #true)
+(check-expect (sad (make-vcham HGAUGE_FULL 20
+                               RIGHT_SPD "red"))
+              #false)
+(check-expect (sad (make-vcham (/ HGAUGE_FULL 2) 20
+                               RIGHT_SPD "red"))
+              #false)
 
+(define (sad va)
+  (cond
+    [(vcat? va)
+     (cond
+       [(<= (vcat-hpos va) HGAUGE_EMPTY) #true]
+       [else #false])]
+    [(vcham? va)
+     (cond
+       [(<= (vcham-hpos va) HGAUGE_EMPTY) #true]
+       [else #false])]
+    [else #false]))
 
 #|
 (define (main init)
