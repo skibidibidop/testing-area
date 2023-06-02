@@ -26,11 +26,31 @@ Certain key strokes can change the chosen pet's mood.
 (define CHAMELEON
   (rectangle (* SCALER 6) (* SCALER 3) "solid" "red"))
 
+(define HGAUGE (rectangle SWIDTH SHEIGHT "solid" "red"))
+(define HGAUGE_YPOS (/ (image-height HGAUGE) 2))
+(define HGAUGE_FULL (/ SWIDTH 2))
+(define HGUAGE_EMPTY (- 0 (/ SWIDTH 2)))
+
+(define RIGHT_SPD 3)
+(define LEFT_SPD -3)
+
 (define BG (empty-scene SWIDTH SHEIGHT))
 
 ; DATA DEFINITIONS /////////////////////////////////////////
 
-
+(define-struct vcat [hpos xpos vel])
+; vcat: (make-vcat Number Number Number)
+; Interp.:
+; (make-vcat hpos xpos vel) is a cat with the following:
+; hpos: center (x-coordinate) of the cat's happiness gauge.
+;     : Gauge is full if this is at HGAUGE_FULL.
+;     : Gauge is empty if this is at HGAUGE_EMPTY.
+; xpos: x-coordinate of CAT
+; vel: velocity (RIGHT_SPD or LEFT_SPD) of CAT
+; (define vcat1 (make-vcat 30 40 RIGHT_SPD))
+#;
+(define (fn_for_vcat c)
+  (...(vcat-hpos c) (vcat-xpos c) (vcat-vel c)))
 
 ; A vanimal is either:
 ; -- a vcat
