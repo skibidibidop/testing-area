@@ -41,7 +41,7 @@ Certain key strokes can change the chosen pet's mood.
 (define-struct vcat [hpos xpos vel])
 ; vcat: (make-vcat Number Number Number)
 ; Interp.:
-; (make-vcat hpos xpos vel) is a cat with the following:
+; (make-vcat hpos xpos vel), a cat with the following:
 ; hpos: center (x-coordinate) of the cat's happiness gauge.
 ;     : Gauge is full if this is at HGAUGE_FULL.
 ;     : Gauge is empty if this is at HGAUGE_EMPTY.
@@ -51,6 +51,20 @@ Certain key strokes can change the chosen pet's mood.
 #;
 (define (fn_for_vcat c)
   (...(vcat-hpos c) (vcat-xpos c) (vcat-vel c)))
+
+(define-struct vcham [hpos xpos vel])
+; vcham: (make-vcham Number Number Number)
+; Interp.:
+; (make-vcham hpos xpos vel), a chameleon w/ the following:
+; hpos: center (x-coordinate) of the chameleon's happiness
+;     : gauge. Gauge is full if it is at HGAUGE_FULL, and
+;     : it is empty if at HGAUGE_EMPTY.
+; xpos: x-coordinate of CHAMELEON.
+; vel: velocity (RIGHT_SPD or LEFT_SPD) of CHAMELEON
+; (define vcham1 (make-vcham 40 50 LEFT_SPD))
+#;
+(define (fn_for_vcham ch)
+  (...(vcham-hpos ch) (vcham-xpos ch) (vcham-vel ch)))
 
 ; A vanimal is either:
 ; -- a vcat
