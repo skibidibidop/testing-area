@@ -26,3 +26,12 @@ Certain key strokes can change the chosen pet's mood.
 (define CHAMELEON
   (rectangle (* SCALER 6) (* SCALER 3) "solid" "red"))
 
+(define BG (empty-scene SWIDTH SHEIGHT))
+
+; DATA DEFINITIONS /////////////////////////////////////////
+
+
+
+; A vanimal is either:
+; -- a vcat
+; -- a vcham
