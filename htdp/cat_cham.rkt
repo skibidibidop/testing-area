@@ -69,3 +69,13 @@ Certain key strokes can change the chosen pet's mood.
 ; A vanimal is either:
 ; -- a vcat
 ; -- a vcham
+; Interp.:
+;   vcat  - happiness gauge, x-coord, velocity of CAT
+;   vcham - happiness gauge, x-coord, velocity of CHAMELEON
+; (define VA1 (make-vcat 20 50 RIGHT_SPD))
+; (define VA2 (make-vcham 30 40 LEFT_SPD))
+#;
+(define (fn_for_vanimal va)
+  (cond[(vcat? va) (...)]
+       [(vcham? va) (...)]
+       [else (...)]))
