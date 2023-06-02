@@ -6,23 +6,5 @@ Author: Mark Beltran
 Date: June 2, 2023
 
 Simulates a cat or chameleon pet based on initial input.
-Pets change their movement direction upon reaching
-the border.
 Certain key strokes can change the chosen pet's mood.
 |#
-
-(require 2htdp/image)
-(require 2htdp/universe)
-
-(define SCALER 10)
-
-; IMAGES ///////////////////////////////////////////////////
-
-(define SWIDTH (* SCALER 20))
-(define SHEIGHT (* SCALER 10))
-
-(define CAT (circle (* SCALER 5) "solid" "brown"))
-
-(define CHAMELEON
-  (rectangle (* SCALER 6) (* SCALER 3) "solid" "red"))
-
