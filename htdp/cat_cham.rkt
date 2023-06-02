@@ -14,17 +14,21 @@ Certain key strokes can change the chosen pet's mood.
 (require 2htdp/image)
 (require 2htdp/universe)
 
-(define SCALER 10)
-
 ; IMAGES ///////////////////////////////////////////////////
+
+(define SCALER 10)
 
 (define SWIDTH (* SCALER 20))
 (define SHEIGHT (* SCALER 10))
 
 (define CAT (circle (* SCALER 5) "solid" "brown"))
+(define CAT_YPOS (- SHEIGHT
+                    (/ (image-height CAT) 2)))
 
 (define CHAMELEON
   (rectangle (* SCALER 6) (* SCALER 3) "solid" "red"))
+(define CHAMELEON_YPOS (- SHEIGHT
+                          (/ (image-height CHAMELEON) 2)))
 
 (define HGAUGE (rectangle SWIDTH SHEIGHT "solid" "red"))
 (define HGAUGE_YPOS (/ (image-height HGAUGE) 2))
@@ -79,3 +83,34 @@ Certain key strokes can change the chosen pet's mood.
   (cond[(vcat? va) (...)]
        [(vcham? va) (...)]
        [else (...)]))
+
+; FUNCTION DEFINITIONS /////////////////////////////////////
+
+; vanimal -> Image
+; Renders CAT/CHAMELEON, HGAUGE, BG based on vanimal data
+(check-expect (render (make-vcat 30 40 RIGHT_SPD))
+              (place-images
+               (list HGAUGE CAT)
+               (list (make-posn 30 HGAUGE_YPOS)
+                     (make-posn 40 CAT_YPOS))
+               BG))
+(check-expect (render (make-vcham 50 60 LEFT_SPD))
+              (place-images
+               (list HGAUGE CHAMELEON)
+               (list (make-posn 50 HGAUGE_YPOS)
+                     (make-posn 60 CAT_YPOS))
+               BG))
+
+(define (render va)
+  (cond[(vcat? va)
+        (place-images
+         (list HGAUGE CAT)
+         (list (make-posn (vcat-hpos va) HGAUGE_YPOS)
+               (make-posn (vcat-xpos va) CAT_YPOS))
+         BG)]
+       [else
+        (place-images
+         (list HGAUGE CHAMELEON)
+         (list (make-posn (vcham-hpos va) HGAUGE_YPOS)
+               (make-posn (vcham-xpos va) CAT_YPOS))
+         BG)]))
