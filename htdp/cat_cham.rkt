@@ -1,6 +1,3 @@
-;; The first three lines of this file were inserted by DrRacket. They record metadata
-;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-beginner-reader.ss" "lang")((modname cat_cham) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: June 2, 2023
@@ -27,7 +24,7 @@ Certain key strokes can change the chosen pet's mood.
 (define CAT_XHALF (/ (image-width CAT) 2))
 
 (define CHAMELEON
-  (rectangle (* SCALER 6) (* SCALER 3) "solid" "red"))
+  (rectangle (* SCALER 6) (* SCALER 3) "outline" "red"))
 (define CHAMELEON_YPOS (- SHEIGHT
                           (/ (image-height CHAMELEON) 2)))
 (define CHAMELEON_XHALF (/ (image-width CAT) 2))
@@ -62,8 +59,8 @@ Certain key strokes can change the chosen pet's mood.
 (define (fn_for_vcat c)
   (...(vcat-hpos c) (vcat-xpos c) (vcat-vel c)))
 
-(define-struct vcham [hpos xpos vel])
-; vcham: (make-vcham Number Number Number)
+(define-struct vcham [hpos xpos vel color])
+; vcham: (make-vcham Number Number Number String)
 ; Interp.:
 ; (make-vcham hpos xpos vel), a chameleon w/ the following:
 ; hpos: center (x-coordinate) of the chameleon's happiness
@@ -71,10 +68,12 @@ Certain key strokes can change the chosen pet's mood.
 ;     : it is empty if at HGAUGE_EMPTY.
 ; xpos: x-coordinate of CHAMELEON.
 ; vel: velocity (RIGHT_SPD or LEFT_SPD) of CHAMELEON
+; color: color of CHAMELEON (red, green, or yellow)
 ; (define vcham1 (make-vcham 40 50 LEFT_SPD))
 #;
 (define (fn_for_vcham ch)
-  (...(vcham-hpos ch) (vcham-xpos ch) (vcham-vel ch)))
+  (...(vcham-hpos ch) (vcham-xpos ch)
+      (vcham-vel ch) (vcham-color)))
 
 ; A vanimal is either:
 ; -- a vcat
@@ -83,7 +82,7 @@ Certain key strokes can change the chosen pet's mood.
 ;   vcat  - happiness gauge, x-coord, velocity of CAT
 ;   vcham - happiness gauge, x-coord, velocity of CHAMELEON
 ; (define VA1 (make-vcat 20 50 RIGHT_SPD))
-; (define VA2 (make-vcham 30 40 LEFT_SPD))
+; (define VA2 (make-vcham 30 40 LEFT_SPD "red"))
 #;
 (define (fn_for_vanimal va)
   (cond[(vcat? va) (...)]
@@ -100,11 +99,11 @@ Certain key strokes can change the chosen pet's mood.
                (list (make-posn 30 HGAUGE_YPOS)
                      (make-posn 40 CAT_YPOS))
                BG))
-(check-expect (render (make-vcham 50 60 LEFT_SPD))
+(check-expect (render (make-vcham 50 60 LEFT_SPD "red"))
               (place-images
                (list HGAUGE CHAMELEON)
                (list (make-posn 50 HGAUGE_YPOS)
-                     (make-posn 60 CAT_YPOS))
+                     (make-posn 60 CHAMELEON_YPOS))
                BG))
 
 (define (render va)
@@ -118,7 +117,7 @@ Certain key strokes can change the chosen pet's mood.
         (place-images
          (list HGAUGE CHAMELEON)
          (list (make-posn (vcham-hpos va) HGAUGE_YPOS)
-               (make-posn (vcham-xpos va) CAT_YPOS))
+               (make-posn (vcham-xpos va) CHAMELEON_YPOS))
          BG)]))
 
 ; Number -> Number
@@ -132,10 +131,12 @@ Certain key strokes can change the chosen pet's mood.
               RIGHT_SPD)
 (check-expect (turn
                (make-vcham
-                50 (- SWIDTH CHAMELEON_XHALF) RIGHT_SPD))
+                50 (- SWIDTH CHAMELEON_XHALF)
+                RIGHT_SPD "red"))
               LEFT_SPD)
 (check-expect (turn
-               (make-vcham 50 CHAMELEON_XHALF LEFT_SPD))
+               (make-vcham
+                50 CHAMELEON_XHALF LEFT_SPD "red"))
                RIGHT_SPD)
 
 (define (turn va)
@@ -166,14 +167,16 @@ Certain key strokes can change the chosen pet's mood.
               (make-vcat (- 60 HGAUGE_DOWN)
                          (+ 70 LEFT_SPD)
                          LEFT_SPD))
-(check-expect (time_step (make-vcham 20 30 RIGHT_SPD))
+(check-expect (time_step (make-vcham 20 30 RIGHT_SPD "red"))
               (make-vcham (- 20 HGAUGE_DOWN)
                           (+ 30 RIGHT_SPD)
-                          RIGHT_SPD))
-(check-expect (time_step (make-vcham 10 20 LEFT_SPD))
+                          RIGHT_SPD
+                          "red"))
+(check-expect (time_step (make-vcham 10 20 LEFT_SPD "red"))
               (make-vcham (- 10 HGAUGE_DOWN)
                           (+ 20 LEFT_SPD)
-                          RIGHT_SPD))
+                          RIGHT_SPD
+                          "red"))
 
 (define (time_step va)
   (cond
@@ -184,7 +187,26 @@ Certain key strokes can change the chosen pet's mood.
     [else
      (make-vcham (- (vcham-hpos va) HGAUGE_DOWN)
                  (+ (vcham-xpos va) (vcham-vel va))
-                 (turn va))]))
+                 (turn va)
+                 (vcham-color va))]))
+
+; Number -> Number
+; Stops HGAUGE from going beyond HGAUGE_FULL
+(check-expect (hlimit HGAUGE_FULL "up") HGAUGE_FULL)
+(check-expect (hlimit HGAUGE_FULL "down") HGAUGE_FULL)
+(check-expect (hlimit 2 "up") (+ 2 PET_HGUP))
+(check-expect (hlimit 2 "down") (+ 2 FEED_HGUP))
+
+(define (hlimit num ke)
+  (cond
+    [(or (>= (+ num PET_HGUP) HGAUGE_FULL)
+         (>= (+ num FEED_HGUP) HGAUGE_FULL))
+     HGAUGE_FULL]
+    [else
+     (cond
+       [(string=? ke "up") (+ num PET_HGUP)]
+       [(string=? ke "down") (+ num FEED_HGUP)]
+       [else num])]))
 
 ; vanimal ke -> vanimal
 ; Increase happiness (cat, chameleon) and
@@ -208,25 +230,71 @@ Certain key strokes can change the chosen pet's mood.
                (make-vcat 40 50 RIGHT_SPD) "down")
               (make-vcat (+ 40 FEED_HGUP) 50 RIGHT_SPD))
 (check-expect (change_mood
-               (make-vcham 10 20 RIGHT_SPD) "right")
-              (make-vcham 10 20 RIGHT_SPD))
+               (make-vcham 10 20 RIGHT_SPD "red") "right")
+              (make-vcham 10 20 RIGHT_SPD "red"))
 (check-expect (change_mood
-               (make-vcham 10 20 RIGHT_SPD) "left")
-              (make-vcham 10 20 LEFT_SPD))
+               (make-vcham 10 20 RIGHT_SPD "red") "left")
+              (make-vcham 10 20 LEFT_SPD "red"))
 (check-expect (change_mood
-               (make-vcham 10 20 LEFT_SPD) "right")
-              (make-cham 10 20 RIGHT_SPD))
+               (make-vcham 10 20 LEFT_SPD "red") "right")
+              (make-vcham 10 20 RIGHT_SPD "red"))
 (check-expect (change_mood
-               (make-vcham 10 20 LEFT_SPD) "left")
-              (make-vcham 10 20 LEFT_SPD))
+               (make-vcham 10 20 LEFT_SPD "red") "left")
+              (make-vcham 10 20 LEFT_SPD "red"))
 (check-expect (change_mood
-               (make-vcham 10 20 RIGHT_SPD) "up")
-              (make-vcham 10 20 RIGHT_SPD))
+               (make-vcham 10 20 RIGHT_SPD "red") "up")
+              (make-vcham 10 20 RIGHT_SPD "red"))
 (check-expect (change_mood
-               (make-vcham 10 20 RIGHT_SPD) "down")
-              (make-vcham (+ 10 FEED_HGUP) 20 RIGHT_SPD))
+               (make-vcham 10 20 RIGHT_SPD "red") "down")
+              (make-vcham (+ 10 FEED_HGUP) 20
+                          RIGHT_SPD "red"))
 (check-expect (change_mood
-               (make-vcham 10 20 RIGHT_SPD) "r" ; REFACTOR TO INCLUDE COLOR IN VCHAM
+               (make-vcham 10 20 RIGHT_SPD "red") "r")
+              (make-vcham 10 20 RIGHT_SPD "red"))
+(check-expect (change_mood
+               (make-vcham 10 20 RIGHT_SPD "red") "g")
+              (make-vcham 10 20 RIGHT_SPD "green"))
+(check-expect (change_mood
+               (make-vcham 10 20 RIGHT_SPD "red") "y")
+              (make-vcham 10 20 RIGHT_SPD "yellow"))
+
+(define (change_mood va ke)
+  (cond
+    [(vcat? va)
+     (cond
+       [(string=? ke "right")
+        (make-vcat (vcat-hpos va) (vcat-xpos va) RIGHT_SPD)]
+       [(string=? ke "left")
+        (make-vcat (vcat-hpos va) (vcat-xpos va) LEFT_SPD)]
+       [(or (string=? ke "up") (string=? ke "down"))
+        (make-vcat (hlimit (vcat-hpos va) ke)
+                   (vcat-xpos va) (vcat-vel va))]
+       [else va])]
+    [(vcham? va)
+     (cond
+       [(string=? ke "right")
+        (make-vcham (vcham-hpos va) (vcham-xpos va)
+                    RIGHT_SPD (vcham-color va))]
+       [(string=? ke "left")
+        (make-vcham (vcham-hpos va) (vcham-xpos va)
+                    LEFT_SPD (vcham-color va))]
+       [(string=? ke "down")
+        (make-vcham (hlimit (vcham-hpos va) ke)
+                    (vcham-xpos va) (vcham-vel va)
+                    (vcham-color va))]
+       [(string=? ke "r")
+        (make-vcham (vcham-hpos va) (vcham-xpos va)
+                    (vcham-vel va) "red")]
+       [(string=? ke "g")
+        (make-vcham (vcham-hpos va) (vcham-xpos va)
+                    (vcham-vel va) "green")]
+       [(string=? ke "y")
+        (make-vcham (vcham-hpos va) (vcham-xpos va)
+                    (vcham-vel va) "yellow")]
+       [else va])]
+    [else va]))
+
+
 
 #|
 (define (main init)
