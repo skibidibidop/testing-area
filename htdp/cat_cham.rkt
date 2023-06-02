@@ -15,8 +15,8 @@ Certain key strokes can change the chosen pet's mood.
 
 (define SCALER 10)
 
-(define SWIDTH (* SCALER 20))
-(define SHEIGHT (* SCALER 10))
+(define SWIDTH (* SCALER 40))
+(define SHEIGHT (* SCALER 30))
 
 (define CAT (circle (* SCALER 5) "solid" "brown"))
 (define CAT_YPOS (- SHEIGHT
@@ -24,16 +24,16 @@ Certain key strokes can change the chosen pet's mood.
 (define CAT_XHALF (/ (image-width CAT) 2))
 
 (define CHAMELEON
-  (rectangle (* SCALER 6) (* SCALER 3) "outline" "red"))
+  (rectangle (* SCALER 10) (* SCALER 3) "outline" "red"))
 (define CHAMELEON_YPOS (- SHEIGHT
                           (/ (image-height CHAMELEON) 2)))
 (define CHAMELEON_XHALF (/ (image-width CAT) 2))
 
-(define HGAUGE (rectangle SWIDTH SHEIGHT "solid" "red"))
+(define HGAUGE (rectangle SWIDTH SCALER "solid" "red"))
 (define HGAUGE_YPOS (/ (image-height HGAUGE) 2))
 (define HGAUGE_FULL (/ SWIDTH 2))
 (define HGAUGE_EMPTY (- 1 (/ SWIDTH 2)))
-(define HGAUGE_DOWN 0.1)
+(define HGAUGE_DOWN 1)
 
 (define PET_HGUP 5)
 (define FEED_HGUP 10)
@@ -115,7 +115,9 @@ Certain key strokes can change the chosen pet's mood.
          BG)]
        [else
         (place-images
-         (list HGAUGE CHAMELEON)
+         (list HGAUGE
+               (rectangle (* SCALER 10) (* SCALER 3)
+                          "outline" (vcham-color va)))
          (list (make-posn (vcham-hpos va) HGAUGE_YPOS)
                (make-posn (vcham-xpos va) CHAMELEON_YPOS))
          BG)]))
@@ -325,11 +327,17 @@ Certain key strokes can change the chosen pet's mood.
        [else #false])]
     [else #false]))
 
-#|
 (define (main init)
   (big-bang init
     [to-draw render]
     [on-tick time_step]
     [on-key change_mood]
-    [stop-when stop]))
-|#
+    [stop-when sad]))
+
+(define tcat
+  (make-vcat HGAUGE_FULL CAT_XHALF RIGHT_SPD))
+(define tcham
+  (make-vcham HGAUGE_FULL CHAMELEON_XHALF RIGHT_SPD "red"))
+
+; (main tcat)
+(main tcham)
