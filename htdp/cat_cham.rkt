@@ -196,8 +196,37 @@ Certain key strokes can change the chosen pet's mood.
                (make-vcat 20 30 RIGHT_SPD) "left")
               (make-vcat 20 30 LEFT_SPD))
 (check-expect (change_mood
+               (make-vcat 20 30 LEFT_SPD) "right")
+              (make-vcat 20 30 RIGHT_SPD))
+(check-expect (change_mood
+               (make-vcat 20 30 LEFT_SPD) "left")
+              (make-vcat 20 30 LEFT_SPD))
+(check-expect (change_mood
                (make-vcat 30 40 RIGHT_SPD) "up")
-              (make-vcat 
+              (make-vcat (+ 30 PET_HGUP) 40 RIGHT_SPD))
+(check-expect (change_mood
+               (make-vcat 40 50 RIGHT_SPD) "down")
+              (make-vcat (+ 40 FEED_HGUP) 50 RIGHT_SPD))
+(check-expect (change_mood
+               (make-vcham 10 20 RIGHT_SPD) "right")
+              (make-vcham 10 20 RIGHT_SPD))
+(check-expect (change_mood
+               (make-vcham 10 20 RIGHT_SPD) "left")
+              (make-vcham 10 20 LEFT_SPD))
+(check-expect (change_mood
+               (make-vcham 10 20 LEFT_SPD) "right")
+              (make-cham 10 20 RIGHT_SPD))
+(check-expect (change_mood
+               (make-vcham 10 20 LEFT_SPD) "left")
+              (make-vcham 10 20 LEFT_SPD))
+(check-expect (change_mood
+               (make-vcham 10 20 RIGHT_SPD) "up")
+              (make-vcham 10 20 RIGHT_SPD))
+(check-expect (change_mood
+               (make-vcham 10 20 RIGHT_SPD) "down")
+              (make-vcham (+ 10 FEED_HGUP) 20 RIGHT_SPD))
+(check-expect (change_mood
+               (make-vcham 10 20 RIGHT_SPD) "r" ; REFACTOR TO INCLUDE COLOR IN VCHAM
 
 #|
 (define (main init)
