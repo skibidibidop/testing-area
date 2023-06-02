@@ -24,17 +24,22 @@ Certain key strokes can change the chosen pet's mood.
 (define CAT (circle (* SCALER 5) "solid" "brown"))
 (define CAT_YPOS (- SHEIGHT
                     (/ (image-height CAT) 2)))
+(define CAT_XHALF (/ (image-width CAT) 2))
 
 (define CHAMELEON
   (rectangle (* SCALER 6) (* SCALER 3) "solid" "red"))
 (define CHAMELEON_YPOS (- SHEIGHT
                           (/ (image-height CHAMELEON) 2)))
+(define CHAMELEON_XHALF (/ (image-width CAT) 2))
 
 (define HGAUGE (rectangle SWIDTH SHEIGHT "solid" "red"))
 (define HGAUGE_YPOS (/ (image-height HGAUGE) 2))
 (define HGAUGE_FULL (/ SWIDTH 2))
-(define HGUAGE_EMPTY (- 0 (/ SWIDTH 2)))
+(define HGUAGE_EMPTY (- 1 (/ SWIDTH 2)))
 (define HGAUGE_DOWN 0.1)
+
+(define PET_HGUP 5)
+(define FEED_HGUP 10)
 
 (define RIGHT_SPD 3)
 (define LEFT_SPD -3)
@@ -116,6 +121,41 @@ Certain key strokes can change the chosen pet's mood.
                (make-posn (vcham-xpos va) CAT_YPOS))
          BG)]))
 
+; Number -> Number
+; Changes direction of movement if a border is reached
+(check-expect (turn
+               (make-vcat
+                50 (- SWIDTH CAT_XHALF) RIGHT_SPD))
+              LEFT_SPD)
+(check-expect (turn
+               (make-vcat 50 CAT_XHALF LEFT_SPD))
+              RIGHT_SPD)
+(check-expect (turn
+               (make-vcham
+                50 (- SWIDTH CHAMELEON_XHALF) RIGHT_SPD))
+              LEFT_SPD)
+(check-expect (turn
+               (make-vcham 50 CHAMELEON_XHALF LEFT_SPD))
+               RIGHT_SPD)
+
+(define (turn va)
+  (cond
+    [(vcat? va)
+     (cond
+       [(>= (vcat-xpos va) (- SWIDTH CAT_XHALF))
+        LEFT_SPD]
+       [(<= (vcat-xpos va) CAT_XHALF)
+        RIGHT_SPD]
+       [else (vcat-vel va)])]
+    [(vcham? va)
+     (cond
+       [(>= (vcham-xpos va) (- SWIDTH CHAMELEON_XHALF))
+        LEFT_SPD]
+       [(<= (vcham-xpos va) CHAMELEON_XHALF)
+        RIGHT_SPD]
+       [else (vcham-vel va)])]
+    [else va]))
+
 ; vanimal -> vanimal
 ; Updates vcat/vcham per tick
 (check-expect (time_step (make-vcat 40 50 RIGHT_SPD))
@@ -133,15 +173,37 @@ Certain key strokes can change the chosen pet's mood.
 (check-expect (time_step (make-vcham 10 20 LEFT_SPD))
               (make-vcham (- 10 HGAUGE_DOWN)
                           (+ 20 LEFT_SPD)
-                          LEFT_SPD))
+                          RIGHT_SPD))
 
 (define (time_step va)
   (cond
     [(vcat? va)
      (make-vcat (- (vcat-hpos va) HGAUGE_DOWN)
                 (+ (vcat-xpos va) (vcat-vel va))
-                (vcat-vel va))]
+                (turn va))]
     [else
      (make-vcham (- (vcham-hpos va) HGAUGE_DOWN)
                  (+ (vcham-xpos va) (vcham-vel va))
-                 (vcham-vel va))]))
+                 (turn va))]))
+
+; vanimal ke -> vanimal
+; Increase happiness (cat, chameleon) and
+; change color (chameleon only)
+(check-expect (change_mood
+               (make-vcat 10 20 RIGHT_SPD) "right")
+              (make-vcat 10 20 RIGHT_SPD))
+(check-expect (change_mood
+               (make-vcat 20 30 RIGHT_SPD) "left")
+              (make-vcat 20 30 LEFT_SPD))
+(check-expect (change_mood
+               (make-vcat 30 40 RIGHT_SPD) "up")
+              (make-vcat 
+
+#|
+(define (main init)
+  (big-bang init
+    [to-draw render]
+    [on-tick time_step]
+    [on-key change_mood]
+    [stop-when stop]))
+|#
