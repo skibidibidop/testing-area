@@ -21,6 +21,9 @@ Pedestrian light simulation:
 (define S_XCENTER (/ SWIDTH 2))
 (define S_YCENTER (/ SHEIGHT 2))
 
+(define OUTLINE (circle (* SCALER 3.3) "solid" "black"))
+(define LIGHT_CENTER (make-posn S_XCENTER S_YCENTER))
+
 (define CDOWN_START 9)
    
 ; DATA DEFINITIONS /////////////////////////////////////////////////////////////
@@ -70,12 +73,33 @@ Pedestrian light simulation:
        [(number? sg) (...)]
        [else ...]))
 
-(define wait_sig (make-state_standby "orange" "red"))
-(define go_sig (make-state_go "green" "white" CDOWN_START))
-(define cdown_sig CDOWN_START)
-
 ; FUNCTION DEFINITIONS /////////////////////////////////////////////////////////
 
 ; Signal -> Image
 ; Modifies light and background color depending on data from Signal
-(check-expect (emit_light ...) ...)
+(check-expect (colorize (make-state_standby "orange" "red"))
+              (place-images
+               (list (circle (* SCALER 3) "solid" "orange")
+                     OUTLINE)
+              (list LIGHT_CENTER LIGHT_CENTER)
+              (empty-scene SWIDTH SHEIGHT "red")))
+               
+(define (colorize sig)
+  (cond[(state_standby? sig)
+        (place-images
+         (list (circle (* SCALER 3) "solid" (state_standby-light sig))
+               OUTLINE)
+         (list LIGHT_CENTER LIGHT_CENTER)
+         (empty-scene SWIDTH SHEIGHT (state_standby-bg sig)))]
+       [(state_go? sig)
+        (place-images
+         (list (circle (* SCALER 3) "solid" (state_go-light sig))
+               OUTLINE)
+         (list LIGHT_CENTER LIGHT_CENTER)
+         (empty-scene SWIDTH SHEIGHT (state_standby-bg sig)))]
+       [(number? sig)
+        (place-image (text (number->string sig) 20
+                           (cond[(= (modulo sig 2) 0) "green"]
+                                [else "orange"]))
+                     S_XCENTER S_YCENTER
+                     (empty-scene SWIDTH SHEIGHT))]))
