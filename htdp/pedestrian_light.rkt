@@ -88,7 +88,15 @@ Pedestrian light simulation:
                (list LIGHT_CENTER LIGHT_CENTER)
                (empty-scene SWIDTH SHEIGHT "white")))
 (check-expect (colorize CDOWN_START)
-              (place-image (text (number->string 9) 20 "orange")
+              (place-image (text (number->string 9) 30 "orange")
+                           S_XCENTER S_YCENTER
+                           (empty-scene SWIDTH SHEIGHT)))
+(check-expect (colorize 4)
+              (place-image (text (number->string 4) 30 "green")
+                           S_XCENTER S_YCENTER
+                           (empty-scene SWIDTH SHEIGHT)))
+(check-expect (colorize 0)
+              (place-image (text (number->string 0) 30 "green")
                            S_XCENTER S_YCENTER
                            (empty-scene SWIDTH SHEIGHT)))
                
@@ -106,7 +114,7 @@ Pedestrian light simulation:
          (list LIGHT_CENTER LIGHT_CENTER)
          (empty-scene SWIDTH SHEIGHT (state_go-bg sig)))]
        [(number? sig)
-        (place-image (text (number->string sig) 20
+        (place-image (text (number->string sig) 30
                            (cond[(= (modulo sig 2) 0) "green"]
                                 [else "orange"]))
                      S_XCENTER S_YCENTER
