@@ -49,12 +49,20 @@ Pedestrian light simulation:
 ; - state_standby
 ; - state_go
 ; - state_cdown
-; Interpretation:
-; state_standby : 
-(define s1 (make-state_standby
-            (
+; Interp.:
+;  state_standby - orange light, red bg, display until go signal received
+;  state_go      - green light, white bg, display for 10s, change to state_cdown
+;  state_cdown   - display countdown from 9 to 0, odd orange, even green,
+;                - then change to state_standby
+; (define s1 (make-state_stanby "orange" "red"))
+; (define s2 (make-state_go "green" "white" CDOWN_START))
+; (define s3 state_cdown)
 #;
-(define fn_for_signal)
+(define (fn_for_signal sg)
+  (cond[(state_standby? sg) (...)]
+       [(state_go? sg) (...)]
+       [(number? sg) (...)]
+       [else ...]))
 
 ; FUNCTION DEFINITIONS /////////////////////////////////////////////////////////
 
