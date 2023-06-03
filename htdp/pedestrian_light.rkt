@@ -79,10 +79,18 @@ Pedestrian light simulation:
 ; Modifies light and background color depending on data from Signal
 (check-expect (colorize (make-state_standby "orange" "red"))
               (place-images
-               (list (circle (* SCALER 3) "solid" "orange")
-                     OUTLINE)
-              (list LIGHT_CENTER LIGHT_CENTER)
-              (empty-scene SWIDTH SHEIGHT "red")))
+               (list (circle (* SCALER 3) "solid" "orange") OUTLINE)
+               (list LIGHT_CENTER LIGHT_CENTER)
+               (empty-scene SWIDTH SHEIGHT "red")))
+(check-expect (colorize (make-state_go "green" "white" CDOWN_START))
+              (place-images
+               (list (circle (* SCALER 3) "solid" "green") OUTLINE)
+               (list LIGHT_CENTER LIGHT_CENTER)
+               (empty-scene SWIDTH SHEIGHT "white")))
+(check-expect (colorize CDOWN_START)
+              (place-image (text (number->string 9) 20 "orange")
+                           S_XCENTER S_YCENTER
+                           (empty-scene SWIDTH SHEIGHT)))
                
 (define (colorize sig)
   (cond[(state_standby? sig)
@@ -96,7 +104,7 @@ Pedestrian light simulation:
          (list (circle (* SCALER 3) "solid" (state_go-light sig))
                OUTLINE)
          (list LIGHT_CENTER LIGHT_CENTER)
-         (empty-scene SWIDTH SHEIGHT (state_standby-bg sig)))]
+         (empty-scene SWIDTH SHEIGHT (state_go-bg sig)))]
        [(number? sig)
         (place-image (text (number->string sig) 20
                            (cond[(= (modulo sig 2) 0) "green"]
