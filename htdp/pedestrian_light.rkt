@@ -43,7 +43,14 @@ Pedestrian light simulation:
 (define (fn_for_state_go sgo)
   (...(state_go-light sgo) (state_go-bg sgo) (state_go-timer sgo)))
 
-(define state_cdown CDOWN_START)
+; state_cdown: Natural[0, 10)
+; Interp.: indicates stage of countdown
+; (define cdown1 9) ; start of countdown
+; (define cdown2 5) ; middle of countdown
+; (define cdown3 0) ; end of countdown
+#;
+(define (fn_for_state_cdown cd)
+  (...cd))
 
 ; - a Signal is one of:
 ; - state_standby
@@ -52,11 +59,10 @@ Pedestrian light simulation:
 ; Interp.:
 ;  state_standby - orange light, red bg, display until go signal received
 ;  state_go      - green light, white bg, display for 10s, change to state_cdown
-;  state_cdown   - display countdown from 9 to 0, odd orange, even green,
-;                - then change to state_standby
+;  state_cdown   - display countdown from 9 to 0, then change to state_standby
 ; (define s1 (make-state_stanby "orange" "red"))
 ; (define s2 (make-state_go "green" "white" CDOWN_START))
-; (define s3 state_cdown)
+; (define s3 CDOWN_START)
 #;
 (define (fn_for_signal sg)
   (cond[(state_standby? sg) (...)]
@@ -64,8 +70,12 @@ Pedestrian light simulation:
        [(number? sg) (...)]
        [else ...]))
 
+(define wait_sig (make-state_standby "orange" "red"))
+(define go_sig (make-state_go "green" "white" CDOWN_START))
+(define cdown_sig CDOWN_START)
+
 ; FUNCTION DEFINITIONS /////////////////////////////////////////////////////////
 
-; signal -> Image
+; Signal -> Image
 ; Modifies light and background color depending on data from Signal
 (check-expect (emit_light ...) ...)
