@@ -13,24 +13,37 @@ Pedestrian light simulation:
 (require 2htdp/image)
 (require 2htdp/universe)
 
-; IMAGES ///////////////////////////////////////////////////////////////////////
+; CONSTANTS ////////////////////////////////////////////////////////////////////
 
 (define SCALER 10)
 (define SWIDTH (* SCALER 10))
 (define SHEIGHT (* SCALER 10))
 (define S_XCENTER (/ SWIDTH 2))
 (define S_YCENTER (/ SHEIGHT 2))
+
+(define CDOWN_START 9)
    
 ; DATA DEFINITIONS /////////////////////////////////////////////////////////////
 
 (define-struct state_standby [light bg])
 ; state_standby: (make-state_standby String String])
-; Interp.: (make-standby light bg) represents a pedestrian traffic light with
-; the color of its light (light) and background (bg)
+; Interp.: (make-stat_standby light bg) represents a pedestrian traffic light
+; with the color of its light (light) and background (bg)
 ; (define stdby1 (make-state_standby "orange" "red"))
 #;
 (define (fn_for_state_standby sby)
   (...(state_standby-light sby) (state_standby-bg sby)))
+
+(define-struct state_go [light bg timer])
+; state_go: (make-state_go String String Number)
+; Interp.: (make-state_go light bg timer) represents a pedestrian traffic light
+; with the color of its light (light) and background (bg),
+; and its duration (timer)
+#;
+(define (fn_for_state_go sgo)
+  (...(state_go-light sgo) (state_go-bg sgo) (state_go-timer sgo)))
+
+(define state_cdown CDOWN_START)
 
 ; - a Signal is one of:
 ; - state_standby
