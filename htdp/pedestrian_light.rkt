@@ -21,31 +21,32 @@ Pedestrial light simulation:
 (define S_XCENTER (/ SWIDTH 2))
 (define S_YCENTER (/ SHEIGHT 2))
 
-(define BG_RED (empty-scene SWIDTH SHEIGHT "red"))
-(define BG_WYT (empty-scene SWIDTH SHEIGHT))
-
 (define LIGHT_OUTLINE
   (circle (* SCALER 3.3) "solid" "black"))
 (define OUTLINE_XCENTER (/ (image-width LIGHT_OUTLINE) 2))
 (define OUTLINE_YCENTER (/ (image-height LIGHT_OUTLINE) 2))
-
-(define STOP_BULB
-  (place-image
-   (circle (* SCALER 3) "solid" "orange")
-   OUTLINE_XCENTER OUTLINE_YCENTER LIGHT_OUTLINE))
-(define STOP
-  (place-image STOP_BULB S_XCENTER S_YCENTER BG_RED))
-
-(define GO_BULB
-  (place-image
-   (circle (* SCALER 3) "solid" "green")
-   OUTLINE_XCENTER OUTLINE_YCENTER LIGHT_OUTLINE))
-(define GO
-  (place-image GO_BULB S_XCENTER S_YCENTER BG_WYT))
    
 ; DATA DEFINITIONS /////////////////////////////////////////
 
-; 
+; cdown is one of:
+; -- #false
+; -- Natural [0, 10)
+; (define CD1 #false) ; countdown not yet started
+; (define CD2 0) ; end of countdown
+; (define CD3 5) ; middle of countdown
+; (define CD4 9) ; start of countdown
+#; 
+(define (fn_for_cdown cd)
+  (cond
+    [(boolean? cdown) (...)]
+    [(and (number? cd) (cd <= 9) (cd >= 0)) (...)]
+    [else (...)]))
+
+(define-struct pcross [lcolor bg cdown])
+; pcross: (make-pcross String String cdown)
+; (Interp.: (make-pcross lcolor bg cd) is a pedestrian
+;  crossing light with light color (lcolor), background
+;  color (bg), and countdown number (cdown)
 
 ; FUNCTION DEFINITIONS /////////////////////////////////////
 
