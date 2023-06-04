@@ -7,10 +7,3 @@ Date: June 4, 2023
 
 A version of make-vec that only accepts positive numbers.
 |#
-
-(define-struct vec [x y])
-; vec: (make-vec PositiveNumber PositiveNumber)
-; Interp.: represents a velocity vector
-#;
-(define (fn_for_vec v)
-  (...(vec-x v) (vec-y v)))
