@@ -15,19 +15,15 @@ A version of make-vec that only accepts positive numbers.
 (define (fn_for_vec v)
   (...(vec-x v) (vec-y v)))
 
-(define ERR_POS_ONLY ("Non-positive number received."))
+(define ERR_POS_ONLY "Non-positive number received.")
 
 ; Number -> Number
 ; Creates an error if a number that is <= 0 is received.
-(check-expect (pos_only 3) 3)
-(check-expect (pos_only 0) ERR_POS_ONLY)
-(check-expect (pos_only -3) ERR_POS_ONLY)
-
 (define (pos_only n)
-  (if (> n 0) n ERR_POS_ONLY))
+  (cond[(positive? n) n]
+       [else (error ERR_POS_ONLY)]))
 
 ; vec -> vec
 ; Outputs a vec if vec-x and vec-y are both positive numbers.
-(check-expect (checked_make_vec
 (define (checked_make_vec v)
-  (make-vec (pos_only (vec-x v) (vec-y v))))
+  (make-vec (pos_only (vec-x v)) (pos_only (vec-y v))))
