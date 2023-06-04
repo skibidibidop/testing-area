@@ -86,7 +86,7 @@ Pedestrian light simulation:
 
 
 ; Signal -> Image
-; Render
+; Render pedestrian traffic light based on data from Signal
 (check-expect (render (make-state_standby "orange" "red"))
               (place-images
                (list (circle (* SCALER 3) "solid" "orange") OUTLINE)
