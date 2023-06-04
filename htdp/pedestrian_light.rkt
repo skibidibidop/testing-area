@@ -24,6 +24,7 @@ Pedestrian light simulation:
 (define OUTLINE (circle (* SCALER 3.3) "solid" "black"))
 (define LIGHT_CENTER (make-posn S_XCENTER S_YCENTER))
 
+(define GO_TIMER 10)
 (define CDOWN_START 9)
    
 ; DATA DEFINITIONS /////////////////////////////////////////////////////////////
@@ -46,11 +47,12 @@ Pedestrian light simulation:
 (define (fn_for_state_go sgo)
   (...(state_go-light sgo) (state_go-bg sgo) (state_go-timer sgo)))
 
-; state_cdown: Natural[0, 10)
+; state_cdown: Natural[-1, 9]
 ; Interp.: indicates stage of countdown
 ; (define cdown1 9) ; start of countdown
 ; (define cdown2 5) ; middle of countdown
 ; (define cdown3 0) ; end of countdown
+; (define cdown4 -1) ; change to state_standby
 #;
 (define (fn_for_state_cdown cd)
   (...cd))
@@ -64,7 +66,7 @@ Pedestrian light simulation:
 ;  state_go      - green light, white bg, display for 10s, change to state_cdown
 ;  state_cdown   - display countdown from 9 to 0, then change to state_standby
 ; (define s1 (make-state_stanby "orange" "red"))
-; (define s2 (make-state_go "green" "white" CDOWN_START))
+; (define s2 (make-state_go "green" "white" GO_TIMER)
 ; (define s3 CDOWN_START)
 #;
 (define (fn_for_signal sg)
@@ -92,7 +94,7 @@ Pedestrian light simulation:
                (list (circle (* SCALER 3) "solid" "orange") OUTLINE)
                (list LIGHT_CENTER LIGHT_CENTER)
                (empty-scene SWIDTH SHEIGHT "red")))
-(check-expect (render (make-state_go "green" "white" CDOWN_START))
+(check-expect (render (make-state_go "green" "white" GO_TIMER))
               (place-images
                (list (circle (* SCALER 3) "solid" "green") OUTLINE)
                (list LIGHT_CENTER LIGHT_CENTER)
@@ -121,3 +123,29 @@ Pedestrian light simulation:
                                 [else "orange"]))
                      S_XCENTER S_YCENTER
                      (empty-scene SWIDTH SHEIGHT))]))
+
+; Signal -> Signal
+; Updates current Signal per tick
+(check-expect (update (make-state_standby "orange" "red"))
+              (make-state_standby "orange" "red"))
+(check-expect (update (make-state_go "green" "white" GO_TIMER))
+              (make-state_go "green" "white" 9))
+(check-expect (update (make-state_go "green" "white" 5))
+              (make-state_go "green" "white" 4))
+(check-expect (update (make-state_go "green" "white" 0))
+              CDOWN_START)
+(check-expect (update CDOWN_START) 8)
+(check-expect (update 4) 3)
+(check-expect (update -1)
+              (make-state_standby "orange" "red"))
+
+(define (update sig)
+  (cond[(state_standby? sig) sig]
+       [(and (state_go? sig) (> (state_go-timer sig) 0))
+        (make-state_go "green" "white" (sub1 (state_go-timer sig)))]
+       [(and (state_go? sig) (= (state_go-timer sig) 0))
+        CDOWN_START]
+       [(and (number? sig) (>= sig 0))
+        (sub1 sig)]
+       [(< sig 0)
+        (make-state_standby "orange" "red")]))
