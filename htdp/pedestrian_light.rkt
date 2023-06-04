@@ -75,44 +75,46 @@ Pedestrian light simulation:
 
 ; FUNCTION DEFINITIONS /////////////////////////////////////////////////////////
 
+; String String -> Image
+; Modifies light and background color of pedestrian traffic light
+(define (colorize lcolor bcolor)
+  (place-images
+   (list (circle (* SCALER 3) "solid" lcolor)
+         OUTLINE)
+   (list LIGHT_CENTER LIGHT_CENTER)
+   (empty-scene SWIDTH SHEIGHT bcolor)))
+
+
 ; Signal -> Image
-; Modifies light and background color depending on data from Signal
-(check-expect (colorize (make-state_standby "orange" "red"))
+; Render
+(check-expect (render (make-state_standby "orange" "red"))
               (place-images
                (list (circle (* SCALER 3) "solid" "orange") OUTLINE)
                (list LIGHT_CENTER LIGHT_CENTER)
                (empty-scene SWIDTH SHEIGHT "red")))
-(check-expect (colorize (make-state_go "green" "white" CDOWN_START))
+(check-expect (render (make-state_go "green" "white" CDOWN_START))
               (place-images
                (list (circle (* SCALER 3) "solid" "green") OUTLINE)
                (list LIGHT_CENTER LIGHT_CENTER)
                (empty-scene SWIDTH SHEIGHT "white")))
-(check-expect (colorize CDOWN_START)
+(check-expect (render CDOWN_START)
               (place-image (text (number->string 9) 30 "orange")
                            S_XCENTER S_YCENTER
                            (empty-scene SWIDTH SHEIGHT)))
-(check-expect (colorize 4)
+(check-expect (render 4)
               (place-image (text (number->string 4) 30 "green")
                            S_XCENTER S_YCENTER
                            (empty-scene SWIDTH SHEIGHT)))
-(check-expect (colorize 0)
+(check-expect (render 0)
               (place-image (text (number->string 0) 30 "green")
                            S_XCENTER S_YCENTER
                            (empty-scene SWIDTH SHEIGHT)))
                
-(define (colorize sig)
+(define (render sig)
   (cond[(state_standby? sig)
-        (place-images
-         (list (circle (* SCALER 3) "solid" (state_standby-light sig))
-               OUTLINE)
-         (list LIGHT_CENTER LIGHT_CENTER)
-         (empty-scene SWIDTH SHEIGHT (state_standby-bg sig)))]
+        (colorize (state_standby-light sig) (state_standby-bg sig))]
        [(state_go? sig)
-        (place-images
-         (list (circle (* SCALER 3) "solid" (state_go-light sig))
-               OUTLINE)
-         (list LIGHT_CENTER LIGHT_CENTER)
-         (empty-scene SWIDTH SHEIGHT (state_go-bg sig)))]
+        (colorize (state_go-light sig) (state_go-bg sig))]
        [(number? sig)
         (place-image (text (number->string sig) 30
                            (cond[(= (modulo sig 2) 0) "green"]
