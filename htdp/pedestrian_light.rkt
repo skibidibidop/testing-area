@@ -149,3 +149,17 @@ Pedestrian light simulation:
         (sub1 sig)]
        [(< sig 0)
         (make-state_standby "orange" "red")]))
+
+; Signal KeyEvent -> Signal
+; Triggers state_go with " "
+(check-expect (cross (make-state_standby "orange" "red") " ")
+              (make-state_go "green" "white" GO_TIMER))
+(check-expect (cross (make-state_standby "orange" "red") "a")
+              (make-state_standby "orange" "red"))
+(check-expect (cross (make-state_standby "orange" "red") "/")
+              (make-state_standby "orange" "red"))
+
+(define (cross sig ke)
+  (cond[(and (state_standby? sig) (string=? ke " "))
+        (make-state_go "green" "white" GO_TIMER)]
+       [else sig]))
