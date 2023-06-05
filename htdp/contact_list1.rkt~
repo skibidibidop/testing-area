@@ -8,12 +8,3 @@ Date: June 5, 2023
 Design a function that consumes a list of contacts and checking if
 it has "Flatt".
 |#
-
-; name_list is one of:
-; - '()
-; - (cons String name_list)
-; Interp.: a list of names
-; (define nl1 (cons '() '()))
-; (define nl2 (cons "Name1" '()))
-; (define nl3 (cons "Name1"
-;                   (cons "Name2" '())))
