@@ -8,10 +8,3 @@ Date: June 6, 2023
 contains? function: takes a string and a list of strings as arguments
 and checks if the former is in the latter.
 |#
-
-; a string_list is one of:
-; - '()
-; - (cons String string_list)
-; Interp.: a list of strings
-; (define sl1 (cons "Str1" '()))
-; (define sl2 (cons "Str1" (cons "Str2" '())))
