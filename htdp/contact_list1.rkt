@@ -24,7 +24,7 @@ it has "Flatt".
 
 ; name_list -> Boolean
 ; determines whether "Flatt" is in a name_list
-(define (has_flatt? nlist) #false)
+; (define (has_flatt? nlist) #false)
 (check-expect (has_flatt? '()) #false)
 (check-expect (has_flatt? (cons "Find" '())) #false)
 (check-expect (has_flatt? (cons "Flatt" '())) #true)
@@ -32,3 +32,9 @@ it has "Flatt".
 (check-expect (has_flatt? (cons "Find"
                                 (cons "Huh" (cons "A" (cons "ASD" '())))))
               #false)
+
+(define (has_flatt? nlist)
+  (cond[(empty? nlist) #false]
+       [(cons? nlist)
+        (or (string=? (first nlist) "Flatt")
+            (has_flatt? (rest nlist)))]))
