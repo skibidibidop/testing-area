@@ -37,4 +37,5 @@ it has "Flatt".
   (cond[(empty? nlist) #false]
        [(cons? nlist)
         (or (string=? (first nlist) "Flatt")
-            (has_flatt? (rest nlist)))]))
+            (has_flatt? (rest nlist)))]
+       [else #false]))
