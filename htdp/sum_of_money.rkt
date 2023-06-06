@@ -12,5 +12,6 @@ Compute sum of amounts in a list.
 ; - '()
 ; - (cons PositiveNumber amount_list)
 ; Interp.: a list of amounts of money
-(define al1 (cons 50 '()))
-(define al2 (cons 50 (cons 30 '())))
+; (define al1 (cons 50 '()))
+; (define al2 (cons 50 (cons 30 '())))
+
