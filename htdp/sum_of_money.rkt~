@@ -5,7 +5,6 @@
 Author: Mark Beltran
 Date: June 6, 2023
 
-Compute sum of amounts in a list.
 |#
 
 ; an amount_list is one of:
