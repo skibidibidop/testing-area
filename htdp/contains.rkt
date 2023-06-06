@@ -15,3 +15,18 @@ and checks if the former is in the latter.
 ; Interp.: a list of strings
 ; (define sl1 (cons "Str1" '()))
 ; (define sl2 (cons "Str1" (cons "Str2" '())))
+
+; String string_list -> Boolean
+; Checks if String is in string_list.
+(check-expect (contains? "Sample1" (cons "Sample1" (cons "S2" '()))) #true)
+(check-expect (contains? "Sample1" (cons "S2" (cons "S3" '()))) #false)
+(check-expect (contains? "Sample1" (cons '() '())) #false)
+(check-expect (contains? "Sample1" (cons "S2" (cons "Sample1" '()))) #true)
+
+(define (contains? str strlist)
+  (cond[(empty? strlist) #false]
+       [(cons? strlist)
+        (and (not (empty? (first strlist)))
+             (or (string=? str (first strlist))
+                 (contains? str (rest strlist))))]
+       [else #false]))
