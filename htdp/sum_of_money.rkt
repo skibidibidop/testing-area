@@ -17,12 +17,11 @@ Compute sum of amounts in a list.
 
 ; amount_list -> Number
 ; Computes sum of all amounts in the list.
-(check-expect (sum '()) (error "Empty list."))
+(check-expect (sum '()) 0)
 (check-expect (sum (cons 1 '())) 1)
 (check-expect (sum (cons 1 (cons 2 '()))) 3)
 (check-expect (sum (cons 0 (cons 1 '()))) 1)
 
 (define (sum amt_list)
-  (cond[(empty? amt_list) (error "Empty list.")]
-       [(cons? amt_list)
-        (
+  (cond[(empty? amt_list) 0]
+       [else (+ (first amt_list) (sum (rest amt_list)))]))
