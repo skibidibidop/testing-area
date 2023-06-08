@@ -7,9 +7,3 @@ Date: June 8, 2023
 
 Non-empty lists sample problem from the book.
 |#
-
-; A temp_list is one of:
-; - '()
-; - (cons ctemp temp_list)
-
-; ctemp: a Number greater than -272
