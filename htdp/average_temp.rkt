@@ -15,8 +15,26 @@ Non-empty lists sample problem from the book.
 ; ctemp: a Number greater than -272
 
 ; temp_list -> Number
+; Computes sum of temperatures in list
+(check-expect (sum (cons 1 (cons 2 '()))) 3)
+
+(define (sum tlist)
+  (cond[(empty? tlist) 0]
+       [else (+ (first tlist) (sum (rest tlist)))]))
+
+; temp_list -> Number
+; Counts number of temperatures in list
+(check-expect (how_many (cons 1 (cons 2 '()))) 2)
+
+(define (how_many tlist)
+  (cond[(empty? tlist) 0]
+       [else
+        (+ (how_many (rest tlist)) 1)]))
+
+; temp_list -> Number
 ; Computes average temperature
 (check-expect
  (average (cons 1 (cons 2 (cons 3 '())))) 2)
 
-(define (average tlist) ...)
+(define (average tlist)
+  (/ (sum tlist) (how_many tlist)))
