@@ -13,3 +13,10 @@ Non-empty lists sample problem from the book.
 ; - (cons ctemp temp_list)
 
 ; ctemp: a Number greater than -272
+
+; temp_list -> Number
+; Computes average temperature
+(check-expect
+ (average (cons 1 (cons 2 (cons 3 '())))) 2)
+
+(define (average tlist) ...)
