@@ -25,4 +25,4 @@ positive. If all numbers in the list are positive, it provides the sum.
 (check-expect (pos? -4) #false)
 
 (define (pos? num)
-  (
+  (> num 0))
