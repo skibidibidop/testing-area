@@ -7,21 +7,3 @@ Date: June 9, 2023
 
 Check if a non-empty list is sorted in descending order.
 |#
-
-; DATA DEFINITION //////////////////////////////////////////////////////////////
-
-; a cels is a Number > -272
-; Interp.: represents temperature in Celsius
-; (define c1 -271)
-; (define c2 0)
-; (define c3 1000)
-
-; a non_empty_list is one of:
-; - (cons cels '())
-; - (cons cels non_empty_list)
-; Interp.: 
-
-; FUNCTION DEFINITION //////////////////////////////////////////////////////////
-
-; 
-(define (sorted>? nlist) #false)
