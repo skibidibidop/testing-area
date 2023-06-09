@@ -19,7 +19,9 @@ Check if a non-empty list is sorted in descending order.
 ; a non_empty_list is one of:
 ; - (cons cels '())
 ; - (cons cels non_empty_list)
-; Interp.: 
+; Interp.: non-empty list of Celsius temperatures
+; (define nl1 (cons 30 '()))
+; (define nl2 (cons -54 (cons 0 (cons 38 '()))))
 
 ; FUNCTION DEFINITION //////////////////////////////////////////////////////////
 
