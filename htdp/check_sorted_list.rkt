@@ -25,5 +25,11 @@ Check if a non-empty list is sorted in descending order.
 
 ; FUNCTION DEFINITION //////////////////////////////////////////////////////////
 
-; 
-(define (sorted>? nlist) #false)
+; non_empty_list -> Boolean
+; Returns #true if list is in descending order. Otherwise, returns #false.
+(check-expect (sorted>? (cons 50 (cons 0 (cons -100 '())))) #true)
+(check-expect (sorted>? (cons -100 (cons 0 (cons 50 '())))) #false)
+                         
+(define (sorted>? nlist)
+  (cond[(empty? (rest nlist)) (first nlist)]
+       [else (< (first nlist) (sorted>? (rest nlist)))]))
