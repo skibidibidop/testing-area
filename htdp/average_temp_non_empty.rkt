@@ -40,4 +40,9 @@ Computes the average of all Celsius temperatures in a non-empty list.
 
 ; non_empty_list -> Number
 ; Returns average of list members
-(define (average nlist) 10)
+(check-expect (average (cons 3 (cons 4 (cons 5 '())))) 4)
+(check-expect (average (cons 0 (cons 0 (cons 0 '())))) 0)
+(check-expect (average (cons -3 (cons -4 (cons -5 '())))) -4)
+
+(define (average nlist)
+  (/ (sum nlist) (how_many nlist)))
