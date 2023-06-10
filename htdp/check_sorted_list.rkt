@@ -31,5 +31,10 @@ Check if a non-empty list is sorted in descending order.
 (check-expect (sorted>? (cons -100 (cons 0 (cons 50 '())))) #false)
                          
 (define (sorted>? nlist)
-  (cond[(empty? (rest nlist)) (first nlist)]
-       [else (< (first nlist) (sorted>? (rest nlist)))]))
+  (cond[(empty? (rest nlist)) #true]
+       [else
+        (cond[(and (> (first nlist)
+                      (first (rest nlist)))
+                   (sorted>? (rest nlist)))
+              #true]
+             [else #false])]))
