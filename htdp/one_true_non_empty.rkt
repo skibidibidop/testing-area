@@ -2,7 +2,7 @@
 Author: Mark Beltran
 Date: June 10, 2023
 
-Returns #true if at least one member of the non-empty list is #true.
+See (one_true) function purpose.
 |#
 
 ; DATA DEFINITIONS /////////////////////////////////////////////////////////////
@@ -16,5 +16,13 @@ Returns #true if at least one member of the non-empty list is #true.
 
 ; FUNCTION DEFINITIONS /////////////////////////////////////////////////////////
 
-;
-(define (one_true bool_nlist) #true)
+; nempty_bool_list -> Boolean
+; Returns #true if at least one member of the non-empty list is #true.
+(check-expect (one_true (cons #true '())) #true)
+(check-expect (one_true (cons #false '())) #false)
+(check-expect (one_true (cons #false (cons #true (cons #false '())))) #true)
+
+(define (one_true bool_nlist)
+  (cond[(empty? (rest bool_nlist)) (first bool_nlist)]
+       [else (or (first bool_nlist)
+                  (one_true (rest bool_nlist)))]))
