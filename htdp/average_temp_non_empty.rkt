@@ -30,7 +30,13 @@ Computes the average of all Celsius temperatures in a non-empty list.
 
 ; non_empty_list -> Number
 ; Returns sum of list members
-(define (sum nlist) 3)
+(check-expect (sum (cons 5 (cons 0 '()))) 5)
+(check-expect (sum (cons -10 (cons 4 (cons 6 '())))) 0)
+(check-expect (sum (cons 0 (cons -4 '()))) -4)
+
+(define (sum nlist)
+  (cond[(empty? (rest nlist)) (first nlist)]
+       [else (+ (first nlist) (sum (rest nlist)))]))
 
 ; non_empty_list -> Number
 ; Returns average of list members
