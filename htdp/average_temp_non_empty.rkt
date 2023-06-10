@@ -8,6 +8,8 @@ Date: June 10, 2023
 Computes the average of all Celsius temperatures in a non-empty list.
 |#
 
+; DATA DEFINITIONS /////////////////////////////////////////////////////////////
+
 ; a cels_temp is a Number greater than -272
 ; Interp.: represents temperature in Celsius
 
@@ -15,3 +17,19 @@ Computes the average of all Celsius temperatures in a non-empty list.
 ; - (cons cels_temp '())
 ; - (cons cels_temp non_empty_list)
 ; Interp.: non-empty list of temperatures in Celsius
+; (define nl1 (cons -271 '()))
+; (define nl2 (cons 0 (cons 50 '())))
+
+; FUNCTION DEFINITIONS /////////////////////////////////////////////////////////
+
+; non_empty_list -> Number
+; Returns count of list members
+(define (how_many nlist) 1)
+
+; non_empty_list -> Number
+; Returns sum of list members
+(define (sum nlist) 3)
+
+; non_empty_list -> Number
+; Returns average of list members
+(define (average nlist) 10)
