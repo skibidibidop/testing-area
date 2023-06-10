@@ -16,4 +16,11 @@ is #false. Otherwise, return #true.
 ; FUNCTION DEFINITIONS /////////////////////////////////////////////////////////
 
 ; nempty_bool_list -> Boolean
-(define (all_true bool_nlist) #true)
+; Returns #false if nempty_bool_list isn't comprised purely of #true as members.
+(check-expect (all_true (cons #true (cons #true (cons #true '())))) #true)
+(check-expect (all_true (cons #true (cons #false (cons #true '())))) #false)
+
+(define (all_true bool_nlist)
+  (cond[(empty? (rest bool_nlist)) (first bool_nlist)]
+       [else (and (first bool_nlist)
+                  (all_true (rest bool_nlist)))]))
