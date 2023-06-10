@@ -7,11 +7,3 @@ Date: June 10, 2023
 
 Computes the average of all Celsius temperatures in a non-empty list.
 |#
-
-; a cels_temp is a Number greater than -272
-; Interp.: represents temperature in Celsius
-
-; a non_empty_list is one of:
-; - (cons cels_temp '())
-; - (cons cels_temp non_empty_list)
-; Interp.: non-empty list of temperatures in Celsius
