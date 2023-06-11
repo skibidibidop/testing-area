@@ -24,10 +24,16 @@ See (col) and (row) function puprose statements.
 ; Produces a column of nat_num number of Image
 (check-expect (col 0 PIC) empty-image)
 (check-expect (col 1 PIC)
-             (beside PIC empty-image))
+              (above PIC empty-image))
+(check-expect (col 2 PIC)
+              (above PIC
+                     (above PIC empty-image)))
 
 (define (col nat img)
   (cond[(zero? nat) empty-image]
        [else
-        (beside PIC
+        (above PIC
                 (col (sub1 nat) PIC))]))
+
+; nat_num Image -> Image
+; Produces a 
