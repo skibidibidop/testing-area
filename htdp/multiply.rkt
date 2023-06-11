@@ -22,6 +22,7 @@ See (multiply) function purpose.
 (check-expect (multiply 0 12) 0)
 (check-expect (multiply 5 -23) -115)
 
-(define (multiply nat)
-  (cond[zero? 0]
-       [else (
+(define (multiply nat num)
+  (cond[(zero? nat) 0]
+       [else (+ num
+                (multiply (sub1 nat) num))]))
