@@ -2,7 +2,7 @@
 Author: Mark Beltran
 Date: June 10, 2023
 
-Extracts the colors of all dolls in a nested doll.
+Extracts the colors of all dolls or inner-most doll in a nested doll.
 |#
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
@@ -37,3 +37,17 @@ Extracts the colors of all dolls in a nested doll.
         (string-append (layer-col dolls)
                        ", "
                        (colors (layer-dol dolls)))]))
+
+; russ_doll -> String
+; Outputs the color of the innermost doll as a string.
+(check-expect (inner_color "blue") "blue")
+(check-expect (inner_color
+               (make-layer "violet" "gold")) "gold")
+(check-expect (inner_color
+               (make-layer "magenta"
+                           (make-layer "violet" "orange")))
+              "orange")
+
+(define (inner_color dolls)
+  (cond[(string? dolls) dolls]
+       [else (inner_color (layer-dol dolls))]))
