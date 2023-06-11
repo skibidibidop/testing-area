@@ -18,6 +18,8 @@ See (nat_num) function purpose.
 
 ; nat_num -> Number
 ; Adds nat_num to pi without using the + primtitive operator.
-(check-expect
+(check-within (add_to_pi 3) (+ 3 pi) 0.001)
+
 (define (add_to_pi nat)
-  (con
+  (cond[(zero? nat) pi]
+       [else (add1 (add_to_pi (sub1  nat)))]))
