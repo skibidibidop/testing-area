@@ -20,4 +20,15 @@ Extracts the colors of all dolls in a nested doll.
 
 ; FUNCTION DEFINITION //////////////////////////////////////////////////////////
 
-; 
+; russ_doll -> String
+; Produces a string of the colors of the nested dolls
+(check-expect (colors "red") "red")
+(check-expect (colors
+               (make-layer "yellow" "red"))
+              "yellow, red")
+(check-expect (colors
+               (make-layer "blue"
+                           (make-layer "yellow" "red")))
+              "blue, yellow, red")
+
+(define (colors dolls) ...)
