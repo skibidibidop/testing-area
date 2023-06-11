@@ -18,7 +18,9 @@ Code along - Russian Doll example.
 
 ; russ_doll -> Number
 ; Counts nested dolls
-(check-expect (doll_count (make-layer "yellow" (make-layer "green" "red"))) 3)
+(check-expect (doll_count "white") 1)
+(check-expect (doll_count
+               (make-layer "yellow" (make-layer "green" "red"))) 3)
 
 (define (doll_count nested_dolls)
   (cond[(string? nested_dolls) 1]
