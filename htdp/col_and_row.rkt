@@ -36,4 +36,16 @@ See (col) and (row) function puprose statements.
                 (col (sub1 nat) PIC))]))
 
 ; nat_num Image -> Image
-; Produces a 
+; Produces a row of nat_num number of Image
+(check-expect (row 0 PIC) empty-image)
+(check-expect (row 1 PIC)
+              (beside PIC empty-image))
+(check-expect (row 2 PIC)
+              (beside PIC
+                      (beside PIC empty-image)))
+
+(define (row nat img)
+  (cond[(zero? nat) empty-image]
+       [else
+        (beside PIC
+                (row (sub1 nat) PIC))]))
