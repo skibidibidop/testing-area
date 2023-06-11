@@ -31,4 +31,9 @@ Extracts the colors of all dolls in a nested doll.
                            (make-layer "yellow" "red")))
               "blue, yellow, red")
 
-(define (colors dolls) ...)
+(define (colors dolls)
+  (cond[(string? dolls) dolls]
+       [else
+        (string-append (layer-col dolls)
+                       ", "
+                       (colors (layer-dol dolls)))]))
