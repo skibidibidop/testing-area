@@ -59,7 +59,13 @@ space bar is pressed. Shots rise vertically at 1 px / tick.
 
 ; shotworld -> shotworld
 ; Moves each shot on state by 1 pixel / tick.
-(define (time_step state) state)
+(check-expect (time_step '()) '())
+(check-expect (time_step (cons 9 '())) (cons 10 '()))
+(check-expect (time_step (cons 11 (cons 13 '())))
+              (cons 12 (cons 14 '())))
+
+(define (time_step state)
+  (
 
 ; shotworld KeyEvent -> shotworld
 ; adds a shot to the world every time the space bar is pressed.
