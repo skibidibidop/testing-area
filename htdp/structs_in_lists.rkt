@@ -25,4 +25,11 @@ Code-along: sample in 10.2 Structures in Lists
 ; (define wl3 (cons (make-work "Mark" 12 40)
 ;                   (cons (make-work "Anthony" 15 80) '())))
 
+; A num_list is one of:
+; - '()
+; - (cons Number num_list)
+; Interp.: a list of numbers
+
 ; FUNCTION DEFINITIONS /////////////////////////////////////////////////////////
+
+; work_list -> num_list
