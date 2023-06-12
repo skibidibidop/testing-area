@@ -45,4 +45,9 @@ Code-along: sample in 10.2 Structures in Lists
                        (make-work "Anthony" 15 35) '())))
               (cons 480 (cons 525 '())))
 
-(define (wages worked) '())
+(define (wages worked)
+  (cond[(empty? worked) '()]
+       [else
+         (cons (* (work-rate (first worked))
+                  (work-hrs (first worked)))
+               (wages (rest worked)))]))
