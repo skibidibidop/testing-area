@@ -81,3 +81,9 @@ space bar is pressed. Shots rise vertically at 1 px / tick.
   (cond[(string=? ke " ")
         (cons SHEIGHT state)]
        [else state]))
+
+(define (main init)
+  (big-bang init
+       [to-draw render]
+       [on-tick time_step]
+       [on-key shoot]))
