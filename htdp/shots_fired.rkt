@@ -37,13 +37,20 @@ space bar is pressed. Shots rise vertically at 1 px / tick.
 
 ; a shot_list is one of:
 ; - '()
-; - (cons shot shot_list)
+; - (cons shotworld shot_list)
 ; Interp.: collection of shots fired
 
 ; FUNCTION DEFINITIONS /////////////////////////////////////////////////////////
 
 ; shotworld -> Image
-; Adds image of a shot for each y on state at (MID, y} to BG
+; Adds image of a shot for each y on state at (SCN_XCENTER, y} to BG
+(check-expect (render '()) BG)
+(check-expect (render (cons 9 '()))
+              (place-image SHOT SCN_XCENTER 9 BG))
+(check-expect (render (cons 9 (cons 10 '())))
+              (place-images SHOT SCN_XCENTER 9
+                            (place-images SHOT SCN_XCENTER 10 BG)))
+
 (define (render state) BG)
 
 ; shotworld -> shotworld
