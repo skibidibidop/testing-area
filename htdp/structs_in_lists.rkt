@@ -33,3 +33,16 @@ Code-along: sample in 10.2 Structures in Lists
 ; FUNCTION DEFINITIONS /////////////////////////////////////////////////////////
 
 ; work_list -> num_list
+; Computes weekly wages for given records
+(check-expect (wages '()) '())
+(check-expect (wages (cons
+                      (make-work "Mark" 12 40)
+                      '()))
+              (cons 480 '()))
+(check-expect (wages (cons
+                      (make-work "Mark" 12 40)
+                      (cons
+                       (make-work "Anthony" 15 35) '())))
+              (cons 480 525 '()))
+
+(define (wages worked) '())
