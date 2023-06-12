@@ -32,7 +32,7 @@ space bar is pressed. Shots rise vertically at 1 px / tick.
 ; - (cons Number num_list)
 ; Interp.: a list of numbers
 
-; a shot is a num_list:
+; a shotworld is a num_list:
 ; Interp.: each number on the list represents a valid shot y-coordinate
 
 ; a shot_list is one of:
@@ -42,13 +42,14 @@ space bar is pressed. Shots rise vertically at 1 px / tick.
 
 ; FUNCTION DEFINITIONS /////////////////////////////////////////////////////////
 
-; shot -> Image
+; shotworld -> Image
 ; Adds image of a shot for each y on state at (MID, y} to BG
 (define (render state) BG)
 
-; shot ->
+; shotworld -> shotworld
 ; Moves each shot on state by 1 pixel / tick.
 (define (time_step state) state)
 
-;
-(define (shoot state ke) ...)
+; shotworld KeyEvent -> shotworld
+; adds a shot to the world every time the space bar is pressed.
+(define (shoot state ke) state)
