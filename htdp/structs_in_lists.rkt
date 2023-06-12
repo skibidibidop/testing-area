@@ -43,6 +43,6 @@ Code-along: sample in 10.2 Structures in Lists
                       (make-work "Mark" 12 40)
                       (cons
                        (make-work "Anthony" 15 35) '())))
-              (cons 480 525 '()))
+              (cons 480 (cons 525 '())))
 
 (define (wages worked) '())
