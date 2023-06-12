@@ -63,12 +63,16 @@ space bar is pressed. Shots rise vertically at 1 px / tick.
 (check-expect (time_step (cons 9 '())) (cons 8 '()))
 (check-expect (time_step (cons 11 (cons 13 '())))
               (cons 10 (cons 12 '())))
+(check-expect (time_step (cons -1 '())) '())
+(check-expect (time_step (cons 0 (cons 5 '())))
+              (cons 5 '()))
 
 (define (time_step state)
   (cond[(empty? state) state]
        [else
-        (cons (sub1 (first state))
-              (time_step (rest state)))]))
+        (cond[(<= (first state) 0) (rest state)]
+             [else (cons (sub1 (first state))
+                         (time_step (rest state)))])]))
 
 ; shotworld KeyEvent -> shotworld
 ; adds a shot to the world every time the space bar is pressed.
@@ -78,8 +82,7 @@ space bar is pressed. Shots rise vertically at 1 px / tick.
 (check-expect (shoot (cons 25 '()) "a") (cons 25 '()))
 
 (define (shoot state ke)
-  (cond[(string=? ke " ")
-        (cons SHEIGHT state)]
+  (cond[(string=? ke " ") (cons SHEIGHT state)]
        [else state]))
 
 ; shotworld -> shotworld
