@@ -65,7 +65,10 @@ space bar is pressed. Shots rise vertically at 1 px / tick.
               (cons 12 (cons 14 '())))
 
 (define (time_step state)
-  (
+  (cond[(empty? state) state]
+       [else
+        (cons (add1 (first state))
+              (time_step (rest state)))]))
 
 ; shotworld KeyEvent -> shotworld
 ; adds a shot to the world every time the space bar is pressed.
