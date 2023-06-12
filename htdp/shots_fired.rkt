@@ -27,13 +27,13 @@ space bar is pressed. Shots rise vertically at 1 px / tick.
 
 ; DATA DEFINITIONS /////////////////////////////////////////////////////////////
 
-; a shot_yrange is one of:
+; a num_list is one of:
 ; - '()
 ; - (cons Number num_list)
-; Interp.: represents valid y-coordinates for the shot
+; Interp.: a list of numbers
 
-; a shot is a Number
-; Interp.: represents a shot's y-coordinate
+; a shot is a num_list:
+; Interp.: each number on the list represents a valid shot y-coordinate
 
 ; a shot_list is one of:
 ; - '()
