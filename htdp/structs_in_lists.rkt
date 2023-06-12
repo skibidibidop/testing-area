@@ -7,3 +7,12 @@ Date: June 12, 2023
 
 Code-along: sample in 10.2 Structures in Lists
 |#
+
+; DATA DEFINITIONS /////////////////////////////////////////////////////////////
+
+(define-struct work [emp rate hrs])
+; (make-work String Number Number)
+; Interp.: (make-work n r h) combines an employee's name (n), rate (r), and
+; number of hours worked (h)
+
+; FUNCTION DEFINITIONS /////////////////////////////////////////////////////////
