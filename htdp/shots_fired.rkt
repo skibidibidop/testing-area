@@ -24,3 +24,10 @@ space bar is pressed. Shots rise vertically at 1 px / tick.
 
 (define BG (empty-scene SWIDTH SHEIGHT))
 (define SHOT (triangle (* SCALER .3) "solid" "red"))
+
+; DATA DEFINITIONS /////////////////////////////////////////////////////////////
+
+; a shot_list is one of:
+; - '()
+; - (cons shot shot_list)
+; Interp.: collection of shots fired
