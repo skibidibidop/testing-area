@@ -15,4 +15,14 @@ Code-along: sample in 10.2 Structures in Lists
 ; Interp.: (make-work n r h) combines an employee's name (n), rate (r), and
 ; number of hours worked (h)
 
+; A work_list is one of:
+; - '()
+; - (cons work work_list)
+; Interp.: represents a list of work details (name, rate, hours) for a number of
+; employees
+; (define wl1 '())
+; (define wl2 (cons (make-work "Mark" 12 40)))
+; (define wl3 (cons (make-work "Mark" 12 40)
+;                   (cons (make-work "Anthony" 15 80) '())))
+
 ; FUNCTION DEFINITIONS /////////////////////////////////////////////////////////
