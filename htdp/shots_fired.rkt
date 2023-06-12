@@ -48,10 +48,14 @@ space bar is pressed. Shots rise vertically at 1 px / tick.
 (check-expect (render (cons 9 '()))
               (place-image SHOT SCN_XCENTER 9 BG))
 (check-expect (render (cons 9 (cons 10 '())))
-              (place-images SHOT SCN_XCENTER 9
-                            (place-images SHOT SCN_XCENTER 10 BG)))
+              (place-image SHOT SCN_XCENTER 9
+                            (place-image SHOT SCN_XCENTER 10 BG)))
 
-(define (render state) BG)
+(define (render state)
+  (cond[(empty? state) BG]
+       [else
+        (place-image SHOT SCN_XCENTER (first state)
+                     (render (rest state)))]))
 
 ; shotworld -> shotworld
 ; Moves each shot on state by 1 pixel / tick.
