@@ -46,8 +46,9 @@ space bar is pressed. Shots rise vertically at 1 px / tick.
 ; Adds image of a shot for each y on state at (MID, y} to BG
 (define (render state) BG)
 
-;
-(define (time_step state) ...)
+; shot ->
+; Moves each shot on state by 1 pixel / tick.
+(define (time_step state) state)
 
 ;
 (define (shoot state ke) ...)
