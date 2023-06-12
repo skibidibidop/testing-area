@@ -72,4 +72,9 @@ space bar is pressed. Shots rise vertically at 1 px / tick.
 
 ; shotworld KeyEvent -> shotworld
 ; adds a shot to the world every time the space bar is pressed.
+(check-expect (shoot '() " ") (cons SHEIGHT '()))
+(check-expect (shoot (cons 20 '()) " ") (cons SHEIGHT (cons 20 '())))
+(check-expect (shoot '() "a") ('()))
+(check-expect (shoot (cons 25 '()) "a") (cons 20 '()))
+
 (define (shoot state ke) state)
