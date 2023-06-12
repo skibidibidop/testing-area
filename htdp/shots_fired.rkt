@@ -11,3 +11,16 @@ Simulates firing shots. Shots are added to the bottom of the scene each time the
 space bar is pressed. Shots rise vertically at 1 px / tick.
 |#
 
+(require 2htdp/image)
+(require 2htdp/universe)
+
+; GRAPHICS /////////////////////////////////////////////////////////////////////
+
+(define SCALER 10)
+
+(define SWIDTH (* SCALER 10))
+(define SHEIGHT (* SCALER 8))
+(define SCN_XCENTER (/ SWIDTH 2))
+
+(define BG (empty-scene SWIDTH SHEIGHT))
+(define SHOT (triangle (* SCALER .3) "solid" "red"))
