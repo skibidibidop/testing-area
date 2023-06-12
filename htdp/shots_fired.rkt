@@ -40,3 +40,14 @@ space bar is pressed. Shots rise vertically at 1 px / tick.
 ; - (cons shot shot_list)
 ; Interp.: collection of shots fired
 
+; FUNCTION DEFINITIONS /////////////////////////////////////////////////////////
+
+; shot -> Image
+; Adds image of a shot for each y on state at (MID, y} to BG
+(define (render state) BG)
+
+;
+(define (time_step state) ...)
+
+;
+(define (shoot state ke) ...)
