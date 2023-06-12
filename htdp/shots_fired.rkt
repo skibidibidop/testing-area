@@ -27,6 +27,9 @@ space bar is pressed. Shots rise vertically at 1 px / tick.
 
 ; DATA DEFINITIONS /////////////////////////////////////////////////////////////
 
+; a shot is a Number
+; Interp.: represents a shot's y-coordinate
+
 ; a shot_list is one of:
 ; - '()
 ; - (cons shot shot_list)
