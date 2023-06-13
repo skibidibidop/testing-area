@@ -7,3 +7,16 @@ Date: June 13, 2023
 
 Output the sum of all x-coordinates in a posn list.
 |#
+
+; DATA DEFINITIONS /////////////////////////////////////////////////////////////
+
+; a posn_list is one of:
+; - '()
+; - (cons posn posn_list)
+; Interp.: a list of posns
+; (define pl1 '())
+; (define pl2 (cons (make-posn 3 4) '()))
+; (define pl3 (cons (make-posn 5 6)
+;                   (cons (make-posn 7 8) '())))
+
+; FUNCTIOIN DEFINITIONS ////////////////////////////////////////////////////////
