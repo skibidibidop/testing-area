@@ -20,3 +20,13 @@ Output the sum of all x-coordinates in a posn list.
 ;                   (cons (make-posn 7 8) '())))
 
 ; FUNCTIOIN DEFINITIONS ////////////////////////////////////////////////////////
+
+; posn_list -> Number
+; Produces the sum of all x-coordinates in a posn list.
+(check-expect (x_sum '()) '())
+(check-expect (x_sum (cons (make-posn 1 2) '())) 1)
+(check-expect (x_sum (cons
+                      (make-posn 3 4)
+                      (cons (make-posn 5 6) '()))) 8)
+
+(define (x_sum plist) 0)
