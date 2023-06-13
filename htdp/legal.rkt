@@ -21,3 +21,9 @@ Output: posns with x-coordinates between 0-100 and y-coordinates between 0-200.
 ;                   (cons (make-posn 5 6) '())))
 
 ; FUNCTION DEFINITIONS /////////////////////////////////////////////////////////
+
+; posn_list -> posn_list
+; Takes members of a posn_list with x-coordinates between 0-100 and
+; y-coordinates between 0-200 and creates a new posn_list with that.
+
+(define (legal plist) '())
