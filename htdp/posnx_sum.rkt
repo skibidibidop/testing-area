@@ -23,10 +23,14 @@ Output the sum of all x-coordinates in a posn list.
 
 ; posn_list -> Number
 ; Produces the sum of all x-coordinates in a posn list.
-(check-expect (x_sum '()) '())
+(check-expect (x_sum '()) 0)
 (check-expect (x_sum (cons (make-posn 1 2) '())) 1)
 (check-expect (x_sum (cons
                       (make-posn 3 4)
                       (cons (make-posn 5 6) '()))) 8)
 
-(define (x_sum plist) 0)
+(define (x_sum plist)
+  (cond[(empty? plist) 0]
+       [else
+        (+ (posn-x (first plist))
+           (x_sum (rest plist)))]))
