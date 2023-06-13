@@ -32,4 +32,10 @@ Output: A posn list with each member translated to (make-posn x (+ y 1))
               (cons (make-posn 3 5)
                     (cons (make-posn 5 7) '())))
 
-(define (translate plist) '())
+(define (translate plist)
+  (cond[(empty? plist) '()]
+       [else
+        (cons (make-posn
+               (posn-x (first plist))
+               (+ (posn-y (first plist)) 1))
+              (translate (rest plist)))]))
