@@ -21,3 +21,15 @@ Output: A posn list with each member translated to (make-posn x (+ y 1))
 ;                   (cons (make-posn 5 6) '())))
 
 ; FUNCTION DEFINITIONS /////////////////////////////////////////////////////////
+
+; posn_list -> posn_list
+; Turns each member of input list to (make-posn x (+ y 1))
+(check-expect (translate '()) '())
+(check-expect (translate (cons (make-posn 1 2) '()))
+              (cons (make-posn 1 3) '()))
+(check-expect (translate (cons (make-posn 3 4)
+                               (cons (make-posn 5 6) '())))
+              (cons (make-posn 3 5)
+                    (cons (make-posn 5 7) '())))
+
+(define (translate plist) '())
