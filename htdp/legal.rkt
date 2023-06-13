@@ -25,5 +25,41 @@ Output: posns with x-coordinates between 0-100 and y-coordinates between 0-200.
 ; posn_list -> posn_list
 ; Takes members of a posn_list with x-coordinates between 0-100 and
 ; y-coordinates between 0-200 and creates a new posn_list with that.
+(check-expect (legal '()) '())
+(check-expect (legal (cons (make-posn -1 -1) '())) '())
+(check-expect (legal (cons (make-posn -1 0))) '())
+(check-expect (legal (cons (make-posn 0 -1))) '())
+(check-expect (legal (cons (make-posn 0 0) '()))
+              (cons (make-posn 0 0) '()))
+(check-expect (legal (cons (make-posn 100 200) '()))
+              (cons (make-posn 100 200) '()))
+(check-expect (legal (cons (make-posn 101 200) '())) '())
+(check-expect (legal (cons (make-posn 100 201) '())) '())
+(check-expect (legal
+               (cons (make-posn 0 0)
+                     (cons (make-posn 100 200) '())))
+              (cons (make-posn 0 0)
+                    (cons (make-posn 100 200) '())))
+(check-expect (legal
+               (cons (make-posn 0 0)
+                     (cons (make-posn -1 200) '())))
+              (cons (make-posn 0 0) '()))
+(check-expect (legal
+               (cons (make-posn 0 0)
+                     (cons (make-posn 100 -1) '())))
+              (cons (make-posn 0 0) '()))
+(check-expect (legal
+               (cons (make-posn 0 0)
+                     (cons (make-posn 101 200) '())))
+              (cons (make-posn 0 0) '()))
+(check-expect (legal
+               (cons (make-posn 0 0)
+                     (cons (make-posn 100 201) '())))
+              (cons (make-posn 0 0) '()))
+(check-expect (legal
+               (cons (make-posn 100 201)
+                     (cons (make-posn -1 -5)
+                           (cons (make-posn -5 300) '()))))
+              '())
 
 (define (legal plist) '())
