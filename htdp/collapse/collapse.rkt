@@ -28,4 +28,21 @@ Use:
 (define sle3 (cons "sla"
                    (cons "slb" '())))
 
+; A lsl (short for list of string_lists) is one of:
+; - '()
+; - (cons string_list lsl)
+; Interp.: a list of string_lists/lines
+(define lsl1 '())
+(define lsl2 (cons
+              (cons "sla" '())
+              '()))
+(define lsl3 (cons
+              (cons "sla"
+                    (cons "slb" '()))
+              (cons
+               (cons "slc"
+                     (cons "sld"
+                           (cons "sle" '())))
+               '())))
+
 ; FUNCTION DEFINITIONS /////////////////////////////////////////////////////////
