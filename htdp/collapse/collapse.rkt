@@ -23,9 +23,6 @@ Convert list of string lists to string and write to .dat file
 
 (require 2htdp/batch-io)
 
-(define test_string1
-  "Hi there!\n\nThis is a test string.\nChecks if (collapse) is working.")
-
 ; DATA DEFINITIONS /////////////////////////////////////////////////////////////
 
 ; A string_list is one of:
@@ -58,8 +55,7 @@ Convert list of string lists to string and write to .dat file
 
 ; String -> lsl
 ; Converts string to lsl
-(check-expect (collapse "") '())
-(check-expect (collapse test_string1)
+(check-expect (collapse "test.txt")
               (cons
                (cons "Hi there!" '())
                (cons
