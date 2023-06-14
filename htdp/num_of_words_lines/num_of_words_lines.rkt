@@ -31,8 +31,34 @@ Code-along: 10.3 Sample: number of lines and number of words per line
 ;               (cons "String2"
 ;                     (cons "String3" '())) '()))
 
+; A num_list is one of:
+; - '()
+; - (cons Number num_list)
+; Interp.: a list of numbers
+; (define nl1 '())
+; (define nl2 (cons 1 '()))
+; (define nl3 (cons 2
+;                   (cons 3 '())))
+
 ; FUNCTION DEFINITIONS /////////////////////////////////////////////////////////
 
-; lsl -> string_list
+; lsl -> num_list
 ; Determines the number of words on each line
+(check-expect (words_per_line '()) '())
+(check-expect (words_per_line
+               (cons (cons "String1" '()) '()))
+              1)
+(check-expect (words_per_line
+               (cons
+                (cons "String2"
+                      (cons "String3" '()))
+                '()))
+              2)
+(check-expect (words_per_line
+               (cons
+                (cons "String4"
+                      (cons "String5" '()))
+                (cons "String6"
+                      (cons "String7" '()))))
+              
 (define (words_per_line lsl) '())
