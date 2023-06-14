@@ -81,4 +81,13 @@ Use:
 
 ; string_list -> String
 ; Converts a string_list to a String
+(check-expect (line_cat '()) '())
+(check-expect (line_cat
+               (cons "sla" '()))
+              "sla")
+(check-expect (line_cat
+               (cons "sla"
+                     (cons "slb" '())))
+              "slaslb")
+
 (define (line_cat line) '())
