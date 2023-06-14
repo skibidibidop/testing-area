@@ -32,3 +32,7 @@ Code-along: 10.3 Sample: number of lines and number of words per line
 ;                     (cons "String3" '())) '()))
 
 ; FUNCTION DEFINITIONS /////////////////////////////////////////////////////////
+
+; lsl -> string_list
+; Determines the number of words on each line
+(define (words_per_line lsl) '())
