@@ -13,7 +13,7 @@ Code-along: 10.3 Sample: number of lines and number of words per line
 ; A string_list is one of:
 ; - '()
 ; - (cons String string_list)
-; Interp.: a list of strings
+; Interp.: a list of strings in a line
 ; (define sl1 '())
 ; (define sl2 (cons "String1" '()))
 ; (define sl3 (cons "String2"
@@ -23,7 +23,7 @@ Code-along: 10.3 Sample: number of lines and number of words per line
 ; An lsl (short for list of string_lists)
 ; - '()
 ; - (cons string_list lsl)
-; Interp.: a list of string lists
+; Interp.: a list of string_lists
 ; (define lsl1 '())
 ; (define lsl2 (cons
 ;               (cons "String1" '()) '()))
@@ -67,5 +67,16 @@ Code-along: 10.3 Sample: number of lines and number of words per line
               (cons 3 (cons 2 (cons 4 '()))))
 
 (define (words_per_line lsl)
-  (cond[(empty? lsl) '()]
+  (cond[(empty lsl?) '()]
        [else
+        (cons
+         (line_processor (first lsl))
+         (words_per_line (rest lsl)))]))
+
+; string_list -> Number
+; Counts the number of words in each list
+(define (line_processor ln)
+  (cond[(empty? ln) '()]
+       [else
+        (...(first ln)...
+            (line_processor (rest ln)))]))
