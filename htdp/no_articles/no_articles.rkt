@@ -43,3 +43,17 @@ Output: no_articles_<file name>.txt
                 '()))))
 
 ; FUNCTION DEFINITIONS /////////////////////////////////////////////////////////
+
+; lsl -> String
+; Converts provided lsl to String
+(check-expect (lsl_to_str '()) "")
+(check-expect 
+(define (lsl_to_str in_lsl)
+  (cond[(empty? in_lsl) ""]
+       [else
+        (...(first in_lsl)...
+            (rest in_lsl)...)]))
+
+; string_list -> string_list
+; Removes all articles in provided string_list
+(define (del_article in_sl) '())
