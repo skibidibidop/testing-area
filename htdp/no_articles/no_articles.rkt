@@ -72,4 +72,27 @@ Output: no_articles_<file name>.txt
 
 ; string_list -> string_list
 ; Removes all articles in provided string_list
+(check-expect (del_article '()) '())
+(check-expect (del_article
+               (cons "A"
+                     (cons "a"
+                           (cons "AN"
+                                 (cons "An"
+                                       (cons "an" '()))))))
+              '())
+(check-expect (del_article
+               (cons "THE"
+                     (cons "The"
+                           (cons "the" '()))))
+              '())
+(check-expect (del_article
+               (cons "The"
+                     (cons "test"
+                           (cons "is"
+                                 (cons "a"
+                                       (cons "success!" '()))))))
+              (cons "test"
+                    (cons "is"
+                          (cons "success!" '()))))
+
 (define (del_article in_sl) '())
