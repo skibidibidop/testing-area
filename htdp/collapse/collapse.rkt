@@ -49,4 +49,28 @@ Use:
 
 ; lsl -> String
 ; Converts a list of string_lists (aka list of lines) into a String
+(check-expect (collapse '()) "")
+(check-expect (collapse
+               (cons
+                (cons "hi" '()) '()))
+              "hi")
+(check-expect (collapse
+               (cons
+                (cons "hello"
+                      (cons "there!" '())) '()))
+              "hello there!")
+(check-expect (collapse
+               (cons
+                (cons "this"
+                      (cons "is"
+                            (cons "a" '())))
+                (cons
+                 (cons "string"
+                       (cons "with" '()))
+                 (cons
+                  (cons "multiple"
+                        (cons "lines" '()))
+                  '()))))
+              "this is a\nstring with\nmultiple lines")
+
 (define (collapse in) "")
