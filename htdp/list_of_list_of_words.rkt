@@ -12,6 +12,12 @@ Code-along 10.3 Lists in lists, files
 
 ; DATA DEFINITIONS /////////////////////////////////////////////////////////////
 
-
+; A string_list is one of:
+; '()
+; (cons String string_list)
+; Interp.: a list of strings
+; (define sl1 '())
+; (define sl2 (cons "String1" '()))
+; (define sl3 (cons "String1" (cons "String2" '())))
 
 ; FUNCTION DEFINITIONS /////////////////////////////////////////////////////////
