@@ -7,3 +7,28 @@ Date: June 14, 2023
 
 Code-along: 10.3 Sample: number of lines and number of words per line
 |#
+
+; DATA DEFINITIONS /////////////////////////////////////////////////////////////
+
+; A string_list is one of:
+; - '()
+; - (cons String string_list)
+; Interp.: a list of strings
+; (define sl1 '())
+; (define sl2 (cons "String1" '()))
+; (define sl3 (cons "String2"
+;                   (cons "String3" '())))
+
+
+; An lsl (short for list of string_lists)
+; - '()
+; - (cons string_list lsl)
+; Interp.: a list of string lists
+; (define lsl1 '())
+; (define lsl2 (cons
+;               (cons "String1" '()) '()))
+; (define lsl3 (cons
+;               (cons "String2"
+;                     (cons "String3" '())) '()))
+
+; FUNCTION DEFINITIONS /////////////////////////////////////////////////////////
