@@ -119,5 +119,5 @@ Output: no_articles_<file name>.txt
 
 (define (main filename)
   (write-file
-   (string-append "no_articles_" filename ".txt")
-   (read-words/line filename)))
+   (string-append "no_articles_" filename)
+   (lsl_to_str (read-words/line filename))))
