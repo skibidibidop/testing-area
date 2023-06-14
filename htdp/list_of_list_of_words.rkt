@@ -21,3 +21,20 @@ Code-along 10.3 Lists in lists, files
 ; (define sl3 (cons "String1" (cons "String2" '())))
 
 ; FUNCTION DEFINITIONS /////////////////////////////////////////////////////////
+
+; String -> String
+; Produces file content as a string.
+(define (read_file f) ...)
+
+; String -> string_list
+; Produces file content as a list of strings, one per line
+(define (read_lines f) ...)
+
+; String -> string_list
+; Produces file content as a list of strings, one per word
+(define (read_words f) ...)
+
+; String -> list_of_string_lists
+; Produces file content as list of string_lists, one list per line and
+; one string per word
+(define (read_words_lines f) ...)
