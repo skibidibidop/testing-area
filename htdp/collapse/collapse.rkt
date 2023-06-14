@@ -46,3 +46,7 @@ Use:
                '())))
 
 ; FUNCTION DEFINITIONS /////////////////////////////////////////////////////////
+
+; lsl -> String
+; Converts a list of string_lists (aka list of lines) into a String
+(define (collapse in) "")
