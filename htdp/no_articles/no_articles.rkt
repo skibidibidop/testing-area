@@ -63,8 +63,12 @@ Output: no_articles_<file name>.txt
 (define (lsl_to_str in_lsl)
   (cond[(empty? in_lsl) ""]
        [else
-        (...(first in_lsl)...
-            (rest in_lsl)...)]))
+        (string-append
+         (del_article (first in_lsl))
+         (cond[(empty? (rest in_lsl))
+               ""]
+              [else " "])
+         (lsl_to_str (rest in_lsl)))]))
 
 ; string_list -> string_list
 ; Removes all articles in provided string_list
