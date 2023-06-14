@@ -109,4 +109,14 @@ Output: no_articles_<file name>.txt
               (del_article (rest in_sl)))]))
 
 ; string_list -> String
+; Converts a string_list to String
+(check-expect (sl_to_str '()) "")
+(check-expect (sl_to_str
+               (cons "hi" '()))
+              "hi")
+(check-expect (sl_to_str
+               (cons "hello"
+                     (cons "there" '())))
+              "hello there")
+
 (define (sl_to_str in_sl) "")
