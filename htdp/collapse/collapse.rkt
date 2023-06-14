@@ -105,3 +105,8 @@ Use:
                " "]
               [else ""])
          (line_cat (rest line)))]))
+
+; MAIN /////////////////////////////////////////////////////////////////////////
+
+(write-file "ttt.dat"
+            (collapse (read-words/line "ttt.txt")))
