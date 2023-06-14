@@ -1,0 +1,4 @@
+Hi there!
+
+This is a test string.
+Checks if (collapse) is working.

@@ -70,4 +70,5 @@ Convert list of string lists to string and write to .dat file
                   (cons "Checks if (collapse) is working." '())
                   '())))))
 
-(define (collapse in) '())
+(define (collapse in)
+  (read-words/line in))
