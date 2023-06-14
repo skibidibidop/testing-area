@@ -81,4 +81,4 @@ Use:
 
 ; string_list -> String
 ; Converts a string_list to a String
-(define
+(define (line_cat line) '())
