@@ -5,3 +5,12 @@
 Author: Mark Beltran
 Date: June 14, 2023
 
+(collapse): converts a list of lines into a string.
+  Words are separated by blank spaces. Lines are separated
+  by \n.
+
+Use:
+
+(write-file "ttt.dat"
+            (collapse (read-words/line "ttt.txt")))
+|#
