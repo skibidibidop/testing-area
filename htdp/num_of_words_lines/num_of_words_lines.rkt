@@ -66,17 +66,9 @@ Code-along: 10.3 Sample: number of lines and number of words per line
                   '()))))
               (cons 3 (cons 2 (cons 4 '()))))
 
-(define (words_per_line lsl)
-  (cond[(empty lsl?) '()]
+(define (words_per_line list_strlist)
+  (cond[(empty? list_strlist) '()]
        [else
         (cons
-         (line_processor (first lsl))
-         (words_per_line (rest lsl)))]))
-
-; string_list -> Number
-; Counts the number of words in each list
-(define (line_processor ln)
-  (cond[(empty? ln) '()]
-       [else
-        (...(first ln)...
-            (line_processor (rest ln)))]))
+         (length (first list_strlist))
+         (words_per_line (rest list_strlist)))]))
