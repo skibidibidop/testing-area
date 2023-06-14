@@ -9,28 +9,6 @@ Code-along 10.3 Lists in lists, files
 |#
 
 (require 2htdp/batch-io)
-
-(define lines.txt
-  (cons "TTT"
-        (cons '()
-              (cons "Put up in a place"
-                    (cons "Where it's easy to see"
-                          (cons "the cryptic admonishment"
-                                (cons "T.T.T." '())))))))
-
-(define words.txt
-  (cons "When"
-        (cons "you"
-              (cons "feel"
-                    (cons "how"
-                          (cons "depressingly"
-                                (cons '()
-                                      (cons "slowly"
-                                            (cons "you"
-                                                  (cons "climb" '()))))))))))
-
-(define words_lines.txt
-  (...))
                                             
 ; DATA DEFINITIONS /////////////////////////////////////////////////////////////
 
