@@ -8,6 +8,8 @@ Input: <file name>.txt
 Output: no_articles_<file name>.txt
 |#
 
+(require 2htdp/batch-io)
+
 ; DATA DEFINITIONS /////////////////////////////////////////////////////////////
 
 ; A string_list is one of:
@@ -112,3 +114,10 @@ Output: no_articles_<file name>.txt
              (string-downcase str) "the"))
         ""]
        [else str]))
+
+; MAIN /////////////////////////////////////////////////////////////////////////
+
+(define (main filename)
+  (write-file
+   (string-append "no_articles_" filename ".txt")
+   (read-words/line filename)))
