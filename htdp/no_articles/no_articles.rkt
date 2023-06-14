@@ -47,7 +47,19 @@ Output: no_articles_<file name>.txt
 ; lsl -> String
 ; Converts provided lsl to String
 (check-expect (lsl_to_str '()) "")
-(check-expect 
+(check-expect (lsl_to_str
+               (cons
+                (cons "lsla" '()) '()))
+              "lsla")
+(check-expect (lsl_to_str
+               (cons
+                (cons "lsla"
+                      (cons "lslb" '()))
+                (cons
+                 (cons "lslc" '())
+                 '())))
+              "lsla lslb\nlslb")
+
 (define (lsl_to_str in_lsl)
   (cond[(empty? in_lsl) ""]
        [else
