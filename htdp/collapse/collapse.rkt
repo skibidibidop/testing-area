@@ -14,3 +14,18 @@ Use:
 (write-file "ttt.dat"
             (collapse (read-words/line "ttt.txt")))
 |#
+
+(require 2htdp/batch-io)
+
+; DATA DEFINITIONS /////////////////////////////////////////////////////////////
+
+; A string_list is one of:
+; - '()
+; - (cons String string_list)
+; - Interp.: a list of strings is a line
+(define sl1 '())
+(define sl2 (cons "sla" '()))
+(define sle3 (cons "sla"
+                   (cons "slb" '())))
+
+; FUNCTION DEFINITIONS /////////////////////////////////////////////////////////
