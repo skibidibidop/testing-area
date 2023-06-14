@@ -50,3 +50,7 @@ Convert list of string lists to string and write to .dat file
                '())))
 
 ; FUNCTION DEFINITIONS /////////////////////////////////////////////////////////
+
+; String -> lsl
+; Converts string to lsl
+(define (collapse in) '())
