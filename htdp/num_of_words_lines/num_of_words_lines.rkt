@@ -46,19 +46,26 @@ Code-along: 10.3 Sample: number of lines and number of words per line
 ; Determines the number of words on each line
 (check-expect (words_per_line '()) '())
 (check-expect (words_per_line
-               (cons (cons "String1" '()) '()))
-              1)
-(check-expect (words_per_line
                (cons
-                (cons "String2"
-                      (cons "String3" '()))
+                (cons "s1" '())
                 '()))
-              2)
+              (cons 1 '()))
 (check-expect (words_per_line
                (cons
-                (cons "String4"
-                      (cons "String5" '()))
-                (cons "String6"
-                      (cons "String7" '()))))
-              
-(define (words_per_line lsl) '())
+                (cons "s1"
+                      (cons "s2"
+                            (cons "s3" '())))
+                (cons
+                 (cons "s4"
+                       (cons "s5" '()))
+                 (cons
+                  (cons "s6"
+                        (cons "s7"
+                              (cons "s8"
+                                    (cons "s9" '()))))
+                  '()))))
+              (cons 3 (cons 2 (cons 4 '()))))
+
+(define (words_per_line lsl)
+  (cond[(empty? lsl) '()]
+       [else
