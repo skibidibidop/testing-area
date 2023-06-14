@@ -5,13 +5,4 @@
 Author: Mark Beltran
 Date: June 14, 2023
 
-Code-along 10.3 Lists in lists, files
 |#
-
-(require 2htdp/batch-io)
-
-; DATA DEFINITIONS /////////////////////////////////////////////////////////////
-
-
-
-; FUNCTION DEFINITIONS /////////////////////////////////////////////////////////
