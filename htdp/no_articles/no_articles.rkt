@@ -64,49 +64,11 @@ Output: no_articles_<file name>.txt
   (cond[(empty? in_lsl) ""]
        [else
         (string-append
-         (del_article (first in_lsl))
+         (sl_to_str (first in_lsl))
          (cond[(empty? (rest in_lsl))
                ""]
-              [else " "])
+              [else "\n"])
          (lsl_to_str (rest in_lsl)))]))
-
-; string_list -> string_list
-; Removes all articles in provided string_list
-(check-expect (del_article '()) '())
-(check-expect (del_article
-               (cons "A"
-                     (cons "a"
-                           (cons "AN"
-                                 (cons "An"
-                                       (cons "an" '()))))))
-              '())
-(check-expect (del_article
-               (cons "THE"
-                     (cons "The"
-                           (cons "the" '()))))
-              '())
-(check-expect (del_article
-               (cons "The"
-                     (cons "test"
-                           (cons "is"
-                                 (cons "a"
-                                       (cons "success!" '()))))))
-              (cons "test"
-                    (cons "is"
-                          (cons "success!" '()))))
-
-(define (del_article in_sl)
-  (cond[(or (string=?
-             (string-downcase (first in_sl)) "a")
-            (string=?
-             (string-downcase (first in_sl)) "an")
-            (string=?
-             (string-downcase (first in_sl)) "the")
-            (empty? in_sl))
-        '()]
-       [else
-        (cons (first in_sl)
-              (del_article (rest in_sl)))]))
 
 ; string_list -> String
 ; Converts a string_list to String
@@ -119,4 +81,16 @@ Output: no_articles_<file name>.txt
                      (cons "there" '())))
               "hello there")
 
-(define (sl_to_str in_sl) "")
+(define (sl_to_str in_sl)
+  (cond[(empty? in_sl) ""]
+       [else
+        (string-append
+         (del_article (first in_sl))
+         (cond[(empty? (rest in_sl))
+               ""]
+              [else " "])
+         (sl_to_str (rest in_sl)))]))
+
+; String -> String
+; Replaces articles with ""
+(define (del_article str) "")
