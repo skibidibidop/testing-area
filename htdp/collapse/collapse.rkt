@@ -76,8 +76,13 @@ Use:
 (define (collapse in)
   (cond[(empty? in) ""]
        [else
-        (...(first in)...
-            (rest in)...)]))
+        (string-append
+         (line_cat (first in))
+         (cond[(not
+                (empty? (rest in)))
+               "\n"]
+              [else ""])
+         (collapse (rest in)))]))
 
 ; string_list -> String
 ; Converts a string_list to a String with words separated by blank spaces
@@ -96,8 +101,7 @@ Use:
         (string-append
          (first line)
          (cond[(not
-                (empty?
-                 (rest line)))
+                (empty? (rest line)))
                " "]
               [else ""])
          (line_cat (rest line)))]))
