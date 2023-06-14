@@ -73,4 +73,12 @@ Use:
                   '()))))
               "this is a\nstring with\nmultiple lines")
 
-(define (collapse in) "")
+(define (collapse in)
+  (cond[(empty? in) ""]
+       [else
+        (...(first in)...
+            (rest in)...)]))
+
+; string_list -> String
+; Converts a string_list to a String
+(define
