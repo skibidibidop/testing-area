@@ -80,7 +80,7 @@ Use:
             (rest in)...)]))
 
 ; string_list -> String
-; Converts a string_list to a String
+; Converts a string_list to a String with words separated by blank spaces
 (check-expect (line_cat '()) "")
 (check-expect (line_cat
                (cons "sla" '()))
@@ -88,11 +88,16 @@ Use:
 (check-expect (line_cat
                (cons "sla"
                      (cons "slb" '())))
-              "slaslb")
+              "sla slb")
 
 (define (line_cat line)
   (cond[(empty? line) ""]
        [else
         (string-append
          (first line)
+         (cond[(not
+                (empty?
+                 (rest line)))
+               " "]
+              [else ""])
          (line_cat (rest line)))]))
