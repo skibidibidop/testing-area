@@ -58,7 +58,7 @@ Output: no_articles_<file name>.txt
                 (cons
                  (cons "lslc" '())
                  '())))
-              "lsla lslb\nlslb")
+              "lsla lslb\nlslc")
 
 (define (lsl_to_str in_lsl)
   (cond[(empty? in_lsl) ""]
@@ -93,4 +93,22 @@ Output: no_articles_<file name>.txt
 
 ; String -> String
 ; Replaces articles with ""
-(define (del_article str) "")
+(check-expect (del_article "a") "")
+(check-expect (del_article "A") "")
+(check-expect (del_article "an") "")
+(check-expect (del_article "An") "")
+(check-expect (del_article "AN") "")
+(check-expect (del_article "the") "")
+(check-expect (del_article "The") "")
+(check-expect (del_article "THE") "")
+(check-expect (del_article "we") "we")
+
+(define (del_article str)
+  (cond[(or (string=?
+             (string-downcase str) "a")
+            (string=?
+             (string-downcase str) "an")
+            (string=?
+             (string-downcase str) "the"))
+        ""]
+       [else str]))
