@@ -9,7 +9,7 @@ Code-along 10.3 Lists in lists, files
 |#
 
 (require 2htdp/batch-io)
-                                            
+
 ; DATA DEFINITIONS /////////////////////////////////////////////////////////////
 
 ; A string_list is one of:
@@ -35,6 +35,18 @@ Code-along 10.3 Lists in lists, files
 
 ; String -> String
 ; Produces file content as a string.
+(check-expect (read_file "ttt.txt")
+              (+ "TTT\n"
+                 "\nPut up in a place\n"
+                 "where it's easy to see\n"
+                 "the cryptic admonishment\n"
+                 "T.T.T.\n"
+                 "\nWhen you feel how depressingly\n"
+                 "slowly you climb,\n"
+                 "it's well to remember that\n"
+                 "Thing Take Time.\n"
+                 "\nPiet Hein"))
+
 (define (read_file f) ...)
 
 ; String -> string_list
