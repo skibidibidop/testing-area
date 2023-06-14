@@ -81,7 +81,7 @@ Use:
 
 ; string_list -> String
 ; Converts a string_list to a String
-(check-expect (line_cat '()) '())
+(check-expect (line_cat '()) "")
 (check-expect (line_cat
                (cons "sla" '()))
               "sla")
@@ -90,4 +90,9 @@ Use:
                      (cons "slb" '())))
               "slaslb")
 
-(define (line_cat line) '())
+(define (line_cat line)
+  (cond[(empty? line) ""]
+       [else
+        (string-append
+         (first line)
+         (line_cat (rest line)))]))
