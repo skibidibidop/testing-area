@@ -95,4 +95,18 @@ Output: no_articles_<file name>.txt
                     (cons "is"
                           (cons "success!" '()))))
 
-(define (del_article in_sl) '())
+(define (del_article in_sl)
+  (cond[(or (string=?
+             (string-downcase (first in_sl)) "a")
+            (string=?
+             (string-downcase (first in_sl)) "an")
+            (string=?
+             (string-downcase (first in_sl)) "the")
+            (empty? in_sl))
+        '()]
+       [else
+        (cons (first in_sl)
+              (del_article (rest in_sl)))]))
+
+; string_list -> String
+(define (sl_to_str in_sl) "")
