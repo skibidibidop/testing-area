@@ -27,8 +27,8 @@ Output: posns with x-coordinates between 0-100 and y-coordinates between 0-200.
 ; y-coordinates between 0-200 and creates a new posn_list with that.
 (check-expect (legal '()) '())
 (check-expect (legal (cons (make-posn -1 -1) '())) '())
-(check-expect (legal (cons (make-posn -1 0))) '())
-(check-expect (legal (cons (make-posn 0 -1))) '())
+(check-expect (legal (cons (make-posn -1 0) '())) '())
+(check-expect (legal (cons (make-posn 0 -1) '())) '())
 (check-expect (legal (cons (make-posn 0 0) '()))
               (cons (make-posn 0 0) '()))
 (check-expect (legal (cons (make-posn 100 200) '()))
@@ -62,4 +62,15 @@ Output: posns with x-coordinates between 0-100 and y-coordinates between 0-200.
                            (cons (make-posn -5 300) '()))))
               '())
 
-(define (legal plist) '())
+(define (legal plist)
+  (cond[(empty? plist) '()]
+       [else
+        (cond[(and
+               (and
+                (>= (posn-x (first plist)) 0)
+                (<= (posn-x (first plist)) 100))
+               (and
+                (>= (posn-y (first plist)) 0)
+                (<= (posn-y (first plist)) 200)))
+              (cons (first plist) (legal (rest plist)))]
+             [else (legal (rest plist))])]))
