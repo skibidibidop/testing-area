@@ -1,6 +1,3 @@
-;; The first three lines of this file were inserted by DrRacket. They record metadata
-;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-beginner-reader.ss" "lang")((modname wc_simulation) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: June 15, 2023
@@ -23,7 +20,22 @@ Counts the number of 1Strings, words, and lines in a file.
 ; total: (make-total Number Number Number)
 ; Interp.: contains the number of 1Strings (cc), words (wc), and lines (lc)
 ; in a file.
+; (define tot1 (make-total 3 10 4))
+
+; A string_list is one of:
+; - '()
+; - (cons String string_list)
+; Interp.: each list member represents a word, each list represents a line in
+; the file
+(define sl1 '())
+(define sl2 (cons "sla" '()))
+(define sl3 (cons "sla"
+                  (cons "slb" '())))
+
+; An lsl (short for list of string_lists)
 
 ; FUNCTION DEFINITIONS /////////////////////////////////////////////////////////
+
+
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
