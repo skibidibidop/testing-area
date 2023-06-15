@@ -19,6 +19,11 @@ Counts the number of 1Strings, words, and lines in a file.
 ; A line_count is a Number
 ; Interp.: represents the number of lines in a file
 
+(define-struct total [cc wc lc])
+; total: (make-total Number Number Number)
+; Interp.: contains the number of 1Strings (cc), words (wc), and lines (lc)
+; in a file.
+
 ; FUNCTION DEFINITIONS /////////////////////////////////////////////////////////
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
