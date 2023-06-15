@@ -48,6 +48,9 @@ Counts the number of 1Strings, words, and lines in a file.
 
 ; FUNCTION DEFINITIONS /////////////////////////////////////////////////////////
 
-
+; String -> total
+; Counts the 1Strings, words, and lines in a file
+(define (main_counter filename)
+  (make-total 0 0 0))
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
