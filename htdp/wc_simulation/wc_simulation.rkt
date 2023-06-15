@@ -10,6 +10,15 @@ Counts the number of 1Strings, words, and lines in a file.
 
 ; DATA DEFINITIONS /////////////////////////////////////////////////////////////
 
+; A char_count is a Number
+; Interp.: represents the number of 1Strings in a file
+
+; A word_count is a Number
+; Interp.: represents the number of words in a file
+
+; A line_count is a Number
+; Interp.: represents the number of lines in a file
+
 ; FUNCTION DEFINITIONS /////////////////////////////////////////////////////////
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
