@@ -50,6 +50,13 @@ Counts the number of 1Strings, words, and lines in a file.
 
 ; String -> total
 ; Counts the 1Strings, words, and lines in a file
+(check-expect (main_counter "empty.txt") (make-total 0 0 0))
+(check-expect (main_counter "c10w10line10.txt") (make-total 10 10 10))
+(check-expect (main_counter "c10w1line1.txt") (make-total 10 1 1))
+(check-expect (main_counter "c1w1line1.txt") (make-total 1 1 1))
+(check-expect (main_counter "c25w5line4.txt") (make-total 25 5 4))
+(check-expect (main_counter "newline.txt") (make-total 1 1 1))
+
 (define (main_counter filename)
   (make-total 0 0 0))
 
