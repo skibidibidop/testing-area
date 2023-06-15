@@ -32,7 +32,19 @@ Counts the number of 1Strings, words, and lines in a file.
 (define sl3 (cons "sla"
                   (cons "slb" '())))
 
-; An lsl (short for list of string_lists)
+; An lsl (short for list of string_lists) is one of:
+; - '()
+; - (cons string_lists lsl)
+; Interp.: each member represents a line in the file. An lsl represents how
+; lines are organized in the file
+(define lsl1 '())
+(define lsl2 (cons
+              (cons "sla" '())))
+(define lsl3 (cons
+              (cons "sla" '())
+              (cons
+               (cons "slb" '())
+               '())))
 
 ; FUNCTION DEFINITIONS /////////////////////////////////////////////////////////
 
