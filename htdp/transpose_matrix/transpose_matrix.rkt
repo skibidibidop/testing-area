@@ -59,6 +59,13 @@ Transposes a matrix.
 ; Matrix -> Row
 ; Takes the first members of all Rows in a matrix (aka column 1)
 ; and creates a new Row
+(define f_row1 (cons 1 (cons 2 '())))
+(define f_row2 (cons 3 (cons 4 '())))
+(define f_mat (cons f_row1 (cons f_row2 '())))
+(define f_result (cons 1 (cons 3 '())))
+
+(check-expect (first* f_mat) f_result)
+
 (define (first* mat)...)
 
 ; Matrix -> Matrix
