@@ -22,6 +22,15 @@ Counts the number of 1Strings, words, and lines in a file.
 ; in a file.
 ; (define tot1 (make-total 3 10 4))
 
+; A char_list is one of:
+; - '()
+; - (cons char char_list)
+; Interp.: a list of characters in the order they appear in the file
+(define cl1 '())
+(define cl2 (cons "a" '()))
+(define cl3 (cons "a"
+                  (cons "b" '())))
+
 ; A string_list is one of:
 ; - '()
 ; - (cons String string_list)
@@ -38,8 +47,7 @@ Counts the number of 1Strings, words, and lines in a file.
 ; Interp.: each member represents a line in the file. An lsl represents how
 ; lines are organized in the file
 (define lsl1 '())
-(define lsl2 (cons
-              (cons "sla" '())))
+(define lsl2 (cons (cons "sla" '()) '()))
 (define lsl3 (cons
               (cons "sla" '())
               (cons
@@ -48,16 +56,12 @@ Counts the number of 1Strings, words, and lines in a file.
 
 ; FUNCTION DEFINITIONS /////////////////////////////////////////////////////////
 
+(define clist (read-1strings filename))
+
 ; String -> total
 ; Counts the 1Strings, words, and lines in a file
-(check-expect (main_counter "empty.txt") (make-total 0 0 0))
-(check-expect (main_counter "c10w10line10.txt") (make-total 10 10 10))
-(check-expect (main_counter "c10w1line1.txt") (make-total 10 1 1))
-(check-expect (main_counter "c1w1line1.txt") (make-total 1 1 1))
-(check-expect (main_counter "c25w5line4.txt") (make-total 25 5 4))
-(check-expect (main_counter "newline.txt") (make-total 1 1 1))
+(check-expect (main_counter ...) ...)
 
-(define (main_counter filename)
-  (make-total 0 0 0))
-
+(define (main_counter char_list)
+  (cond[(empty? 
 ; MAIN /////////////////////////////////////////////////////////////////////////
