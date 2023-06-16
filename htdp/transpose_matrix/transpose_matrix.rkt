@@ -56,7 +56,11 @@ Transposes a matrix.
     [else
      (cons (first* mat) (transpose (rest* mat)))]))
 
-; Matrix -> Num_list
-; Takes the first members of all num_lists in a matrix (aka column 1)
+; Matrix -> Row
+; Takes the first members of all Rows in a matrix (aka column 1)
 ; and creates a new Row
-(define (first* mat) '()
+(define (first* mat)...)
+
+; Matrix -> Matrix
+; Removes the first members of all Rows in given Matrix
+(define (rest* mat)...)
