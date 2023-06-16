@@ -91,3 +91,14 @@ Transposes a matrix.
     [(empty? mat) '()]
     [else
      (cons (rest (first mat)) (rest* (rest mat)))]))
+
+; MAIN /////////////////////////////////////////////////////////////////////////
+
+(define m_row1 (cons 1 (cons 2 (cons 3 (cons 4 '())))))
+(define m_row2 (cons 5 (cons 6 (cons 7 (cons 8 '())))))
+(define m_row3 (cons 9 (cons 10 (cons 11 (cons 12 '())))))
+(define m_mat (cons m_row1
+                    (cons m_row2
+                          (cons m_row3 '()))))
+
+(transpose m_mat)
