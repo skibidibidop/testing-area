@@ -91,6 +91,14 @@ Code-along: 10.4 Graphical Editor, Revisited
 ; Renders image of text separated by a cursor
 (define (render in_editor) BG)
 
+(define ed_no_chars (create-editor "" ""))
+(define ed_left_char (create-editor "a" ""))
+(define ed_left_str (create-editor "abc" ""))
+(define ed_right_char (create-editor "" "x"))
+(define ed_right_str (create-editor "xyz" ""))
+(define ed_both_char (create-editor "a" "b"))
+(define ed_both_str (create-editor "abc" "xyz"))
+
 ; Editor KeyEvent -> Editor
 ; Deals with a KeyEvent, given some Editor
 (check-expect (khandler (create_editor "" "") "e")
@@ -132,6 +140,8 @@ Code-along: 10.4 Graphical Editor, Revisited
 
 ; Editor -> Editor
 ; Moves the last character of editor-pre to the beginning of editor-post
+(check-expect (editor_left 
+
 (define (editor_left ed) ed)
 
 ; Editor -> Editor
