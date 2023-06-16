@@ -5,6 +5,8 @@ Date: June 15, 2023
 Counts the number of 1Strings, words, and lines in a file.
 |#
 
+(require 2htdp/batch-io)
+
 ; DATA DEFINITIONS /////////////////////////////////////////////////////////////
 
 ; A char_count is a Number
@@ -56,12 +58,6 @@ Counts the number of 1Strings, words, and lines in a file.
 
 ; FUNCTION DEFINITIONS /////////////////////////////////////////////////////////
 
-(define clist (read-1strings filename))
 
-; String -> total
-; Counts the 1Strings, words, and lines in a file
-(check-expect (main_counter ...) ...)
 
-(define (main_counter char_list)
-  (cond[(empty? 
 ; MAIN /////////////////////////////////////////////////////////////////////////
