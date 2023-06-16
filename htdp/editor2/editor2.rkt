@@ -49,3 +49,17 @@ Code-along: 10.4 Graphical Editor, Revisited
   (cond[(empty? ls) (cons char '())]
        [else
         (cons (first ls) (list_append (rest ls) char))]))
+
+; String String -> Editor
+; Produces an Editor out of 2 Strings
+(define hello
+  (cons "h" (cons "e" (cons "l" (cons "l" (cons "o" '()))))))
+(define there
+  (cons "t" (cons "h" (cons "e" (cons "r" (cons "e" '()))))))
+
+(check-expect (create_editor "hello" "there")
+              (make-editor hello there))
+
+(define (create_editor pre post)
+  (make-editor (explode pre)
+               (explode post)))
