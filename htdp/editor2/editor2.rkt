@@ -79,3 +79,10 @@ Code-along: 10.4 Graphical Editor, Revisited
   (make-editor (explode pre)
                (explode post)))
 
+; Editor -> Image
+; Renders image of text separated by a cursor
+(define (render in_editor) BG)
+
+; Editor KeyEvent -> Editor
+; Deals with a key event, given some editor
+(define (khandler in_editor ke) in_editor)
