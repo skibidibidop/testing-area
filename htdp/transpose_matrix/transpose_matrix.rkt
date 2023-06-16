@@ -50,4 +50,8 @@ Transposes a matrix.
 
 (check-expect (transpose mat1) tam1)
 
-(define (transpose lnl)
+(define (transpose mat)
+  (cond
+    [(empty? (first mat)) '()]
+    [else
+     (cons (first* mat) (transpose (rest* mat)))]))
