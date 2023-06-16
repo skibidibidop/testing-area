@@ -56,8 +56,36 @@ Counts the number of 1Strings, words, and lines in a file.
                (cons "slb" '())
                '())))
 
-; FUNCTION DEFINITIONS /////////////////////////////////////////////////////////
+; FUNCTIONS, ETC. /////////////////////////////////////////////////////////
 
+(define tracker (make-total 0 0 0))
 
+; lsl -> total
+; Stores the char_count, word_cout, and line_count of a file in a total
+(check-expect (counter '()) (make-total 0 0 0))
+(check-expect (counter (cons
+                        (cons "lsla" '()) '()))
+              (make-total 4 1 1))
+(check-expect (counter
+               (cons
+                (cons "lsla"
+                      (cons "lslb" '()))
+                '()))
+              (make-total 9 2 1))
+(check-expect (counter
+               (cons
+                (cons "lsla"
+                      (cons "lslb" '()))
+                (cons
+                 (cons "lslc"
+                       (cons "lsld"
+                             (cons "lsle" '())))
+                 '())))
+               (make-total 23 5 2))
+
+(define (master_counter in_lsl) ...)
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
+
+(define (main filename)
+  (master_counter (read-words/line filename)))
