@@ -1,27 +1,78 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname num_of_words_lines) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
-Date: June 15, 2023
-
-Counts the number of 1Strings, words, and lines in a file.
+Date: June 14, 2023
+Code-along: 10.3 Sample: number of lines and number of words per line
 |#
-
-(require 2htdp/batch-io)
-
 ; DATA DEFINITIONS /////////////////////////////////////////////////////////////
+; A string_list is one of:
+; - '()
+; - (cons String string_list)
+; Interp.: a list of strings in a line
+; (define sl1 '())
+; (define sl2 (cons "String1" '()))
+; (define sl3 (cons "String2"
+;                   (cons "String3" '())))
+; An lsl (short for list of string_lists)
+; - '()
+; - (cons string_list lsl)
+; Interp.: a list of string_lists
+; (define lsl1 '())
+; (define lsl2 (cons
+;               (cons "String1" '()) '()))
+; (define lsl3 (cons
+;               (cons "String2"
+;                     (cons "String3" '())) '()))
+; A num_list is one of:
+; - '()
+; - (cons Number num_list)
+; Interp.: a list of numbers
+; (define nl1 '())
+; (define nl2 (cons 1 '()))
+; (define nl3 (cons 2
+;                   (cons 3 '())))
+; FUNCTION DEFINITIONS /////////////////////////////////////////////////////////
+; lsl -> num_list
+; Determines the number of words on each line
+(check-expect (words_per_line '()) '())
+(check-expect (words_per_line
+               (cons
+                (cons "s1" '())
+                '()))
+              (cons 1 '()))
+(check-expect (words_per_line
+               (cons
+                (cons "s1"
+                      (cons "s2"
+                            (cons "s3" '())))
+                (cons
+                 (cons "s4"
+                       (cons "s5" '()))
+                 (cons
+                  (cons "s6"
+                        (cons "s7"
+                              (cons "s8"
+                                    (cons "s9" '()))))
+                  '()))))
+              (cons 3 (cons 2 (cons 4 '()))))
 
-(define-struct total [cc wc lc])
-; total: (make-total Number Number Number)
-; Interp.: contains the number of 1Strings (cc), words (wc), and lines (lc)
-; in a file.
-; (define tot1 (make-total 3 10 4))
+(define (words_per_line lsl)
+  (cond[(empty lsl?) '()]
+(define (words_per_line list_strlist)
+  (cond[(empty? list_strlist) '()]
+       [else
+        (cons
+         (line_processor (first lsl))
+         (words_per_line (rest lsl)))]))
 
-; FUNCTIONS, ETC. /////////////////////////////////////////////////////////
-
-; lsl -> total
-; Stores the character count, word count, and line count in a total
-(check-expect (counter "ttt.txt") (make-total 183 33 13))
-
-(define (counter filename)
-  (make-total (length (read-1strings filename))
-              (length (read-words filename))
-              (length (read-lines filename))))
+; string_list -> Number
+; Counts the number of words in each list
+(define (line_processor ln)
+  (cond[(empty? ln) '()]
+       [else
+        (...(first ln)...
+            (line_processor (rest ln)))]))
+         (length (first list_strlist))
+         (words_per_line (rest list_strlist)))]))
