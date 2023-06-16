@@ -138,6 +138,10 @@ Code-along: 10.4 Graphical Editor, Revisited
 ; Moves the first character of editor-post to the end of editor-pre
 (define (editor_right ed) ed)
 
+; Editor -> Editor
+; Deletes the last character of editor-pre
+(define (editor_del ed) ed)
+
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
 ; String -> Editor
