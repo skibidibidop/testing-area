@@ -74,4 +74,16 @@ Transposes a matrix.
 
 ; Matrix -> Matrix
 ; Removes the first members of all Rows in given Matrix
+(define r_row1 (cons 1 (cons 2 (cons 3 '()))))
+(define r_row2 (cons 4 (cons 5 (cons 6 '()))))
+(define r_row3 (cons 7 (cons 8 (cons 9 '()))))
+(define r_mat (cons r_row1 (cons r_row2 (cons r_row3 '()))))
+
+(define r_wor1 (cons 2 (cons 3 '())))
+(define r_wor2 (cons 5 (cons 6 '())))
+(define r_wor3 (cons 8 (cons 9 '())))
+(define r_result (cons r_wor1 (cons r_wor2 (cons r_wor3 '()))))
+
+(check-expect (rest* r_mat) r_result)
+
 (define (rest* mat)...)
