@@ -118,15 +118,15 @@ Code-along: 10.4 Graphical Editor, Revisited
 (check-expect (khandler (create_editor "zx" "yv") " ")
               (create_editor "zx " "yv"))
 
-(define (khandler in_editor ke)
+(define (khandler ed ke)
   (cond
-    [(key=? ke "left") ...]
-    [(key=? ke "right") ...]
-    [(key=? ke "\b") ...]
-    [(key=? ke "\t") ...]
-    [(key=? ke "\r") ...]
-    [(= (string-length k) 1) ...]
-    [else ...]))
+    [(key=? ke "left") (editor_left ed)]
+    [(key=? ke "right")(editor_right ed)]
+    [(key=? ke "\b") (editor_del ed)]
+    [(key=? ke "\t") ed]
+    [(key=? ke "\r") ed]
+    [(= (string-length k) 1) (editor_ins ed ke)]
+    [else ed]))
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
