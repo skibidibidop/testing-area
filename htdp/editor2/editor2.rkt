@@ -34,4 +34,8 @@ Code-along: 10.4 Graphical Editor, Revisited
  (rev (cons "a" (cons "b" (cons "c" '()))))
  (cons "c" (cons "b" (cons "a" '()))))
 
-(define (rev l) l)
+(define (rev l)
+  (cond[(empty? l) ...]
+       [else
+        (...(first l)...
+            (rev (rest l)...))]))
