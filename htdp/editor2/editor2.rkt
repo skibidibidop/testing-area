@@ -84,5 +84,14 @@ Code-along: 10.4 Graphical Editor, Revisited
 (define (render in_editor) BG)
 
 ; Editor KeyEvent -> Editor
-; Deals with a key event, given some editor
+; Deals with a KeyEvent, given some Editor
 (define (khandler in_editor ke) in_editor)
+
+; MAIN /////////////////////////////////////////////////////////////////////////
+
+; String -> Editor
+; Launches the editor given some initial string
+(define (main str)
+  (big-bang (create_editor str "")
+    [to-draw render]
+    [on-key khandler]))
