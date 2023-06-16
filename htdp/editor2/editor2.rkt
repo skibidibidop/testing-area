@@ -27,3 +27,11 @@ Code-along: 10.4 Graphical Editor, Revisited
 (make-editor lla good)
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
+
+; Lo1S -> Lo1S
+; Produces a reverse version of the given list
+(check-expect
+ (rev (cons "a" (cons "b" (cons "c" '()))))
+ (cons "c" (cons "b" (cons "a" '()))))
+
+(define (rev l) l)
