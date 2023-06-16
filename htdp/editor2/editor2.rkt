@@ -22,10 +22,6 @@ Code-along: 10.4 Graphical Editor, Revisited
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
-; An Lo1s (short for List_of_1Strings) is one of:
-; - '()
-; - (cons 1String Lo1s)
-
 (define-struct editor [pre post])
 ; Editor: (make-editor Lo1s Lo1s)
 (define good
@@ -37,6 +33,12 @@ Code-along: 10.4 Graphical Editor, Revisited
 
 (make-editor all good)
 (make-editor lla good)
+
+; An Lo1s (short for List_of_1Strings) is one of:
+; - '()
+; - (cons 1String Lo1s)
+; Interp.: a list of 1Strings
+(define lo1s1 (cons "a" (cons "b" '())))
 
 ; A KeyEvent is one of:
 ; - 1Strings
