@@ -86,4 +86,8 @@ Transposes a matrix.
 
 (check-expect (rest* r_mat) r_result)
 
-(define (rest* mat)...)
+(define (rest* mat)
+  (cond
+    [(empty? mat) '()]
+    [else
+     (cons (rest (first mat)) (rest* (rest mat)))]))
