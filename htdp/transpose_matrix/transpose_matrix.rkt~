@@ -10,16 +10,13 @@ Transposes a matrix.
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
-; A row is one of:
-; - '()
-; - (cons Number row)
-; Interp.: a row in a matrix
-(define row1 (cons 11 (cons 12 '())))
-(define row2 (cons 21 (cons 22 '())))
-
 ; A matrix is one of:
 ; (cons row '())
 ; (cons row matrix)
 ; Constraint: all rows in matrix are of the same length
+
+; A row is one of:
+; - '()
+; - (cons Number row)
 
 ; FUNCTIONS & RELATED //////////////////////////////////////////////////////////
