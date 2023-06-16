@@ -142,6 +142,10 @@ Code-along: 10.4 Graphical Editor, Revisited
 ; Deletes the last character of editor-pre
 (define (editor_del ed) ed)
 
+; Editor KeyEvent -> Editor
+; Appends ke to editor-pre if it is a 1String
+(define (editor_ins ed ke) ed)
+
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
 ; String -> Editor
