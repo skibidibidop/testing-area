@@ -10,5 +10,20 @@ Code-along: 10.4 Graphical Editor, Revisited
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
+; An Lo1S (short for List_of_1Strings) is one of:
+; - '()
+; - (cons 1String Lo1S)
+
+(define-struct editor [pre post])
+; Editor: (make-editor Lo1S Lo1S)
+(define good
+  (cons "g" (cons "o" (cons "o" (cons "d" '())))))
+(define all
+  (cons "a" (cons "l" (cons "l" '()))))
+(define lla
+  (cons "l" (cons "l" (cons "a" '()))))
+
+(make-editor all good)
+(make-editor lla good)
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
