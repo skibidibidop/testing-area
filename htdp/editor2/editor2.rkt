@@ -98,6 +98,8 @@ Code-along: 10.4 Graphical Editor, Revisited
 (define ed_right_str (create-editor "" "xyz"))
 (define ed_both_char (create-editor "a" "b"))
 (define ed_both_str (create-editor "abc" "xyz"))
+(define ed_char_str (create-editor "a" "bcd"))
+(define ed_str_char (create-editor "wxy" "z"))
 
 ; Editor KeyEvent -> Editor
 ; Deals with a KeyEvent, given some Editor
