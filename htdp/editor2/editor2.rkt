@@ -85,6 +85,11 @@ Code-along: 10.4 Graphical Editor, Revisited
 
 ; Editor KeyEvent -> Editor
 ; Deals with a KeyEvent, given some Editor
+(check-expect (khandler (create_editor "" "") "e")
+              (create_editor "e" ""))
+(check-expect (khandler (create_editor "cd" "fgh") "e")
+              (create_editor "cde" "fgh"))
+
 (define (khandler in_editor ke) in_editor)
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
