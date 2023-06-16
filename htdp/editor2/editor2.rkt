@@ -8,6 +8,21 @@ Date: June 16, 2023
 Code-along: 10.4 Graphical Editor, Revisited
 |#
 
+(require 2htdp/image)
+(require 2htdp/universe)
+
+; CONSTANTS ////////////////////////////////////////////////////////////////////
+
+(define SCALER 10)
+
+(define EWIDTH (* SCALER 30))
+(define EHEIGHT (* SCALER 5))
+(define FONT_SIZE (* SCALER 3))
+(define FONT_COLOR "black")
+
+(define BG (empty-scene EWIDTH EHEIGHT))
+(define CURSOR (rectangle 1 EHEIGHT "solid" "red"))
+
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
 ; An Lo1s (short for List_of_1Strings) is one of:
@@ -63,3 +78,4 @@ Code-along: 10.4 Graphical Editor, Revisited
 (define (create_editor pre post)
   (make-editor (explode pre)
                (explode post)))
+
