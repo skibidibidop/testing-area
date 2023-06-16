@@ -66,7 +66,11 @@ Transposes a matrix.
 
 (check-expect (first* f_mat) f_result)
 
-(define (first* mat)...)
+(define (first* mat)
+  (cond
+    [(empty? mat) '()]
+    [else
+     (cons (first (first mat)) (first* (rest mat)))]))
 
 ; Matrix -> Matrix
 ; Removes the first members of all Rows in given Matrix
