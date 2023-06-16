@@ -21,5 +21,6 @@ Transposes a matrix.
 ; (cons row '())
 ; (cons row matrix)
 ; Constraint: all rows in matrix are of the same length
+(define mat1 (cons row1 (cons row2 '())))
 
 ; FUNCTIONS & RELATED //////////////////////////////////////////////////////////
