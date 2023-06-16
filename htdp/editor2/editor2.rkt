@@ -10,12 +10,12 @@ Code-along: 10.4 Graphical Editor, Revisited
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
-; An Lo1S (short for List_of_1Strings) is one of:
+; An Lo1s (short for List_of_1Strings) is one of:
 ; - '()
-; - (cons 1String Lo1S)
+; - (cons 1String Lo1s)
 
 (define-struct editor [pre post])
-; Editor: (make-editor Lo1S Lo1S)
+; Editor: (make-editor Lo1s Lo1s)
 (define good
   (cons "g" (cons "o" (cons "o" (cons "d" '())))))
 (define all
@@ -28,14 +28,24 @@ Code-along: 10.4 Graphical Editor, Revisited
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
-; Lo1S -> Lo1S
+; Lo1s -> Lo1s
 ; Produces a reverse version of the given list
 (check-expect
  (rev (cons "a" (cons "b" (cons "c" '()))))
  (cons "c" (cons "b" (cons "a" '()))))
 
 (define (rev l)
-  (cond[(empty? l) ...]
+  (cond[(empty? l) '()]
        [else
-        (...(first l)...
-            (rev (rest l)...))]))
+        (list_append
+         (rev (rest l)) (first l))]))
+
+; Lo1s 1String -> Lo1s
+; Adds 1String to end of Lo1s
+(check-expect (list_append (cons "a" (cons "b" '())) "c")
+              (cons "a" (cons "b" (cons "c" '()))))
+
+(define (list_append ls char)
+  (cond[(empty? ls) (cons char '())]
+       [else
+        (cons (first ls) (list_append (rest ls) char))]))
