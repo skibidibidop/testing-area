@@ -130,6 +130,10 @@ Code-along: 10.4 Graphical Editor, Revisited
     [(= (string-length k) 1) (editor_ins ed ke)]
     [else ed]))
 
+; Editor -> Editor
+; Moves the last character of editor-pre to the beginning of editor-post
+(define (editor_left ed) ed)
+
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
 ; String -> Editor
