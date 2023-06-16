@@ -23,4 +23,31 @@ Transposes a matrix.
 ; Constraint: all rows in matrix are of the same length
 (define mat1 (cons row1 (cons row2 '())))
 
+; A num_list is one of:
+; - '()
+; (cons Number num_list)
+; Interp.: a list of Numbers
+(define nl1 (cons 1 (cons 2 '())))
+
+; An lnl (short for list_of_num_lists) is one of:
+; '()
+; (cons num_list lnl)
+; Interp.: a list of num_lists
+(define lnl1 (cons
+              (cons 1 (cons 2 '()))
+              (cons
+               (cons 3 (cons 4 '()))
+               '())))
+
 ; FUNCTIONS & RELATED //////////////////////////////////////////////////////////
+
+; matrix -> matrix
+; Transposes the given matrix along the diagonal
+
+(define wor1 (cons 11 (cons 21 '())))
+(define wor2 (cons 12 (cons 22 '())))
+(define tam1 (cons wor1 (cons wor2 '())))
+
+(check-expect (transpose mat1) tam1)
+
+(define (transpose lnl)
