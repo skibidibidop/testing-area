@@ -232,10 +232,11 @@ Code-along: 10.4 Graphical Editor, Revisited
 
 (define (editor_left ed)
   (make-editor
-   (cond[(empty? (first (rev (editor-pre ed)))) '()]
+   (cond[(empty? (editor-pre ed)) '()]
         [else (rev (rmv_first (rev (editor-pre ed))))])
-   (cons (first (rev (editor-pre ed)))
-         (editor-post ed))))
+   (cond[(empty? (editor-post ed)) '()]
+        [else (cons (first (rev (editor-pre ed)))
+                    (editor-post ed))])))
 
 ; Lo1s -> Lo1s
 ; Removes the first member of a Lo1s
@@ -255,7 +256,7 @@ Code-along: 10.4 Graphical Editor, Revisited
 (check-expect (editor_right (create_editor "abc" "xyz"))
               (create_editor "abcx" "yz"))
 
-(define (editor_right ed) ed)
+(define (editor_right ed) ...)
 
 ; Editor -> Editor
 ; Deletes the last character of editor-pre
