@@ -24,21 +24,23 @@ Code-along: 10.4 Graphical Editor, Revisited
 
 (define-struct editor [pre post])
 ; Editor: (make-editor Lo1s Lo1s)
-(define good
-  (cons "g" (cons "o" (cons "o" (cons "d" '())))))
-(define all
-  (cons "a" (cons "l" (cons "l" '()))))
-(define lla
-  (cons "l" (cons "l" (cons "a" '()))))
-
-(make-editor all good)
-(make-editor lla good)
+; Interp.: represents a text editor with the text before the cursor (pre) and
+; after the cursor (post)
+; (define good
+;   (cons "g" (cons "o" (cons "o" (cons "d" '())))))
+; (define all
+;   (cons "a" (cons "l" (cons "l" '()))))
+; (define lla
+;   (cons "l" (cons "l" (cons "a" '()))))
+;
+; (make-editor all good)
+; (make-editor lla good)
 
 ; An Lo1s (short for List_of_1Strings) is one of:
 ; - '()
 ; - (cons 1String Lo1s)
 ; Interp.: a list of 1Strings
-(define lo1s1 (cons "a" (cons "b" '())))
+; (define lo1s1 (cons "a" (cons "b" '())))
 
 ; A KeyEvent is one of:
 ; - 1Strings
@@ -47,7 +49,7 @@ Code-along: 10.4 Graphical Editor, Revisited
 ; - "left"
 ; - "right"
 ; Interp.: valid keystrokes while an editor is active
-(define ke1 "a")
+; (define ke1 "a")
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
