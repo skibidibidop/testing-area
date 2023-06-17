@@ -152,7 +152,10 @@ Code-along: 10.4 Graphical Editor, Revisited
               (cons "a" (cons "b" '())))
 
 (define (list_append char_list char)
-  char_list)
+  (cond
+    [(empty? char_list) (cons char '())]
+    [else
+     (reverse (cons char (reverse char_list)))]))
 
 ; Editor -> Editor
 ; Deletes the last character of editor-pre
