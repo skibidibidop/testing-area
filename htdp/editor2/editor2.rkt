@@ -78,13 +78,18 @@ Code-along: 10.4 Graphical Editor, Revisited
    "left" "top"
    BG))
 
-; String -> Image
-; Converts String to a text Image
+; Lo1s -> Image
+; Converts Lo1s to Image
 (check-expect (editor_text (cons "h" (cons "i" (cons "!" '()))))
               (text "hi!" FONT_SIZE FONT_COLOR))
 
-(define (editor_text str)
-  (text "" FONT_SIZE FONT_COLOR))
+(define (editor_text char_list)
+  (text (clist_to_str char_list) "FONT_SIZE" "FONT_COLOR"))
+
+; Lo1s -> String
+; Converts Lo1s -> String
+(define (clist_to_str char_list)
+  (""))
 
 ; Editor KeyEvent -> Editor
 ; Deals with a KeyEvent, given some Editor
