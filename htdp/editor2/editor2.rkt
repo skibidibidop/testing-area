@@ -170,7 +170,13 @@ Code-along: 10.4 Graphical Editor, Revisited
 (check-expect (editor_del (create_editor "" "a"))
               (create_editor "" "a"))
 
-(define (editor_del ed) ed)
+(define (editor_del ed)
+  (make-editor
+   (cond
+     [(empty? (editor-pre ed)) '()]
+     [else
+      (reverse (rmv_first (reverse (editor-pre ed))))])
+   (editor-post ed)))
 
 ; Editor KeyEvent -> Editor
 ; Appends ke to editor-pre if it is a 1String
