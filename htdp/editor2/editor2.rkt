@@ -53,18 +53,6 @@ Code-along: 10.4 Graphical Editor, Revisited
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
-; Lo1s -> Lo1s
-; Produces a reverse version of the given list
-(check-expect
- (rev (cons "a" (cons "b" (cons "c" '()))))
- (cons "c" (cons "b" (cons "a" '()))))
-
-(define (rev l)
-  (cond[(empty? l) '()]
-       [else
-        (list_append
-         (rev (rest l)) (first l))]))
-
 ; Lo1s 1String -> Lo1s
 ; Adds 1String to end of Lo1s
 (check-expect (list_append (cons "a" (cons "b" '())) "c")
