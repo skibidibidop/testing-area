@@ -84,12 +84,20 @@ Code-along: 10.4 Graphical Editor, Revisited
               (text "hi!" FONT_SIZE FONT_COLOR))
 
 (define (editor_text char_list)
-  (text (clist_to_str char_list) "FONT_SIZE" "FONT_COLOR"))
+  (text (clist_to_str char_list) FONT_SIZE FONT_COLOR))
 
 ; Lo1s -> String
 ; Converts Lo1s -> String
+(check-expect (clist_to_str '()) "")
+(check-expect (clist_to_str (cons "h" (cons "e" (cons "y" '()))))
+              "hey")
+
 (define (clist_to_str char_list)
-  (""))
+  (cond
+    [(empty? char_list) ""]
+    [else
+     (string-append (first char_list)
+                    (clist_to_str (rest char_list)))]))
 
 ; Editor KeyEvent -> Editor
 ; Deals with a KeyEvent, given some Editor
