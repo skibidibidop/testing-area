@@ -159,6 +159,17 @@ Code-along: 10.4 Graphical Editor, Revisited
 
 ; Editor -> Editor
 ; Deletes the last character of editor-pre
+(check-expect (editor_del (create_editor "" ""))
+              (create_editor "" ""))
+(check-expect (editor_del (create_editor "ab" ""))
+              (create_editor "a" ""))
+(check-expect (editor_del (create_editor "a" ""))
+              (create_editor "" ""))
+(check-expect (editor_del (create_editor "" "ab"))
+              (create_editor "" "ab"))
+(check-expect (editor_del (create_editor "" "a"))
+              (create_editor "" "a"))
+
 (define (editor_del ed) ed)
 
 ; Editor KeyEvent -> Editor
