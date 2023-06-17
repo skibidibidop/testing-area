@@ -180,7 +180,17 @@ Code-along: 10.4 Graphical Editor, Revisited
 
 ; Editor KeyEvent -> Editor
 ; Appends ke to editor-pre if it is a 1String
-(define (editor_ins ed ke) ed)
+(check-expect (editor_ins (create_editor "" "") " ")
+              (create_editor " " ""))
+(check-expect (editor_ins (create_editor "a" "") " ")
+              (create_editor "a " ""))
+(check-expect (editor_ins (create_editor "ab" "cd") "e")
+              (create_editor "abe" "cd"))
+
+(define (editor_ins ed ke)
+  (make-editor
+   (list_append (editor-pre ed) ke)
+   (editor-post ed)))
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
