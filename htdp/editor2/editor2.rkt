@@ -240,10 +240,10 @@ Code-along: 10.4 Graphical Editor, Revisited
 
 (define (editor_left ed)
   (make-editor
-   (cond[(empty?
-          (first (rev (editor-pre ed)))) '()]
-        [else
-         (cons (...))])))
+   (cond[(empty? (first (rev (editor-pre ed)))) '()]
+        [else (rev (rmv_first (rev (editor-pre ed))))])
+   (cons (first (rev (editor-pre ed)))
+         (editor-post ed))))
 
 ; Lo1s -> Lo1s
 ; Removes the first member of a Lo1s
@@ -251,7 +251,10 @@ Code-along: 10.4 Graphical Editor, Revisited
 (check-expect (rmv_first (cons "a" (cons "b" '())))
               (cons "b" '()))
 
-(define (rmv_first char_list) char_list)
+(define (rmv_first char_list)
+  (cond
+    [(empty? char_list) '()]
+    [else (rest char_list)]))
 
 ; Editor -> Editor
 ; Moves the first character of editor-post to the end of editor-pre
