@@ -69,7 +69,14 @@ Code-along: 10.4 Graphical Editor, Revisited
 
 ; Editor -> Image
 ; Renders image of text separated by a cursor
-(define (render in_editor) BG)
+(define (render ed)
+  (place-image/align
+   (beside (editor_text (editor-pre ed))
+           CURSOR
+           (editor_text (editor-post ed)))
+   1 1
+   "left" "top"
+   BG))
 
 ; String -> Image
 ; Converts String to a text Image
