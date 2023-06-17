@@ -97,7 +97,28 @@ Code-along: 10.4 Graphical Editor, Revisited
 (check-expect (editor_left (create_editor "" "abc"))
               (create_editor "" "abc"))
 
-(define (editor_left ed) ed)
+(define (editor_left ed)
+  (make-editor
+   (cond
+     [(empty? (editor-pre ed)) '()]
+     [else
+      (reverse (rmv_first (reverse (editor-pre ed))))])
+   (cond
+     [(empty? (editor-pre ed)) (editor-post ed)]
+     [else
+      (cons (first (reverse (editor-pre ed)))
+            (editor-post ed))])))
+
+; Lo1s -> Lo1s
+; Removes the first element of a Lo1s
+(check-expect (rmv_first '()) '())
+(check-expect (rmv_first (cons "a" (cons "b" '())))
+              (cons "b" '()))
+
+(define (rmv_first char_list)
+  (cond
+    [(empty? char_list) '()]
+    [else (rest char_list)])) 
 
 ; Editor -> Editor
 ; Moves the first character of editor-post to the end of editor-pre
