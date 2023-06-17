@@ -80,7 +80,11 @@ Code-along: 10.4 Graphical Editor, Revisited
 
 ; String -> Image
 ; Converts String to a text Image
-(define (editor_text str) BG)
+(check-expect (editor_text (cons "h" (cons "i" (cons "!" '()))))
+              (text "hi!" FONT_SIZE FONT_COLOR))
+
+(define (editor_text str)
+  (text "" FONT_SIZE FONT_COLOR))
 
 ; Editor KeyEvent -> Editor
 ; Deals with a KeyEvent, given some Editor
