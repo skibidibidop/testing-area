@@ -122,6 +122,17 @@ Code-along: 10.4 Graphical Editor, Revisited
 
 ; Editor -> Editor
 ; Moves the first character of editor-post to the end of editor-pre
+(check-expect (editor_right (create_editor "" ""))
+              (create_editor "" ""))
+(check-expect (editor_right (create_editor "" "abc"))
+              (create_editor "a" "bc"))
+(check-expect (editor_right (create_editor "a" "bc"))
+              (create_editor "ab" "c"))
+(check-expect (editor_right (create_editor "ab" "c"))
+              (create_editor "abc" ""))
+(check-expect (editor_right (create_editor "abc" ""))
+              (create_editor "abc" ""))
+
 (define (editor_right ed) ed)
 
 ; Editor -> Editor
