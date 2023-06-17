@@ -133,7 +133,26 @@ Code-along: 10.4 Graphical Editor, Revisited
 (check-expect (editor_right (create_editor "abc" ""))
               (create_editor "abc" ""))
 
-(define (editor_right ed) ed)
+(define (editor_right ed)
+  (make-editor
+   (cond
+     [(empty? (editor-post ed)) (editor-pre ed)]
+     [else
+      (list_append (editor-pre ed)
+                   (first (editor-post ed)))])
+   (cond
+     [(empty? (editor-post ed)) '()]
+     [else
+      (rest (editor-post ed))])))
+
+; Lo1s 1String -> Lo1s
+; Appends a 1String to a Lo1s
+(check-expect (list_append '() "a") (cons "a" '()))
+(check-expect (list_append (cons "a" '()) "b")
+              (cons "a" (cons "b" '())))
+
+(define (list_append char_list char)
+  char_list)
 
 ; Editor -> Editor
 ; Deletes the last character of editor-pre
