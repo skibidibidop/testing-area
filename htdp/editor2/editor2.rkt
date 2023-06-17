@@ -53,16 +53,6 @@ Code-along: 10.4 Graphical Editor, Revisited
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
-; Lo1s 1String -> Lo1s
-; Adds 1String to end of Lo1s
-(check-expect (list_append (cons "a" (cons "b" '())) "c")
-              (cons "a" (cons "b" (cons "c" '()))))
-
-(define (list_append ls char)
-  (cond[(empty? ls) (cons char '())]
-       [else
-        (cons (first ls) (list_append (rest ls) char))]))
-
 ; String String -> Editor
 ; Produces an Editor out of 2 Strings
 (define hello
