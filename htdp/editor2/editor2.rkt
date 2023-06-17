@@ -104,10 +104,6 @@ Code-along: 10.4 Graphical Editor, Revisited
 ; Editor KeyEvent -> Editor
 ; Deals with a KeyEvent, given some Editor
 ; (create_editor "" "")
-(check-expect (khandler ed_no_chars "left")
-              ed_no_chars)
-(check-expect (khandler ed_no_chars "right")
-              ed_no_chars)
 (check-expect (khandler ed_no_chars "\b")
               ed_no_chars)
 (check-expect (khandler ed_no_chars "\t")
@@ -182,10 +178,6 @@ Code-along: 10.4 Graphical Editor, Revisited
 (check-expect (khandler ed_both_char "a")
               (create_editor "aa" "b"))
 ; (create_editor "abc" "xyz")
-(check-expect (khandler ed_both_str "left")
-              (create_editor "ab" "cxyz"))
-(check-expect (khandler ed_both_str "right")
-              (create_editor "abcx" "yz"))
 (check-expect (khandler ed_both_str "\b")
               (create_editor "ab" "xyz"))
 (check-expect (khandler ed_both_str "\t")
@@ -258,6 +250,11 @@ Code-along: 10.4 Graphical Editor, Revisited
 
 ; Editor -> Editor
 ; Moves the first character of editor-post to the end of editor-pre
+(check-expect (editor_right (create_editor "" ""))
+              (create_editor "" ""))
+(check-expect (editor_right (create_editor "abc" "xyz"))
+              (create_editor "abcx" "yz"))
+
 (define (editor_right ed) ed)
 
 ; Editor -> Editor
