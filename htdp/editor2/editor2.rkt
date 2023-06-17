@@ -71,6 +71,10 @@ Code-along: 10.4 Graphical Editor, Revisited
 ; Renders image of text separated by a cursor
 (define (render in_editor) BG)
 
+; String -> Image
+; Converts String to a text Image
+(define (editor_text str) BG)
+
 ; Editor KeyEvent -> Editor
 ; Deals with a KeyEvent, given some Editor
 
