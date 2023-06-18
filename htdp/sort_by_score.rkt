@@ -44,4 +44,16 @@ Sorts list of game players by score in descending order.
     [(empty? gpl) '()]
     [else
      (insert (first gpl) (sort_desc (rest gpl)))]))
+
+; Gp Gp_list -> Gp_list
+; Inserts p into sorted gpl
+(check-expect (insert gp0 '()) (list gp0))
+(check-expect (insert gp0 (list gp30 gp20 g10))
+              (list gp30 gp20 gp10 gp0))
+(check-expect (insert gp0 (list gp10 gp20 gp30))
+              (list gp30 gp20 gp10 gp0))
+(check-expect (insert gp0 (list gp20 gp10 gp30))
+              (list gp30 gp20 gp10 gp0))
+
+(define (insert p gpl) gpl)
     
