@@ -26,10 +26,9 @@ Code-along: 11.3 sample problem (sort reals)
 
 (define (sort_desc nl)
   (cond
-    [(empty? nl) ...]
+    [(empty? nl) '()]
     [else
-     (...(first nl)...
-         (sort_desc (rest nl)))]))
+     (insert (first nl) (sort_desc (rest nl)))]))
 
 ; Number num_list -> num_list
 ; Inserts n into sorted num_list
