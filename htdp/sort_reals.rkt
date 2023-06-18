@@ -32,4 +32,9 @@ Code-along: 11.3 sample problem (sort reals)
 
 ; Number num_list -> num_list
 ; Inserts n into sorted num_list
+(check-expect (insert 5 '()) (list 5))
+(check-expect (insert 5 (list 6)) (list 6 5))
+(check-expect (insert 5 (list 4)) (list 5 4))
+(check-expect (insert 12 (list 20 -5)) (list 20 12 -5))
+
 (define (insert n nl) nl)
