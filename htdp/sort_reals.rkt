@@ -37,4 +37,9 @@ Code-along: 11.3 sample problem (sort reals)
 (check-expect (insert 5 (list 4)) (list 5 4))
 (check-expect (insert 12 (list 20 -5)) (list 20 12 -5))
 
-(define (insert n nl) nl)
+(define (insert n nl)
+  (cond
+    [(empty? nl) ...]
+    [else
+     (...(first nl)...
+         (insert n (rest nl))...)]))
