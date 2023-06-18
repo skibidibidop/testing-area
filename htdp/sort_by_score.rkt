@@ -22,7 +22,6 @@ Sorts list of game players by score in descending order.
 ; (define gpl2 (list (make-gp "Name1" 0)
 ;                    (make-gp "Name2" 10)))
 
-
 ; FUNCTIONS /////////////////////////////////////////////////////////
 
 ; Gp_list -> Gp_list
@@ -42,8 +41,7 @@ Sorts list of game players by score in descending order.
 
 (define (sort_desc gpl)
   (cond
-    [(empty? gpl) ...]
+    [(empty? gpl) '()]
     [else
-     (...(first gpl)...
-         (rest gpl)...)]))
+     (insert (first gpl) (sort_desc (rest gpl)))]))
     
