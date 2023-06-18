@@ -22,3 +22,11 @@ Sorts emails by date (no. of seconds since beginning of time) or name.
 ; Represents text m sent by f, d seconds after the beginning of time
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
+
+; Email_list -> Email_list
+; Sorts Email_list from oldest to latest.
+(define (sort_oton el) el)
+
+; Email_list -> Email_list
+; Sorts Email_list alphabetically based on sender's name
+(define (sort_alphab el) el)
