@@ -18,6 +18,11 @@ Code-along: 11.3 sample problem (sort reals)
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
 ; num_list -> num_list
-; Produces a sorted version of provided num_list
+; Sorts nl in descending order
+(check-expect (sort_desc '()) '())
+(check-expect (sort_desc (list 3 2 1)) (list 3 2 1))
+(check-expect (sort_desc (list 1 2 3)) (list 3 2 1))
+(check-expect (sort_desc (list 12 20 -5)) (list 20 12 -5))
+
 (define (sort_desc nl)
   nl)
