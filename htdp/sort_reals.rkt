@@ -16,3 +16,8 @@ Code-along: 11.3 sample problem (sort reals)
 ; (define nl3 (cons 1 (cons 2 '())))
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
+
+; num_list -> num_list
+; Produces a sorted version of provided num_list
+(define (sort_desc nl)
+  nl)
