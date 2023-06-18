@@ -25,5 +25,6 @@ Sorts list of game players by score in descending order.
 
 ; FUNCTIONS /////////////////////////////////////////////////////////
 
-;
-(define (sort_desc g
+; Gp_list -> Gp_list
+; Sorts gp_list by score in desscending order.
+(define (sort_desc gpl) gpl)
