@@ -25,4 +25,8 @@ Code-along: 11.3 sample problem (sort reals)
 (check-expect (sort_desc (list 12 20 -5)) (list 20 12 -5))
 
 (define (sort_desc nl)
-  nl)
+  (cond
+    [(empty? nl) ...]
+    [else
+     (...(first nl)...
+         (sort_desc (rest nl)))]))
