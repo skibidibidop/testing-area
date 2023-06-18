@@ -27,9 +27,23 @@ Sorts list of game players by score in descending order.
 
 ; Gp_list -> Gp_list
 ; Sorts gp_list by score in desscending order.
+(define gp0 (make-gp "Name0" 0))
+(define gp10 (make-gp "Name10" 10))
+(define gp20 (make-gp "Name20" 20))
+(define gp30 (make-gp "Name30" 30))
+
+(check-expect (sort_desc '()) '())
+(check-expect (sort_desc (list gp0 gp10 gp20 gp30))
+              (list gp30 gp20 gp10 gp0))
+(check-expect (sort_desc (list gp30 gp20 gp10 gp0))
+              (list gp30 gp20 gp10 gp0))
+(check-expect (sort_desc (list gp20 gp30 gp0 gp10))
+              (list gp30 gp20 gp10 gp0))
+
 (define (sort_desc gpl)
   (cond
     [(empty? gpl) ...]
-    [...(first gpl)...
-        (rest gpl)...]))
+    [else
+     (...(first gpl)...
+         (rest gpl)...)]))
     
