@@ -1,6 +1,3 @@
-;; The first three lines of this file were inserted by DrRacket. They record metadata
-;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-beginner-reader.ss" "lang")((modname sort_by_score) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: June 18, 2023
@@ -44,17 +41,13 @@ Sorts list of game players by score in descending order.
 (define (sort_desc gpl)
   (cond
     [(empty? gpl) '()]
-    [else
+    [(cons? gpl)
      (insert (first gpl) (sort_desc (rest gpl)))]))
 
 ; Gp Gp_list -> Gp_list
 ; Inserts p into sorted gpl
 (check-expect (insert gp0 '()) (list gp0))
 (check-expect (insert gp0 (list gp30 gp20 gp10))
-              (list gp30 gp20 gp10 gp0))
-(check-expect (insert gp0 (list gp10 gp20 gp30))
-              (list gp30 gp20 gp10 gp0))
-(check-expect (insert gp0 (list gp20 gp10 gp30))
               (list gp30 gp20 gp10 gp0))
 
 (define (insert p gpl)
