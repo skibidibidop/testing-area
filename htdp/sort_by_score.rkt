@@ -27,4 +27,9 @@ Sorts list of game players by score in descending order.
 
 ; Gp_list -> Gp_list
 ; Sorts gp_list by score in desscending order.
-(define (sort_desc gpl) gpl)
+(define (sort_desc gpl)
+  (cond
+    [(empty? gpl) ...]
+    [...(first gpl)...
+        (rest gpl)...]))
+    
