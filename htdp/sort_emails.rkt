@@ -2,7 +2,7 @@
 Author: Mark Beltran
 Date: June 19, 2023
 
-Sorts emails by date (no. of seconds since beginning of time).
+Sorts emails by date (no. of seconds since beginning of time) or name.
 |#
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
@@ -13,3 +13,4 @@ Sorts emails by date (no. of seconds since beginning of time).
 ; Represents text m sent by f, d seconds after the beginning of time
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
+
