@@ -38,6 +38,8 @@ Sorts list of game players by score in descending order.
               (list gp30 gp20 gp10 gp0))
 (check-expect (sort_desc (list gp20 gp30 gp0 gp10))
               (list gp30 gp20 gp10 gp0))
+(check-expect (sort_desc (list gp30 gp10 gp20 gp0))
+              (list gp30 gp20 gp10 gp0))
 
 (define (sort_desc gpl)
   (cond
@@ -48,12 +50,17 @@ Sorts list of game players by score in descending order.
 ; Gp Gp_list -> Gp_list
 ; Inserts p into sorted gpl
 (check-expect (insert gp0 '()) (list gp0))
-(check-expect (insert gp0 (list gp30 gp20 g10))
+(check-expect (insert gp0 (list gp30 gp20 gp10))
               (list gp30 gp20 gp10 gp0))
 (check-expect (insert gp0 (list gp10 gp20 gp30))
               (list gp30 gp20 gp10 gp0))
 (check-expect (insert gp0 (list gp20 gp10 gp30))
               (list gp30 gp20 gp10 gp0))
 
-(define (insert p gpl) gpl)
-    
+(define (insert p gpl)
+  (cond
+    [(empty? gpl) (cons p '())]
+    [else
+     (if (>= (gp-score p) (gp-score (first gpl)))
+         (cons p gpl)
+         (cons (first gpl) (insert p (rest gpl))))]))
