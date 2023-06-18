@@ -27,7 +27,7 @@ Code-along: 11.3 sample problem (sort reals)
 (define (sort_desc nl)
   (cond
     [(empty? nl) '()]
-    [else
+    [(cons? nl)
      (insert (first nl) (sort_desc (rest nl)))]))
 
 ; Number num_list -> num_list
@@ -39,7 +39,8 @@ Code-along: 11.3 sample problem (sort reals)
 
 (define (insert n nl)
   (cond
-    [(empty? nl) ...]
+    [(empty? nl) (cons n '())]
     [else
-     (...(first nl)...
-         (insert n (rest nl))...)]))
+     (if (>= n (first nl))
+         (cons n nl)
+         (cons (first nl) (insert n (rest nl))))]))
