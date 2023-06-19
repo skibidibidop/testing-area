@@ -37,7 +37,15 @@ Sorts emails by date (no. of seconds since beginning of time) or name.
 (check-expect (sort_oton (list eld30 elc20 elb10 ela1))
               sorted_email_list)
 
-(define (sort_oton el) el)
+(define (sort_oton el)
+  (cond
+    [(empty? el) '()]
+    [else
+     (insert (first el) (sort_oton (rest el)))]))
+
+; E_mail Email_list -> Email_list
+; Inserts E_mail into sorted Email_list
+(define (insert em el) el)
 
 ; Email_list -> Email_list
 ; Sorts Email_list alphabetically based on sender's name
