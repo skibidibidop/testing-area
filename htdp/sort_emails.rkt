@@ -55,7 +55,13 @@ Sorts emails by date (no. of seconds since beginning of time) or name.
 (check-expect (insert eld30 (list ela1 elb10 elc20))
               sorted_email_list)
 
-(define (insert em el) el)
+(define (insert em el)
+  (cond
+    [(empty? el) (list em)]
+    [else
+     (if (<= (e_mail-date em) (e_mail-date (first el)))
+         (cons em el)
+         (cons (first el) (insert em (rest el))))]))
 
 ; Email_list -> Email_list
 ; Sorts Email_list alphabetically based on sender's name
