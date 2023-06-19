@@ -79,4 +79,20 @@ Sorts emails by date (no. of seconds since beginning of time) or name.
 
 ; E_mail Email_list -> Email_list
 ; Inserts E_mail into sorted Email_list based on name of sender
-(define (alphab_insert em el) el)
+(check-expect (alphab_insert ela1 '()) (list ela1))
+(check-expect (alphab_insert ela1 (list elb10 elc20 eld30))
+              sorted_email_list)
+(check-expect (alphab_insert elb10 (list ela1 elc20 eld30))
+              sorted_email_list)
+(check-expect (alphab_insert elc20 (list ela1 elb10 eld30))
+              sorted_email_list)
+(check-expect (alphab_insert eld30 (list ela1 elb10 elc20))
+              sorted_email_list)
+
+(define (alphab_insert em el)
+  (cond
+    [(empty? el) (list em)]
+    [else
+     (if (string<? (e_mail-from em) (e_mail-from (first el)))
+         (cons em el)
+         (cons (first el) (alphab_insert em (rest el))))]))
