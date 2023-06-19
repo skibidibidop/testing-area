@@ -25,6 +25,18 @@ Sorts emails by date (no. of seconds since beginning of time) or name.
 
 ; Email_list -> Email_list
 ; Sorts Email_list from oldest to latest.
+(define (ela1 (make-email "Aname" 1 "Mess 1")))
+(define (elb10 (make-email "Bname" 10 "Mess 2")))
+(define (elc20 (make-email "Cname" 20 "Mess 3")))
+(define (eld30 (make-email "Dname" 30 "Mess 4")))
+(define sorted_email_list (list ela1 elb10 elc20 eld30))
+
+(check-expect (sort_oton '()) '())
+(check-expect (sort_oton (list ela1 elb10 elc20 eld30))
+              sorted_email_list)
+(check-expect (sort_oton (list eld30 elc20 elb10 ela1))
+              sorted_email_list)
+
 (define (sort_oton el) el)
 
 ; Email_list -> Email_list
