@@ -17,4 +17,10 @@ Determines if a number occurs in a sorted list.
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
-; Number Sorted
+; Number Sorted_numlist -> Boolean
+; Determines if a number occurs in a sorted list.
+(check-expect (in_list? 0 '()) #false)
+(check-expect (in_list? 0 (list 0 1 2 3)) #true)
+(check-expect (in_list? 0 (list 1 2 3)) #false)
+
+(define (in_list? n snl) #false)
