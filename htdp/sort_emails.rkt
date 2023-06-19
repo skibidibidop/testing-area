@@ -23,10 +23,10 @@ Sorts emails by date (no. of seconds since beginning of time) or name.
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
-(define (ela1 (make-email "Aname" 1 "Mess 1")))
-(define (elb10 (make-email "Bname" 10 "Mess 2")))
-(define (elc20 (make-email "Cname" 20 "Mess 3")))
-(define (eld30 (make-email "Dname" 30 "Mess 4")))
+(define ela1 (make-e_mail "Aname" 1 "Mess 1"))
+(define elb10 (make-e_mail "Bname" 10 "Mess 2"))
+(define elc20 (make-e_mail "Cname" 20 "Mess 3"))
+(define eld30 (make-e_mail "Dname" 30 "Mess 4"))
 (define sorted_email_list (list ela1 elb10 elc20 eld30))
 
 ; Email_list -> Email_list
@@ -41,6 +41,7 @@ Sorts emails by date (no. of seconds since beginning of time) or name.
 
 ; Email_list -> Email_list
 ; Sorts Email_list alphabetically based on sender's name
+(check-expect (sort_alphab '()) '())
 (check-expect (sort_alphab (list ela1 elb10 elc20 eld30))
               sorted_email_list)
 (check-expect (sort_alphab (list eld30 elc20 elb10 ela1))
