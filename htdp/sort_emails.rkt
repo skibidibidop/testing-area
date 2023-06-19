@@ -45,6 +45,16 @@ Sorts emails by date (no. of seconds since beginning of time) or name.
 
 ; E_mail Email_list -> Email_list
 ; Inserts E_mail into sorted Email_list
+(check-expect (insert ela1 '()) (list ela1))
+(check-expect (insert ela1 (list elb10 elc20 eld30))
+              sorted_email_list)
+(check-expect (insert elb10 (list ela1 elc20 eld30))
+              sorted_email_list)
+(check-expect (insert elc20 (list ela1 elb10 eld30))
+              sorted_email_list)
+(check-expect (insert eld30 (list ela1 elb10 elc20))
+              sorted_email_list)
+
 (define (insert em el) el)
 
 ; Email_list -> Email_list
