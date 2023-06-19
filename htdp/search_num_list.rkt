@@ -23,4 +23,11 @@ Determines if a number occurs in a sorted list.
 (check-expect (in_list? 0 (list 0 1 2 3)) #true)
 (check-expect (in_list? 0 (list 1 2 3)) #false)
 
-(define (in_list? n snl) #false)
+(define (in_list? n snl)
+  (cond
+    [(empty? snl) #false]
+    [else
+     (cond
+       [(= n (first snl)) #true]
+       [(< n (first snl)) (in_list? n (rest snl))]
+       [else #false])]))
