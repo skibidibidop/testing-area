@@ -69,6 +69,9 @@ Code-along: 11.4 Polygon sample problem
 
 ; Image Posn Posn -> Image
 ; Draws a red line from Posn p to Posn q into img
+(check-expect (render_line BG (make-posn 10 20) (make-posn 50 80))
+              (scene+line BG 10 20 50 80 "red"))
+
 (define (render_line img p q)
   (scene+line
    img
