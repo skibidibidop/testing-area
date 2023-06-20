@@ -34,4 +34,14 @@ Dictionary location: /usr/share/dict/words
 
 ; Letter Dictionary -> Number
 ; Counts the numbers of words in dict that start with letter ltr
-(define (starts_with# ltr dict) 3)
+(check-expect (starts_with# "a" '()) 0)
+(check-expect (starts_with# "e" AS_LIST) 3307)
+(check-expect (starts_with# "z" AS_LIST) 151)
+
+(define (starts_with# ltr dict)
+  (cond
+    [(empty? dict) 0]
+    [else
+     (if (string=? (first (explode (first dict))) ltr)
+         (+ (starts_with# ltr (rest dict)) 1)
+         (starts_with# ltr (rest dict)))]))
