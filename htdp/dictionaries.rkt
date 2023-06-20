@@ -21,10 +21,15 @@ Dictionary location: /usr/share/dict/words
 ; A Dictionary is a string_list
 (define AS_LIST (read-lines LOCATION))
 
-; A string_list is one of:
+; A String_list is one of:
 ; - '()
 ; - (cons String string_list)
 ; Interp.: a list of Strings
+
+; A Ltr_list is one of:
+; - '()
+; (cons Letter Ltr_list)
+; Interp.: a list of Letters
 
 ; A Letter is a member of this list:
 (define LETTERS
@@ -79,5 +84,8 @@ Dictionary location: /usr/share/dict/words
   (cond
     [(empty? dict) '()]
     [else
-     (...(first dict)
-         (rest dict)...)]))
+     (cons ...)]))
+
+; Ltr_list Dictionary -> Ltr_counts
+;
+(define (ltr_checker llist dict) ...)
