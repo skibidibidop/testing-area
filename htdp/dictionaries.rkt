@@ -36,6 +36,11 @@ Dictionary location: /usr/share/dict/words
 ; letter (ltr) is used as the first character of a word in a Dictionary
 ; (define lc1 (make-ltr_counts "a" 5000))
 
+; An Lcl (short for ltr_counts_list) is one of:
+; - '()
+; - (cons Ltr_counts Lcl)
+; Interp.: a list of ltr_counts
+
 ; FUNCTION DEFINITION //////////////////////////////////////////////////////////
 
 ; Letter Dictionary -> Number
@@ -52,7 +57,7 @@ Dictionary location: /usr/share/dict/words
          (+ (starts_with# ltr (rest dict)) 1)
          (starts_with# ltr (rest dict)))]))
 
-; Dictionary -> Ltr_counts
+; Dictionary -> Lcl
 ; Counts the number of times each Letter is used as the first character of a
 ; word in a Dictionary.
-(define (count_by_letter dict)...)
+(define (count_by_letter dict) '())
