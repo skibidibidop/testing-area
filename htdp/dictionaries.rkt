@@ -85,7 +85,12 @@ Dictionary location: /usr/share/dict/words
     [(empty? dict) '()]
     [else (lcl_maker LETTERS dict)]))
 
-;
+; Dictionary -> Ltr_list
+; Creates a list (set) of all first letters in provided Dictionary
+(define (get_firsts dict) '())
+
+; Ltr_list Dictionary -> lcl
+; Creates a list of Ltr_counts based on provided Dictionary
 (define (lcl_maker llist dict)
   (cond
     [(empty? llist) '()]
