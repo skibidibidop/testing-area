@@ -31,3 +31,6 @@ Dictionary location: /usr/share/dict/words
   (explode "abcdefghijklmnopqrstuvwxyz"))
 
 ; FUNCTION DEFINITION //////////////////////////////////////////////////////////
+
+; Letter Dictionary -> Number
+(define (starts_with# ltr dict) 3)
