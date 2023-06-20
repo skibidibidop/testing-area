@@ -52,5 +52,7 @@ Dictionary location: /usr/share/dict/words
          (+ (starts_with# ltr (rest dict)) 1)
          (starts_with# ltr (rest dict)))]))
 
-; Dictionary -> 
-(define (count_by_letter
+; Dictionary -> Ltr_counts
+; Counts the number of times each Letter is used as the first character of a
+; word in a Dictionary.
+(define (count_by_letter dict)...)
