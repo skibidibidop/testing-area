@@ -87,7 +87,18 @@ Dictionary location: /usr/share/dict/words
 
 ; Dictionary -> Ltr_list
 ; Creates a list (set) of all first letters in provided Dictionary
-(define (get_firsts dict) '())
+(check-expect (get_firsts '()) '())
+(check-expect (get_firsts SAMPLE_DICT1) (list "a" "b" "c"))
+(check-expect (get_firsts SAMPLE_DICT2) (list "a" "b" "c"))
+
+(define (get_firsts dict)
+  (cond
+    [(empty? dict) '()]
+    [else
+     (if (not (string=? (first dict)
+                        (first (rest dict))))
+         (cons (first dict))
+         (cons (get_firsts (rest dict))))]))
 
 ; Ltr_list Dictionary -> lcl
 ; Creates a list of Ltr_counts based on provided Dictionary
