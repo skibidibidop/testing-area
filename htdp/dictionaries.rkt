@@ -30,6 +30,12 @@ Dictionary location: /usr/share/dict/words
 (define LETTERS
   (explode "abcdefghijklmnopqrstuvwxyz"))
 
+(define-struct ltr_counts [letter count])
+; (make-ltr_counts Letter Number)
+; Interp.: (make-ltr ltr count), contains the number of times (count) a
+; letter (ltr) is used as the first character of a word in a Dictionary
+; (define lc1 (make-ltr_counts "a" 5000))
+
 ; FUNCTION DEFINITION //////////////////////////////////////////////////////////
 
 ; Letter Dictionary -> Number
@@ -45,3 +51,6 @@ Dictionary location: /usr/share/dict/words
      (if (string=? (first (explode (first dict))) ltr)
          (+ (starts_with# ltr (rest dict)) 1)
          (starts_with# ltr (rest dict)))]))
+
+; Dictionary -> 
+(define (count_by_letter
