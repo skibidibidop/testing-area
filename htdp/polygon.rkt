@@ -28,13 +28,17 @@ Code-along: 11.4 Polygon sample problem
 (define (render_poly img p)
   (cond
     [(empty? (rest (rest (rest p))))
-     (...(first p)...img...
-         (second p)...
-         (third p)...)]
+     (render_line
+      (render_line
+       (render_line BG (first p) (second p))
+       (second p) (third p))
+      (third p) (first p))]
     [else
-     (...(first p)...
-         (render_poly img (rest p))...)]))
+     (render_line (render_poly (rest p))
+                  (first p)
+                  (second p))]))
 
 ; Image Posn Posn -> Image
-; Draws a red line from Posn p to Posn q into im
-(define (render_line im p q) im)
+; Draws a red line from Posn p to Posn q into img
+(define (render_line img p q)
+  (
