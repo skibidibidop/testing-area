@@ -25,7 +25,7 @@ Code-along: 11.4 Polygon sample problem
 
 ; Image Polygon -> Image
 ; Renders polygon p into image img
-(define (render img p)
+(define (render_poly img p)
   (cond
     [(empty? (rest (rest (rest p))))
      (...(first p)...img...
@@ -33,4 +33,8 @@ Code-along: 11.4 Polygon sample problem
          (third p)...)]
     [else
      (...(first p)...
-         (render img (rest p))...)]))
+         (render_poly img (rest p))...)]))
+
+; Image Posn Posn -> Image
+; Draws a red line from Posn p to Posn q into im
+(define (render_line im p q) im)
