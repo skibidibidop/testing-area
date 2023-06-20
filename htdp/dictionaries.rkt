@@ -33,4 +33,5 @@ Dictionary location: /usr/share/dict/words
 ; FUNCTION DEFINITION //////////////////////////////////////////////////////////
 
 ; Letter Dictionary -> Number
+; Counts the numbers of words in dict that start with letter ltr
 (define (starts_with# ltr dict) 3)
