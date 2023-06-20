@@ -79,13 +79,17 @@ Dictionary location: /usr/share/dict/words
                (make-ltr_counts "a" 3)
                (make-ltr_counts "b" 1)
                (make-ltr_counts "c" 4)))
-           
+
 (define (count_by_letter dict)
   (cond
     [(empty? dict) '()]
-    [else
-     (cons ...)]))
+    [else (lcl_maker LETTERS dict)]))
 
-; Ltr_list Dictionary -> Ltr_counts
 ;
-(define (ltr_checker llist dict) ...)
+(define (lcl_maker llist dict)
+  (cond
+    [(empty? llist) '()]
+    [else
+     (cons (make-ltr_counts (first llist)
+                            (starts_with# (first llist) dict))
+           (lcl_maker (rest llist) dict))]))
