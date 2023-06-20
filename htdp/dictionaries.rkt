@@ -83,7 +83,7 @@ Dictionary location: /usr/share/dict/words
 (define (count_by_letter dict)
   (cond
     [(empty? dict) '()]
-    [else (lcl_maker LETTERS dict)]))
+    [else (lcl_maker (get_firsts dict) dict)]))
 
 ; Dictionary -> Ltr_list
 ; Creates a list (set) of all first letters in provided Dictionary
@@ -91,6 +91,13 @@ Dictionary location: /usr/share/dict/words
 
 ; Ltr_list Dictionary -> lcl
 ; Creates a list of Ltr_counts based on provided Dictionary
+(check-expect (lcl_maker
+               (list "a" "b" "c") SAMPLE_DICT1)
+              (list
+               (make-ltr_counts "a" 1)
+               (make-ltr_counts "b" 2)
+               (make-ltr_counts "c" 3)))
+
 (define (lcl_maker llist dict)
   (cond
     [(empty? llist) '()]
