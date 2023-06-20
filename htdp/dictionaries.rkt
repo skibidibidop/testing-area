@@ -60,4 +60,19 @@ Dictionary location: /usr/share/dict/words
 ; Dictionary -> Lcl
 ; Counts the number of times each Letter is used as the first character of a
 ; word in a Dictionary.
+(define SAMPLE_DICT1 (list "aa" "ba" "bb" "ca" "cb" "cc"))
+(define SAMPLE_DICT2 (list "aa" "ab" "ac" "ba" "ca" "cc" "cd" "ce"))
+
+(check-expect (count_by_letter '()) '())
+(check-expect (count_by_letter SAMPLE_DICT1)
+              (list
+               (make-ltr_counts "a" 1)
+               (make-ltr_counts "b" 2)
+               (make-ltr_counts "c" 3)))
+(check-expect (count_by_letter SAMPLE_DICT2)
+              (list
+               (make-ltr_counts "a" 3)
+               (make-ltr_counts "b" 1)
+               (make-ltr_counts "c" 4)))
+           
 (define (count_by_letter dict) '())
