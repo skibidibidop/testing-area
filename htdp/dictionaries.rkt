@@ -75,4 +75,9 @@ Dictionary location: /usr/share/dict/words
                (make-ltr_counts "b" 1)
                (make-ltr_counts "c" 4)))
            
-(define (count_by_letter dict) '())
+(define (count_by_letter dict)
+  (cond
+    [(empty? dict) '()]
+    [else
+     (...(first dict)
+         (rest dict)...)]))
