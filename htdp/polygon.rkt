@@ -41,4 +41,7 @@ Code-along: 11.4 Polygon sample problem
 ; Image Posn Posn -> Image
 ; Draws a red line from Posn p to Posn q into img
 (define (render_line img p q)
-  (
+  (scene+line
+   img
+   (posn-x p) (posn-y p) (posn-x q) (posn-y q))
+  "red")
