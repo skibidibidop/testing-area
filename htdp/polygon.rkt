@@ -8,7 +8,9 @@ Date: June 19, 2023
 Code-along: 11.4 Polygon sample problem
 |#
 
-(define (SCALER 10))
+(require 2htdp/image)
+
+(define SCALER 10)
 (define SWIDTH (* SCALER 5))
 (define SHEIGHT (* SCALER 5))
 
@@ -25,6 +27,33 @@ Code-along: 11.4 Polygon sample problem
 
 ; Image Polygon -> Image
 ; Renders polygon p into image img
+(define triangle_p
+  (list
+   (make-posn 20 10)
+   (make-posn 20 20)
+   (make-posn 30 20)))
+(define square_p
+  (list
+   (make-posn 10 10)
+   (make-posn 20 10)
+   (make-posn 20 20)
+   (make-posn 10 20)))
+
+(check-expect (render_poly BG triangle_p)
+              (scene+line
+               (scene+line
+                (scene+line BG 20 10 20 20 "red")
+                20 20 30 20 "red")
+               30 20 20 10 "red"))
+(check-expect (render_poly BG square_p)
+              (scene+line
+               (scene+line
+                (scene+line
+                 (scene+line BG 10 10 20 10 "red")
+                 20 10 20 20 "red")
+                20 20 10 20 "red")
+               10 20 10 10 "red"))
+
 (define (render_poly img p)
   (cond
     [(empty? (rest (rest (rest p))))
@@ -34,7 +63,7 @@ Code-along: 11.4 Polygon sample problem
        (second p) (third p))
       (third p) (first p))]
     [else
-     (render_line (render_poly (rest p))
+     (render_line (render_poly BG (rest p))
                   (first p)
                   (second p))]))
 
@@ -43,5 +72,5 @@ Code-along: 11.4 Polygon sample problem
 (define (render_line img p q)
   (scene+line
    img
-   (posn-x p) (posn-y p) (posn-x q) (posn-y q))
-  "red")
+   (posn-x p) (posn-y p) (posn-x q) (posn-y q)
+  "red"))
