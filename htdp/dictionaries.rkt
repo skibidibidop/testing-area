@@ -125,4 +125,19 @@ Dictionary location: /usr/share/dict/words
 (check-expect (most_frequent SAMPLE_DICT1) (make-ltr_counts "c" 3))
 
 (define (most_frequent dict)
-  (make-ltr_counts "a" 0))
+  (cond
+    [(empty? dict) (make-ltr_counts "-" -1)]
+    [else
+     (higher_count (first (count_by_letter dict))
+                   (most_frequent (rest dict)))]))
+
+; Ltr_counts Ltr_counts -> Ltr_counts
+; Returns the Ltr_counts with the higher ltr_counts-count
+(check-expect (higher_count (make-ltr_counts "a" 5)
+                            (make-ltr_counts "-" -1))
+              (make-ltr_counts "a" 5))
+(check-expect (higher_count (make-ltr_counts "s" 3)
+                            (make-ltr_counts "w" 0))
+              (make-ltr_counts "s" 3))
+
+(define (higher_count lc1 lc2) lc1)
