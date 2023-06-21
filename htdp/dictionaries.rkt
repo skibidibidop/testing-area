@@ -1,3 +1,6 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname dictionaries) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: June 20, 2023
@@ -115,3 +118,9 @@ Dictionary location: /usr/share/dict/words
      (cons (make-ltr_counts (first llist)
                             (starts_with# (first llist) dict))
            (lcl_maker (rest llist) dict))]))
+
+; Dictionary -> Ltr_counts
+; Produces the ltr_counts structure of the most frequent first letter
+; in the provided dictionary
+(define (most_frequent dict)
+  (make-ltr_count "a" 0))
