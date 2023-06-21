@@ -139,5 +139,12 @@ Dictionary location: /usr/share/dict/words
 (check-expect (higher_count (make-ltr_counts "s" 3)
                             (make-ltr_counts "w" 0))
               (make-ltr_counts "s" 3))
+(check-expect (higher_count (make-ltr_counts "a" 4)
+                            (make-ltr_counts "b" 50))
+              (make-ltr_counts "b" 50))
 
-(define (higher_count lc1 lc2) lc1)
+(define (higher_count lc1 lc2)
+  (cond
+    [(>= (ltr_counts-count lc1) (ltr_counts-count lc2))
+     lc1]
+    [else lc2]))
