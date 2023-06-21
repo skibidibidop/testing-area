@@ -122,5 +122,7 @@ Dictionary location: /usr/share/dict/words
 ; Dictionary -> Ltr_counts
 ; Produces the ltr_counts structure of the most frequent first letter
 ; in the provided dictionary
+(check-expect (most_frequent SAMPLE_DICT1) (make-ltr_counts "c" 3))
+
 (define (most_frequent dict)
-  (make-ltr_count "a" 0))
+  (make-ltr_counts "a" 0))
