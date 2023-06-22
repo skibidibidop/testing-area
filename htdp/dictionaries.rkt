@@ -38,7 +38,13 @@ Dictionary location: /usr/share/dict/words
 ; Number c times in a Dictionary
 (define sample_lc (make-letter_count "a" 40))
 
-
+; An Lc_list is one of:
+; - '()
+; - (cons Letter_count Lc_list)
+; Interp.: a list of Letter_counts
+(define lcl1 '())
+(define lcl2 (list (make-letter_count "a" 40)
+                   (make-letter_count "b" 58)))
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
