@@ -1,0 +1,1 @@
+Redoing HTDP 2e without skipping any exercises. 
