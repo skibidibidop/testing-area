@@ -15,4 +15,14 @@ Dictionary location: /usr/share/dict/words
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
+(define LOCATION "/usr/share/dict/words")
+
+; A Dictionary is a string_list
+(define AS_LIST (read-lines LOCATION)
+
+; A string_list is one of:
+; - '()
+; - (cons String string_list)
+; Interp.: a list of strings
+
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
