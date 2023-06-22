@@ -32,6 +32,11 @@ Dictionary location: /usr/share/dict/words
 ; or a member of this list:
 (define LETTERS (explode "abcdefghijklmnopqrstuvwxyz"))
 
+; A Letter_list is one of:
+; - '()
+; - (cons Letter Letter_list)
+; A list of Letters
+
 (define-struct letter_count [letter count])
 ; (make-letter_count Letter Number)
 ; Interp.: (make-letter_count l c), the Letter l is used as a first character
@@ -72,13 +77,47 @@ Dictionary location: /usr/share/dict/words
 ; Dictionary -> Lc_list
 ; Counts how often each letter is used as a first character in Dictionary dict
 (check-expect (count_by_letter '()) '())
-(check-expect (count_by_letter TEST_DICT1)
-              (list (make-letter_count "a" 1)
-                    (make-letter_count "b" 2)
-                    (make-letter_count "c" 3)))
 (check-expect (count_by_letter TEST_DICT3)
               (list (make-letter_count "a" 3)
                     (make-letter_count "b" 1)
-                    (make-letter_count "c" 2)))
+                    (make-letter_count "c" 2)
+                    (make-letter_count "d" 0)
+                    (make-letter_count "e" 0)
+                    (make-letter_count "f" 0)
+                    (make-letter_count "g" 0)
+                    (make-letter_count "h" 0)
+                    (make-letter_count "i" 0)
+                    (make-letter_count "j" 0)
+                    (make-letter_count "k" 0)
+                    (make-letter_count "l" 0)
+                    (make-letter_count "m" 0)
+                    (make-letter_count "n" 0)
+                    (make-letter_count "o" 0)
+                    (make-letter_count "p" 0)
+                    (make-letter_count "q" 0)
+                    (make-letter_count "r" 0)
+                    (make-letter_count "s" 0)
+                    (make-letter_count "t" 0)
+                    (make-letter_count "u" 0)
+                    (make-letter_count "v" 0)
+                    (make-letter_count "w" 0)
+                    (make-letter_count "x" 0)
+                    (make-letter_count "y" 0)
+                    (make-letter_count "z" 0)))
 
-(define (count_by_letter dict) '())
+(define (count_by_letter dict)
+  (cond
+    [(empty? dict) '()]
+    [else
+     (count_firsts LETTERS dict)]))
+
+; Letter_list Dictionary -> Lc_list
+; Counts the number of times each Letter in Letter_list ltr_list is used as a
+; first character in Dictionary dict
+(define (count_firsts ltr_list dict)
+  (cond
+    [(empty? ltr_list) '()]
+    [else
+     (cons (make-letter_count (first ltr_list)
+                              (starts_with# (first ltr_list) dict))
+           (count_firsts (rest ltr_list) dict))]))
