@@ -44,12 +44,13 @@ Dictionary location: /usr/share/dict/words
 (check-expect (starts_with# "a" TEST_DICT1) 1)
 (check-expect (starts_with# "b" TEST_DICT2) 2)
 (check-expect (starts_with# "h" TEST_DICT3) 0)
-(check-expect (starts_with# "e" AS_LIST) 3000)
+(check-expect (starts_with# "e" AS_LIST) 3307)
 (check-expect (starts_with# "z" AS_LIST) 151)
 
 (define (starts_with# ltr dict)
   (cond
     [(empty? dict) 0]
     [else
-     (...(first dict)
-         (rest dict)...)]))
+     (if (string=? ltr (first (explode (first dict))))
+         (+ (starts_with# ltr (rest dict)) 1)
+         (starts_with# ltr (rest dict)))]))
