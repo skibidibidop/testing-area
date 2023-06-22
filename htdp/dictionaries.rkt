@@ -121,3 +121,9 @@ Dictionary location: /usr/share/dict/words
      (cons (make-letter_count (first ltr_list)
                               (starts_with# (first ltr_list) dict))
            (count_firsts (rest ltr_list) dict))]))
+
+; Dictionary -> Letter_count
+; Outputs the Letter_count of the Letter most used as the first character in
+; Dictionary dict
+(define (most_frequent dict)
+  (make-letter_count "a" 0))
