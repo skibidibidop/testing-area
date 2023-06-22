@@ -32,6 +32,8 @@ Dictionary location: /usr/share/dict/words
 ; or a member of this list:
 (define LETTERS (explode "abcdefghijklmnopqrstuvwxyz"))
 
+
+
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
 (define TEST_DICT1 (list "aa" "ba" "bb" "ca" "cb" "cc"))
@@ -47,10 +49,14 @@ Dictionary location: /usr/share/dict/words
 (check-expect (starts_with# "e" AS_LIST) 3307)
 (check-expect (starts_with# "z" AS_LIST) 151)
 
-(define (starts_with# ltr dict)
+(define (starts_with# ltr dict) ;<----------------------------------------------
   (cond
     [(empty? dict) 0]
     [else
      (if (string=? ltr (first (explode (first dict))))
          (+ (starts_with# ltr (rest dict)) 1)
          (starts_with# ltr (rest dict)))]))
+
+; Dictionary -> Lc_list
+; Counts how often each letter is used as a first character in Dictionary dict
+(define (count_by_letter dict) '())
