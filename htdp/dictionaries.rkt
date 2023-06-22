@@ -125,9 +125,25 @@ Dictionary location: /usr/share/dict/words
 ; Dictionary -> Letter_count
 ; Outputs the Letter_count of the Letter most used as the first character in
 ; Dictionary dict
+(check-expect (most_frequent '()) '())
 (check-expect (most_frequent TEST_DICT1) (make-letter_count "c" 3))
 (check-expect (most_frequent TEST_DICT2) (make-letter_count "a" 3))
 (check-expect (most_frequent TEST_DICT3) (make-letter_count "a" 3))
 
 (define (most_frequent dict)
-  (make-letter_count "a" 0))
+  (cond
+    [(empty? dict) '()]
+    [else
+     (compare_counts (first (count_firsts LETTERS dict))
+                     (rest (count_firsts LETTERS dict)))]))
+
+; Letter_count Lc_list -> Letter_count
+; Outputs the Letter_count in Lc_list lcl with the highest letter_count-count
+(define (compare_counts lc lcl)
+  (cond
+    [(empty? lcl) lc]
+    [else
+     (if (>= (letter_count-count lc)
+             (letter_count-count (first lcl)))
+         (compare_counts lc (rest lcl))
+         (compare_counts (first lcl) (rest lcl)))]))
