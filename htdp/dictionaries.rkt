@@ -66,7 +66,7 @@ Dictionary location: /usr/share/dict/words
 (check-expect (starts_with# "e" AS_LIST) 3307)
 (check-expect (starts_with# "z" AS_LIST) 151)
 
-(define (starts_with# ltr dict) ;<----------------------------------------------
+(define (starts_with# ltr dict)
   (cond
     [(empty? dict) 0]
     [else
