@@ -17,6 +17,11 @@ Dictionary location: /usr/share/dict/words
 ; A Dictionary is a string_list
 (define AS_LIST (read-lines LOCATION))
 
+; A Dict_list is one of:
+; - '()
+; - (cons Dictionary Dict_list)
+; Interp.: a list of Dictionarys
+
 ; A string_list is one of:
 ; - '()
 ; - (cons String string_list)
@@ -159,4 +164,11 @@ Dictionary location: /usr/share/dict/words
                (list "ba")
                (list "ca" "cb")))
 
-(define (word_by_first_letter dict) '())
+(define (word_by_first_letter dict)
+  (cond
+    [(empty? dict) '()]
+    [else
+      (make_dict LETTERS dict)]))
+
+; Letter_list Dictionary -> 
+(define (make_dict 
