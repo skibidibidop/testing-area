@@ -33,3 +33,18 @@ Dictionary location: /usr/share/dict/words
 (define LETTERS (explode "abcdefghijklmnopqrstuvwxyz"))
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
+
+(define TEST_DICT1 (list "aa" "ba" "bb" "ca" "cb" "cc"))
+(define TEST_DICT2 (list "aa" "ab" "ac" "ba" "bb" "ca"))
+(define TEST_DICT3 (list "aa" "ab" "ac" "ba" "ca" "cb"))
+  
+; Letter Dictionary -> Number
+; Counts the number of words in Dictionary dict that start with Letter ltr
+(check-expect (starts_with# "a" '()) 0)
+(check-expect (starts_with# "a" TEST_DICT1) 1)
+(check-expect (starts_with# "b" TEST_DICT2) 2)
+(check-expect (starts_with# "h" TEST_DICT3) 0)
+(check-expect (starts_with# "e" AS_LIST) 3000)
+(check-expect (starts_with# "z" AS_LIST) 151)
+
+(define (starts_with# ltr dict) 0)
