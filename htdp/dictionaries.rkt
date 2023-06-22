@@ -71,4 +71,14 @@ Dictionary location: /usr/share/dict/words
 
 ; Dictionary -> Lc_list
 ; Counts how often each letter is used as a first character in Dictionary dict
+(check-expect (count_by_letter '()) '())
+(check-expect (count_by_letter TEST_DICT1)
+              (list (make-letter_count "a" 1)
+                    (make-letter_count "b" 2)
+                    (make-letter_count "c" 3)))
+(check-expect (count_by_letter TEST_DICT3)
+              (list (make-letter_count "a" 3)
+                    (make-letter_count "b" 1)
+                    (make-letter_count "c" 2)))
+
 (define (count_by_letter dict) '())
