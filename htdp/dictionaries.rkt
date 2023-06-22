@@ -18,11 +18,18 @@ Dictionary location: /usr/share/dict/words
 (define LOCATION "/usr/share/dict/words")
 
 ; A Dictionary is a string_list
-(define AS_LIST (read-lines LOCATION)
+(define AS_LIST (read-lines LOCATION))
 
 ; A string_list is one of:
 ; - '()
 ; - (cons String string_list)
 ; Interp.: a list of strings
+
+; A Letter is one of the following 1Strings:
+; - "a"
+; - ...
+; - "z"
+; or a member of this list:
+(define LETTERS (explode "abcdefghijklmnopqrstuvwxyz"))
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
