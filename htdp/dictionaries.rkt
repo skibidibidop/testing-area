@@ -125,5 +125,9 @@ Dictionary location: /usr/share/dict/words
 ; Dictionary -> Letter_count
 ; Outputs the Letter_count of the Letter most used as the first character in
 ; Dictionary dict
+(check-expect (most_frequent TEST_DICT1) (make-letter_count "c" 3))
+(check-expect (most_frequent TEST_DICT2) (make-letter_count "a" 3))
+(check-expect (most_frequent TEST_DICT3) (make-letter_count "a" 3))
+
 (define (most_frequent dict)
   (make-letter_count "a" 0))
