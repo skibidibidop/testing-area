@@ -1,6 +1,3 @@
-;; The first three lines of this file were inserted by DrRacket. They record metadata
-;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-beginner-reader.ss" "lang")((modname dictionaries) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: June 20, 2023
@@ -147,3 +144,19 @@ Dictionary location: /usr/share/dict/words
              (letter_count-count (first lcl)))
          (compare_counts lc (rest lcl))
          (compare_counts (first lcl) (rest lcl)))]))
+
+; Dictionary -> Dict_list
+; Produces a list of Dictionarys per Letter from the words in Dictionary dict
+(check-expect (word_by_first_letter '()) '())
+(check-expect (word_by_first_letter TEST_DICT1)
+              (list
+               (list "aa")
+               (list "ba" "bb")
+               (list "ca" "cb" "cc")))
+(check-expect (word_by_first_letter TEST_DICT3)
+              (list
+               (list "aa" "ab" "ac")
+               (list "ba")
+               (list "ca" "cb")))
+
+(define (word_by_first_letter dict) '())
