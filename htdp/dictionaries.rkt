@@ -32,6 +32,12 @@ Dictionary location: /usr/share/dict/words
 ; or a member of this list:
 (define LETTERS (explode "abcdefghijklmnopqrstuvwxyz"))
 
+(define-struct letter_count [letter count])
+; (make-letter_count Letter Number)
+; Interp.: (make-letter_count l c), the Letter l is used as a first character
+; Number c times in a Dictionary
+(define sample_lc (make-letter_count "a" 40))
+
 
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
