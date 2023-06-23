@@ -1,3 +1,6 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname dictionaries) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: June 20, 2023
@@ -183,8 +186,9 @@ Dictionary location: /usr/share/dict/words
   (cond
     [(empty? ltr_list) '()]
     [else
-     (cons (alpha_dict_maker (first ltr_list) dict)
-           (dict_list_maker (rest ltr_list) dict))]))
+     (remove '()
+             (cons (alpha_dict_maker (first ltr_list) dict)
+                   (dict_list_maker (rest ltr_list) dict)))]))
 
 ; Letter Dictionary -> Dictionary
 ; Creates a Dictionary of words with the same starting letter
