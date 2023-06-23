@@ -173,6 +173,7 @@ Dictionary location: /usr/share/dict/words
 ; Letter_list Dict -> Dict_list
 ; Creates a list of Dictionarys sorted alphabetically, with each Dictionary
 ; only containing words starting from the same letter
+(check-expect (dict_list_maker LETTERS '()) '())
 (check-expect (dict_list_maker LETTERS TEST_DICT1)
               (list (list "aa")
                     (list "ba" "bb")
@@ -184,3 +185,18 @@ Dictionary location: /usr/share/dict/words
     [else
      (cons (alpha_dict_maker (first ltr_list) dict)
            (dict_list_maker (rest ltr_list) dict))]))
+
+; Letter Dictionary -> Dictionary
+; Creates a Dictionary of words with the same starting letter
+(check-expect (alpha_dict_maker "c" '()) '())
+(check-expect (alpha_dict_maker "b" TEST_DICT1)
+              (list "ba" "bb"))
+
+(define (alpha_dict_maker ltr dict)
+  (cond
+    [(empty? dict) '()]
+    [else
+     (if (string=? ltr (first (explode (first dict))))
+         (cons (first dict)
+               (alpha_dict_maker ltr (rest dict)))
+         (alpha_dict_maker ltr (rest dict)))]))
