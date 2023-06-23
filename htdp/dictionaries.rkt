@@ -168,7 +168,19 @@ Dictionary location: /usr/share/dict/words
   (cond
     [(empty? dict) '()]
     [else
-      (make_dict LETTERS dict)]))
+     (dict_list_maker LETTERS dict)]))
 
-; Letter_list Dictionary -> 
-(define (make_dict 
+; Letter_list Dict -> Dict_list
+; Creates a list of Dictionarys sorted alphabetically, with each Dictionary
+; only containing words starting from the same letter
+(check-expect (dict_list_maker LETTERS TEST_DICT1)
+              (list (list "aa")
+                    (list "ba" "bb")
+                    (list "ca" "cb" "cc")))
+
+(define (dict_list_maker ltr_list dict)
+  (cond
+    [(empty? ltr_list) '()]
+    [else
+     (cons (alpha_dict_maker (first ltr_list) dict)
+           (dict_list_maker (rest ltr_list) dict))]))
