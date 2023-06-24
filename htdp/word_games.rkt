@@ -21,3 +21,7 @@ Remove duplicate strings in list of anagrams.
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
+; String -> String_list
+; Finds all anagrams of word s
+(define (anagram s)
+  ...)
