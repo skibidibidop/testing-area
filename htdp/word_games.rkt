@@ -23,9 +23,15 @@ Remove duplicate strings in list of anagrams.
 
 ; String -> String_list
 ; Finds all anagrams of word s
-(check-member-of (anagram "cat")
-              (list "act" "cat")
-              (list "cat" "cat"))
+(check-satisfied (anagram "rat")
+                 (all_rat_anagrams?))
 
 (define (anagram s)
   ...)
+
+; String_list -> Boolean
+; Are all anagrams of "rat" in the list
+(define (all_rat_anagrams? w)
+  (and (member? "rat" w)
+       (member? "tar" w)
+       (member? "art" w)))
