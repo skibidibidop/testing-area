@@ -1,3 +1,6 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname word_games) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: June 23, 2023
@@ -19,6 +22,10 @@ Remove duplicate strings in list of anagrams.
 (define sl1 '())
 (define sl2 (cons "hi" (cons "hello" '())))
 
+; A Word is ...
+
+; A Word_list is ...
+
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
 ; String -> String_list
@@ -35,3 +42,8 @@ Remove duplicate strings in list of anagrams.
   (and (member? "rat" w)
        (member? "tar" w)
        (member? "art" w)))
+
+; Word -> Word_list
+; Finds all arrangements of word
+(define (arrangements word)
+  (list word))
