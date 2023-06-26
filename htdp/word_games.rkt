@@ -60,8 +60,12 @@ Remove duplicate strings in list of anagrams.
   (list word))
 
 ; Word_list -> String_list
-; Turns all Words in wl into Strings
-(define (words->strings wl) '())
+; Turns all Words in wlist into Strings
+(define (words->strings wlist) '())
+
+; String_list -> String_list
+; Picks out all the Strings that occur in the dictionary
+(define (in_dict str_list) '())
 
 ; String -> Word
 ; Converts s to the chosen word representation
