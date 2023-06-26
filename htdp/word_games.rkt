@@ -61,6 +61,13 @@ Remove duplicate strings in list of anagrams.
 
 ; Word_list -> String_list
 ; Turns all Words in wlist into Strings
+(check-expect (words->strings '()) '())
+(check-expect (words->strings
+               (list (list "h" "i")
+                     (list "h" "e" "y")
+                     (list "o" "h")))
+              (list "hi" "hey" "oh"))
+
 (define (words->strings wlist) '())
 
 ; String_list -> String_list
