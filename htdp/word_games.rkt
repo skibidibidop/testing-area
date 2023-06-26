@@ -22,9 +22,15 @@ Remove duplicate strings in list of anagrams.
 (define sl1 '())
 (define sl2 (cons "hi" (cons "hello" '())))
 
-; A Word is ...
+; A Word is one of:
+; - '()
+; (cons Char Word)
+; Interp.: a list of characters
 
-; A Word_list is ...
+; A Word_list is one of:
+; - '()
+; (cons Word Word_list)
+; Interp.: a list of Words
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
