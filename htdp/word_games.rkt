@@ -30,13 +30,18 @@ Remove duplicate strings in list of anagrams.
 
 ; A Word is one of:
 ; - '()
-; (cons Char Word)
+; (cons 1String Word)
 ; Interp.: a list of characters
+(define w1 '())
+(define w2 (list "h" "e" "y" "!"))
 
 ; A Word_list is one of:
 ; - '()
 ; (cons Word Word_list)
 ; Interp.: a list of Words
+(define wl1 '())
+(define wl2 (list (list "h" "i")
+                  (list "o" "h")))
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
@@ -62,6 +67,10 @@ Remove duplicate strings in list of anagrams.
 
 ; Word -> Word_list
 ; Finds all arrangements of word
+(check-expect (arrangements '()) '())
+(check-expect (arrangements (list "e" "d"))
+              (list "ed" "de"))
+
 (define (arrangements word)
   (list word))
 
