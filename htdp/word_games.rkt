@@ -71,8 +71,12 @@ Remove duplicate strings in list of anagrams.
 (check-expect (arrangements (list "e" "d"))
               (list "ed" "de"))
 
-(define (arrangements word)
-  (list word))
+(define (arrangements w)
+  (cond
+    [(empty? w) ...]
+    [else
+     (...(first w)...
+         (arrangements (rest w)...))]))
 
 ; Word_list -> String_list
 ; Turns all Words in wlist into Strings
