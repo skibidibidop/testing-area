@@ -64,4 +64,12 @@ Remove duplicate strings in list of anagrams.
 
 ; Word -> String
 ; Converts w to a String
-(define (word->string w) ...)
+(check-expect (word->string '()) "")
+(check-expect (word->string (list "h" "i" "!"))
+              "hi!")
+
+(define (word->string w)
+  (cond
+    [(empty? w) ""]
+    [else
+     (implode w)]))
