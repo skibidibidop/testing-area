@@ -44,7 +44,8 @@ Remove duplicate strings in list of anagrams.
                  all_rat_anagrams?)
 
 (define (anagrams s)
- 
+  (in_dict
+   (words->strings (arrangements (string->word s)))))
 
 ; String_list -> Boolean
 ; Are all anagrams of "rat" in the list
