@@ -67,7 +67,7 @@ Remove duplicate strings in list of anagrams.
 
 ; Word -> Word_list
 ; Finds all arrangements of word
-(check-expect (arrangements '()) '())
+(check-expect (arrangements '()) (list '()))
 (check-expect (arrangements (list "e" "d"))
               (list "ed" "de"))
 
@@ -75,8 +75,16 @@ Remove duplicate strings in list of anagrams.
   (cond
     [(empty? w) ...]
     [else
-     (...(first w)...
-         (arrangements (rest w)...))]))
+     (insert_everywhere/in_all_words
+      (first w)
+      (arrangements (rest w)))]))
+
+; 1String Word_list -> Word_list
+; Produces a Word_list with ltr inserted before wlist, in between
+; every 1String in wlist, and at the end of wlist
+(check-expect (insert_everywhere/in_all_words "t" '()) '())
+
+(define (insert_everywhere/in_all_words ltr wlist) '())
 
 ; Word_list -> String_list
 ; Turns all Words in wlist into Strings
