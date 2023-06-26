@@ -47,3 +47,11 @@ Remove duplicate strings in list of anagrams.
 ; Finds all arrangements of word
 (define (arrangements word)
   (list word))
+
+; String -> Word
+; Converts s to the chosen word representation
+(define (string->word s) ...)
+
+; Word -> String
+; Converts w to a String
+(define (word->string w) ...)
