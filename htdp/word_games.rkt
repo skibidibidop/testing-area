@@ -83,6 +83,21 @@ Remove duplicate strings in list of anagrams.
 ; Produces a Word_list with ltr inserted before wlist, in between
 ; every 1String in wlist, and at the end of wlist
 (check-expect (insert_everywhere/in_all_words "t" '()) '())
+(check-expect (insert_everywhere/in_all_words "t" (list (list "a")))
+              (list (list "t" "a")
+                    (list "a" "t")))
+(check-expect (insert_everywhere/in_all_words "t" (list (list "a" "b")))
+              (list (list "t" "a" "b")
+                    (list "a" "t" "b")
+                    (list "a" "b" "t")))
+(check-expect (insert_everywhere/in_all_words "t" (list (list "a" "b")
+                                                        (list "c" "d")))
+              (list (list "t" "a" "b")
+                    (list "a" "t" "b")
+                    (list "a" "b" "t")
+                    (list "t" "c" "d")
+                    (list "c" "t" "d")
+                    (list "c" "d" "t")))
 
 (define (insert_everywhere/in_all_words ltr wlist) '())
 
