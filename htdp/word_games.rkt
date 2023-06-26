@@ -68,7 +68,12 @@ Remove duplicate strings in list of anagrams.
                      (list "o" "h")))
               (list "hi" "hey" "oh"))
 
-(define (words->strings wlist) '())
+(define (words->strings wlist)
+  (cond
+    [(empty? wlist) '()]
+    [else
+     (cons (word->string (first wlist))
+           (words->strings (rest wlist)))]))
 
 ; String_list -> String_list
 ; Picks out all the Strings that occur in the dictionary
