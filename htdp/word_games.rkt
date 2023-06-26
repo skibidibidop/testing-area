@@ -37,7 +37,7 @@ Remove duplicate strings in list of anagrams.
 ; String -> String_list
 ; Finds all anagrams of word s
 (check-satisfied (anagram "rat")
-                 (all_rat_anagrams?))
+                 all_rat_anagrams?)
 
 (define (anagram s)
   ...)
@@ -56,7 +56,11 @@ Remove duplicate strings in list of anagrams.
 
 ; String -> Word
 ; Converts s to the chosen word representation
-(define (string->word s) ...)
+(check-expect (string->word "hey!")
+              (list "h" "e" "y" "!"))
+
+(define (string->word s)
+  (explode s))
 
 ; Word -> String
 ; Converts w to a String
