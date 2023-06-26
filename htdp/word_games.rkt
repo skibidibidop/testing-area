@@ -10,10 +10,16 @@ Project: Word Games
 Notes:
 Enumerate all anagrams from a provided word.
 Remove duplicate strings in list of anagrams.
-
 |#
 
+(require 2htdp/batch-io)
+
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
+
+(define LOCATION "/usr/share/dict/words")
+
+; A Dictionary is a String_list
+(define AS_LIST (read-lines LOCATION))
 
 ; A String_list is one of:
 ; - '()
@@ -77,7 +83,17 @@ Remove duplicate strings in list of anagrams.
 
 ; String_list -> String_list
 ; Picks out all the Strings that occur in the dictionary
-(define (in_dict str_list) '())
+(check-expect (in_dict '()) '())
+(check-expect (in_dict (list "zdx" "ASL" "Benetton" "asdf"))
+              (list "ASL" "Benetton"))
+
+(define (in_dict str_list)
+  (cond
+    [(empty? str_list) '()]
+    [else
+     (if (member? (first str_list) AS_LIST)
+         (cons (first str_list) (in_dict (rest str_list)))
+         (in_dict (rest str_list)))]))
 
 ; String -> Word
 ; Converts s to the chosen word representation
