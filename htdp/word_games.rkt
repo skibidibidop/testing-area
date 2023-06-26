@@ -59,6 +59,10 @@ Remove duplicate strings in list of anagrams.
 (define (arrangements word)
   (list word))
 
+; Word_list -> String_list
+; Turns all Words in wl into Strings
+(define (words->strings wl) '())
+
 ; String -> Word
 ; Converts s to the chosen word representation
 (check-expect (string->word "hey!")
