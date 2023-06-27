@@ -134,6 +134,12 @@ Remove duplicate strings in list of anagrams.
 ; Word -> Word_list
 ; Creates a list that represents the part to the right of the Letter during
 ; each insertion.
+(check-expect (get_right (explode "abc"))
+              (list (explode "abc")
+                    (explode "bc")
+                    (list "c")
+                    (list '())))
+
 (define (get_right w) '())
 
 ; Word -> Word_list
