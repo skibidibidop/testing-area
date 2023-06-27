@@ -73,6 +73,11 @@ Redoing the Word Games project.
 
 ; Word_list -> String_list
 ; Converts all Words in Word_list wl to Strings
+(check-expect (words->strings '()) '())
+(check-expect (words->strings (list (explode "hi!")
+                                    (explode "hello")))
+              (list "hi!" "hello!"))
+
 (define (words->strings wl) '())
 
 ; String_list -> String_list
