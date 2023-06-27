@@ -64,3 +64,7 @@ Redoing the Word Games project.
 ; Converts Word w to String
 (define (word->string w)
   ...)
+
+; Word_list -> String_list
+; Converts all Words in Word_list wl to Strings
+(define (words->strings wl) '())
