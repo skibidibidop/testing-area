@@ -138,9 +138,14 @@ Remove duplicate strings in list of anagrams.
               (list (explode "abc")
                     (explode "bc")
                     (list "c")
-                    (list '())))
+                    '()))
 
-(define (get_right w) '())
+(define (get_right w)
+  (cond
+    [(empty? w) (list '())]
+    [else
+     (cons w
+           (get_right (rest w)))]))
 
 ; Word -> Word_list
 ; Creates a list that represents the part to the left of the Letter during
