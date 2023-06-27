@@ -56,7 +56,11 @@ Redoing the Word Games project.
 
 ; String -> Word
 ; Converts String s to Word
-(define (string->word s) '())
+(check-expect (string->word "") '())
+(check-expect (string->word "hi!") (list "h" "i" "!"))
+
+(define (string->word s)
+  (explode s))
 
 ; Word -> String
 ; Converts Word w to String
