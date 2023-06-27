@@ -52,18 +52,15 @@ Redoing the Word Games project.
 
 ; Word -> Word_list
 ; Produces all rearrangements of Word w
-(define (arrangements w)
-  ...)
+(define (arrangements w) '())
 
 ; String -> Word
 ; Converts String s to Word
-(define (string->word s)
-  ...)
+(define (string->word s) '())
 
 ; Word -> String
 ; Converts Word w to String
-(define (word->string w)
-  ...)
+(define (word->string w) "")
 
 ; Word_list -> String_list
 ; Converts all Words in Word_list wl to Strings
