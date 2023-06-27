@@ -105,7 +105,7 @@ Remove duplicate strings in list of anagrams.
 
 ; 1String Word -> Word_list
 ; Inserts a Letter ltr before, in between all letters of, and after Word w.
-(check-expect (insert_everywhere/in_a_word '()) (cons '() '()))
+(check-expect (insert_everywhere/in_a_word '()) '())
 (check-expect (insert_everywhere/in_a_word "t" (list "a" "b" "c"))
               (list (list "t" "a" "b" "c")
                     (list "a" "t" "b" "c")
@@ -113,7 +113,10 @@ Remove duplicate strings in list of anagrams.
                     (list "a" "b" "c" "t")))
 
 (define (insert_everywhere/in_a_word ltr w)
-  (
+  (cond
+    [(empty? w) '()]
+    [else
+     (
 ; Word_list -> String_list
 ; Turns all Words in wlist into Strings
 (check-expect (words->strings '()) '())
@@ -161,5 +164,7 @@ Remove duplicate strings in list of anagrams.
 (define (word->string w)
   (cond
     [(empty? w) ""]
+    [(empty? (first w))
+     (string-append "" (word->string (rest w)))]
     [else
-     (implode w)]))
+     (string-append (first w) (word->string (rest w)))]))
