@@ -53,3 +53,13 @@ Redoing the Word Games project.
 ; Produces all rearrangements of Word w
 (define (arrangements w)
   ...)
+
+; String -> Word
+; Converts String s to Word
+(define (string->word s)
+  ...)
+
+; Word -> String
+; Converts Word w to String
+(define (word->string w)
+  ...)
