@@ -73,7 +73,7 @@ Remove duplicate strings in list of anagrams.
 
 (define (arrangements w)
   (cond
-    [(empty? w) ...]
+    [(empty? w) '()]
     [else
      (insert_everywhere/in_all_words
       (first w)
@@ -108,6 +108,20 @@ Remove duplicate strings in list of anagrams.
 ; Letter Word Word -> Word_list
 ; Creates a list by appending elements of l_list, ltr, and elements
 ; of r_list
+(check-expect (combine "t"
+                       (list (list '())
+                             (list "a")
+                             (list "a" "b")
+                             (list "a" "b" "c"))
+                       (list (list "a" "b" "c")
+                             (list "b" "c")
+                             (list "c")
+                             (list '())))
+              (list (list '() "t" "a" "b" "c")
+                    (list "a" "t" "b" "c")
+                    (list "a" "b" "t" "c")
+                    (list "a" "b" "c" "t")))
+
 (define (combine ltr l_list r_list) '())
 
 ; Word -> Word_list
