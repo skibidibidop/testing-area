@@ -84,7 +84,12 @@ Redoing the Word Games project.
 ; 1String Word_list -> Word_list
 ; Creates a list where ltr is inserted before, in between 1Strings,
 ; and after all Words in wlist
-(define (insert_everywhere/in_all_words ltr wlist)
+(check-expect (insert_everywhere/in_all_words "a" (list '())) (list '()))
+(check-expect (insert_everywhere/in_all_words "a" (list (list "b")
+                                                        (list '())))
+              (list (list "a"
+
+(define (insert_everywhere/in_all_words ltr wlist) '())
 
 ; String -> Word
 ; Converts String s to Word
