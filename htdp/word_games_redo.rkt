@@ -77,8 +77,9 @@ Redoing the Word Games project.
   (cond
     [(empty? w) (list '())]
     [else
-     (...(first w)...
-         (arrangements (rest w))...)]))
+     (insert_everywhere/in_all_words
+      (first w)
+      (arrangements (rest w)))]))
 
 ; String -> Word
 ; Converts String s to Word
