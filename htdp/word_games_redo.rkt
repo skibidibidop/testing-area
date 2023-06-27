@@ -59,7 +59,7 @@ Redoing the Word Games project.
 
 ; Word -> Word_list
 ; Produces all rearrangements of Word w
-(check-expect (arrangements '()) '())
+(check-expect (arrangements '()) (list '()))
 (check-expect (arrangements (list "a"))
               (list (list "a")))
 (check-expect (arrangments (list "a" "b"))
@@ -73,7 +73,12 @@ Redoing the Word Games project.
                     (list "c" "a" "b")
                     (list "c" "b" "a")))
 
-(define (arrangements w) '())
+(define (arrangements w)
+  (cond
+    [(empty? w) (list '())]
+    [else
+     (...(first w)...
+         (arrangements (rest w))...)]))
 
 ; String -> Word
 ; Converts String s to Word
