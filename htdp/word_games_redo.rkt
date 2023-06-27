@@ -76,9 +76,14 @@ Redoing the Word Games project.
 (check-expect (words->strings '()) '())
 (check-expect (words->strings (list (explode "hi!")
                                     (explode "hello")))
-              (list "hi!" "hello!"))
+              (list "hi!" "hello"))
 
-(define (words->strings wl) '())
+(define (words->strings wl)
+  (cond
+    [(empty? wl) '()]
+    [else
+     (cons (word->string (first wl))
+           (words->strings (rest wl)))]))
 
 ; String_list -> String_list
 ; Picks out all Strings in String_list sl that occur in the dictionary
