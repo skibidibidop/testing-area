@@ -68,3 +68,7 @@ Redoing the Word Games project.
 ; Word_list -> String_list
 ; Converts all Words in Word_list wl to Strings
 (define (words->strings wl) '())
+
+; String_list -> String_list
+; Picks out all Strings in String_list sl that occur in the dictionary
+(define (in_dict sl) '())
