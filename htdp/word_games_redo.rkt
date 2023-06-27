@@ -8,7 +8,14 @@ Date: June 27, 2023
 Redoing the Word Games project.
 |#
 
+(require 2htdp/batch-io)
+
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
+
+(define DICT_LOC "/usr/share/dict/words")
+
+; A Dictionary is a String_list
+(define AS_LIST (read-lines DICT_LOC))
 
 ; A String_list is one of:
 ; - '()
@@ -91,4 +98,10 @@ Redoing the Word Games project.
 (check-expect (in_dict (list "zdx" "ASL" "Benetton" "asdf"))
               (list "ASL" "Benetton"))
 
-(define (in_dict sl) '())
+(define (in_dict sl)
+  (cond
+    [(empty? sl) '()]
+    [else
+     (if (member? (first sl) AS_LIST)
+         (cons (first sl) (in_dict (rest sl)))
+         (in_dict (rest sl)))]))
