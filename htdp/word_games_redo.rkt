@@ -7,3 +7,36 @@ Date: June 27, 2023
 
 Redoing the Word Games project.
 |#
+
+; DATA DEFINITION //////////////////////////////////////////////////////////////
+
+; A String_list is one of:
+; - '()
+; - (cons String String_list)
+; Interp.: a list of Strings
+
+; A Word is one of:
+; - '()
+; - (cons 1String Word)
+; Interp.: a list of 1Strings
+(define w1 '())
+(define w2 (list "a" "b" "c"))
+
+; FUNCTIONS ////////////////////////////////////////////////////////////////////
+
+; String -> String_list
+; Produces all anagrams of String s
+(check-member-of (anagrams "cat")
+                 (list "act" "cat")
+                 (list "cat" "act"))
+(check-satisfied (anagrams "rat")
+                 all_words_from_rat?)
+
+(define (anagrams s)
+  ...)
+
+; String_list -> Boolean
+(define (all_words_from_rat? w)
+  (and (member "rat" w)
+       (member "tar" w)
+       (member "art" w)))
