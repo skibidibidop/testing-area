@@ -120,9 +120,16 @@ Remove duplicate strings in list of anagrams.
               (list (list '() "t" "a" "b" "c")
                     (list "a" "t" "b" "c")
                     (list "a" "b" "t" "c")
-                    (list "a" "b" "c" "t")))
+                    (list "a" "b" "c" "t" '())))
 
-(define (combine ltr l_list r_list) '())
+(define (combine ltr l_list r_list)
+  (cond
+    [(or (empty? l_list) (empty? r_list)) '()]
+    [else
+     (cons (append (first l_list)
+                   (list ltr)
+                   (first r_list))
+           (combine ltr (rest l_list) (rest r_list)))]))
 
 ; Word -> Word_list
 ; Creates a list that represents the part to the right of the Letter during
