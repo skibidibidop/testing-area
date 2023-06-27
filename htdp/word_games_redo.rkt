@@ -22,6 +22,14 @@ Redoing the Word Games project.
 (define w1 '())
 (define w2 (list "a" "b" "c"))
 
+; A Word_list is one of:
+; - '()
+; - (cons Word Word_list)
+; - Interp.: a list of Words
+(define wl1 '())
+(define wl2 (list (list "a")
+                  (list "b" "c")))
+
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
 ; String -> String_list
