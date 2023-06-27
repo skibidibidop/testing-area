@@ -68,7 +68,8 @@ Redoing the Word Games project.
 (check-expect (word->string (list "h" "e" "y"))
               "hey")
 
-(define (word->string w) "")
+(define (word->string w)
+  (implode w))
 
 ; Word_list -> String_list
 ; Converts all Words in Word_list wl to Strings
