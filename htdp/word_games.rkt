@@ -67,7 +67,7 @@ Remove duplicate strings in list of anagrams.
 
 ; Word -> Word_list
 ; Finds all arrangements of word
-(check-expect (arrangements '()) (list '()))
+(check-expect (arrangements '()) '())
 (check-expect (arrangements (list "e" "d"))
               (list "ed" "de"))
 
@@ -153,12 +153,11 @@ Remove duplicate strings in list of anagrams.
 (check-expect (accumulate (explode "abc"))
               (list (explode "abc")
                     (explode "ab")
-                    (list "a")
-                    '()))
+                    (list "a")))
 
 (define (accumulate w)
   (cond
-    [(empty? w) (list '())]
+    [(empty? w) '()]
     [else
      (cons w
            (accumulate
