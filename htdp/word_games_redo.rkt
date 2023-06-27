@@ -87,4 +87,8 @@ Redoing the Word Games project.
 
 ; String_list -> String_list
 ; Picks out all Strings in String_list sl that occur in the dictionary
+(check-expect (in_dict '()) '())
+(check-expect (in_dict (list "zdx" "ASL" "Benetton" "asdf"))
+              (list "ASL" "Benetton"))
+
 (define (in_dict sl) '())
