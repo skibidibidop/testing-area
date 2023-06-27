@@ -100,8 +100,25 @@ Remove duplicate strings in list of anagrams.
     [(empty? wlist) '()]
     [else
      (cons
-      (insert_everywhere/in_a_word ltr (first wlist))
+      (combine ltr
+               (reverse (accumulate (first wlist)))
+               (get_right (first wlist)))
       (insert_everywhere/in_all_words ltr (rest wlist)))]))
+
+; Letter Word Word -> Word_list
+; Creates a list by appending elements of l_list, ltr, and elements
+; of r_list
+(define (combine ltr l_list r_list) '())
+
+; Word -> Word_list
+; Creates a list that represents the part to the right of the Letter during
+; each insertion.
+(define (get_right w) '())
+
+; Word -> Word_list
+; Creates a list that represents the part to the left of the Letter during
+; each insertion.
+(define (accumulate w) '())
 
 ; Word_list -> String_list
 ; Turns all Words in wlist into Strings
