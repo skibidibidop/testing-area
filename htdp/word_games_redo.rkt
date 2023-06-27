@@ -48,3 +48,8 @@ Redoing the Word Games project.
   (and (member "rat" w)
        (member "tar" w)
        (member "art" w)))
+
+; Word -> Word_list
+; Produces all rearrangements of Word w
+(define (arrangements w)
+  ...)
