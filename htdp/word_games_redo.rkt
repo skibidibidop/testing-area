@@ -64,6 +64,10 @@ Redoing the Word Games project.
 
 ; Word -> String
 ; Converts Word w to String
+(check-expect (word->string '()) "")
+(check-expect (word->string (list "h" "e" "y"))
+              "hey")
+
 (define (word->string w) "")
 
 ; Word_list -> String_list
