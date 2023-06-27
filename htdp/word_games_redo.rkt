@@ -41,7 +41,8 @@ Redoing the Word Games project.
                  all_words_from_rat?)
 
 (define (anagrams s)
-  ...)
+  (in_dict
+   (words->strings (arrangements (string->word s)))))
 
 ; String_list -> Boolean
 (define (all_words_from_rat? w)
