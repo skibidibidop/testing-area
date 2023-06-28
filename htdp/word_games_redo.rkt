@@ -155,12 +155,11 @@ Redoing the Word Games project.
 (check-expect (list_left (explode "bcd"))
               (list (explode "bcd")
                     (explode "bc")
-                    (explode "b")
-                    (list '())))
+                    (explode "b")))
 
 (define (list_left w)
   (cond
-    [(empty? w) (list '())]
+    [(empty? w) '()]
     [else
      (cons w
            (list_left (reverse (rest (reverse w)))))]))
@@ -169,18 +168,19 @@ Redoing the Word Games project.
 ; Adds ltr to the end of each member of wlist
 (check-expect (add_ltr "a" (list (explode "bcd")
                                  (explode "bc")
-                                 (list "b")
-                                 (list '())))
+                                 (list "b")))
               (list (explode "bcda")
                     (explode "bca")
                     (explode "ba")
-                    (explode "a")))
+                    (list "a")))
 
 (define (add_ltr ltr wlist)
   (cond
-    [(empty? wlist) ltr]
+    [(empty? wlist) (list ltr)]
     [else
-     (append (first wlist) (list ltr))
+     (cons
+      (append (first wlist) (list ltr))
+      (add_ltr ltr (rest wlist)))]))
 
 ; Word_list Word_list -> Word_list
 ; Combines generated left and right sides of each arrangement
