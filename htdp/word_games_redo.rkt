@@ -103,7 +103,7 @@ For Linux:
 
 (define (insert_everywhere/in_all_words ltr wlist)
   (cond
-    [(and (empty? (first wlist)) (empty? (rest wlist))) '()]
+    [(empty? wlist) '()]
     [else
      (append (insert_everywhere/in_a_word ltr (first wlist))
              (insert_everywhere/in_all_words ltr (rest wlist)))]))
@@ -180,7 +180,7 @@ For Linux:
 
 (define (add_ltr ltr wlist)
   (cond
-    [(and (empty? (first wlist)) (empty? (rest wlist))) (list ltr)]
+    [(empty? wlist) (list (list ltr))]
     [else
      (cons
       (append (first wlist) (list ltr))
@@ -193,7 +193,7 @@ For Linux:
     [(or (empty? left) (empty? right)) '()]
     [else
      (cons
-      (append (first left) (first right))
+      (append (list (first left)) (first right))
       (combine (rest left) (rest right)))]))
 
 ; String -> Word
