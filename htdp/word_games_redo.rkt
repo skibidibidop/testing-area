@@ -1,3 +1,6 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname word_games_redo) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: June 27, 2023
@@ -59,16 +62,16 @@ Redoing the Word Games project.
 (check-expect (arrangements '()) (list '()))
 (check-expect (arrangements (list "a"))
               (list (list "a")))
-(check-expect (arrangments (list "a" "b"))
-              (list (list "a" "b")
-                    (list "b" "a")))
-(check-expect (arrangements (list "a" "b" "c"))
-              (list (list "a" "b" "c")
-                    (list "a" "c" "b")
-                    (list "b" "a" "c")
+(check-expect (arrangements (list "b" "a"))
+              (list (list "b" "a")
+                    (list "a" "b")))
+(check-expect (arrangements (list "c" "b" "a"))
+              (list (list "c" "b" "a")
                     (list "b" "c" "a")
+                    (list "b" "a" "c")
                     (list "c" "a" "b")
-                    (list "c" "b" "a")))
+                    (list "a" "c" "b")
+                    (list "a" "b" "c")))
 
 (define (arrangements w)
   (cond
@@ -82,20 +85,22 @@ Redoing the Word Games project.
 ; Creates a list where ltr is inserted before, in between 1Strings,
 ; and after all Words in wlist
 (check-expect (insert_everywhere/in_all_words "a" (list '()))
-              (list (list "a" '())
-                    (list '() "a")))
-(check-expect (insert_everywhere/in_all_words "b" (list (list "a" '())
-                                                        (list '() "a")))
-              (list (list "b" "a" '())
-                    (list "a" "b" '())
-                    (list "a" '() "b")
-                    (list "b" '() "a")
-                    (list '() "b" "a")
-                    (list '() "a" "b")))
+              (list (list "a")))
+(check-expect (insert_everywhere/in_all_words "b" (list (list "a")))
+              (list (list "b" "a")
+                    (list "a" "b")))
+(check-expect (insert_everywhere/in_all-words "c" (list (list "b" "a")
+                                                        (list "a" "b")))
+              (list (list "c" "b" "a")
+                    (list "b" "c" "a")
+                    (list "b" "a" "c")
+                    (list "c" "a" "b")
+                    (list "a" "c" "b")
+                    (list "a" "b" "c")))
 
 (define (insert_everywhere/in_all_words ltr wlist)
   (cond
-    [(empty? wlist) '()]
+    [(and (empty? (first wlist) (rest wlist))) '()]
     [else
      (cons (insert_everywhere/in_a_word ltr (first wlist))
            (insert_everywhere/in_all_words ltr (rest wlist)))]))
@@ -103,7 +108,15 @@ Redoing the Word Games project.
 ; 1String Word -> Word_list
 ; Creates a list where ltr is inserted before, in between 1Strings,
 ; and after Word w
-(check-expect (insert_everywhere/in_a_word "a" '()) 
+(check-expect (insert_everywhere/in_a_word "a" '()) "a")
+(check-expect (insert_everywhere/in_a_word "b" (list "a"))
+              (list (list "b" "a")
+                    (list "a" "b")))
+(check-expect (insert_everywhere/in_a_word "c" (list "b" "a"))
+              (list (list "c" "b" "a")
+                    (list "b" "c" "a")
+                    (list "b" "a" "c")))
+
 (define (insert_everywhere/in_a_word ltr w) '())
 
 ; String -> Word
