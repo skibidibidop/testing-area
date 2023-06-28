@@ -125,7 +125,15 @@ Redoing the Word Games project.
 
 ; Word -> Word_list
 ; Generates right side of each arrangement
-(check-expect 
+(check-expect (get_right '()) (list '()))
+(check-expect (get_right (list "a"))
+              (list (list "a")
+                    (list '())))
+(check-expect (get_right (list "b" "a"))
+              (list (list "b" "a")
+                    (list "a")
+                    (list '())))
+
 (define (get_right w)
   (cond
     [(empty? w) (list '())]
