@@ -128,7 +128,7 @@ For Linux:
 
 ; Word -> Word_list
 ; Generates right side of each arrangement
-(check-expect (get_right '()) (list '()))
+(check-expect (get_right '()) (list (list '())))
 (check-expect (get_right (list "a"))
               (list (list "a")
                     (list '())))
