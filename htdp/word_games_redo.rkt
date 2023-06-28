@@ -141,7 +141,8 @@ Redoing the Word Games project.
      (cons w
            (get_right (rest w)))]))
 
-;
+; Word_list Word_list -> Word_list
+; Combines generated left and right sides of each arrangement
 (define (combine left right)
   (cond
     [(or (empty? left) (empty? right)) '()]
