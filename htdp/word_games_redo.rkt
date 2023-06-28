@@ -139,7 +139,7 @@ For Linux:
 
 (define (get_right w)
   (cond
-    [(empty? w) (list '())]
+    [(empty? w) (list (list '()))]
     [else
      (cons w
            (get_right (rest w)))]))
@@ -163,7 +163,7 @@ For Linux:
 
 (define (list_left w)
   (cond
-    [(empty? w) (list '())]
+    [(empty? w) (list (list '()))]
     [else
      (cons w
            (list_left (reverse (rest (reverse w)))))]))
