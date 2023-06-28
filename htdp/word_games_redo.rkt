@@ -141,6 +141,47 @@ Redoing the Word Games project.
      (cons w
            (get_right (rest w)))]))
 
+; 1String Word -> Word_list
+; Generates left side of each arrangement
+(define (get_left ltr w)
+  (cond
+    [(empty? w) '()]
+    [else
+     (reverse (add_ltr ltr (list_left w)))]))
+
+; Word -> Word_list
+; Generates a list from a Word, each member without the last letter
+; from the previous member
+(check-expect (list_left (explode "bcd"))
+              (list (explode "bcd")
+                    (explode "bc")
+                    (explode "b")
+                    (list '())))
+
+(define (list_left w)
+  (cond
+    [(empty? w) (list '())]
+    [else
+     (cons w
+           (list_left (reverse (rest (reverse w)))))]))
+
+; 1String Word_list -> Word_list
+; Adds ltr to the end of each member of wlist
+(check-expect (add_ltr "a" (list (explode "bcd")
+                                 (explode "bc")
+                                 (list "b")
+                                 (list '())))
+              (list (explode "bcda")
+                    (explode "bca")
+                    (explode "ba")
+                    (explode "a")))
+
+(define (add_ltr ltr wlist)
+  (cond
+    [(empty? wlist) ltr]
+    [else
+     (append (first wlist) (list ltr))
+
 ; Word_list Word_list -> Word_list
 ; Combines generated left and right sides of each arrangement
 (define (combine left right)
