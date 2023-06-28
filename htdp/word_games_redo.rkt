@@ -1,6 +1,3 @@
-;; The first three lines of this file were inserted by DrRacket. They record metadata
-;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-beginner-reader.ss" "lang")((modname word_games_redo) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: June 27, 2023
@@ -12,7 +9,13 @@ Redoing the Word Games project.
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
+#|
+For Linux:
 (define DICT_LOC "/usr/share/dict/words")
+|#
+
+; For Windows:
+(define DICT_LOC "D:\\DrRacket\\Racket\\projects\\dict\\words")
 
 ; A Dictionary is a String_list
 (define AS_LIST (read-lines DICT_LOC))
