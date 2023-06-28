@@ -89,7 +89,7 @@ Redoing the Word Games project.
 (check-expect (insert_everywhere/in_all_words "b" (list (list "a")))
               (list (list "b" "a")
                     (list "a" "b")))
-(check-expect (insert_everywhere/in_all-words "c" (list (list "b" "a")
+(check-expect (insert_everywhere/in_all_words "c" (list (list "b" "a")
                                                         (list "a" "b")))
               (list (list "c" "b" "a")
                     (list "b" "c" "a")
@@ -100,15 +100,15 @@ Redoing the Word Games project.
 
 (define (insert_everywhere/in_all_words ltr wlist)
   (cond
-    [(and (empty? (first wlist) (rest wlist))) '()]
+    [(and (empty? (first wlist)) (empty? (rest wlist))) '()]
     [else
-     (cons (insert_everywhere/in_a_word ltr (first wlist))
-           (insert_everywhere/in_all_words ltr (rest wlist)))]))
+     (append (insert_everywhere/in_a_word ltr (first wlist))
+             (insert_everywhere/in_all_words ltr (rest wlist)))]))
 
 ; 1String Word -> Word_list
 ; Creates a list where ltr is inserted before, in between 1Strings,
 ; and after Word w
-(check-expect (insert_everywhere/in_a_word "a" '()) "a")
+(check-expect (insert_everywhere/in_a_word "a" '()) (list "a"))
 (check-expect (insert_everywhere/in_a_word "b" (list "a"))
               (list (list "b" "a")
                     (list "a" "b")))
@@ -117,7 +117,30 @@ Redoing the Word Games project.
                     (list "b" "c" "a")
                     (list "b" "a" "c")))
 
-(define (insert_everywhere/in_a_word ltr w) '())
+(define (insert_everywhere/in_a_word ltr w)
+  (cond
+    [(empty? w) '()]
+    [else
+      (combine (get_left ltr w) (get_right w))]))
+
+; Word -> Word_list
+; Generates right side of each arrangement
+(check-expect 
+(define (get_right w)
+  (cond
+    [(empty? w) (list '())]
+    [else
+     (cons w
+           (get_right (rest w)))]))
+
+;
+(define (combine left right)
+  (cond
+    [(or (empty? left) (empty? right)) '()]
+    [else
+     (cons
+      (append (first left) (first right))
+      (combine (rest left) (rest right)))]))
 
 ; String -> Word
 ; Converts String s to Word
