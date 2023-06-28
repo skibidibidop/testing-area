@@ -155,11 +155,12 @@ Redoing the Word Games project.
 (check-expect (list_left (explode "bcd"))
               (list (explode "bcd")
                     (explode "bc")
-                    (explode "b")))
+                    (list "b")
+                    (list '())))
 
 (define (list_left w)
   (cond
-    [(empty? w) '()]
+    [(empty? w) (list '())]
     [else
      (cons w
            (list_left (reverse (rest (reverse w)))))]))
@@ -176,7 +177,7 @@ Redoing the Word Games project.
 
 (define (add_ltr ltr wlist)
   (cond
-    [(empty? wlist) (list ltr)]
+    [(and (empty? (first wlist)) (empty? (rest wlist))) (list ltr)]
     [else
      (cons
       (append (first wlist) (list ltr))
