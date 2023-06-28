@@ -100,8 +100,10 @@ Redoing the Word Games project.
      (cons (insert_everywhere/in_a_word ltr (first wlist))
            (insert_everywhere/in_all_words ltr (rest wlist)))]))
 
-;
-(define (insert_
+; 1String Word -> Word_list
+; Creates a list where ltr is inserted before, in between 1Strings,
+; and after Word w
+(define (insert_everywhere/in_a_word ltr w)
 
 ; String -> Word
 ; Converts String s to Word
