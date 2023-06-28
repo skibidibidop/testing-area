@@ -1,6 +1,3 @@
-;; The first three lines of this file were inserted by DrRacket. They record metadata
-;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-beginner-reader.ss" "lang")((modname word_games_redo) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: June 27, 2023
@@ -84,12 +81,27 @@ Redoing the Word Games project.
 ; 1String Word_list -> Word_list
 ; Creates a list where ltr is inserted before, in between 1Strings,
 ; and after all Words in wlist
-(check-expect (insert_everywhere/in_all_words "a" (list '())) (list '()))
-(check-expect (insert_everywhere/in_all_words "a" (list (list "b")
-                                                        (list '())))
-              (list (list "a"
+(check-expect (insert_everywhere/in_all_words "a" (list '()))
+              (list (list "a" '())
+                    (list '() "a")))
+(check-expect (insert_everywhere/in_all_words "b" (list (list "a" '())
+                                                        (list '() "a")))
+              (list (list "b" "a" '())
+                    (list "a" "b" '())
+                    (list "a" '() "b")
+                    (list "b" '() "a")
+                    (list '() "b" "a")
+                    (list '() "a" "b")))
 
-(define (insert_everywhere/in_all_words ltr wlist) '())
+(define (insert_everywhere/in_all_words ltr wlist)
+  (cond
+    [(empty? wlist) '()] ; UNSURE ABOUT THIS
+    [else
+     (cons (insert_everywhere/in_a_word ltr (first wlist))
+           (insert_everywhere/in_all_words ltr (rest wlist)))]))
+
+;
+(define (insert_
 
 ; String -> Word
 ; Converts String s to Word
