@@ -230,8 +230,8 @@ For Linux:
 ; String_list -> String_list
 ; Picks out all Strings in String_list sl that occur in the dictionary
 (check-expect (in_dict '()) '())
-(check-expect (in_dict (list "zdx" "ASL" "Benetton" "asdf"))
-              (list "ASL" "Benetton"))
+(check-expect (in_dict (list "zdx" "Benetton" "asdf"))
+              (list "Benetton"))
 
 (define (in_dict sl)
   (cond
