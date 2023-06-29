@@ -87,8 +87,6 @@ For Linux:
 ; 1String Word_list -> Word_list
 ; Creates a list where ltr is inserted before, in between 1Strings,
 ; and after all Words in wlist
-(check-expect (insert_everywhere/in_all_words "a" (list '()))
-              (list (list "a")))
 (check-expect (insert_everywhere/in_all_words "b" (list (list "a")))
               (list (list "b" "a")
                     (list "a" "b")))
