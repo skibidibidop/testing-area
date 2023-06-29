@@ -193,6 +193,19 @@ For Linux:
 
 ; Word_list Word_list -> Word_list
 ; Combines generated left and right sides of each arrangement
+(check-expect (combine (list (list "a")
+                             (explode "ba")
+                             (explode "bca")
+                             (explode "bcda"))
+                       (list (explode "bcd")
+                             (explode "cd")
+                             (list "d")
+                             (list '())))
+              (list (explode "abcd")
+                    (explode "bacd")
+                    (explode "bcad")
+                    (explode "bcda")))
+
 (define (combine left right)
   (cond
     [(or (empty? left) (empty? right)) (list '())]
