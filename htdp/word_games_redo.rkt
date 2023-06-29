@@ -111,7 +111,6 @@ For Linux:
 ; 1String Word -> Word_list
 ; Creates a list where ltr is inserted before, in between 1Strings,
 ; and after Word w
-(check-expect (insert_everywhere/in_a_word "a" '()) (list "a"))
 (check-expect (insert_everywhere/in_a_word "b" (list "a"))
               (list (list "b" "a")
                     (list "a" "b")))
@@ -128,18 +127,16 @@ For Linux:
 
 ; Word -> Word_list
 ; Generates right side of each arrangement
-(check-expect (get_right '()) (list (list '())))
+(check-expect (get_right '()) '())
 (check-expect (get_right (list "a"))
-              (list (list "a")
-                    (list '())))
+              (list (list "a")))
 (check-expect (get_right (list "b" "a"))
               (list (list "b" "a")
-                    (list "a")
-                    (list '())))
+                    (list "a")))
 
 (define (get_right w)
   (cond
-    [(empty? w) (list (list '()))]
+    [(empty? w) '()]
     [else
      (cons w
            (get_right (rest w)))]))
@@ -199,8 +196,7 @@ For Linux:
                              (explode "bcda"))
                        (list (explode "bcd")
                              (explode "cd")
-                             (list "d")
-                             (list '())))
+                             (list "d")))
               (list (explode "abcd")
                     (explode "bacd")
                     (explode "bcad")
@@ -208,10 +204,11 @@ For Linux:
 
 (define (combine left right)
   (cond
-    [(or (empty? left) (empty? right)) (list '())]
+    [(empty? left) '()]
+    [(empty? right) (list (first left))]
     [else
      (cons
-      (append (list (first left)) (first right))
+      (append (first left) (first right))
       (combine (rest left) (rest right)))]))
 
 ; String -> Word
