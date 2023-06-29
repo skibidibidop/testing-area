@@ -146,6 +146,12 @@ For Linux:
 
 ; 1String Word -> Word_list
 ; Generates left side of each arrangement
+(check-expect (get_left "a" (explode "bcd"))
+              (list (list "a")
+                    (explode "ba")
+                    (explode "bca")
+                    (explode "bcda")))
+
 (define (get_left ltr w)
   (cond
     [(empty? w) '()]
@@ -158,12 +164,11 @@ For Linux:
 (check-expect (list_left (explode "bcd"))
               (list (explode "bcd")
                     (explode "bc")
-                    (list "b")
-                    (list '())))
+                    (list "b")))
 
 (define (list_left w)
   (cond
-    [(empty? w) (list (list '()))]
+    [(empty? w) '()]
     [else
      (cons w
            (list_left (reverse (rest (reverse w)))))]))
@@ -190,7 +195,7 @@ For Linux:
 ; Combines generated left and right sides of each arrangement
 (define (combine left right)
   (cond
-    [(or (empty? left) (empty? right)) '()]
+    [(or (empty? left) (empty? right)) (list '())]
     [else
      (cons
       (append (list (first left)) (first right))
