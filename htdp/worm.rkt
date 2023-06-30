@@ -70,6 +70,19 @@ Snake game, basically.
 
 ; Worm_seg Direction -> Worm_seg
 ; Changes the WORM_SEGMENT's movement direction
+(check-expect (change_direction
+               (make-worm_seg (make-posn 50 50) GO_RIGHT 0) "right")
+              (make-worm_seg (make-posn 50 50) GO_RIGHT 0))
+(check-expect (change_direction
+               (make-worm_seg (make-posn 50 50) GO_RIGHT 0) "left")
+              (make-worm_seg (make-posn 50 50) GO_LEFT 0))
+(check-expect (change_direction
+               (make-worm_seg (make-posn 50 50) GO_RIGHT 0) "up")
+              (make-worm_seg (make-posn 50 50) 0 GO_UP))
+(check-expect (change_direction
+               (make-worm_seg (make-posn 50 50) GO_RIGHT 0) "down")
+              (make-worm_seg (make-posn 50 50) 0 GO_DOWN))
+
 (define (change_direction wseg key_event) wseg)
 
 #|
