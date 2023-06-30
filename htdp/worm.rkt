@@ -18,6 +18,8 @@ Snake game, basically.
 (define WORM_SEGMENT (circle SCALER "solid" "red"))
 (define BG (empty-scene SWIDTH SHEIGHT))
 
+(define MOVESPD SCALER)
+
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
 (define-struct worm_seg [loc vmove hmove])
@@ -27,3 +29,9 @@ Snake game, basically.
 (make-worm_seg [(make-posn 30 40) 4 0])
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
+
+(define (main worm)
+  (big-bang worm
+    [to-draw ...]
+    [on-tick ...]
+    [on-key ...]))
