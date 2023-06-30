@@ -126,11 +126,15 @@ Snake game, basically.
                (make-worm_seg (make-posn 40 UP_LIMIT) GO_DOWN 0))
               #true)
 (check-expect (walls_reached
-               (make-worm_seg (make-posn 40 DOWN_LIMIT) GO_UP) 0)
+               (make-worm_seg (make-posn 40 DOWN_LIMIT) GO_UP 0))
               #true)
 
-(define (walls_reached wseg) #false)
-
+(define (walls_reached wseg)
+  (or (= (posn-x (worm_seg-loc wseg)) LEFT_LIMIT)
+      (= (posn-x (worm_seg-loc wseg)) RIGHT_LIMIT)
+      (= (posn-y (worm_seg-loc wseg)) UP_LIMIT)
+      (= (posn-y (worm_seg-loc wseg)) DOWN_LIMIT)))
+  
 #|
 (define worm_state
   (make-worm_seg (make-posn XCENTER YCENTER) 0 GO_RIGHT))
