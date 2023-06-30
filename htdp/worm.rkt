@@ -14,25 +14,38 @@ Snake game, basically.
 (define SCALER 10)
 (define SWIDTH (* SCALER 50))
 (define SHEIGHT (* SCALER 50))
+(define XCENTER (/ SWIDTH 2))
+(define YCENTER (/ SHEIGHT 2))
 
 (define WORM_SEGMENT (circle SCALER "solid" "red"))
 (define BG (empty-scene SWIDTH SHEIGHT))
 
-(define MOVESPD SCALER)
+(define MOVSPD SCALER)
+(define GO_UP (* MOVSPD -1))
+(define GO_DOWN MOVSPD)
+(define GO_RIGHT MOVSPD)
+(define GO_LEFT (* MOVSPD -1))
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
-(define-struct worm_seg [loc vmove hmove])
+(define-struct worm_seg [loc hmove vmove])
 ; (make-worm_seg Posn Number Number)
-; Interp.: (make-worm_seg l v h), represents a segment of a worm, with its
-; coordinates (l), vertical velocity (v), and horizontal velocity (h)
+; Interp.: (make-worm_seg l h v), represents a segment of a worm, with its
+; coordinates (l), horizontal velocity (h), and vertical velocity (v)
 (make-worm_seg [(make-posn 30 40) 4 0])
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
+; 
+
+#|
+(define worm_state [(make-posn XCENTER YCENTER) 0 GO_RIGHT])
 
 (define (main worm)
   (big-bang worm
     [to-draw render]
     [on-tick time_step]
     [on-key change_direction]))
+
+(main worm_state)
+|#
