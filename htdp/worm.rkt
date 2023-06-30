@@ -8,6 +8,11 @@ Date: June 29, 2023
 Snake game, basically.
 |#
 
+(require 2htdp/image)
+(require 2htdp/universe)
+
+
+
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
 (define-struct worm_seg [loc vmove hmove])
