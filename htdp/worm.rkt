@@ -52,7 +52,14 @@ Snake game, basically.
 (check-expect (time_step (make-worm_seg (make-posn 50 50) GO_RIGHT 0))
               (make-worm_seg (make-posn (+ 50 GO_RIGHT) 50) GO_RIGHT 0))
 
-(define (time_step wseg) wseg)
+(define (time_step wseg)
+  (make-worm_seg
+   (make-posn (+ (posn-x (worm_seg-loc wseg))
+                 (worm_seg-hmove wseg))
+              (+ (posn-y (worm_seg-loc wseg))
+                 (worm_seg-vmove wseg)))
+   (worm_seg-hmove wseg)
+   (worm_seg-vmove wseg)))
 
 #|
 (define worm_state (make-posn XCENTER YCENTER) 0 GO_RIGHT)
