@@ -30,8 +30,9 @@ Snake game, basically.
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
+
 (define (main worm)
   (big-bang worm
-    [to-draw ...]
-    [on-tick ...]
-    [on-key ...]))
+    [to-draw render]
+    [on-tick time_step]
+    [on-key change_direction]))
