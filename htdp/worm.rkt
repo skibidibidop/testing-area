@@ -11,7 +11,12 @@ Snake game, basically.
 (require 2htdp/image)
 (require 2htdp/universe)
 
+(define SCALER 10)
+(define SWIDTH (* SCALER 50))
+(define SHEIGHT (* SCALER 50))
 
+(define WORM_SEGMENT (circle SCALER "solid" "red"))
+(define BG (empty-scene SWIDTH SHEIGHT))
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
