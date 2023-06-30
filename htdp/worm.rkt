@@ -20,7 +20,7 @@ Snake game, basically.
 (define WORM_SEGMENT (circle SCALER "solid" "red"))
 (define BG (empty-scene SWIDTH SHEIGHT))
 
-(define MOVSPD SCALER)
+(define MOVSPD (* SCALER 2))
 (define GO_UP (* MOVSPD -1))
 (define GO_DOWN MOVSPD)
 (define GO_RIGHT MOVSPD)
@@ -46,6 +46,13 @@ Snake game, basically.
                (posn-x (worm_seg-loc wseg))
                (posn-y (worm_seg-loc wseg))
                BG))
+
+; Worm_seg -> Worm_seg
+; Moves the WORM_SEGMENT per tick
+(check-expect (time_step (make-worm_seg (make-posn 50 50) GO_RIGHT 0))
+              (make-worm_seg (make-posn (+ 50 GO_RIGHT) 50) GO_RIGHT 0))
+
+(define (time_step wseg) wseg)
 
 #|
 (define worm_state (make-posn XCENTER YCENTER) 0 GO_RIGHT)
