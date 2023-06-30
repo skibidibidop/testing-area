@@ -32,14 +32,19 @@ Snake game, basically.
 ; (make-worm_seg Posn Number Number)
 ; Interp.: (make-worm_seg l h v), represents a segment of a worm, with its
 ; coordinates (l), horizontal velocity (h), and vertical velocity (v)
-(make-worm_seg [(make-posn 30 40) 4 0])
+(make-worm_seg (make-posn 30 40) 4 0)
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
-; 
+; Worm_seg -> Image
+; Draws a WORM_SEGMENT on BG based on the coordinates in Worm_seg
+(check-expect (render (make-worm_seg (make-posn XCENTER YCENTER) GO_RIGHT 0))
+              (place-image WORM_SEGMENT XCENTER YCENTER BG))
+
+(define (render wseg) BG)
 
 #|
-(define worm_state [(make-posn XCENTER YCENTER) 0 GO_RIGHT])
+(define worm_state (make-posn XCENTER YCENTER) 0 GO_RIGHT)
 
 (define (main worm)
   (big-bang worm
