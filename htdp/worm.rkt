@@ -84,25 +84,32 @@ Snake game, basically.
               (make-worm_seg (make-posn 50 50) 0 GO_DOWN))
 
 (define (change_direction wseg key_event)
-  (make-worm_seg
-   (make-posn (posn-x (worm_seg-loc wseg)) (posn-y (worm_seg-loc wseg)))
-   (cond
-     [(string=? "left" key_event) GO_LEFT]
-     [(string=? "right" key_event) GO_RIGHT]
-     [else 0])
-   (cond
-     [(string=? "up" key_event) GO_UP]
-     [(string=? "down" key_event) GO_DOWN]
-     [else 0])))
+  (cond
+    [(string=? "left" key_event)
+     (make-worm_seg
+      (make-posn (posn-x (worm_seg-loc wseg)) (posn-y (worm_seg-loc wseg)))
+      GO_LEFT 0)]
+    [(string=? "right" key_event)
+     (make-worm_seg
+      (make-posn (posn-x (worm_seg-loc wseg)) (posn-y (worm_seg-loc wseg)))
+      GO_RIGHT 0)]
+    [(string=? "up" key_event)
+     (make-worm_seg
+      (make-posn (posn-x (worm_seg-loc wseg)) (posn-y (worm_seg-loc wseg)))
+      0 GO_UP)]
+    [(string=? "down" key_event)
+     (make-worm_seg
+      (make-posn (posn-x (worm_seg-loc wseg)) (posn-y (worm_seg-loc wseg)))
+      0 GO_DOWN)]
+    [else wseg]))
 
-#|
-(define worm_state (make-posn XCENTER YCENTER) 0 GO_RIGHT)
+(define worm_state
+  (make-worm_seg (make-posn XCENTER YCENTER) 0 GO_RIGHT))
 
 (define (main worm)
   (big-bang worm
     [to-draw render]
-    [on-tick time_step]
+    [on-tick time_step 1]
     [on-key change_direction]))
 
 (main worm_state)
-|#
