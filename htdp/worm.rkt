@@ -14,6 +14,11 @@ Snake game, basically.
 (define XCENTER (/ SWIDTH 2))
 (define YCENTER (/ SHEIGHT 2))
 
+(define UP_LIMIT 0)
+(define DOWN_LIMIT SHEIGHT)
+(define LEFT_LIMIT 0)
+(define RIGHT_LIMIT SWIDTH)
+
 (define WORM_SEGMENT (circle SCALER "solid" "red"))
 (define BG (empty-scene SWIDTH SHEIGHT))
 
@@ -102,6 +107,8 @@ Snake game, basically.
 
 ; Worm_seg -> Boolean
 ; Displays game over message when the worm reaches any of the walls
+(check-expect (walls_reached
+               (make-worm_seg (make-posn 
 (define (walls_reached wseg) #false)
 
 #|
