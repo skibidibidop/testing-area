@@ -10,10 +10,4 @@ Snake game, basically.
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
-(define-struct worm_seg [loc vmove hmove])
-; (make-worm_seg Posn Number Number)
-; Interp.: (make-worm_seg l v h), represents a segment of a worm, with its
-; coordinates (l), vertical velocity (v), and horizontal velocity (h)
-(make-worm_seg [(make-posn 30 40) 4 0])
-
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
