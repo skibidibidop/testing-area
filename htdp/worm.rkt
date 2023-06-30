@@ -83,7 +83,17 @@ Snake game, basically.
                (make-worm_seg (make-posn 50 50) GO_RIGHT 0) "down")
               (make-worm_seg (make-posn 50 50) 0 GO_DOWN))
 
-(define (change_direction wseg key_event) wseg)
+(define (change_direction wseg key_event)
+  (make-worm_seg
+   (make-posn (posn-x (worm_seg-loc wseg)) (posn-y (worm_seg-loc wseg)))
+   (cond
+     [(string=? "left" key_event) GO_LEFT]
+     [(string=? "right" key_event) GO_RIGHT]
+     [else 0])
+   (cond
+     [(string=? "up" key_event) GO_UP]
+     [(string=? "down" key_event) GO_DOWN]
+     [else 0])))
 
 #|
 (define worm_state (make-posn XCENTER YCENTER) 0 GO_RIGHT)
