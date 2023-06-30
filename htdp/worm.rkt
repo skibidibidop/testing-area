@@ -41,7 +41,11 @@ Snake game, basically.
 (check-expect (render (make-worm_seg (make-posn XCENTER YCENTER) GO_RIGHT 0))
               (place-image WORM_SEGMENT XCENTER YCENTER BG))
 
-(define (render wseg) BG)
+(define (render wseg)
+  (place-image WORM_SEGMENT
+               (posn-x (worm_seg-loc wseg))
+               (posn-y (worm_seg-loc wseg))
+               BG))
 
 #|
 (define worm_state (make-posn XCENTER YCENTER) 0 GO_RIGHT)
