@@ -14,13 +14,19 @@ Snake game, basically.
 (define XCENTER (/ SWIDTH 2))
 (define YCENTER (/ SHEIGHT 2))
 
-(define UP_LIMIT 0)
-(define DOWN_LIMIT SHEIGHT)
-(define LEFT_LIMIT 0)
-(define RIGHT_LIMIT SWIDTH)
-
 (define WORM_SEGMENT (circle SCALER "solid" "red"))
 (define BG (empty-scene SWIDTH SHEIGHT))
+
+(define UP_LIMIT
+  (/ (image-height WORM_SEGMENT) 2))
+(define DOWN_LIMIT
+  (- SHEIGHT
+     (/ (image-height WORM_SEGMENT) 2)))
+(define LEFT_LIMIT
+  (/ (image-height WORM_SEGMENT) 2))
+(define RIGHT_LIMIT SWIDTH
+  (- SWIDTH
+     (/ (image-height WORM_SEGMENT) 2)))
 
 (define MOVSPD (* SCALER 2))
 (define GO_UP (* MOVSPD -1))
