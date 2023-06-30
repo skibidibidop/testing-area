@@ -34,6 +34,13 @@ Snake game, basically.
 ; coordinates (l), horizontal velocity (h), and vertical velocity (v)
 (make-worm_seg (make-posn 30 40) 4 0)
 
+; A Direction is one of:
+; - "up"
+; - "down"
+; - "left"
+; - "right"
+; Interp.: a key event indicating the next movement direction
+
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
 ; Worm_seg -> Image
@@ -60,6 +67,10 @@ Snake game, basically.
                  (worm_seg-vmove wseg)))
    (worm_seg-hmove wseg)
    (worm_seg-vmove wseg)))
+
+; Worm_seg Direction -> Worm_seg
+; Changes the WORM_SEGMENT's movement direction
+(define (change_direction wseg key_event) wseg)
 
 #|
 (define worm_state (make-posn XCENTER YCENTER) 0 GO_RIGHT)
