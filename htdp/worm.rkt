@@ -23,10 +23,10 @@ Snake game, basically.
   (- SHEIGHT
      (/ (image-height WORM_SEGMENT) 2)))
 (define LEFT_LIMIT
-  (/ (image-height WORM_SEGMENT) 2))
-(define RIGHT_LIMIT SWIDTH
+  (/ (image-width WORM_SEGMENT) 2))
+(define RIGHT_LIMIT
   (- SWIDTH
-     (/ (image-height WORM_SEGMENT) 2)))
+     (/ (image-width WORM_SEGMENT) 2)))
 
 (define MOVSPD (* SCALER 2))
 (define GO_UP (* MOVSPD -1))
@@ -114,7 +114,21 @@ Snake game, basically.
 ; Worm_seg -> Boolean
 ; Displays game over message when the worm reaches any of the walls
 (check-expect (walls_reached
-               (make-worm_seg (make-posn 
+               (make-worm_seg (make-posn XCENTER YCENTER) GO_LEFT 0))
+              #false)
+(check-expect (walls_reached
+               (make-worm_seg (make-posn RIGHT_LIMIT 40) GO_LEFT 0))
+              #true)
+(check-expect (walls_reached
+               (make-worm_seg (make-posn LEFT_LIMIT 40) GO_RIGHT 0))
+              #true)
+(check-expect (walls_reached
+               (make-worm_seg (make-posn 40 UP_LIMIT) GO_DOWN 0))
+              #true)
+(check-expect (walls_reached
+               (make-worm_seg (make-posn 40 DOWN_LIMIT) GO_UP) 0)
+              #true)
+
 (define (walls_reached wseg) #false)
 
 #|
