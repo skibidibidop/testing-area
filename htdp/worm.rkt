@@ -109,7 +109,7 @@ Snake game, basically.
 (define (main worm)
   (big-bang worm
     [to-draw render]
-    [on-tick time_step 1]
+    [on-tick time_step 0.5]
     [on-key change_direction]))
 
 (main worm_state)
