@@ -22,16 +22,10 @@ Snake game, basically.
 (define SEG_HEIGHT (image-height WORM_SEGMENT))
 (define BG (empty-scene SWIDTH SHEIGHT))
 
-(define UP_LIMIT
-  (/ SCALER 2))
-(define DOWN_LIMIT
-  (- SHEIGHT
-     (/ SCALER 2)))
-(define LEFT_LIMIT
-  (/ SCALER 2))
-(define RIGHT_LIMIT
-  (- SWIDTH
-     (/ SCALER 2)))
+(define UP_LIMIT SCALER)
+(define DOWN_LIMIT (- SHEIGHT SCALER))
+(define LEFT_LIMIT SCALER)
+(define RIGHT_LIMIT (- SWIDTH SCALER))
 
 (define MOVSPD (* SCALER 2))
 (define GO_UP (* MOVSPD -1))
@@ -170,7 +164,6 @@ Snake game, basically.
               (rest worm))]
        [else worm])]))
 
-#|
 ; Worm_seg -> Boolean
 ; Displays game over message when the worm reaches any of the walls
 (check-expect (walls_reached?
@@ -209,7 +202,7 @@ Snake game, basically.
 ; Worm -> Worm
 ; Adds a Worm_seg to Worm if Food is consumed by it
 (define (grow_worm wseg) '())
-|#
+
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
 (define worm_state
@@ -224,8 +217,8 @@ Snake game, basically.
 (define (main worm)
   (big-bang worm
     [to-draw render]
-    [on-tick time_step 0.5]
-    [on-key change_direction]))
-    ;[stop-when walls_reached? show_game_over]))
+    [on-tick time_step 0.1]
+    [on-key change_direction]
+    [stop-when walls_reached? show_game_over]))
 
 (main worm_state)
