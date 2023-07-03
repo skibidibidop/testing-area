@@ -88,7 +88,7 @@ Snake game, basically.
                   (posn-y (worm_seg-loc (first worm)))
                   (render (rest worm)))]))
 
-; Worm -> Worm
+; Worm Direction-> Worm
 ; Updates all Worm_segs in Worm per tick
 (check-expect (time_step '()) '())
 (check-expect (time_step
@@ -122,37 +122,43 @@ Snake game, basically.
 ; Worm Direction -> Worm
 ; Changes the Worm's movement direction
 (check-expect (change_direction
-               (make-worm_seg (make-posn 50 50) GO_RIGHT 0) "right")
-              (make-worm_seg (make-posn 50 50) GO_RIGHT 0))
-(check-expect (change_direction
-               (make-worm_seg (make-posn 50 50) GO_RIGHT 0) "left")
-              (make-worm_seg (make-posn 50 50) GO_LEFT 0))
-(check-expect (change_direction
-               (make-worm_seg (make-posn 50 50) GO_RIGHT 0) "up")
-              (make-worm_seg (make-posn 50 50) 0 GO_UP))
-(check-expect (change_direction
-               (make-worm_seg (make-posn 50 50) GO_RIGHT 0) "down")
-              (make-worm_seg (make-posn 50 50) 0 GO_DOWN))
+               (list
+                (make-worm_seg
+                 (make-posn XCENTER YCENTER) GO_RIGHT 0)) "up")
+              (list
+               (make-worm_seg
+                (make-posn XCENTER YCENTER) 0 GO_UP)))
 
-(define (change_direction wseg key_event)
+(define (change_direction worm key_event)
   (cond
-    [(string=? "left" key_event)
-     (make-worm_seg
-      (make-posn (posn-x (worm_seg-loc wseg)) (posn-y (worm_seg-loc wseg)))
-      GO_LEFT 0)]
-    [(string=? "right" key_event)
-     (make-worm_seg
-      (make-posn (posn-x (worm_seg-loc wseg)) (posn-y (worm_seg-loc wseg)))
-      GO_RIGHT 0)]
-    [(string=? "up" key_event)
-     (make-worm_seg
-      (make-posn (posn-x (worm_seg-loc wseg)) (posn-y (worm_seg-loc wseg)))
-      0 GO_UP)]
-    [(string=? "down" key_event)
-     (make-worm_seg
-      (make-posn (posn-x (worm_seg-loc wseg)) (posn-y (worm_seg-loc wseg)))
-      0 GO_DOWN)]
-    [else wseg]))
+    [(empty? worm) '()]
+    [else
+     (cond
+       [(string=? "left" key_event)
+        (cons (make-worm_seg
+               (make-posn (posn-x (worm_seg-loc (first worm)))
+                          (posn-y (worm_seg-loc (first worm))))
+               GO_LEFT 0)
+              (rest worm))]
+       [(string=? "right" key_event)
+        (cons (make-worm_seg
+               (make-posn (posn-x (worm_seg-loc (first worm)))
+                          (posn-y (worm_seg-loc (first worm))))
+               GO_RIGHT 0)
+              (rest worm))]
+       [(string=? "up" key_event)
+        (cons (make-worm_seg
+               (make-posn (posn-x (worm_seg-loc (first worm)))
+                          (posn-y (worm_seg-loc (first worm))))
+               0 GO_UP)
+              (rest worm))]
+       [(string=? "down" key_event)
+        (cons (make-worm_seg
+               (make-posn (posn-x (worm_seg-loc (first worm)))
+                          (posn-y (worm_seg-loc (first worm))))
+               0 GO_DOWN)
+              (rest worm))]
+       [else worm])]))
 
 ; Worm_seg -> Boolean
 ; Displays game over message when the worm reaches any of the walls
