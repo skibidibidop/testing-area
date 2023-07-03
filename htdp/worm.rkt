@@ -196,15 +196,15 @@ Snake game, basically.
 
 ; Worm_seg -> Image
 ; Shows game over screen
-(define (show_game_over wseg)
+(define (show_game_over worm)
   (place-image GAME_OVER
                (+ (/ (image-width GAME_OVER) 2) (/ SCALER 2)) 
                (- SHEIGHT (/ (image-height GAME_OVER) 2))
-               (render wseg)))
+               (render worm)))
 
 ; Worm -> Worm
 ; Adds a Worm_seg to Worm if Food is consumed by it
-(define (grow_worm wseg) '())
+(define (grow_worm worm) '())
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
