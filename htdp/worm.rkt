@@ -199,7 +199,7 @@ Snake game, basically.
                 (make-worm_seg (make-posn 100 50) GO_RIGHT 0)
                 (make-worm_seg (make-posn 100 40) GO_RIGHT 0)
                 (make-worm_seg (make-posn 90 40) GO_RIGHT 0)
-                (make-worm-seg (make-posn 90 50) GO_RIGHT 0)
+                (make-worm_seg (make-posn 90 50) GO_RIGHT 0)
                 (make-worm_seg (make-posn 100 50) GO_RIGHT 0)))
               #true)
 (check-expect (bite_self?
@@ -209,7 +209,21 @@ Snake game, basically.
                 (make-worm_seg (make-posn 120 50) 0 GO_UP)))
               #false)
 
-(define (bite_self? worm) #false)
+(define (bite_self? worm)
+  (cond
+    [(empty? worm) #false]
+    [else
+     (member? (worm_seg-loc (first worm))
+              (generate_posn_list (rest worm)))]))
+
+; Worm -> Posn_list
+; Lists all posns in Worm, aux for (bite_self?)
+(define (generate_posn_list worm)
+  (cond
+    [(empty? worm) '()]
+    [else
+     (cons (worm_seg-loc (first worm))
+           (generate_posn_list (rest worm)))]))
 
 (define GAME_OVER
    (text "Don't touch the walls and don't bite yourself!" (* SCALER 1.5) "red"))
