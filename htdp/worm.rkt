@@ -62,7 +62,7 @@ Snake game, basically.
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
 ; Worm -> Image
-; Draws a WORM_SEGMENT on BG based on the coordinates in Worm_seg
+; Draws all Worm_segs in Worm as WORM_SEGMENTS
 (check-expect (render '()) BG)
 (check-expect (render
                (list (make-worm_seg (make-posn XCENTER YCENTER)
@@ -89,21 +89,38 @@ Snake game, basically.
                   (render (rest worm)))]))
 
 ; Worm -> Worm
-; Moves the WORM_SEGMENT per tick
-(check-expect (time_step (make-worm_seg (make-posn 50 50) GO_RIGHT 0))
-              (make-worm_seg (make-posn (+ 50 GO_RIGHT) 50) GO_RIGHT 0))
+; Updates all Worm_segs in Worm per tick
+(check-expect (time_step '()) '())
+(check-expect (time_step
+               (list (make-worm_seg (make-posn XCENTER YCENTER)
+                                    GO_RIGHT 0)))
+              (list (make-worm_seg
+                     (make-posn (+ XCENTER GO_RIGHT) YCENTER)
+                     GO_RIGHT 0)))
+(check-expect (time_step
+               (list (make-worm_seg (make-posn XCENTER YCENTER) GO_RIGHT 0)
+                     (make-worm_seg (make-posn (- XCENTER SEG_WIDTH) YCENTER)
+                                    GO_RIGHT 0)))
+              (list (make-worm_seg
+                     (make-posn (+ XCENTER GO_RIGHT) YCENTER) GO_RIGHT 0)
+                    (make-worm_seg
+                     (make-posn XCENTER YCENTER) GO_RIGHT 0)))
 
-(define (time_step wseg)
-  (make-worm_seg
-   (make-posn (+ (posn-x (worm_seg-loc wseg))
-                 (worm_seg-hmove wseg))
-              (+ (posn-y (worm_seg-loc wseg))
-                 (worm_seg-vmove wseg)))
-   (worm_seg-hmove wseg)
-   (worm_seg-vmove wseg)))
+(define (time_step worm)
+  (cond
+    [(empty? worm) '()]
+    [else
+     (cons (make-worm_seg
+            (make-posn (+ (posn-x (worm_seg-loc (first worm)))
+                          (worm_seg-hmove (first worm)))
+                       (+ (posn-y (worm_seg-loc (first worm)))
+                          (worm_seg-vmove (first worm))))
+            (worm_seg-hmove (first worm))
+            (worm_seg-vmove (first worm)))
+           (time_step (rest worm)))]))
 
-; Worm_seg Direction -> Worm_seg
-; Changes the WORM_SEGMENT's movement direction
+; Worm Direction -> Worm
+; Changes the Worm's movement direction
 (check-expect (change_direction
                (make-worm_seg (make-posn 50 50) GO_RIGHT 0) "right")
               (make-worm_seg (make-posn 50 50) GO_RIGHT 0))
@@ -179,9 +196,9 @@ Snake game, basically.
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
 (define worm_state
-  (list (make-worm_seg (make-posn XCENTER YCENTER) 0 GO_RIGHT)
+  (list (make-worm_seg (make-posn XCENTER YCENTER) GO_RIGHT 0)
         (make-worm_seg (make-posn (- XCENTER SEG_WIDTH) YCENTER)
-                       0 GO_RIGHT)))
+                       GO_RIGHT 0)))
 
 (define (main worm)
   (big-bang worm
