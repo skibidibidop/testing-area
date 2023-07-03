@@ -33,7 +33,7 @@ Snake game, basically.
   (- SWIDTH
      (/ SCALER 2)))
 
-(define MOVSPD SCALER)
+(define MOVSPD (* SCALER 2))
 (define GO_UP (* MOVSPD -1))
 (define GO_DOWN MOVSPD)
 (define GO_RIGHT MOVSPD)
@@ -90,34 +90,21 @@ Snake game, basically.
 
 ; Worm Direction-> Worm
 ; Updates all Worm_segs in Worm per tick
-(check-expect (time_step '()) '())
-(check-expect (time_step
-               (list (make-worm_seg (make-posn XCENTER YCENTER)
-                                    GO_RIGHT 0)))
-              (list (make-worm_seg
-                     (make-posn (+ XCENTER GO_RIGHT) YCENTER)
-                     GO_RIGHT 0)))
-(check-expect (time_step
-               (list (make-worm_seg (make-posn XCENTER YCENTER) GO_RIGHT 0)
-                     (make-worm_seg (make-posn (- XCENTER SEG_WIDTH) YCENTER)
-                                    GO_RIGHT 0)))
-              (list (make-worm_seg
-                     (make-posn (+ XCENTER GO_RIGHT) YCENTER) GO_RIGHT 0)
-                    (make-worm_seg
-                     (make-posn XCENTER YCENTER) GO_RIGHT 0)))
-
 (define (time_step worm)
   (cond
     [(empty? worm) '()]
     [else
-     (cons (make-worm_seg
-            (make-posn (+ (posn-x (worm_seg-loc (first worm)))
-                          (worm_seg-hmove (first worm)))
-                       (+ (posn-y (worm_seg-loc (first worm)))
-                          (worm_seg-vmove (first worm))))
-            (worm_seg-hmove (first worm))
-            (worm_seg-vmove (first worm)))
-           (time_step (rest worm)))]))
+     (reverse
+      (rest
+       (reverse
+        (cons (make-worm_seg
+               (make-posn (+ (posn-x (worm_seg-loc (first worm)))
+                             (worm_seg-hmove (first worm)))
+                          (+ (posn-y (worm_seg-loc (first worm)))
+                             (worm_seg-vmove (first worm))))
+               (worm_seg-hmove (first worm))
+               (worm_seg-vmove (first worm)))
+              worm))))]))
 
 ; Worm Direction -> Worm
 ; Changes the Worm's movement direction
@@ -160,6 +147,7 @@ Snake game, basically.
               (rest worm))]
        [else worm])]))
 
+#|
 ; Worm_seg -> Boolean
 ; Displays game over message when the worm reaches any of the walls
 (check-expect (walls_reached?
@@ -198,19 +186,23 @@ Snake game, basically.
 ; Worm -> Worm
 ; Adds a Worm_seg to Worm if Food is consumed by it
 (define (grow_worm wseg) '())
-
+|#
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
 (define worm_state
   (list (make-worm_seg (make-posn XCENTER YCENTER) GO_RIGHT 0)
         (make-worm_seg (make-posn (- XCENTER SEG_WIDTH) YCENTER)
+                       GO_RIGHT 0)
+        (make-worm_seg (make-posn (- XCENTER (* SEG_WIDTH 2)) YCENTER)
+                       GO_RIGHT 0)
+        (make-worm_seg (make-posn (- XCENTER (* SEG_WIDTH 3)) YCENTER)
                        GO_RIGHT 0)))
 
 (define (main worm)
   (big-bang worm
     [to-draw render]
-    [on-tick time_step 0.1]
-    [on-key change_direction]
-    [stop-when walls_reached? show_game_over]))
+    [on-tick time_step 0.5]
+    [on-key change_direction]))
+    ;[stop-when walls_reached? show_game_over]))
 
 (main worm_state)
