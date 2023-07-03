@@ -190,7 +190,26 @@ Snake game, basically.
       (>= (posn-x (worm_seg-loc (first worm))) RIGHT_LIMIT)
       (<= (posn-y (worm_seg-loc (first worm))) UP_LIMIT)
       (>= (posn-y (worm_seg-loc (first worm))) DOWN_LIMIT)
-      (and (member? (posn-x (worm_seg-loc (first worm))) (rest worm))
+      (bite_self? worm)))
+
+; Worm -> Boolean
+; Is the Worm's head located in the same coordinates as the rest of its body
+(check-expect (bite_self?
+               (list
+                (make-worm_seg (make-posn 100 50) GO_RIGHT 0)
+                (make-worm_seg (make-posn 100 40) GO_RIGHT 0)
+                (make-worm_seg (make-posn 90 40) GO_RIGHT 0)
+                (make-worm-seg (make-posn 90 50) GO_RIGHT 0)
+                (make-worm_seg (make-posn 100 50) GO_RIGHT 0)))
+              #true)
+(check-expect (bite_self?
+               (list
+                (make-worm_seg (make-posn 100 50) 0 GO_UP)
+                (make-worm_seg (make-posn 110 50) 0 GO_UP)
+                (make-worm_seg (make-posn 120 50) 0 GO_UP)))
+              #false)
+
+(define (bite_self? worm) #false)
 
 (define GAME_OVER
    (text "Don't touch the walls and don't bite yourself!" (* SCALER 1.5) "red"))
