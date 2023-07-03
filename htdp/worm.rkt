@@ -166,33 +166,34 @@ Snake game, basically.
 
 ; Worm_seg -> Boolean
 ; Is the Worm's head touching any of the walls
-(check-expect (walls_reached?
+(check-expect (collision?
                (list (make-worm_seg
                       (make-posn XCENTER YCENTER) GO_RIGHT 0)))
               #false)           
-(check-expect (walls_reached?
+(check-expect (collision?
                (list (make-worm_seg
                       (make-posn RIGHT_LIMIT 40) GO_LEFT 0)))
                #true)
-(check-expect (walls_reached?
+(check-expect (collision?
                (list (make-worm_seg
                       (make-posn LEFT_LIMIT 40) GO_RIGHT 0)))
                #true)
-(check-expect (walls_reached?
+(check-expect (collision?
                (list (make-worm_seg (make-posn 40 UP_LIMIT) GO_DOWN 0)))
               #true)
-(check-expect (walls_reached?
+(check-expect (collision?
                (list (make-worm_seg (make-posn 40 DOWN_LIMIT) GO_UP 0)))
               #true)
 
-(define (walls_reached? worm)
+(define (collision? worm)
   (or (<= (posn-x (worm_seg-loc (first worm))) LEFT_LIMIT)
       (>= (posn-x (worm_seg-loc (first worm))) RIGHT_LIMIT)
       (<= (posn-y (worm_seg-loc (first worm))) UP_LIMIT)
-      (>= (posn-y (worm_seg-loc (first worm))) DOWN_LIMIT)))
+      (>= (posn-y (worm_seg-loc (first worm))) DOWN_LIMIT)
+      (and (member? (posn-x (worm_seg-loc (first worm))) (rest worm))
 
 (define GAME_OVER
-   (text "Don't touch the walls!" (* SCALER 1.5) "red"))
+   (text "Don't touch the walls and don't bite yourself!" (* SCALER 1.5) "red"))
 
 ; Worm_seg -> Image
 ; Shows game over screen
@@ -222,6 +223,6 @@ Snake game, basically.
     [to-draw render]
     [on-tick time_step 0.2]
     [on-key change_direction]
-    [stop-when walls_reached? show_game_over]))
+    [stop-when collision? show_game_over]))
 
 (main worm_state)
