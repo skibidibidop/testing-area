@@ -164,6 +164,17 @@ Snake game, basically.
               (rest worm))]
        [else worm])]))
 
+; Worm -> Boolean
+; Has the Worm touched any walls or is its head located in the same
+; coordinates as any of its segments
+; Tests under (collision?) and (bite_self?)
+(define (game_over? worm)
+  (cond
+    [(empty? worm) #false]
+    [else 
+     (or (collision? worm)
+         (bite_self? worm))]))
+
 ; Worm_seg -> Boolean
 ; Is the Worm's head touching any of the walls
 (check-expect (collision?
@@ -189,8 +200,7 @@ Snake game, basically.
   (or (<= (posn-x (worm_seg-loc (first worm))) LEFT_LIMIT)
       (>= (posn-x (worm_seg-loc (first worm))) RIGHT_LIMIT)
       (<= (posn-y (worm_seg-loc (first worm))) UP_LIMIT)
-      (>= (posn-y (worm_seg-loc (first worm))) DOWN_LIMIT)
-      (bite_self? worm)))
+      (>= (posn-y (worm_seg-loc (first worm))) DOWN_LIMIT)))
 
 ; Worm -> Boolean
 ; Is the Worm's head located in the same coordinates as the rest of its body
@@ -225,16 +235,25 @@ Snake game, basically.
      (cons (worm_seg-loc (first worm))
            (generate_posn_list (rest worm)))]))
 
-(define GAME_OVER
-   (text "Don't touch the walls and don't bite yourself!" (* SCALER 1.5) "red"))
+(define WALL_HIT
+  (text "Don't touch the walls!" (* SCALER 1.5) "red"))
+(define BITE
+  (text "Don't bite yourself!" (* SCALER 1.5) "red"))
 
 ; Worm_seg -> Image
 ; Shows game over screen
 (define (show_game_over worm)
-  (place-image GAME_OVER
-               (+ (/ (image-width GAME_OVER) 2) (/ SCALER 2)) 
-               (- SHEIGHT (/ (image-height GAME_OVER) 2))
-               (render worm)))
+  (cond
+    [(collision? worm)
+     (place-image WALL_HIT
+                  (+ (/ (image-width WALL_HIT) 2) (/ SCALER 2)) 
+                  (- SHEIGHT (/ (image-height WALL_HIT) 2))
+                  (render worm))]
+    [(bite_self? worm)
+     (place-image BITE
+                  (+ (/ (image-width BITE) 2) (/ SCALER 2))
+                  (- SHEIGHT (/ (image-height BITE) 2))
+                  (render worm))]))
 
 ; Worm -> Worm
 ; Adds a Worm_seg to Worm if Food is consumed by it
@@ -256,6 +275,6 @@ Snake game, basically.
     [to-draw render]
     [on-tick time_step 0.2]
     [on-key change_direction]
-    [stop-when collision? show_game_over]))
+    [stop-when game_over? show_game_over]))
 
 (main worm_state)
