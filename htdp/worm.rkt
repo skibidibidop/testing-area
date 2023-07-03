@@ -1,3 +1,6 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname worm) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: June 29, 2023
@@ -23,15 +26,15 @@ Snake game, basically.
    BG))
 
 (define UP_LIMIT
-  (/ (image-height WORM_SEGMENT) 2))
+  (/ SCALER 2))
 (define DOWN_LIMIT
   (- SHEIGHT
-     (/ (image-height WORM_SEGMENT) 2)))
+     (/ SCALER 2)))
 (define LEFT_LIMIT
-  (/ (image-width WORM_SEGMENT) 2))
+  (/ SCALER 2))
 (define RIGHT_LIMIT
   (- SWIDTH
-     (/ (image-width WORM_SEGMENT) 2)))
+     (/ SCALER 2)))
 
 (define MOVSPD (* SCALER 2))
 (define GO_UP (* MOVSPD -1))
@@ -135,10 +138,19 @@ Snake game, basically.
               #true)
 
 (define (walls_reached? wseg)
-  (or (= (posn-x (worm_seg-loc wseg)) LEFT_LIMIT)
-      (= (posn-x (worm_seg-loc wseg)) RIGHT_LIMIT)
-      (= (posn-y (worm_seg-loc wseg)) UP_LIMIT)
-      (= (posn-y (worm_seg-loc wseg)) DOWN_LIMIT)))
+  (or (<= (posn-x (worm_seg-loc wseg)) LEFT_LIMIT)
+      (>= (posn-x (worm_seg-loc wseg)) RIGHT_LIMIT)
+      (<= (posn-y (worm_seg-loc wseg)) UP_LIMIT)
+      (>= (posn-y (worm_seg-loc wseg)) DOWN_LIMIT)))
+
+; Worm_seg -> Image
+; Shows game over screen
+(define (show_game_over wseg)
+  (place-image
+   (text "Don't touch the walls!" (* SCALER 5) "red")
+   XCENTER YCENTER
+   BG))
+
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
@@ -150,6 +162,6 @@ Snake game, basically.
     [to-draw render]
     [on-tick time_step]
     [on-key change_direction]
-    [stop-when walls_reached? 
+    [stop-when walls_reached? show_game_over]))
 
 (main worm_state)
