@@ -19,11 +19,6 @@ Snake game, basically.
 
 (define WORM_SEGMENT (circle SCALER "solid" "red"))
 (define BG (empty-scene SWIDTH SHEIGHT))
-(define GAME_OVER
-  (place-image
-   (text "Don't touch the walls!" (* SCALER 5) "red")
-   XCENTER YCENTER
-   BG))
 
 (define UP_LIMIT
   (/ SCALER 2))
@@ -143,14 +138,16 @@ Snake game, basically.
       (<= (posn-y (worm_seg-loc wseg)) UP_LIMIT)
       (>= (posn-y (worm_seg-loc wseg)) DOWN_LIMIT)))
 
+(define GAME_OVER
+   (text "Don't touch the walls!" (* SCALER 1.5) "red"))
+
 ; Worm_seg -> Image
 ; Shows game over screen
 (define (show_game_over wseg)
-  (place-image
-   (text "Don't touch the walls!" (* SCALER 5) "red")
-   XCENTER YCENTER
-   BG))
-
+  (place-image GAME_OVER
+               (+ (/ (image-width GAME_OVER) 2) (/ SCALER 2)) 
+               (- SHEIGHT (/ (image-height GAME_OVER) 2))
+               (render wseg)))
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
@@ -160,7 +157,7 @@ Snake game, basically.
 (define (main worm)
   (big-bang worm
     [to-draw render]
-    [on-tick time_step 0.4]
+    [on-tick time_step]
     [on-key change_direction]
     [stop-when walls_reached? show_game_over]))
 
