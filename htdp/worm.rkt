@@ -154,6 +154,10 @@ Snake game, basically.
                (- SHEIGHT (/ (image-height GAME_OVER) 2))
                (render wseg)))
 
+; Worm -> Worm
+; Adds a Worm_seg to Worm if Food is consumed by it
+(define (grow_worm wseg) '())
+
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
 (define worm_state
