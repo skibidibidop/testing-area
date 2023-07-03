@@ -18,6 +18,8 @@ Snake game, basically.
 (define YCENTER (/ SHEIGHT 2))
 
 (define WORM_SEGMENT (circle SCALER "solid" "red"))
+(define SEG_WIDTH (image-width WORM_SEGMENT))
+(define SEG_HEIGHT (image-height WORM_SEGMENT))
 (define BG (empty-scene SWIDTH SHEIGHT))
 
 (define UP_LIMIT
@@ -59,18 +61,34 @@ Snake game, basically.
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
-; Worm_seg -> Image
+; Worm -> Image
 ; Draws a WORM_SEGMENT on BG based on the coordinates in Worm_seg
-(check-expect (render (make-worm_seg (make-posn XCENTER YCENTER) GO_RIGHT 0))
+(check-expect (render '()) BG)
+(check-expect (render
+               (list (make-worm_seg (make-posn XCENTER YCENTER)
+                                    GO_RIGHT 0)))
               (place-image WORM_SEGMENT XCENTER YCENTER BG))
+(check-expect (render
+               (list (make-worm_seg (make-posn XCENTER YCENTER)
+                                    GO_RIGHT 0)
+                     (make-worm_seg (make-posn (- XCENTER SEG_WIDTH) YCENTER)
+                                    GO_RIGHT 0)))
+              (place-image
+               WORM_SEGMENT XCENTER YCENTER
+               (place-image
+                WORM_SEGMENT (- XCENTER SEG_WIDTH) YCENTER
+                BG)))
 
-(define (render wseg)
-  (place-image WORM_SEGMENT
-               (posn-x (worm_seg-loc wseg))
-               (posn-y (worm_seg-loc wseg))
-               BG))
+(define (render worm)
+  (cond
+    [(empty? worm) BG]
+    [else
+     (place-image WORM_SEGMENT
+                  (posn-x (worm_seg-loc (first worm)))
+                  (posn-y (worm_seg-loc (first worm)))
+                  (render (rest worm)))]))
 
-; Worm_seg -> Worm_seg
+; Worm -> Worm
 ; Moves the WORM_SEGMENT per tick
 (check-expect (time_step (make-worm_seg (make-posn 50 50) GO_RIGHT 0))
               (make-worm_seg (make-posn (+ 50 GO_RIGHT) 50) GO_RIGHT 0))
@@ -137,11 +155,11 @@ Snake game, basically.
                (make-worm_seg (make-posn 40 DOWN_LIMIT) GO_UP 0))
               #true)
 
-(define (walls_reached? wseg)
-  (or (<= (posn-x (worm_seg-loc wseg)) LEFT_LIMIT)
-      (>= (posn-x (worm_seg-loc wseg)) RIGHT_LIMIT)
-      (<= (posn-y (worm_seg-loc wseg)) UP_LIMIT)
-      (>= (posn-y (worm_seg-loc wseg)) DOWN_LIMIT)))
+(define (walls_reached? worm)
+  (or (<= (posn-x (worm_seg-loc (first worm))) LEFT_LIMIT)
+      (>= (posn-x (worm_seg-loc (first worm))) RIGHT_LIMIT)
+      (<= (posn-y (worm_seg-loc (first worm))) UP_LIMIT)
+      (>= (posn-y (worm_seg-loc (first worm))) DOWN_LIMIT)))
 
 (define GAME_OVER
    (text "Don't touch the walls!" (* SCALER 1.5) "red"))
@@ -161,7 +179,9 @@ Snake game, basically.
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
 (define worm_state
-  (make-worm_seg (make-posn XCENTER YCENTER) 0 GO_RIGHT))
+  (list (make-worm_seg (make-posn XCENTER YCENTER) 0 GO_RIGHT)
+        (make-worm_seg (make-posn (- XCENTER SEG_WIDTH) YCENTER)
+                       0 GO_RIGHT)))
 
 (define (main worm)
   (big-bang worm
