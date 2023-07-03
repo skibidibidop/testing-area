@@ -45,6 +45,11 @@ Snake game, basically.
 ; coordinates (l), horizontal velocity (h), and vertical velocity (v)
 (make-worm_seg (make-posn 30 40) 4 0)
 
+; A Worm is one of:
+; - '()
+; (cons Worm_seg Worm)
+; Interp.: a list of Worm_segs
+
 ; A Direction is one of:
 ; - "up"
 ; - "down"
