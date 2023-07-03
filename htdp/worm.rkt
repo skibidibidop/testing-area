@@ -90,6 +90,29 @@ Snake game, basically.
 
 ; Worm Direction-> Worm
 ; Updates all Worm_segs in Worm per tick
+(check-expect (time_step '()) '())
+(check-expect (time_step (list
+                          (make-worm_seg
+                           (make-posn XCENTER YCENTER) GO_RIGHT 0)))
+              (list (make-worm_seg
+                     (make-posn (+ XCENTER GO_RIGHT) YCENTER)
+                     GO_RIGHT 0)))
+(check-expect (time_step
+               (list
+                (make-worm_seg
+                 (make-posn XCENTER YCENTER) 0 GO_UP)
+                (make-worm_seg
+                 (make-posn XCENTER (+ YCENTER SEG_HEIGHT)) 0 GO_UP)
+                (make-worm_seg
+                 (make-posn XCENTER (+ YCENTER (* SEG_HEIGHT 2))) 0 GO_UP)))
+              (list
+               (make-worm_seg
+                (make-posn XCENTER (- YCENTER SEG_HEIGHT)) 0 GO_UP)
+               (make-worm_seg
+                (make-posn XCENTER YCENTER) 0 GO_UP)
+               (make-worm_seg
+                (make-posn XCENTER (+ YCENTER SEG_HEIGHT)) 0 GO_UP)))
+
 (define (time_step worm)
   (cond
     [(empty? worm) '()]
