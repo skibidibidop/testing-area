@@ -165,21 +165,24 @@ Snake game, basically.
        [else worm])]))
 
 ; Worm_seg -> Boolean
-; Displays game over message when the worm reaches any of the walls
+; Is the Worm's head touching any of the walls
 (check-expect (walls_reached?
-               (make-worm_seg (make-posn XCENTER YCENTER) GO_LEFT 0))
-              #false)
+               (list (make-worm_seg
+                      (make-posn XCENTER YCENTER) GO_RIGHT 0)))
+              #false)           
 (check-expect (walls_reached?
-               (make-worm_seg (make-posn RIGHT_LIMIT 40) GO_LEFT 0))
+               (list (make-worm_seg
+                      (make-posn RIGHT_LIMIT 40) GO_LEFT 0)))
+               #true)
+(check-expect (walls_reached?
+               (list (make-worm_seg
+                      (make-posn LEFT_LIMIT 40) GO_RIGHT 0)))
+               #true)
+(check-expect (walls_reached?
+               (list (make-worm_seg (make-posn 40 UP_LIMIT) GO_DOWN 0)))
               #true)
 (check-expect (walls_reached?
-               (make-worm_seg (make-posn LEFT_LIMIT 40) GO_RIGHT 0))
-              #true)
-(check-expect (walls_reached?
-               (make-worm_seg (make-posn 40 UP_LIMIT) GO_DOWN 0))
-              #true)
-(check-expect (walls_reached?
-               (make-worm_seg (make-posn 40 DOWN_LIMIT) GO_UP 0))
+               (list (make-worm_seg (make-posn 40 DOWN_LIMIT) GO_UP 0)))
               #true)
 
 (define (walls_reached? worm)
@@ -217,7 +220,7 @@ Snake game, basically.
 (define (main worm)
   (big-bang worm
     [to-draw render]
-    [on-tick time_step 0.1]
+    [on-tick time_step 0.2]
     [on-key change_direction]
     [stop-when walls_reached? show_game_over]))
 
