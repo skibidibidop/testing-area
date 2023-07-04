@@ -18,6 +18,7 @@ Snake game, basically.
 (define YCENTER (/ SHEIGHT 2))
 
 (define WORM_SEGMENT (circle SCALER "solid" "red"))
+(define FOOD (circle SCALER "solid" "green"))
 (define SEG_WIDTH (image-width WORM_SEGMENT))
 (define SEG_HEIGHT (image-height WORM_SEGMENT))
 (define BG (empty-scene SWIDTH SHEIGHT))
