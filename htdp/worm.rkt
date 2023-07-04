@@ -42,6 +42,14 @@ Snake game, basically.
 ; coordinates (l), horizontal velocity (h), and vertical velocity (v)
 (make-worm_seg (make-posn 30 40) 4 0)
 
+(define-struct worm_state [worm food])
+; (make-worm_state Worm Posn)
+; Interp.: (make-worm_state w f), represents the entire worm (w) and where its
+; next food (f) is currently located
+(make-worm_state (list (make-worm_seg (make-posn 30 40) GO_RIGHT 0)
+                       (make-worm_seg (make-posn 20 40) GO_RIGHT 0))
+                 (make-posn 50 50))
+
 ; A Worm is one of:
 ; - '()
 ; (cons Worm_seg Worm)
@@ -262,7 +270,7 @@ Snake game, basically.
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
-(define worm_state
+(define wstate
   (list (make-worm_seg (make-posn XCENTER YCENTER) GO_RIGHT 0)
         (make-worm_seg (make-posn (- XCENTER SEG_WIDTH) YCENTER)
                        GO_RIGHT 0)
@@ -278,4 +286,4 @@ Snake game, basically.
     [on-key change_direction]
     [stop-when game_over? show_game_over]))
 
-(main worm_state)
+(main wstate)
