@@ -228,17 +228,29 @@ Snake game, basically.
 (define (not=-1-1? p)
   (not (and (= (posn-x p) 1) (= (posn-y p) 1))))
 
-; Worm Direction -> Worm
-; Changes the Worm's movement direction
+; Worm_state Direction -> Worm_state
+; Updates Worm_state by changing the Worm's movement direction
+; and retaining Food location
 (check-expect (change_direction
+               (make-worm_state
+                (list
+                 (make-worm_seg
+                  (make-posn XCENTER YCENTER) GO_RIGHT 0))
+                (make-posn 40 70)) "up")
+              (make-worm_state
                (list
                 (make-worm_seg
-                 (make-posn XCENTER YCENTER) GO_RIGHT 0)) "up")
-              (list
-               (make-worm_seg
-                (make-posn XCENTER YCENTER) 0 GO_UP)))
+                 (make-posn XCENTER YCENTER) 0 GO_UP))
+               (make-posn 40 70)))
 
-(define (change_direction worm key_event)
+(define (change_direction ws key_event)
+  (make-worm_state (steer_worm (worm_state-worm ws) key_event)
+                   (worm_state-food ws)))
+
+; Worm Direction -> Worm
+; Changes Worm's movement direction
+; Test under (change_direction)
+(define (steer_worm worm key_event)
   (cond
     [(empty? worm) '()]
     [else
@@ -362,20 +374,17 @@ Snake game, basically.
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
-(define wstate
-  (list (make-worm_seg (make-posn XCENTER YCENTER) GO_RIGHT 0)
-        (make-worm_seg (make-posn (- XCENTER SEG_WIDTH) YCENTER)
-                       GO_RIGHT 0)
-        (make-worm_seg (make-posn (- XCENTER (* SEG_WIDTH 2)) YCENTER)
-                       GO_RIGHT 0)
-        (make-worm_seg (make-posn (- XCENTER (* SEG_WIDTH 3)) YCENTER)
-                       GO_RIGHT 0)))
+(define worm_play
+  (make-worm_state
+   (list
+    (make-worm_seg (make-posn XCENTER YCENTER) GO_RIGHT 0))
+   (make-posn 70 80)))
 
-(define (main worm)
-  (big-bang worm
+(define (main wstate)
+  (big-bang wstate
     [to-draw show_worm_food]
     [on-tick time_step 0.2]
     [on-key change_direction]
     [stop-when game_over? show_game_over]))
 
-(main wstate)
+(main worm_play)
