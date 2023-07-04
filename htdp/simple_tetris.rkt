@@ -21,4 +21,16 @@ Project: Simple Tetris
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
+(define-struct tetris [block landscape])
+; (make-tetris Block Landscape)
+; Interp.: (make-tetris b0 (list b1 b2 ...)) represents the falling block (b0)
+; and the resting blocks (list b1 b2 ...)
+
+; A Landscape is one of:
+; - '()
+; - (cons Block Landscape)
+
+; A Block is a Posn
+; Interp.: (make-posn x y) represents coordinates of the Block's center point
+
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
