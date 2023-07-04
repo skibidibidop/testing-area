@@ -281,16 +281,16 @@ Snake game, basically.
               (rest worm))]
        [else worm])]))
 
-; Worm -> Boolean
+; Worm_state -> Boolean
 ; Has the Worm touched any walls or is its head located in the same
 ; coordinates as any of its segments
 ; Tests under (collision?) and (bite_self?)
-(define (game_over? worm)
+(define (game_over? ws)
   (cond
-    [(empty? worm) #false]
+    [(empty? (worm_state-worm ws)) #false]
     [else 
-     (or (collision? worm)
-         (bite_self? worm))]))
+     (or (collision? (worm_state-worm ws))
+         (bite_self? (worm_state-worm ws)))]))
 
 ; Worm_seg -> Boolean
 ; Is the Worm's head touching any of the walls
