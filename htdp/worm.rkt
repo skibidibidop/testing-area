@@ -137,7 +137,7 @@ Snake game, basically.
                  (make-posn XCENTER (+ YCENTER SEG_HEIGHT)) 0 GO_UP))
                (make-posn (+ XCENTER 50) (+ YCENTER 50))))
 ; Worm is lengthened and Food appears elsewhere on the canvas
-(check-random (time-step
+(check-random (time_step
                (make-worm_state
                 (list
                  (make-worm_seg (make-posn XCENTER YCENTER) GO_RIGHT 0))
@@ -150,12 +150,13 @@ Snake game, basically.
                (food-create (make-posn XCENTER YCENTER))))
 
 (define (time_step ws)
-  (cond
-    [(and (= (posn-x (worm_seg-loc (first (worm_state-worm ws))))
-             (posn-x (worm_state-food ws)))
-          (= (posn-y (worm_seg-loc (first (worm_state-worm ws))))
-             (posn-y (worm_state-food ws))))
-     (grow_worm_move_food 
+    (if (and (= (posn-x (worm_seg-loc (first (worm_state-worm ws))))
+                (posn-x (worm_state-food ws)))
+             (= (posn-y (worm_seg-loc (first (worm_state-worm ws))))
+                (posn-y (worm_state-food ws))))
+        (make-worm_state (grow_worm (worm_state-worm ws))
+                         (food-create
+                          (worm_seg-loc (first (worm_state-worm ws)))))
     [(empty? worm) '()]
     [else
      (reverse
@@ -169,6 +170,12 @@ Snake game, basically.
                (worm_seg-hmove (first worm))
                (worm_seg-vmove (first worm)))
               worm))))]))
+
+; Worm -> Worm_state
+; Adds a Worm_seg to the end of Worm
+; Tests under (time_step)
+(define (grow_worm worm)
+  (
 
 ; Posn -> Posn
 ; ???
