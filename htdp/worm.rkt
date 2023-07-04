@@ -182,7 +182,20 @@ Snake game, basically.
 ; and removing the last Worm_seg from provided Worm
 ; Tests under (time_step)
 (define (move_worm worm)
-  '())
+  (cond
+    [(empty? worm) '()]
+    [else
+     (reverse
+      (rest
+       (reverse
+        (cons (make-worm_seg
+               (make-posn (+ (posn-x (worm_seg-loc (first worm)))
+                             (worm_seg-hmove (first worm)))
+                          (+ (posn-y (worm_seg-loc (first worm)))
+                             (worm_seg-vmove (first worm))))
+               (worm_seg-hmove (first worm))
+               (worm-seg-vmove (first worm)))
+              worm))))]))
 
 ; Posn -> Posn
 ; ???
