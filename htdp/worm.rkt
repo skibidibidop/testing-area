@@ -105,30 +105,47 @@ Snake game, basically.
                   (posn-y (worm_seg-loc (first w)))
                   (assemble_worm_food (rest w) f))]))
 
-; Worm -> Worm
-; Updates Worm per tick
-(check-expect (time_step '()) '())
-(check-expect (time_step (list
-                          (make-worm_seg
-                           (make-posn XCENTER YCENTER) GO_RIGHT 0)))
-              (list (make-worm_seg
-                     (make-posn (+ XCENTER GO_RIGHT) YCENTER)
-                     GO_RIGHT 0)))
+; Worm_state -> Worm_state
+; Updates Worm_state per tick
 (check-expect (time_step
+               (make-worm_state
+                (list
+                 (make-worm_seg (make-posn XCENTER YCENTER) GO_RIGHT 0))
+                (make-posn (+ XCENTER 40) (+ YCENTER 40))))
+              (make-worm_state
                (list
+                (make-worm_seg (make-posn (+ XCENTER GO_RIGHT) YCENTER)
+                               GO_RIGHT 0))
+               (make-posn (+ XCENTER 40) (+ YCENTER 40))))
+(check-expect (time_step
+               (make-worm_state
+                (list
+                 (make-worm_seg
+                  (make-posn XCENTER YCENTER) 0 GO_UP)
+                 (make-worm_seg
+                  (make-posn XCENTER (+ YCENTER SEG_HEIGHT)) 0 GO_UP)
+                 (make-worm_seg
+                  (make-posn XCENTER (+ YCENTER (* SEG_HEIGHT 2))) 0 GO_UP))
+                (make-posn (+ XCENTER 50) (+ YCENTER 50))))
+              (make-worm_state
+               (list
+                (make-worm_seg
+                 (make-posn XCENTER (- YCENTER SEG_HEIGHT)) 0 GO_UP)
                 (make-worm_seg
                  (make-posn XCENTER YCENTER) 0 GO_UP)
                 (make-worm_seg
-                 (make-posn XCENTER (+ YCENTER SEG_HEIGHT)) 0 GO_UP)
-                (make-worm_seg
-                 (make-posn XCENTER (+ YCENTER (* SEG_HEIGHT 2))) 0 GO_UP)))
-              (list
-               (make-worm_seg
-                (make-posn XCENTER (- YCENTER SEG_HEIGHT)) 0 GO_UP)
-               (make-worm_seg
-                (make-posn XCENTER YCENTER) 0 GO_UP)
-               (make-worm_seg
-                (make-posn XCENTER (+ YCENTER SEG_HEIGHT)) 0 GO_UP)))
+                 (make-posn XCENTER (+ YCENTER SEG_HEIGHT)) 0 GO_UP))
+               (make-posn (+ XCENTER 50) (+ YCENTER 50))))
+(check-random (time-step
+               (make-worm_state
+                (list
+                 (make-worm_seg (make-posn XCENTER YCENTER) GO_RIGHT 0))
+                (make-posn XCENTER YCENTER)))
+              (make-worm_state
+               (list
+                (make-worm_seg (make-posn (+ XCENTER GO_RIGHT) YCENTER)
+                               GO_RIGHT 0))
+               (make-posn 
 
 (define (time_step worm)
   (cond
@@ -145,6 +162,24 @@ Snake game, basically.
                (worm_seg-hmove (first worm))
                (worm_seg-vmove (first worm)))
               worm))))]))
+
+; Posn -> Posn
+; ???
+(check-satisfied (food-create (make-posn 1 1)) not=-1-1?)
+(define (food-create p)
+  (food-check-create
+   p (make-posn (random MAX) (random MAX))))
+
+; Posn Posn -> Posn
+; generative recursion
+; ???
+(define (food-check-create p candidate)
+  (if (equal? p candidate) (food-create p) candidate))
+
+; Posn -> Boolean
+; use for testing only
+(define (not=-1-1? p)
+  (not (and (= (posn-x p) 1) (= (posn-y p) 1))))
 
 ; Worm Direction -> Worm
 ; Changes the Worm's movement direction
