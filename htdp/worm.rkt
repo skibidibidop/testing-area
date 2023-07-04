@@ -64,31 +64,39 @@ Snake game, basically.
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
-; Worm -> Image
-; Draws all Worm_segs in Worm as WORM_SEGMENTS
-(check-expect (render '()) BG)
-(check-expect (render
-               (list (make-worm_seg (make-posn XCENTER YCENTER)
-                                    GO_RIGHT 0)))
-              (place-image WORM_SEGMENT XCENTER YCENTER BG))
-(check-expect (render
-               (list (make-worm_seg (make-posn XCENTER YCENTER)
-                                    GO_RIGHT 0)
-                     (make-worm_seg (make-posn (- XCENTER SEG_WIDTH) YCENTER)
-                                    GO_RIGHT 0)))
+; Worm_state -> Image
+; Renders all Worm_segs in worm_state-worm and FOOD based on worm_state-food_loc
+(check-expect (show_worm_food
+               (make-worm_state
+                (list (make-worm_seg (make-posn XCENTER YCENTER) GO_RIGHT 0))
+                (make-posn 80 40)))
+              (place-image WORM_SEGMENT XCENTER YCENTER
+               (place-image FOOD 80 40 BG)))
+(check-expect (show_worm_food
+               (make-worm_state
+                (list (make-worm_seg (make-posn XCENTER YCENTER)
+                                     GO_RIGHT 0)
+                      (make-worm_seg (make-posn (- XCENTER SEG_WIDTH) YCENTER)
+                                     GO_RIGHT 0))
+                (make-posn 70 70)))
               (place-image
                WORM_SEGMENT XCENTER YCENTER
                (place-image
                 WORM_SEGMENT (- XCENTER SEG_WIDTH) YCENTER
                 BG)))
 
-(define (render worm)
+(define (show_worm_food ws)
+  (
   (cond
-    [(empty? worm) BG]
+    [(empty? ws)
+     (place-image FOOD
+                  (posn-x (worm_state-food_loc ws))
+                  (posn-y (worm_state-food_loc ws))
+                  BG)]
     [else
      (place-image WORM_SEGMENT
-                  (posn-x (worm_seg-loc (first worm)))
-                  (posn-y (worm_seg-loc (first worm)))
+                  (posn-x (worm_seg-loc (first (worm_state-worm ws))))
+                  (posn-y (worm_seg-loc (first (worm_state-worm ws))))
                   (render (rest worm)))]))
 
 ; Worm Direction-> Worm
