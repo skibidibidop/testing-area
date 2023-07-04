@@ -136,6 +136,7 @@ Snake game, basically.
                 (make-worm_seg
                  (make-posn XCENTER (+ YCENTER SEG_HEIGHT)) 0 GO_UP))
                (make-posn (+ XCENTER 50) (+ YCENTER 50))))
+; Worm is lengthened and Food appears elsewhere on the canvas
 (check-random (time-step
                (make-worm_state
                 (list
@@ -143,9 +144,10 @@ Snake game, basically.
                 (make-posn XCENTER YCENTER)))
               (make-worm_state
                (list
-                (make-worm_seg (make-posn (+ XCENTER GO_RIGHT) YCENTER)
+                (make-worm_seg (make-posn XCENTER YCENTER) GO_RIGHT 0)
+                (make-worm_seg (make-posn (- XCENTER SEG_WIDTH) YCENTER)
                                GO_RIGHT 0))
-               (make-posn 
+               (food-create (make-posn XCENTER YCENTER))))
 
 (define (time_step worm)
   (cond
@@ -168,7 +170,7 @@ Snake game, basically.
 (check-satisfied (food-create (make-posn 1 1)) not=-1-1?)
 (define (food-create p)
   (food-check-create
-   p (make-posn (random MAX) (random MAX))))
+   p (make-posn (random SWIDTH) (random SHEIGHT))))
 
 ; Posn Posn -> Posn
 ; generative recursion
