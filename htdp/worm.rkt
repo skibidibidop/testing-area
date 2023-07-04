@@ -105,8 +105,8 @@ Snake game, basically.
                   (posn-y (worm_seg-loc (first w)))
                   (assemble_worm_food (rest w) f))]))
 
-; Worm Direction-> Worm
-; Updates all Worm_segs in Worm per tick
+; Worm -> Worm
+; Updates Worm per tick
 (check-expect (time_step '()) '())
 (check-expect (time_step (list
                           (make-worm_seg
