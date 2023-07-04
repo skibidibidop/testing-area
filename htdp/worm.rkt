@@ -8,7 +8,7 @@ Snake game, basically.
 (require 2htdp/image)
 (require 2htdp/universe)
 
-(define SCALER 10)
+(define SCALER 5)
 (define SWIDTH (* SCALER 50))
 (define SHEIGHT (* SCALER 50))
 (define XCENTER (/ SWIDTH 2))
@@ -356,20 +356,20 @@ Snake game, basically.
 (define BITE
   (text "Don't bite yourself!" SCALER "red"))
 
-; Worm_seg -> Image
+; Worm_state -> Image
 ; Shows game over screen
-(define (show_game_over worm)
+(define (show_game_over ws)
   (cond
-    [(collision? worm)
+    [(collision? (worm_state-worm ws))
      (place-image WALL_HIT
                   (+ (/ (image-width WALL_HIT) 2) (/ SCALER 2)) 
                   (- SHEIGHT (/ (image-height WALL_HIT) 2))
-                  (show_worm_food worm))]
-    [(bite_self? worm)
+                  (show_worm_food ws))]
+    [(bite_self? (worm_state-worm ws))
      (place-image BITE
                   (+ (/ (image-width BITE) 2) (/ SCALER 2))
                   (- SHEIGHT (/ (image-height BITE) 2))
-                  (show_worm_food worm))]))
+                  (show_worm_food ws))]))
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
