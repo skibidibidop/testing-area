@@ -157,19 +157,8 @@ Snake game, basically.
         (make-worm_state (grow_worm (worm_state-worm ws))
                          (food-create
                           (worm_seg-loc (first (worm_state-worm ws)))))
-    [(empty? worm) '()]
-    [else
-     (reverse
-      (rest
-       (reverse
-        (cons (make-worm_seg
-               (make-posn (+ (posn-x (worm_seg-loc (first worm)))
-                             (worm_seg-hmove (first worm)))
-                          (+ (posn-y (worm_seg-loc (first worm)))
-                             (worm_seg-vmove (first worm))))
-               (worm_seg-hmove (first worm))
-               (worm_seg-vmove (first worm)))
-              worm))))]))
+        (make-worm_state (move_worm (worm_state-worm ws))
+                         (worm_state-food ws))))
 
 ; Worm -> Worm
 ; Adds a Worm_seg to the end of Worm
