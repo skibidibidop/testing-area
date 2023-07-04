@@ -87,24 +87,23 @@ Snake game, basically.
                WORM_SEGMENT XCENTER YCENTER
                (place-image
                 WORM_SEGMENT (- XCENTER SEG_WIDTH) YCENTER
-                BG)))
+                (place-image FOOD 70 70 BG))))
 
 (define (show_worm_food ws)
-  (assemble_worm_food (worm_state-worm ws) (worm_state-food_loc ws)))
+  (assemble_worm_food (worm_state-worm ws) (worm_state-food ws)))
 
 ; Worm Food -> Image
-(define)
+; Handles rendering using a list and Posn from (show_worm_food)
+; Tests are under (show_worm_food) function
+(define (assemble_worm_food w f)
   (cond
-    [(empty? ws)
-     (place-image FOOD
-                  (posn-x (worm_state-food_loc ws))
-                  (posn-y (worm_state-food_loc ws))
-                  BG)]
+    [(empty? w)
+     (place-image FOOD (posn-x f) (posn-y f) BG)]
     [else
      (place-image WORM_SEGMENT
-                  (posn-x (worm_seg-loc (first (worm_state-worm ws))))
-                  (posn-y (worm_seg-loc (first (worm_state-worm ws))))
-                  (render (rest worm)))]))
+                  (posn-x (worm_seg-loc (first w)))
+                  (posn-y (worm_seg-loc (first w)))
+                  (assemble_worm_food (rest w) f))]))
 
 ; Worm Direction-> Worm
 ; Updates all Worm_segs in Worm per tick
@@ -272,12 +271,12 @@ Snake game, basically.
      (place-image WALL_HIT
                   (+ (/ (image-width WALL_HIT) 2) (/ SCALER 2)) 
                   (- SHEIGHT (/ (image-height WALL_HIT) 2))
-                  (render worm))]
+                  (show_worm_food worm))]
     [(bite_self? worm)
      (place-image BITE
                   (+ (/ (image-width BITE) 2) (/ SCALER 2))
                   (- SHEIGHT (/ (image-height BITE) 2))
-                  (render worm))]))
+                  (show_worm_food worm))]))
 
 ; Worm -> Worm
 ; Adds a Worm_seg to Worm if Food is consumed by it
@@ -296,7 +295,7 @@ Snake game, basically.
 
 (define (main worm)
   (big-bang worm
-    [to-draw render]
+    [to-draw show_worm_food]
     [on-tick time_step 0.2]
     [on-key change_direction]
     [stop-when game_over? show_game_over]))
