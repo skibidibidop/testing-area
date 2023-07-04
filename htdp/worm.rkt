@@ -55,6 +55,10 @@ Snake game, basically.
 ; (cons Worm_seg Worm)
 ; Interp.: a list of Worm_segs
 
+; A Food is a Posn
+; (make-posn Number Number)
+; Interp.: (make-posn 40 50) represents the Food's coordinates
+
 ; A Direction is one of:
 ; - "up"
 ; - "down"
@@ -86,7 +90,10 @@ Snake game, basically.
                 BG)))
 
 (define (show_worm_food ws)
-  (
+  (assemble_worm_food (worm_state-worm ws) (worm_state-food_loc ws)))
+
+; Worm Food -> Image
+(define)
   (cond
     [(empty? ws)
      (place-image FOOD
