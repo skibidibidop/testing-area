@@ -164,7 +164,31 @@ Snake game, basically.
 ; Adds a Worm_seg to the end of Worm
 ; Tests under (time_step)
 (define (grow_worm worm)
-  '())
+  (cond
+    [(empty? worm) '()]
+    [else
+     (reverse
+      (cons
+       (make-worm_seg
+        (cond
+          [(= (worm_seg-hmove (first (reverse worm))) GO_RIGHT)
+           (make-posn (- (posn-x (worm_seg-loc (first (reverse worm))))
+                         SEG_WIDTH)
+                      (posn-y (worm_seg-loc (first (reverse worm)))))]
+          [(= (worm_seg-hmove (first (reverse worm))) GO_LEFT)
+           (make-posn (+ (posn-x (worm_seg-loc (first (reverse worm))))
+                         SEG_WIDTH)
+                      (posn-y (worm_seg-loc (first (reverse worm)))))]
+          [(= (worm_seg-vmove (first (reverse worm))) GO_UP)
+           (make-posn (posn-x (worm_seg-loc (first (reverse worm))))
+                      (+ (posn-y (worm_seg-loc (first (reverse worm))))
+                         SEG_HEIGHT))]
+          [(= (worm_seg-vmove (first (reverse worm))) GO_DOWN)
+           (make-posn (posn-x (worm_seg-loc (first (reverse worm))))
+                      (- (posn-y (worm_seg-loc (first (reverse worm))))))])
+          (worm_seg-hmove (first (reverse worm)))
+          (worm_seg-vmove (first (reverse worm))))
+       (reverse worm)))]))
 
 ; Worm -> Worm
 ; Simulates Worm movement by adding a Worm_seg to the beginning of Worm
@@ -183,7 +207,7 @@ Snake game, basically.
                           (+ (posn-y (worm_seg-loc (first worm)))
                              (worm_seg-vmove (first worm))))
                (worm_seg-hmove (first worm))
-               (worm-seg-vmove (first worm)))
+               (worm_seg-vmove (first worm)))
               worm))))]))
 
 ; Posn -> Posn
