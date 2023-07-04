@@ -150,10 +150,7 @@ Snake game, basically.
                (food-create (make-posn XCENTER YCENTER))))
 
 (define (time_step ws)
-    (if (and (= (posn-x (worm_seg-loc (first (worm_state-worm ws))))
-                (posn-x (worm_state-food ws)))
-             (= (posn-y (worm_seg-loc (first (worm_state-worm ws))))
-                (posn-y (worm_state-food ws))))
+    (if (= (sqrt (+ 
         (make-worm_state (grow_worm (worm_state-worm ws))
                          (food-create
                           (worm_seg-loc (first (worm_state-worm ws)))))
