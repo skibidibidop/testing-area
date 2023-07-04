@@ -152,7 +152,7 @@ Snake game, basically.
                       (posn-x (worm_state-food ws))))
               (sqr (- (posn-y (worm_seg-loc (first (worm_state-worm ws))))
                       (posn-y (worm_state-food ws))))))
-          SCALER)
+          (* SCALER 1.5))
       (make-worm_state (grow_worm (worm_state-worm ws))
                        (food-create
                         (worm_seg-loc (first (worm_state-worm ws)))))
@@ -291,7 +291,7 @@ Snake game, basically.
      (or (collision? (worm_state-worm ws))
          (bite_self? (worm_state-worm ws)))]))
 
-; Worm_seg -> Boolean
+; Worm -> Boolean
 ; Is the Worm's head touching any of the walls
 (check-expect (collision?
                (list (make-worm_seg
@@ -352,9 +352,9 @@ Snake game, basically.
            (generate_posn_list (rest worm)))]))
 
 (define WALL_HIT
-  (text "Don't touch the walls!" (* SCALER 1.5) "red"))
+  (text "Don't touch the walls!" SCALER "red"))
 (define BITE
-  (text "Don't bite yourself!" (* SCALER 1.5) "red"))
+  (text "Don't bite yourself!" SCALER "red"))
 
 ; Worm_seg -> Image
 ; Shows game over screen
