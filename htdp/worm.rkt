@@ -149,8 +149,13 @@ Snake game, basically.
                                GO_RIGHT 0))
                (food-create (make-posn XCENTER YCENTER))))
 
-(define (time_step worm)
+(define (time_step ws)
   (cond
+    [(and (= (posn-x (worm_seg-loc (first (worm_state-worm ws))))
+             (posn-x (worm_state-food ws)))
+          (= (posn-y (worm_seg-loc (first (worm_state-worm ws))))
+             (posn-y (worm_state-food ws))))
+     (grow_worm_move_food 
     [(empty? worm) '()]
     [else
      (reverse
@@ -314,10 +319,6 @@ Snake game, basically.
                   (+ (/ (image-width BITE) 2) (/ SCALER 2))
                   (- SHEIGHT (/ (image-height BITE) 2))
                   (show_worm_food worm))]))
-
-; Worm -> Worm
-; Adds a Worm_seg to Worm if Food is consumed by it
-(define (grow_worm worm) '())
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
