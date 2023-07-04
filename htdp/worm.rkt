@@ -1,6 +1,3 @@
-;; The first three lines of this file were inserted by DrRacket. They record metadata
-;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-beginner-reader.ss" "lang")((modname worm) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: June 29, 2023
@@ -150,12 +147,17 @@ Snake game, basically.
                (food-create (make-posn XCENTER YCENTER))))
 
 (define (time_step ws)
-    (if (= (sqrt (+ 
-        (make-worm_state (grow_worm (worm_state-worm ws))
-                         (food-create
-                          (worm_seg-loc (first (worm_state-worm ws)))))
-        (make-worm_state (move_worm (worm_state-worm ws))
-                         (worm_state-food ws))))
+  (if (<= (sqrt
+           (+ (sqr (- (posn-x (worm_seg-loc (first (worm_state-worm ws))))
+                      (posn-x (worm_state-food ws))))
+              (sqr (- (posn-y (worm_seg-loc (first (worm_state-worm ws))))
+                      (posn-y (worm_state-food ws))))))
+          SCALER)
+      (make-worm_state (grow_worm (worm_state-worm ws))
+                       (food-create
+                        (worm_seg-loc (first (worm_state-worm ws)))))
+      (make-worm_state (move_worm (worm_state-worm ws))
+                       (worm_state-food ws))))
 
 ; Worm -> Worm
 ; Adds a Worm_seg to the end of Worm
