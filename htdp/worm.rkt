@@ -171,11 +171,18 @@ Snake game, basically.
                (worm_seg-vmove (first worm)))
               worm))))]))
 
-; Worm -> Worm_state
+; Worm -> Worm
 ; Adds a Worm_seg to the end of Worm
 ; Tests under (time_step)
 (define (grow_worm worm)
-  (
+  '())
+
+; Worm -> Worm
+; Simulates Worm movement by adding a Worm_seg to the beginning of Worm
+; and removing the last Worm_seg from provided Worm
+; Tests under (time_step)
+(define (move_worm worm)
+  '())
 
 ; Posn -> Posn
 ; ???
