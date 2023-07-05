@@ -58,14 +58,41 @@ Project: Simple Tetris
   (make-tetris (make-posn XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 3)))
                (list (make-posn XCENTER
                                 (- SCENE_HEIGHT HALF_BLOCK_SIZE)))))
+; Blocks are added to the front of the list to avoid having to
+; reverse the list
 (define full_stack
   (make-tetris (make-posn XCENTER HALF_BLOCK_SIZE)
-               (list (make-posn XCENTER (- SCENE_HEIGHT HALF_BLOCK_SIZE))
-                     (make-posn XCENTER (- SCENE_HEIGHT BLOCK_SIZE))
-                     (make-posn XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 3)))
-                     (make-posn XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 4)))
+               (list (make-posn XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 17)))
+                     (make-posn XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 15)))
+                     (make-posn XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 13)))
+                     (make-posn XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 11)))
+                     (make-posn XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 9)))
+                     (make-posn XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 7)))
                      (make-posn XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 5)))
-(define full_row ...)
+                     (make-posn XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 3)))
+                     (make-posn XCENTER (- SCENE_HEIGHT HALF_BLOCK_SIZE)))))
+                                        
+(define full_row
+  (make-tetris (make-posn XCENTER HALF_BLOCK_SIZE)
+               (list (make-posn (- SCENE_WIDTH (* HALF_BLOCK_SIZE 17))
+                                (- SCENE_HEIGHT HALF_BLOCK_SIZE))
+                     (make-posn (- SCENE_WIDTH (* HALF_BLOCK_SIZE 15))
+                                (- SCENE_HEIGHT HALF_BLOCK_SIZE))
+                     (make-posn (- SCENE_WIDTH (* HALF_BLOCK_SIZE 13))
+                                (- SCENE_HEIGHT HALF_BLOCK_SIZE))
+                     (make-posn (- SCENE_WIDTH (* HALF_BLOCK_SIZE 11))
+                                (- SCENE_HEIGHT HALF_BLOCK_SIZE))
+                     (make-posn (- SCENE_WIDTH (* HALF_BLOCK_SIZE 9))
+                                (- SCENE_HEIGHT HALF_BLOCK_SIZE))
+                     (make-posn (- SCENE_WIDTH (* HALF_BLOCK_SIZE 7))
+                                (- SCENE_HEIGHT HALF_BLOCK_SIZE))
+                     (make-posn (- SCENE_WIDTH (* HALF_BLOCK_SIZE 5))
+                                (- SCENE_HEIGHT HALF_BLOCK_SIZE))
+                     (make-posn (- SCENE_WIDTH (* HALF_BLOCK_SIZE 3))
+                                (- SCENE_HEIGHT HALF_BLOCK_SIZE))
+                     (make-posn (- SCENE_HEIGHT HALF_BLOCK_SIZE)
+                                (- SCENE_HEIGHT HALF_BLOCK_SIZE)))))
+
 
 (check-expect (tetris_render first_block_spawn)
               (place-image BLOCK XCENTER HALF_BLOCK_SIZE
@@ -88,5 +115,58 @@ Project: Simple Tetris
                (place-image
                 BLOCK XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 3))
                 BG)))
+(check-expect (tetris_render full_stack)
+              (place-image
+               BLOCK XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 17))
+               (place-image
+                BLOCK XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 15))
+                (place-image
+                 BLOCK XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 13))
+                 (place-image
+                  BLOCK XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 11))
+                  (place-image
+                   BLOCK XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 9))
+                   (place-image
+                    BLOCK XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 7))
+                    (place-image
+                     BLOCK XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 5))
+                     (place-image
+                      BLOCK XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 3))
+                      (place-image
+                       BLOCK XCENTER (- SCENE_HEIGHT HALF_BLOCK_SIZE)
+                       (place-image
+                        BLOCK XCENTER HALF_BLOCK_SIZE BG)))))))))))
+(check-expect (tetris_render full_row)
+              (place-image
+               BLOCK (- SCENE_WIDTH (* HALF_BLOCK_SIZE 17))
+               (- SCENE_HEIGHT HALF_BLOCK_SIZE)
+               (place-image BLOCK
+                            (- SCENE_WIDTH (* HALF_BLOCK_SIZE 15))
+                            (- SCENE_HEIGHT HALF_BLOCK_SIZE)
+                (place-image BLOCK
+                             (- SCENE_WIDTH (* HALF_BLOCK_SIZE 13))
+                             (- SCENE_HEIGHT HALF_BLOCK_SIZE)
+                 (place-image BLOCK
+                              (- SCENE_WIDTH (* HALF_BLOCK_SIZE 11))
+                              (- SCENE_HEIGHT HALF_BLOCK_SIZE)
+                  (place-image BLOCK
+                               (- SCENE_WIDTH (* HALF_BLOCK_SIZE 9))
+                               (- SCENE_HEIGHT HALF_BLOCK_SIZE)
+                   (place-image BLOCK
+                                (- SCENE_WIDTH (* HALF_BLOCK_SIZE 7))
+                                (- SCENE_HEIGHT HALF_BLOCK_SIZE)
+                    (place-image BLOCK
+                                 (- SCENE_WIDTH (* HALF_BLOCK_SIZE 5))
+                                 (- SCENE_HEIGHT HALF_BLOCK_SIZE)
+                     (place-image BLOCK
+                                  (- SCENE_WIDTH (* HALF_BLOCK_SIZE 3))
+                                  (- SCENE_HEIGHT HALF_BLOCK_SIZE)
+                      (place-image BLOCK
+                                   (- SCENE_WIDTH HALF_BLOCK_SIZE)
+                                   (- SCENE_HEIGHT HALF_BLOCK_SIZE)
+                       (place-image BLOCK
+                                    HALF_BLOCK_SIZE
+                                    (- SCENE_HEIGHT HALF_BLOCK_SIZE)
+                                    BG)))))))))))
 
 (define (tetris_render tet) BG)
