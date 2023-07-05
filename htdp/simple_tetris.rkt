@@ -18,6 +18,7 @@ Project: Simple Tetris
 (define BLOCK
   (overlay (square (- BLOCK_SIZE 1) "solid" "red")
            (square BLOCK_SIZE "outline" "black")))
+(define BG (empty-scene SCENE_WIDTH SCENE_HEIGHT))
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
@@ -34,3 +35,7 @@ Project: Simple Tetris
 ; Interp.: (make-posn x y) represents coordinates of the Block's center point
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
+
+; Tetris -> Image
+; Turns tetris instance to an image
+(define (tetris_render tet) BG)
