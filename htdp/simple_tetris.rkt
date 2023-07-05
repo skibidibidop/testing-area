@@ -73,7 +73,7 @@ Project: Simple Tetris
                      (make-posn XCENTER (- SCENE_HEIGHT HALF_BLOCK_SIZE)))))
                                         
 (define full_row
-  (make-tetris (make-posn XCENTER HALF_BLOCK_SIZE)
+  (make-tetris (make-posn HALF_BLOCK_SIZE (- SCENE_HEIGHT HALF_BLOCK_SIZE))
                (list (make-posn (- SCENE_WIDTH (* HALF_BLOCK_SIZE 17))
                                 (- SCENE_HEIGHT HALF_BLOCK_SIZE))
                      (make-posn (- SCENE_WIDTH (* HALF_BLOCK_SIZE 15))
@@ -90,7 +90,7 @@ Project: Simple Tetris
                                 (- SCENE_HEIGHT HALF_BLOCK_SIZE))
                      (make-posn (- SCENE_WIDTH (* HALF_BLOCK_SIZE 3))
                                 (- SCENE_HEIGHT HALF_BLOCK_SIZE))
-                     (make-posn (- SCENE_HEIGHT HALF_BLOCK_SIZE)
+                     (make-posn (- SCENE_WIDTH HALF_BLOCK_SIZE)
                                 (- SCENE_HEIGHT HALF_BLOCK_SIZE)))))
 
 
@@ -175,4 +175,12 @@ Project: Simple Tetris
 ; Block Landscape -> Image
 ; Handles recursive processing of Block and Landscape
 ; for (tetris_render) function
-(define (draw_blocks falling resting) BG)
+(define (draw_blocks falling resting)
+  (cond
+    [(empty? resting)
+     (place-image BLOCK (posn-x falling) (posn-y falling) BG)]
+    [else
+     (place-image BLOCK
+                  (posn-x (first resting))
+                  (posn-y (first resting))
+                  (draw_blocks falling (rest resting)))]))
