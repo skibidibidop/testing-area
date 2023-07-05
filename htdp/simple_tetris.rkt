@@ -169,4 +169,10 @@ Project: Simple Tetris
                                     (- SCENE_HEIGHT HALF_BLOCK_SIZE)
                                     BG)))))))))))
 
-(define (tetris_render tet) BG)
+(define (tetris_render tet)
+  (draw_blocks (tetris-block tet) (tetris-landscape tet)))
+
+; Block Landscape -> Image
+; Handles recursive processing of Block and Landscape
+; for (tetris_render) function
+(define (draw_blocks falling resting) BG)
