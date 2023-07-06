@@ -20,7 +20,7 @@ Outline:
 (require 2htdp/image)
 (require 2htdp/universe)
 
-(define SCALER 10)
+(define SCALER 30)
 
 (define SCENE_WIDTH (* SCALER 10))
 (define SCENE_HEIGHT (* SCALER 10))
@@ -35,8 +35,8 @@ Outline:
            (square BLOCK_SIZE "outline" "black")))
 (define BG (empty-scene SCENE_WIDTH SCENE_HEIGHT))
 
-(define FALL_SLOW (* SCALER 0.001))
-(define FALL_FAST (* SCALER 0.01))
+(define FALL_SLOW (* SCALER 0.1))
+(define FALL_FAST (* SCALER 0.3))
 (define GO_LEFT (* BLOCK_SIZE -1))
 (define GO_RIGHT BLOCK_SIZE)
 
@@ -230,7 +230,7 @@ Outline:
 
 (define (time_step tet)
   (cond
-    [(collision_bottom? tet)
+    [(collision_bottom? (tetris-block tet) (tetris-landscape tet))
      (make-tetris
       (make-posn XCENTER HALF_BLOCK_SIZE)
       (cons (tetris-block tet) (tetris-landscape tet))
@@ -243,22 +243,41 @@ Outline:
       (tetris-landscape tet)
       (tetris-speed tet))]))
 
-; Tetris -> Boolean
+; Block Landscape -> Boolean
 ; Has the falling block landed on top of another block or the
 ; the bottom of the scene
-(check-expect (collision_bottom? first_block_spawn) #false)
-(check-expect (collision_bottom? first_block_dropping) #false)
-(check-expect (collision_bottom? first_block_landed) #true)
-(check-expect (collision_bottom? block_on_block) #true)
-(check-expect (collision_bottom? full_stack) #true)
-(check-expect (collision_bottom? full_row) #true)
+(check-expect (collision_bottom? (tetris-block first_block_spawn)
+                                 (tetris-landscape first_block_spawn))
+              #false)
+(check-expect (collision_bottom? (tetris-block first_block_dropping)
+                                 (tetris-landscape first_block_dropping))
+              #false)
+(check-expect (collision_bottom? (tetris-block first_block_landed)
+                                 (tetris-landscape first_block_landed))
+              #true)
+(check-expect (collision_bottom? (tetris-block block_on_block)
+                                 (tetris-landscape block_on_block))
+              #true)
+(check-expect (collision_bottom? (tetris-block full_stack)
+                                 (tetris-landscape full_stack))
+              #true)
+(check-expect (collision_bottom? (tetris-block full_row)
+                                 (tetris-landscape full_row))
+              #true)
 
-(define (collision_bottom? tet) #false)
+(define (collision_bottom? tet)
+  (= (- SCENE_HEIGHT (posn-y (tetris-block tet)))
+     HALF_BLOCK_SIZE)
+  (= (
 
-#|
+; MAIN /////////////////////////////////////////////////////////////////////////
+
 ; Tetris -> Tetris
 (define (tetris_main tet)
   (big-bang tet
     [to-draw tetris_render]
     [on-tick time_step]))
-|#
+
+(tetris_main (make-tetris
+              (make-posn XCENTER HALF_BLOCK_SIZE)
+              '() FALL_SLOW))
