@@ -12,6 +12,8 @@ Outline:
 - (time_step)
 --- (collision_bottom?)
 - (alter_movement)
+--- (collision_left?)
+--- (collision_right?)
 - (tetris_main)
 |#
 
@@ -350,11 +352,20 @@ Outline:
       (tetris-speed tet))]
     [else tet]))
 
-;
-(define (collision_left? tet) tet)
+; Tetris -> Boolean
+; Is there anything to the left of the falling block
+(check-expect (collision_left? max_left) #true)
+(check-expect (collision_left? max_right) #false)
+(check-expect (collision_left? first_block_spawn) #false)
+(check-expect (collision_left? first_block_landed) #false)
+(check-expect (collision_left? block_on_block) #false)
+(check-expect (collision_left? full_stack) #false)
+(check-expect (collision_left? full_row) #false)
+(define (collision_left? tet) #false)
 
-;
-(define (collision_right? tet) tet)
+; Tetris -> Boolean
+; Is there anything to the right of the falling block
+(define (collision_right? tet) #false)
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
