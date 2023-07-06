@@ -9,6 +9,7 @@ Outline:
 - Data definition
 - (tetris_render)
 --- (draw_blocks)
+- (time_step)
 - (tetris_main)
 |#
 
@@ -29,6 +30,10 @@ Outline:
   (overlay (square (- BLOCK_SIZE 1) "solid" "red")
            (square BLOCK_SIZE "outline" "black")))
 (define BG (empty-scene SCENE_WIDTH SCENE_HEIGHT))
+
+(define GO_DOWN BLOCK_SIZE)
+(define GO_LEFT (* BLOCK_SIZE -1))
+(define GO_RIGHT BLOCK_SIZE)
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
@@ -192,6 +197,26 @@ Outline:
                   (posn-x (first resting))
                   (posn-y (first resting))
                   (draw_blocks falling (rest resting)))]))
+
+; Tetris -> Tetris
+; Updates the location of the falling block per tick
+(check-expect (time_step first_block_spawn)
+              (make-tetris
+               (make-posn XCENTER (* HALF_BLOCK_SIZE 3))
+               '()))
+(check-expect (time_step first_block_landed)
+              (make-tetris
+               (make-posn XCENTER HALF_BLOCK_SIZE)
+               (list
+                (make-posn XCENTER (- SCENE_HEIGHT HALF_BLOCK_SIZE)))))
+(check-expect (time_step block_on_block)
+              (make-tetris
+               (make-posn XCENTER HALF_BLOCK_SIZE)
+               (list
+                (make-posn XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 3)))
+                (make-posn XCENTER (- SCENE_HEIGHT HALF_BLOCK_SIZE)))))
+
+(define (time_step tet) tet)
 
 #|
 ; Tetris -> Tetris
