@@ -20,7 +20,7 @@ Outline:
 (require 2htdp/image)
 (require 2htdp/universe)
 
-(define SCALER 30)
+(define SCALER 100)
 
 (define SCENE_WIDTH (* SCALER 10))
 (define SCENE_HEIGHT (* SCALER 10))
@@ -36,7 +36,7 @@ Outline:
 (define BG (empty-scene SCENE_WIDTH SCENE_HEIGHT))
 
 (define FALL_SLOW (* SCALER 0.1))
-(define FALL_FAST (* SCALER 0.3))
+(define FALL_FAST (* SCALER 0.2))
 (define GO_LEFT (* BLOCK_SIZE -1))
 (define GO_RIGHT BLOCK_SIZE)
 
@@ -212,7 +212,9 @@ Outline:
 ; Updates the location of the falling block per tick
 (check-expect (time_step first_block_spawn)
               (make-tetris
-               (make-posn XCENTER (* HALF_BLOCK_SIZE 3))
+               (make-posn XCENTER
+                          (+ (posn-y (tetris-block first_block_spawn))
+                             FALL_SLOW))
                '() FALL_SLOW))
 (check-expect (time_step first_block_landed)
               (make-tetris
@@ -265,10 +267,15 @@ Outline:
                                  (tetris-landscape full_row))
               #true)
 
-(define (collision_bottom? tet)
-  (= (- SCENE_HEIGHT (posn-y (tetris-block tet)))
-     HALF_BLOCK_SIZE)
-  (= (
+(define (collision_bottom? block lscape)
+  (cond
+    [(empty? lscape)
+     (= (- SCENE_HEIGHT (posn-y block))
+        HALF_BLOCK_SIZE)]
+    [else
+     (or (= (- (posn-y (first lscape)) (posn-y block))
+            BLOCK_SIZE)
+         (collision_bottom? block (rest lscape)))]))
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
