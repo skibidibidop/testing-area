@@ -1,6 +1,3 @@
-;; The first three lines of this file were inserted by DrRacket. They record metadata
-;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-beginner-reader.ss" "lang")((modname simple_tetris) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: July 5, 2023
@@ -41,6 +38,16 @@ Outline:
 (define GO_LEFT (* BLOCK_SIZE -1))
 (define GO_RIGHT BLOCK_SIZE)
 
+(define FIRST_FROM_BORDER HALF_BLOCK_SIZE)
+(define SECOND_FROM_BORDER (* HALF_BLOCK_SIZE 3))
+(define THIRD_FROM_BORDER (* HALF_BLOCK_SIZE 5))
+(define FOURTH_FROM_BORDER (* HALF_BLOCK_SIZE 7))
+(define FIFTH_FROM_BORDER (* HALF_BLOCK_SIZE 9))
+(define SIXTH_FROM_BORDER (* HALF_BLOCK_SIZE 11))
+(define SEVENTH_FROM_BORDER (* HALF_BLOCK_SIZE 13))
+(define EIGHTH_FROM_BORDER (* HALF_BLOCK_SIZE 15))
+(define NINTH_FROM_BORDER (* HALF_BLOCK_SIZE 17))
+
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
 (define-struct tetris [block landscape speed])
@@ -65,10 +72,8 @@ Outline:
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
-; Tetris -> Image
-; Turns tetris instance to an image
 (define first_block_spawn
-  (make-tetris (make-posn XCENTER HALF_BLOCK_SIZE)
+  (make-tetris (make-posn XCENTER FIRST_FROM_BORDER)
                '() FALL_SLOW))
 (define first_block_dropping
   (make-tetris (make-posn XCENTER YCENTER)
@@ -77,126 +82,132 @@ Outline:
   (make-tetris (make-posn XCENTER (- SCENE_HEIGHT HALF_BLOCK_SIZE))
                '() FALL_SLOW))
 (define next_block_spawn
-  (make-tetris (make-posn XCENTER HALF_BLOCK_SIZE)
+  (make-tetris (make-posn XCENTER FIRST_FROM_BORDER)
                (list (make-posn XCENTER
-                                (- SCENE_HEIGHT HALF_BLOCK_SIZE)))
+                                (- SCENE_HEIGHT FIRST_FROM_BORDER)))
                FALL_SLOW))
 (define block_on_block
-  (make-tetris (make-posn XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 3)))
+  (make-tetris (make-posn XCENTER (- SCENE_HEIGHT SECOND_FROM_BORDER))
                (list (make-posn XCENTER
-                                (- SCENE_HEIGHT HALF_BLOCK_SIZE)))
+                                (- SCENE_HEIGHT FIRST_FROM_BORDER)))
                FALL_SLOW))
-; Blocks are added to the front of the list to avoid having to
+; Blocks are added to the beginning of the list to avoid having to
 ; reverse the list
 (define full_stack
   (make-tetris (make-posn XCENTER HALF_BLOCK_SIZE)
-               (list (make-posn XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 17)))
-                     (make-posn XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 15)))
-                     (make-posn XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 13)))
-                     (make-posn XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 11)))
-                     (make-posn XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 9)))
-                     (make-posn XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 7)))
-                     (make-posn XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 5)))
-                     (make-posn XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 3)))
-                     (make-posn XCENTER (- SCENE_HEIGHT HALF_BLOCK_SIZE)))
+               (list (make-posn XCENTER (- SCENE_HEIGHT NINTH_FROM_BORDER))
+                     (make-posn XCENTER (- SCENE_HEIGHT EIGHTH_FROM_BORDER))
+                     (make-posn XCENTER (- SCENE_HEIGHT SEVENTH_FROM_BORDER))
+                     (make-posn XCENTER (- SCENE_HEIGHT SIXTH_FROM_BORDER))
+                     (make-posn XCENTER (- SCENE_HEIGHT FIFTH_FROM_BORDER))
+                     (make-posn XCENTER (- SCENE_HEIGHT FORUTH_FROM_BORDER))
+                     (make-posn XCENTER (- SCENE_HEIGHT THIRD_FROM_BORDER))
+                     (make-posn XCENTER (- SCENE_HEIGHT SECOND_FROM_BORDER))
+                     (make-posn XCENTER (- SCENE_HEIGHT FIRST_FROM_BORDER)))
                FALL_SLOW))
                                         
 (define full_row
-  (make-tetris (make-posn HALF_BLOCK_SIZE (- SCENE_HEIGHT HALF_BLOCK_SIZE))
-               (list (make-posn (- SCENE_WIDTH (* HALF_BLOCK_SIZE 17))
-                                (- SCENE_HEIGHT HALF_BLOCK_SIZE))
-                     (make-posn (- SCENE_WIDTH (* HALF_BLOCK_SIZE 15))
-                                (- SCENE_HEIGHT HALF_BLOCK_SIZE))
-                     (make-posn (- SCENE_WIDTH (* HALF_BLOCK_SIZE 13))
-                                (- SCENE_HEIGHT HALF_BLOCK_SIZE))
-                     (make-posn (- SCENE_WIDTH (* HALF_BLOCK_SIZE 11))
-                                (- SCENE_HEIGHT HALF_BLOCK_SIZE))
-                     (make-posn (- SCENE_WIDTH (* HALF_BLOCK_SIZE 9))
-                                (- SCENE_HEIGHT HALF_BLOCK_SIZE))
-                     (make-posn (- SCENE_WIDTH (* HALF_BLOCK_SIZE 7))
-                                (- SCENE_HEIGHT HALF_BLOCK_SIZE))
-                     (make-posn (- SCENE_WIDTH (* HALF_BLOCK_SIZE 5))
-                                (- SCENE_HEIGHT HALF_BLOCK_SIZE))
-                     (make-posn (- SCENE_WIDTH (* HALF_BLOCK_SIZE 3))
-                                (- SCENE_HEIGHT HALF_BLOCK_SIZE))
-                     (make-posn (- SCENE_WIDTH HALF_BLOCK_SIZE)
-                                (- SCENE_HEIGHT HALF_BLOCK_SIZE)))
+  (make-tetris (make-posn FIRST_FROM_BORDER (- SCENE_HEIGHT FIRST_FROM_BORDER))
+               (list (make-posn (- SCENE_WIDTH NINTH_FROM_BORDER)
+                                (- SCENE_HEIGHT FIRST_FROM_BORDER))
+                     (make-posn (- SCENE_WIDTH EIGHTH_FROM_BORDER)
+                                (- SCENE_HEIGHT FIRST_FROM_BORDER))
+                     (make-posn (- SCENE_WIDTH SEVENTH_FROM_BORDER)
+                                (- SCENE_HEIGHT FIRST_FROM_BORDER))
+                     (make-posn (- SCENE_WIDTH SIXTH_FROM_BORDER)
+                                (- SCENE_HEIGHT FIRST_FROM_BORDER))
+                     (make-posn (- SCENE_WIDTH FIFTH_FROM_BORDER)
+                                (- SCENE_HEIGHT FIRST_FROM_BORDER))
+                     (make-posn (- SCENE_WIDTH FOURTH_FROM_BORDER)
+                                (- SCENE_HEIGHT FIRST_FROM_BORDER))
+                     (make-posn (- SCENE_WIDTH THIRD_FROM_BORDER)
+                                (- SCENE_HEIGHT FIRST_FROM_BORDER))
+                     (make-posn (- SCENE_WIDTH SECOND_FROM_BORDER)
+                                (- SCENE_HEIGHT FIRST_FROM_BORDER))
+                     (make-posn (- SCENE_WIDTH FIRST_FROM_BORDER)
+                                (- SCENE_HEIGHT FIRST_FROM_BORDER)))
                FALL_SLOW))
+(define max_left
+  (make-tetris (make-posn FIRST_FROM_BORDER YCENTER) '() FALL_SLOW))
+(define max_right
+  (make-tetris (make-posn (- SCENE_WIDTH FIRST_FROM_BORDER) YCENTER)
+               '() FALL_SLOW))
 
-
+; Tetris -> Image
+; Turns tetris instance to an image
 (check-expect (tetris_render first_block_spawn)
-              (place-image BLOCK XCENTER HALF_BLOCK_SIZE
+              (place-image BLOCK XCENTER FIRST_FROM_BORDER
                            BG))
 (check-expect (tetris_render first_block_dropping)
               (place-image BLOCK XCENTER YCENTER
                            BG))
 (check-expect (tetris_render first_block_landed)
-              (place-image BLOCK XCENTER (- SCENE_HEIGHT HALF_BLOCK_SIZE)
+              (place-image BLOCK XCENTER (- SCENE_HEIGHT FIRST_FROM_BORDER)
                            BG))
 (check-expect (tetris_render next_block_spawn)
               (place-image
-               BLOCK XCENTER (- SCENE_HEIGHT HALF_BLOCK_SIZE)
+               BLOCK XCENTER (- SCENE_HEIGHT FIRST_FROM_BORDER)
                (place-image
-                BLOCK XCENTER HALF_BLOCK_SIZE
+                BLOCK XCENTER FIRST_FROM_BORDER
                 BG)))
 (check-expect (tetris_render block_on_block)
               (place-image
-               BLOCK XCENTER (- SCENE_HEIGHT HALF_BLOCK_SIZE)
+               BLOCK XCENTER (- SCENE_HEIGHT FIRST_FROM_BORDER)
                (place-image
-                BLOCK XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 3))
+                BLOCK XCENTER (- SCENE_HEIGHT SECOND_FROM_BORDER)
                 BG)))
 (check-expect (tetris_render full_stack)
               (place-image
-               BLOCK XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 17))
+               BLOCK XCENTER (- SCENE_HEIGHT NINTH_FROM_BORDER)
                (place-image
-                BLOCK XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 15))
+                BLOCK XCENTER (- SCENE_HEIGHT EIGHTH_FROM_BORDER)
                 (place-image
-                 BLOCK XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 13))
+                 BLOCK XCENTER (- SCENE_HEIGHT SEVENTH_FROM_BORDER)
                  (place-image
-                  BLOCK XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 11))
+                  BLOCK XCENTER (- SCENE_HEIGHT SIXTH_FROM_BORDER)
                   (place-image
-                   BLOCK XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 9))
+                   BLOCK XCENTER (- SCENE_HEIGHT FIFTH_FROM_BORDER)
                    (place-image
-                    BLOCK XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 7))
+                    BLOCK XCENTER (- SCENE_HEIGHT FOURTH_FROM_BORDER)
                     (place-image
-                     BLOCK XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 5))
+                     BLOCK XCENTER (- SCENE_HEIGHT THIRD_FROM_BORDER)
                      (place-image
-                      BLOCK XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 3))
+                      BLOCK XCENTER (- SCENE_HEIGHT SECOND_FROM_BORDER)
                       (place-image
-                       BLOCK XCENTER (- SCENE_HEIGHT HALF_BLOCK_SIZE)
+                       BLOCK XCENTER (- SCENE_HEIGHT FIRST_FROM_BORDER)
                        (place-image
-                        BLOCK XCENTER HALF_BLOCK_SIZE BG)))))))))))
+                        BLOCK XCENTER FIRST_FROM_BORDER BG)))))))))))
 (check-expect (tetris_render full_row)
               (place-image
-               BLOCK (- SCENE_WIDTH (* HALF_BLOCK_SIZE 17))
-               (- SCENE_HEIGHT HALF_BLOCK_SIZE)
+               BLOCK (- SCENE_WIDTH NINTH_FROM_BORDER)
+               (- SCENE_HEIGHT FIRST_FROM_BORDER)
                (place-image BLOCK
-                            (- SCENE_WIDTH (* HALF_BLOCK_SIZE 15))
-                            (- SCENE_HEIGHT HALF_BLOCK_SIZE)
+                            (- SCENE_WIDTH EIGHTH_FROM_BORDER)
+                            (- SCENE_HEIGHT FIRST_FROM_BORDER)
                 (place-image BLOCK
-                             (- SCENE_WIDTH (* HALF_BLOCK_SIZE 13))
-                             (- SCENE_HEIGHT HALF_BLOCK_SIZE)
+                             (- SCENE_WIDTH SEVENTH_FROM_BORDER)
+                             (- SCENE_HEIGHT FIRST_FROM_BORDER)
                  (place-image BLOCK
-                              (- SCENE_WIDTH (* HALF_BLOCK_SIZE 11))
-                              (- SCENE_HEIGHT HALF_BLOCK_SIZE)
+                              (- SCENE_WIDTH SIXTH_FROM_BORDER)
+                              (- SCENE_HEIGHT FIRST_FROM_BORDER)
                   (place-image BLOCK
-                               (- SCENE_WIDTH (* HALF_BLOCK_SIZE 9))
-                               (- SCENE_HEIGHT HALF_BLOCK_SIZE)
+                               (- SCENE_WIDTH FIFTH_FROM_BORDER)
+                               (- SCENE_HEIGHT FIRST_FROM_BORDER)
                    (place-image BLOCK
-                                (- SCENE_WIDTH (* HALF_BLOCK_SIZE 7))
-                                (- SCENE_HEIGHT HALF_BLOCK_SIZE)
+                                (- SCENE_WIDTH FOURTH_FROM_BORDER)
+                                (- SCENE_HEIGHT FIRST_FROM_BORDER)
                     (place-image BLOCK
-                                 (- SCENE_WIDTH (* HALF_BLOCK_SIZE 5))
-                                 (- SCENE_HEIGHT HALF_BLOCK_SIZE)
+                                 (- SCENE_WIDTH THIRD_FROM_BORDER)
+                                 (- SCENE_HEIGHT FIRST_FROM_BORDER)
                      (place-image BLOCK
-                                  (- SCENE_WIDTH (* HALF_BLOCK_SIZE 3))
-                                  (- SCENE_HEIGHT HALF_BLOCK_SIZE)
+                                  (- SCENE_WIDTH SECOND_FROM_BORDER)
+                                  (- SCENE_HEIGHT FIRST_FROM_BORDER)
                       (place-image BLOCK
-                                   (- SCENE_WIDTH HALF_BLOCK_SIZE)
-                                   (- SCENE_HEIGHT HALF_BLOCK_SIZE)
+                                   (- SCENE_WIDTH FIRST_FROM_BORDER)
+                                   (- SCENE_HEIGHT FIRST_FROM_BORDER)
                        (place-image BLOCK
-                                    HALF_BLOCK_SIZE
-                                    (- SCENE_HEIGHT HALF_BLOCK_SIZE)
+                                    FIRST_FROM_BORDER
+                                    (- SCENE_HEIGHT FIRST_FROM_BORDER)
                                     BG)))))))))))
 
 (define (tetris_render tet)
@@ -226,23 +237,23 @@ Outline:
                '() FALL_SLOW))
 (check-expect (time_step first_block_landed)
               (make-tetris
-               (make-posn XCENTER HALF_BLOCK_SIZE)
+               (make-posn XCENTER FIRST_FROM_BORDER)
                (list
-                (make-posn XCENTER (- SCENE_HEIGHT HALF_BLOCK_SIZE)))
+                (make-posn XCENTER (- SCENE_HEIGHT FIRST_FROM_BORDER)))
                FALL_SLOW))
 (check-expect (time_step block_on_block)
               (make-tetris
-               (make-posn XCENTER HALF_BLOCK_SIZE)
+               (make-posn XCENTER FIRST_FROM_BORDER)
                (list
-                (make-posn XCENTER (- SCENE_HEIGHT (* HALF_BLOCK_SIZE 3)))
-                (make-posn XCENTER (- SCENE_HEIGHT HALF_BLOCK_SIZE)))
+                (make-posn XCENTER (- SCENE_HEIGHT SECOND_FROM_BORDER))
+                (make-posn XCENTER (- SCENE_HEIGHT FIRST_FROM_BORDER)))
                FALL_SLOW))
 
 (define (time_step tet)
   (cond
     [(collision_bottom? (tetris-block tet) (tetris-landscape tet))
      (make-tetris
-      (make-posn XCENTER HALF_BLOCK_SIZE)
+      (make-posn XCENTER FIRST_FROM_BORDER)
       (cons (tetris-block tet) (tetris-landscape tet))
       (tetris-speed tet))]
     [else
@@ -289,7 +300,7 @@ Outline:
 ; Shifts the falling block to either side and alters falling speed
 (check-expect (alter_movement first_block_spawn "left")
               (make-tetris
-               (make-posn (+ XCENTER GO_LEFT) HALF_BLOCK_SIZE)
+               (make-posn (+ XCENTER GO_LEFT) FIRST_FROM_BORDER)
                '() FALL_SLOW))
 (check-expect (alter_movement block_dropping "right")
               (make-tetris
@@ -297,19 +308,23 @@ Outline:
                '() FALL_SLOW))
 (check-expect (alter_movement next_block_spawn "down")
               (make-tetris
-               (make-posn XCENTER HALF_BLOCK_SIZE)
+               (make-posn XCENTER FIRST_FROM_BORDER)
                (list (make-posn XCENTER
-                                (- SCENE_HEIGHT HALF_BLOCK_SIZE)))
+                                (- SCENE_HEIGHT FIRST_FROM_BORDER)))
                FALL_FAST))
 (check-expect (alter_movement next_block_spawn "up")
               (make-tetris
-               (make-posn XCENTER HALF_BLOCK_SIZE)
+               (make-posn XCENTER FIRST_FROM_BORDER)
                (list (make-posn XCENTER
-                                (- SCENE_HEIGHT HALF_BLOCK_SIZE)))
-               FALL_FAST))
-(test for block next to wall)
+                                (- SCENE_HEIGHT FIRST_FROM_BORDER)))
+               FALL_SLOW))
+(check-expect (alter_movement max_left "left")
+              max_left)
+(check-expect (alter_movement max_left "right")
+              (make-tetris
+               (make-posn SECOND_FROM_BORDER
 
-(define (alter_movement tet key) tet)
+
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
@@ -320,5 +335,5 @@ Outline:
     [on-tick time_step]))
 
 (tetris_main (make-tetris
-              (make-posn XCENTER HALF_BLOCK_SIZE)
+              (make-posn XCENTER FIRST_FROM_BORDER)
               '() FALL_SLOW))
