@@ -14,6 +14,7 @@ Outline:
 --- (draw_blocks)
 - (time_step)
 --- (collision_bottom?)
+- (alter_movement)
 - (tetris_main)
 |#
 
@@ -286,7 +287,29 @@ Outline:
 
 ; Tetris Direction -> Tetris
 ; Shifts the falling block to either side and alters falling speed
-(define (move_to_side tet key)
+(check-expect (alter_movement first_block_spawn "left")
+              (make-tetris
+               (make-posn (+ XCENTER GO_LEFT) HALF_BLOCK_SIZE)
+               '() FALL_SLOW))
+(check-expect (alter_movement block_dropping "right")
+              (make-tetris
+               (make-posn (+ XCENTER GO_RIGHT) YCENTER)
+               '() FALL_SLOW))
+(check-expect (alter_movement next_block_spawn "down")
+              (make-tetris
+               (make-posn XCENTER HALF_BLOCK_SIZE)
+               (list (make-posn XCENTER
+                                (- SCENE_HEIGHT HALF_BLOCK_SIZE)))
+               FALL_FAST))
+(check-expect (alter_movement next_block_spawn "up")
+              (make-tetris
+               (make-posn XCENTER HALF_BLOCK_SIZE)
+               (list (make-posn XCENTER
+                                (- SCENE_HEIGHT HALF_BLOCK_SIZE)))
+               FALL_FAST))
+(test for block next to wall)
+
+(define (alter_movement tet key) tet)
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
