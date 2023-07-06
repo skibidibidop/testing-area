@@ -13,6 +13,7 @@ Outline:
 - (tetris_render)
 --- (draw_blocks)
 - (time_step)
+--- (collision_bottom?)
 - (tetris_main)
 |#
 
@@ -229,7 +230,7 @@ Outline:
 
 (define (time_step tet)
   (cond
-    [(collision? tet)
+    [(collision_bottom? tet)
      (make-tetris
       (make-posn XCENTER HALF_BLOCK_SIZE)
       (cons (tetris-block tet) (tetris-landscape tet))
@@ -241,6 +242,18 @@ Outline:
        (+ (posn-y (tetris-block tet)) (tetris-speed tet)))
       (tetris-landscape tet)
       (tetris-speed tet))]))
+
+; Tetris -> Boolean
+; Has the falling block landed on top of another block or the
+; the bottom of the scene
+(check-expect (collision_bottom? first_block_spawn) #false)
+(check-expect (collision_bottom? first_block_dropping) #false)
+(check-expect (collision_bottom? first_block_landed) #true)
+(check-expect (collision_bottom? block_on_block) #true)
+(check-expect (collision_bottom? full_stack) #true)
+(check-expect (collision_bottom? full_row) #true)
+
+(define (collision_bottom? tet) #false)
 
 #|
 ; Tetris -> Tetris
