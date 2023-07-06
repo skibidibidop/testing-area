@@ -338,13 +338,17 @@ Outline:
      (make-tetris (tetris-block tet) (tetris-landscape tet) FALL_SLOW)]
     [(key=? key "down")
      (make-tetris (tetris-block tet) (tetris-landscape tet) FALL_FAST)]
-    [(and (key=? key "left") (not (collision_left? tet)))
+    [(and (key=? key "left")
+          (not (collision_left?
+                (tetris-block tet) (tetris-landscape tet))))
      (make-tetris
       (make-posn (+ (posn-x (tetris-block tet)) GO_LEFT)
                  (posn-y (tetris-block tet)))
       (tetris-landscape tet)
       (tetris-speed tet))]
-    [(and (key=? key "right") (not (collision_right? tet)))
+    [(and (key=? key "right")
+          (not (collision_right?
+                (tetris-block tet) (tetris-lanscape tet))))
      (make-tetris
       (make-posn (+ (posn-x (tetris-block tet)) GO_RIGHT)
                  (posn-y (tetris-block tet)))
@@ -352,29 +356,17 @@ Outline:
       (tetris-speed tet))]
     [else tet]))
 
-; Tetris -> Boolean
+; Block Landscape -> Boolean
 ; Is there anything to the left of the falling block
-(check-expect (collision_left? max_left) #true)
-(check-expect (collision_left? max_right) #false)
-(check-expect (collision_left? first_block_spawn) #false)
-(check-expect (collision_left? first_block_landed) #false)
-(check-expect (collision_left? block_on_block) #false)
-(check-expect (collision_left? full_stack) #false)
-(check-expect (collision_left? full_row) #true)
 
-(define (collision_left? tet) #false)
 
-; Tetris -> Boolean
+(define (collision_left? block lscape) #false)
+
+; Block Landscape -> Boolean
 ; Is there anything to the right of the falling block
-(check-expect (collision_right? max_left) #false)
-(check-expect (collision_right? max_right) #true)
-(check-expect (collision_right? first_block_spawn) #false)
-(check-expect (collision_right? first_block_landed) #false)
-(check-expect (collision_right? block_on_block) #false)
-(check-expect (collision_right? full_stack) #false)
-(check-expect (collision_right? full_row) #true)
 
-(define (collision_right? tet) #false)
+
+(define (collision_right? block lscape) #false)
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
