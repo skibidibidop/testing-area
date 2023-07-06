@@ -100,7 +100,7 @@ Outline:
                      (make-posn XCENTER (- SCENE_HEIGHT SEVENTH_FROM_BORDER))
                      (make-posn XCENTER (- SCENE_HEIGHT SIXTH_FROM_BORDER))
                      (make-posn XCENTER (- SCENE_HEIGHT FIFTH_FROM_BORDER))
-                     (make-posn XCENTER (- SCENE_HEIGHT FORUTH_FROM_BORDER))
+                     (make-posn XCENTER (- SCENE_HEIGHT FOURTH_FROM_BORDER))
                      (make-posn XCENTER (- SCENE_HEIGHT THIRD_FROM_BORDER))
                      (make-posn XCENTER (- SCENE_HEIGHT SECOND_FROM_BORDER))
                      (make-posn XCENTER (- SCENE_HEIGHT FIRST_FROM_BORDER)))
@@ -322,7 +322,15 @@ Outline:
               max_left)
 (check-expect (alter_movement max_left "right")
               (make-tetris
-               (make-posn SECOND_FROM_BORDER
+               (make-posn SECOND_FROM_BORDER YCENTER) '() FALL_SLOW))
+(check-expect (alter_movement max_right "left")
+              (make-tetris
+               (make-posn (- SCENE_WIDTH SECOND_FROM_BORDER) YCENTER)
+               '() FALL_SLOW))
+(check-expect (alter_movement max_right "right")
+              max_right)
+
+(define (alter_movement tet key) tet)
 
 
 
