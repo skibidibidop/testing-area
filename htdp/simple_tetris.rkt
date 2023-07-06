@@ -55,6 +55,13 @@ Outline:
 ; A Block is a Posn
 ; Interp.: (make-posn x y) represents coordinates of the Block's center point
 
+; A Direction is one of:
+; - "left"
+; - "right"
+; - "up"
+; - "down"
+; Interp.: represents key events (left/right/down arrow pressed)
+
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
 ; Tetris -> Image
@@ -276,6 +283,10 @@ Outline:
      (or (= (- (posn-y (first lscape)) (posn-y block))
             BLOCK_SIZE)
          (collision_bottom? block (rest lscape)))]))
+
+; Tetris Direction -> Tetris
+; Shifts the falling block to either side and alters falling speed
+(define (move_to_side tet key)
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
