@@ -60,13 +60,13 @@ Outline:
 ; Turns tetris instance to an image
 (define first_block_spawn
   (make-tetris (make-posn XCENTER HALF_BLOCK_SIZE)
-               '()) FALL_SLOW)
+               '() FALL_SLOW))
 (define first_block_dropping
   (make-tetris (make-posn XCENTER YCENTER)
-               '()) FALL_SLOW)
+               '() FALL_SLOW))
 (define first_block_landed
   (make-tetris (make-posn XCENTER (- SCENE_HEIGHT HALF_BLOCK_SIZE))
-               '()) FALL_SLOW)
+               '() FALL_SLOW))
 (define next_block_spawn
   (make-tetris (make-posn XCENTER HALF_BLOCK_SIZE)
                (list (make-posn XCENTER
@@ -237,13 +237,15 @@ Outline:
     [else
      (make-tetris
       (make-posn
+       (posn-x (tetris-block tet))
+       (+ (posn-y (tetris-block tet)) (tetris-speed tet)))
+      (tetris-landscape tet)
+      (tetris-speed tet))]))
 
 #|
 ; Tetris -> Tetris
 (define (tetris_main tet)
   (big-bang tet
     [to-draw tetris_render]
-    [on-tick time_step]
-    [on-key ...]
-    [stop-when ...]))
+    [on-tick time_step]))
 |#
