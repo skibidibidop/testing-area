@@ -3,6 +3,13 @@ Author: Mark Beltran
 Date: July 5, 2023
 
 Project: Simple Tetris
+
+Outline:
+- Constants
+- Data definition
+- (tetris_render)
+--- (draw_blocks)
+- (tetris_main)
 |#
 
 (require 2htdp/image)
@@ -175,6 +182,7 @@ Project: Simple Tetris
 ; Block Landscape -> Image
 ; Handles recursive processing of Block and Landscape
 ; for (tetris_render) function
+; Tests under (tetris_render)
 (define (draw_blocks falling resting)
   (cond
     [(empty? resting)
@@ -184,3 +192,13 @@ Project: Simple Tetris
                   (posn-x (first resting))
                   (posn-y (first resting))
                   (draw_blocks falling (rest resting)))]))
+
+#|
+; Tetris -> Tetris
+(define (tetris_main tet)
+  (big-bang tet
+    [to-draw tetris_render]
+    [on-tick ...]
+    [on-key ...]
+    [stop-when ...]))
+|#
