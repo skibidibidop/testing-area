@@ -330,9 +330,31 @@ Outline:
 (check-expect (alter_movement max_right "right")
               max_right)
 
-(define (alter_movement tet key) tet)
+(define (alter_movement tet key)
+  (cond
+    [(key=? key "up")
+     (make-tetris (tetris-block tet) (tetris-landscape tet) FALL_SLOW)]
+    [(key=? key "down")
+     (make-tetris (tetris-block tet) (tetris-landscape tet) FALL_FAST)]
+    [(and (key=? key "left") (not (collision_left? tet)))
+     (make-tetris
+      (make-posn (+ (posn-x (tetris-block tet)) GO_LEFT)
+                 (posn-y (tetris-block tet)))
+      (tetris-landscape tet)
+      (tetris-speed tet))]
+    [(and (key=? key "right") (not (collision_right? tet)))
+     (make-tetris
+      (make-posn (+ (posn-x (tetris-block tet)) GO_RIGHT)
+                 (posn-y (tetris-block tet)))
+      (tetris-landscape tet)
+      (tetris-speed tet))]
+    [else tet]))
 
+;
+(define (collision_left? tet) tet)
 
+;
+(define (collision_right? tet) tet)
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
@@ -340,7 +362,8 @@ Outline:
 (define (tetris_main tet)
   (big-bang tet
     [to-draw tetris_render]
-    [on-tick time_step]))
+    [on-tick time_step]
+    [on-key alter_movement]))
 
 (tetris_main (make-tetris
               (make-posn XCENTER FIRST_FROM_BORDER)
