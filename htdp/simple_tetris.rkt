@@ -360,11 +360,20 @@ Outline:
 (check-expect (collision_left? first_block_landed) #false)
 (check-expect (collision_left? block_on_block) #false)
 (check-expect (collision_left? full_stack) #false)
-(check-expect (collision_left? full_row) #false)
+(check-expect (collision_left? full_row) #true)
+
 (define (collision_left? tet) #false)
 
 ; Tetris -> Boolean
 ; Is there anything to the right of the falling block
+(check-expect (collision_right? max_left) #false)
+(check-expect (collision_right? max_right) #true)
+(check-expect (collision_right? first_block_spawn) #false)
+(check-expect (collision_right? first_block_landed) #false)
+(check-expect (collision_right? block_on_block) #false)
+(check-expect (collision_right? full_stack) #false)
+(check-expect (collision_right? full_row) #true)
+
 (define (collision_right? tet) #false)
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
