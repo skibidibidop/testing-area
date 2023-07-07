@@ -285,7 +285,7 @@ Outline:
       (tetris-landscape tet))]))
 
 ; Block Landscape -> Boolean
-; Has the falling block landed on top of another block or the
+; Has the falling block landed on top of another block or
 ; the bottom of the scene
 (check-expect (collision_bottom? (tetris-block first_block_spawn)
                                  (tetris-landscape first_block_spawn))
@@ -309,8 +309,8 @@ Outline:
 (define (collision_bottom? block lscape)
   (cond
     [(empty? lscape)
-     (= (- SCENE_HEIGHT (posn-y block))
-        HALF_BLOCK_SIZE)]
+     (= (posn-y block)
+        (- SCENE_HEIGHT FIRST_FROM_BORDER))]
     [else
      (or (and (= (- (posn-y (first lscape)) (posn-y block))
                  BLOCK_SIZE)
