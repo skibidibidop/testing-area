@@ -17,6 +17,7 @@ Outline:
 - (alter_movement)
 --- (collision_left?)
 --- (collision_right?)
+- (game_over?)
 - (tetris_main)
 |#
 
@@ -539,6 +540,20 @@ Outline:
               (< (abs (- (posn-y block) (posn-y (first lscape))))
                  BLOCK_SIZE))
          (collision_right? block (rest lscape)))]))
+
+; Tetris -> Boolean
+; Is a resting block touching the top of the scene
+(check-expect (game_over? first_block_spawn) #false)
+(check-expect (game_over? block_on_block) #false)
+(check-expect (game_over? first_block_dropping) #false)
+(check-expect (game_over?
+               (make-tetris
+                (make-posn FIRST_FROM_BORDER FIRST_FROM_BORDER)
+                (cons (make-posn FIRST_FROM_BORDER FIRST_FROM_BORDER)
+                      (tetris-landscape full_stack))))
+              #true)
+
+(define (game_over? tet) #false)
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
