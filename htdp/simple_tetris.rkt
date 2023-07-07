@@ -54,6 +54,8 @@ Outline:
 (define EIGHTH_FROM_BORDER (* HALF_BLOCK_SIZE 15))
 (define NINTH_FROM_BORDER (* HALF_BLOCK_SIZE 17))
 
+(define FONT_SIZE (* SCALER 0.5))
+
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
 (define-struct tetris [block landscape])
@@ -559,6 +561,18 @@ Outline:
     [else
      (= (posn-y (first (tetris-landscape tet))) FIRST_FROM_BORDER)]))
 
+; Tetris -> Image
+; Shows final score when game is over
+(define (show_final_score tet)
+  (place-images
+   (list (text "Final score: " FONT_SIZE "red")
+         (text (number->string
+                (length (tetris-landscape tet)))
+               FONT_SIZE "red"))
+   (list (make-posn (- XCENTER BLOCK_SIZE) YCENTER)
+         (make-posn (+ XCENTER BLOCK_SIZE) YCENTER))
+   BG))
+
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
 ; Tetris -> Tetris
@@ -567,7 +581,7 @@ Outline:
     [to-draw tetris_render]
     [on-tick time_step TICK_RATE]
     [on-key alter_movement]
-    [stop-when game_over?]))
+    [stop-when game_over? show_final_score]))
 
 (tetris_main (make-tetris
               (make-posn FIRST_FROM_BORDER FIRST_FROM_BORDER)
