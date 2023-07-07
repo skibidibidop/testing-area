@@ -38,7 +38,7 @@ Outline:
            (square BLOCK_SIZE "outline" "black")))
 (define BG (empty-scene SCENE_WIDTH SCENE_HEIGHT))
 
-(define TICK_RATE 0.5)
+(define TICK_RATE 0.2)
 (define FALL_RATE HALF_BLOCK_SIZE)
 (define GO_LEFT (* BLOCK_SIZE -1))
 (define GO_RIGHT BLOCK_SIZE)
@@ -450,7 +450,81 @@ Outline:
 
 ; Block Landscape -> Boolean
 ; Is there anything to the right of the falling block
-
+(check-expect (collision_right?
+               (make-posn XCENTER FIRST_FROM_BORDER) '())
+              #false)
+(check-expect (collision_right?
+               (make-posn XCENTER YCENTER) '())
+              #false)
+(check-expect (collision_right?
+               (make-posn XCENTER (- SCENE_HEIGHT FIRST_FROM_BORDER)) '())
+              #true)
+(check-expect (collision_right?
+               (make-posn FIRST_FROM_BORDER FIRST_FROM_BORDER) '())
+              #false)
+(check-expect (collision_right?
+               (make-posn FIRST_FROM_BORDER (- SCENE_HEIGHT FIRST_FROM_BORDER))
+               '())
+              #false)
+(check-expect (collision_right?
+               (make-posn (- SCENE_WIDTH FIRST_FROM_BORDER) FIRST_FROM_BORDER)
+               '())
+              #true)
+(check-expect (collision_right?
+               (make-posn (- SCENE_WIDTH FIRST_FROM_BORDER)
+                          (- SCENE_HEIGHT FIRST_FROM_BORDER))
+               '())
+              #true)
+(check-expect (collision_right?
+               (make-posn SECOND_FROM_BORDER (- SCENE_HEIGHT THIRD_FROM_BORDER))
+               (list
+                (make-posn
+                 FIRST_FROM_BORDER (- SCENE_HEIGHT THIRD_FROM_BORDER))
+                (make-posn
+                 FIRST_FROM_BORDER (- SCENE_HEIGHT SECOND_FROM_BORDER))
+                (make-posn
+                 FIRST_FROM_BORDER (- SCENE_HEIGHT FIRST_FROM_BORDER))
+                (make-posn
+                 SECOND_FROM_BORDER (- SCENE_HEIGHT FIRST_FROM_BORDER))
+                (make-posn
+                 THIRD_FROM_BORDER (- SCENE_HEIGHT FIRST_FROM_BORDER))
+                (make-posn
+                 THIRD_FROM_BORDER (- SCENE_HEIGHT SECOND_FROM_BORDER))
+                (make-posn
+                 THIRD_FROM_BORDER (- SCENE_HEIGHT THIRD_FROM_BORDER))))
+              #true)
+(check-expect (collision_right?
+               (make-posn SECOND_FROM_BORDER (- SCENE_HEIGHT THIRD_FROM_BORDER))
+               (list
+                (make-posn
+                 FIRST_FROM_BORDER (- SCENE_HEIGHT THIRD_FROM_BORDER))
+                (make-posn
+                 FIRST_FROM_BORDER (- SCENE_HEIGHT SECOND_FROM_BORDER))
+                (make-posn
+                 FIRST_FROM_BORDER (- SCENE_HEIGHT FIRST_FROM_BORDER))
+                (make-posn
+                 SECOND_FROM_BORDER (- SCENE_HEIGHT FIRST_FROM_BORDER))
+                (make-posn
+                 THIRD_FROM_BORDER (- SCENE_HEIGHT FIRST_FROM_BORDER))
+                (make-posn
+                 THIRD_FROM_BORDER (- SCENE_HEIGHT SECOND_FROM_BORDER))))
+              #false)
+(check-expect (collision_right?
+               (make-posn SECOND_FROM_BORDER (- SCENE_HEIGHT THIRD_FROM_BORDER))
+               (list
+                (make-posn
+                 FIRST_FROM_BORDER (- SCENE_HEIGHT SECOND_FROM_BORDER))
+                (make-posn
+                 FIRST_FROM_BORDER (- SCENE_HEIGHT FIRST_FROM_BORDER))
+                (make-posn
+                 SECOND_FROM_BORDER (- SCENE_HEIGHT FIRST_FROM_BORDER))
+                (make-posn
+                 THIRD_FROM_BORDER (- SCENE_HEIGHT FIRST_FROM_BORDER))
+                (make-posn
+                 THIRD_FROM_BORDER (- SCENE_HEIGHT SECOND_FROM_BORDER))
+                (make-posn
+                 THIRD_FROM_BORDER (- SCENE_HEIGHT THIRD_FROM_BORDER))))
+              #true)
 
 (define (collision_right? block lscape) #false)
 
