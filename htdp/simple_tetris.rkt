@@ -1,3 +1,6 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname simple_tetris) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: July 5, 2023
@@ -255,7 +258,7 @@ Outline:
   (cond
     [(collision_bottom? (tetris-block tet) (tetris-landscape tet))
      (make-tetris
-      (make-posn XCENTER FIRST_FROM_BORDER)
+      (make-posn FIRST_FROM_BORDER FIRST_FROM_BORDER)
       (cons (tetris-block tet) (tetris-landscape tet))
       (tetris-speed tet))]
     [else
@@ -348,7 +351,7 @@ Outline:
       (tetris-speed tet))]
     [(and (key=? key "right")
           (not (collision_right?
-                (tetris-block tet) (tetris-lanscape tet))))
+                (tetris-block tet) (tetris-landscape tet))))
      (make-tetris
       (make-posn (+ (posn-x (tetris-block tet)) GO_RIGHT)
                  (posn-y (tetris-block tet)))
@@ -436,7 +439,17 @@ Outline:
 
 (define (collision_left? block lscape)
   (cond
-    [
+    [(empty? lscape)
+     (= (posn-x block) FIRST_FROM_BORDER)]
+    [else
+     (or (= (posn-x block) FIRST_FROM_BORDER)
+         (and (> (- (posn-x block) (posn-x (first lscape)))
+                 0)
+              (= (- (posn-x block) (posn-x (first lscape)))
+                 BLOCK_SIZE)
+              (< (abs (- (posn-y block) (posn-y (first lscape))))
+                 BLOCK_SIZE))
+         (collision_left? block (rest lscape)))]))
 
 ; Block Landscape -> Boolean
 ; Is there anything to the right of the falling block
@@ -454,5 +467,5 @@ Outline:
     [on-key alter_movement]))
 
 (tetris_main (make-tetris
-              (make-posn XCENTER FIRST_FROM_BORDER)
+              (make-posn FIRST_FROM_BORDER FIRST_FROM_BORDER)
               '() FALL_SLOW))
