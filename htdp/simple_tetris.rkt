@@ -458,7 +458,7 @@ Outline:
               #false)
 (check-expect (collision_right?
                (make-posn XCENTER (- SCENE_HEIGHT FIRST_FROM_BORDER)) '())
-              #true)
+              #false)
 (check-expect (collision_right?
                (make-posn FIRST_FROM_BORDER FIRST_FROM_BORDER) '())
               #false)
@@ -526,7 +526,19 @@ Outline:
                  THIRD_FROM_BORDER (- SCENE_HEIGHT THIRD_FROM_BORDER))))
               #true)
 
-(define (collision_right? block lscape) #false)
+(define (collision_right? block lscape)
+  (cond
+    [(empty? lscape)
+     (= (posn-x block) (- SCENE_WIDTH FIRST_FROM_BORDER))]
+    [else
+     (or (= (posn-x block) (- SCENE_WIDTH FIRST_FROM_BORDER))
+         (and (< (- (posn-x block) (posn-x (first lscape)))
+                 0)
+              (= (- (posn-x (first lscape)) (posn-x block))
+                 BLOCK_SIZE)
+              (< (abs (- (posn-y block) (posn-y (first lscape))))
+                 BLOCK_SIZE))
+         (collision_right? block (rest lscape)))]))
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
