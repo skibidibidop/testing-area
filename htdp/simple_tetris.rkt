@@ -39,7 +39,7 @@ Outline:
            (square BLOCK_SIZE "outline" "black")))
 (define BG (empty-scene SCENE_WIDTH SCENE_HEIGHT))
 
-(define TICK_RATE 0.2)
+(define TICK_RATE 0.1)
 (define FALL_RATE HALF_BLOCK_SIZE)
 (define GO_LEFT (* BLOCK_SIZE -1))
 (define GO_RIGHT BLOCK_SIZE)
@@ -553,7 +553,11 @@ Outline:
                       (tetris-landscape full_stack))))
               #true)
 
-(define (game_over? tet) #false)
+(define (game_over? tet)
+  (cond
+    [(empty? (tetris-landscape tet)) #false]
+    [else
+     (= (posn-y (first (tetris-landscape tet))) FIRST_FROM_BORDER)]))
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
@@ -562,7 +566,8 @@ Outline:
   (big-bang tet
     [to-draw tetris_render]
     [on-tick time_step TICK_RATE]
-    [on-key alter_movement]))
+    [on-key alter_movement]
+    [stop-when game_over?]))
 
 (tetris_main (make-tetris
               (make-posn FIRST_FROM_BORDER FIRST_FROM_BORDER)
