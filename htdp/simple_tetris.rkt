@@ -434,7 +434,9 @@ Outline:
                  THIRD_FROM_BORDER (- SCENE_HEIGHT THIRD_FROM_BORDER))))
               #false)
 
-(define (collision_left? block lscape) #false)
+(define (collision_left? block lscape)
+  (cond
+    [
 
 ; Block Landscape -> Boolean
 ; Is there anything to the right of the falling block
