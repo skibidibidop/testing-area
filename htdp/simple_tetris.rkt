@@ -75,7 +75,7 @@ Outline:
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
 (define first_block_spawn
-  (make-tetris (make-posn FIRST_FROM_BORDER FIRST_FROM_BORDER) '())
+  (make-tetris (make-posn FIRST_FROM_BORDER FIRST_FROM_BORDER) '()))
 (define first_block_dropping
   (make-tetris (make-posn FIRST_FROM_BORDER YCENTER) '()))
 (define first_block_landed
@@ -181,7 +181,7 @@ Outline:
                     BLOCK FIRST_FROM_BORDER
                     (- SCENE_HEIGHT FOURTH_FROM_BORDER)
                     (place-image
-                     BLOCK FIRST_FROM_BORDER?
+                     BLOCK FIRST_FROM_BORDER
                      (- SCENE_HEIGHT THIRD_FROM_BORDER)
                      (place-image
                       BLOCK FIRST_FROM_BORDER
@@ -322,7 +322,7 @@ Outline:
 ; Shifts the falling block to either side and alters falling speed
 (check-expect (alter_movement first_block_spawn "left")
               first_block_spawn)
-(check-expect (alter_movement block_dropping "right")
+(check-expect (alter_movement first_block_dropping "right")
               (make-tetris
                (make-posn (+ FIRST_FROM_BORDER GO_RIGHT) YCENTER)
                '()))
@@ -465,4 +465,4 @@ Outline:
 
 (tetris_main (make-tetris
               (make-posn FIRST_FROM_BORDER FIRST_FROM_BORDER)
-              '() FALL_SLOW))
+              '()))
