@@ -321,59 +321,39 @@ Outline:
 ; Tetris Direction -> Tetris
 ; Shifts the falling block to either side and alters falling speed
 (check-expect (alter_movement first_block_spawn "left")
-              (make-tetris
-               (make-posn (+ XCENTER GO_LEFT) FIRST_FROM_BORDER)
-               '() FALL_SLOW))
+              first_block_spawn)
 (check-expect (alter_movement block_dropping "right")
               (make-tetris
-               (make-posn (+ XCENTER GO_RIGHT) YCENTER)
-               '() FALL_SLOW))
-(check-expect (alter_movement next_block_spawn "down")
-              (make-tetris
-               (make-posn XCENTER FIRST_FROM_BORDER)
-               (list (make-posn XCENTER
-                                (- SCENE_HEIGHT FIRST_FROM_BORDER)))
-               FALL_FAST))
-(check-expect (alter_movement next_block_spawn "up")
-              (make-tetris
-               (make-posn XCENTER FIRST_FROM_BORDER)
-               (list (make-posn XCENTER
-                                (- SCENE_HEIGHT FIRST_FROM_BORDER)))
-               FALL_SLOW))
+               (make-posn (+ FIRST_FROM_BORDER GO_RIGHT) YCENTER)
+               '()))
 (check-expect (alter_movement max_left "left")
               max_left)
 (check-expect (alter_movement max_left "right")
               (make-tetris
-               (make-posn SECOND_FROM_BORDER YCENTER) '() FALL_SLOW))
+               (make-posn SECOND_FROM_BORDER YCENTER) '()))
 (check-expect (alter_movement max_right "left")
               (make-tetris
                (make-posn (- SCENE_WIDTH SECOND_FROM_BORDER) YCENTER)
-               '() FALL_SLOW))
+               '()))
 (check-expect (alter_movement max_right "right")
               max_right)
 
 (define (alter_movement tet key)
   (cond
-    [(key=? key "up")
-     (make-tetris (tetris-block tet) (tetris-landscape tet) FALL_SLOW)]
-    [(key=? key "down")
-     (make-tetris (tetris-block tet) (tetris-landscape tet) FALL_FAST)]
     [(and (key=? key "left")
           (not (collision_left?
                 (tetris-block tet) (tetris-landscape tet))))
      (make-tetris
       (make-posn (+ (posn-x (tetris-block tet)) GO_LEFT)
                  (posn-y (tetris-block tet)))
-      (tetris-landscape tet)
-      (tetris-speed tet))]
+      (tetris-landscape tet))]
     [(and (key=? key "right")
           (not (collision_right?
                 (tetris-block tet) (tetris-landscape tet))))
      (make-tetris
       (make-posn (+ (posn-x (tetris-block tet)) GO_RIGHT)
                  (posn-y (tetris-block tet)))
-      (tetris-landscape tet)
-      (tetris-speed tet))]
+      (tetris-landscape tet))]
     [else tet]))
 
 ; Block Landscape -> Boolean
