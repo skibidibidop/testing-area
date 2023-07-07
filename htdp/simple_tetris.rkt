@@ -38,7 +38,8 @@ Outline:
            (square BLOCK_SIZE "outline" "black")))
 (define BG (empty-scene SCENE_WIDTH SCENE_HEIGHT))
 
-(define FALL_RATE 0.5)
+(define TICK_RATE 0.5)
+(define FALL_RATE HALF_BLOCK_SIZE)
 (define GO_LEFT (* BLOCK_SIZE -1))
 (define GO_RIGHT BLOCK_SIZE)
 
@@ -74,32 +75,43 @@ Outline:
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
 (define first_block_spawn
-  (make-tetris (make-posn XCENTER FIRST_FROM_BORDER) '())
+  (make-tetris (make-posn FIRST_FROM_BORDER FIRST_FROM_BORDER) '())
 (define first_block_dropping
-  (make-tetris (make-posn XCENTER YCENTER) '()))
+  (make-tetris (make-posn FIRST_FROM_BORDER YCENTER) '()))
 (define first_block_landed
-  (make-tetris (make-posn XCENTER (- SCENE_HEIGHT HALF_BLOCK_SIZE)) '()))
+  (make-tetris (make-posn FIRST_FROM_BORDER
+                          (- SCENE_HEIGHT HALF_BLOCK_SIZE)) '()))
 (define next_block_spawn
-  (make-tetris (make-posn XCENTER FIRST_FROM_BORDER)
-               (list (make-posn XCENTER
+  (make-tetris (make-posn FIRST_FROM_BORDER FIRST_FROM_BORDER)
+               (list (make-posn FIRST_FROM_BORDER
                                 (- SCENE_HEIGHT FIRST_FROM_BORDER)))))
 (define block_on_block
-  (make-tetris (make-posn XCENTER (- SCENE_HEIGHT SECOND_FROM_BORDER))
-               (list (make-posn XCENTER
+  (make-tetris (make-posn FIRST_FROM_BORDER (- SCENE_HEIGHT SECOND_FROM_BORDER))
+               (list (make-posn FIRST_FROM_BORDER
                                 (- SCENE_HEIGHT FIRST_FROM_BORDER)))))
 ; Blocks are added to the beginning of the list to avoid having to
 ; reverse the list
 (define full_stack
-  (make-tetris (make-posn XCENTER HALF_BLOCK_SIZE)
-               (list (make-posn XCENTER (- SCENE_HEIGHT NINTH_FROM_BORDER))
-                     (make-posn XCENTER (- SCENE_HEIGHT EIGHTH_FROM_BORDER))
-                     (make-posn XCENTER (- SCENE_HEIGHT SEVENTH_FROM_BORDER))
-                     (make-posn XCENTER (- SCENE_HEIGHT SIXTH_FROM_BORDER))
-                     (make-posn XCENTER (- SCENE_HEIGHT FIFTH_FROM_BORDER))
-                     (make-posn XCENTER (- SCENE_HEIGHT FOURTH_FROM_BORDER))
-                     (make-posn XCENTER (- SCENE_HEIGHT THIRD_FROM_BORDER))
-                     (make-posn XCENTER (- SCENE_HEIGHT SECOND_FROM_BORDER))
-                     (make-posn XCENTER (- SCENE_HEIGHT FIRST_FROM_BORDER)))))
+  (make-tetris (make-posn FIRST_FROM_BORDER FIRST_FROM_BORDER)
+               (list
+                (make-posn FIRST_FROM_BORDER
+                           (- SCENE_HEIGHT NINTH_FROM_BORDER))
+                (make-posn FIRST_FROM_BORDER
+                           (- SCENE_HEIGHT EIGHTH_FROM_BORDER))
+                (make-posn FIRST_FROM_BORDER
+                           (- SCENE_HEIGHT SEVENTH_FROM_BORDER))
+                (make-posn FIRST_FROM_BORDER
+                           (- SCENE_HEIGHT SIXTH_FROM_BORDER))
+                (make-posn FIRST_FROM_BORDER
+                           (- SCENE_HEIGHT FIFTH_FROM_BORDER))
+                (make-posn FIRST_FROM_BORDER
+                           (- SCENE_HEIGHT FOURTH_FROM_BORDER))
+                (make-posn FIRST_FROM_BORDER
+                           (- SCENE_HEIGHT THIRD_FROM_BORDER))
+                (make-posn FIRST_FROM_BORDER
+                           (- SCENE_HEIGHT SECOND_FROM_BORDER))
+                (make-posn FIRST_FROM_BORDER
+                           (- SCENE_HEIGHT FIRST_FROM_BORDER)))))
 (define full_row
   (make-tetris (make-posn FIRST_FROM_BORDER (- SCENE_HEIGHT FIRST_FROM_BORDER))
                (list (make-posn (- SCENE_WIDTH NINTH_FROM_BORDER)
@@ -128,79 +140,96 @@ Outline:
 ; Tetris -> Image
 ; Turns tetris instance to an image
 (check-expect (tetris_render first_block_spawn)
-              (place-image BLOCK XCENTER FIRST_FROM_BORDER
+              (place-image BLOCK FIRST_FROM_BORDER FIRST_FROM_BORDER
                            BG))
 (check-expect (tetris_render first_block_dropping)
-              (place-image BLOCK XCENTER YCENTER
+              (place-image BLOCK FIRST_FROM_BORDER YCENTER
                            BG))
 (check-expect (tetris_render first_block_landed)
-              (place-image BLOCK XCENTER (- SCENE_HEIGHT FIRST_FROM_BORDER)
+              (place-image BLOCK
+                           FIRST_FROM_BORDER (- SCENE_HEIGHT FIRST_FROM_BORDER)
                            BG))
 (check-expect (tetris_render next_block_spawn)
               (place-image
-               BLOCK XCENTER (- SCENE_HEIGHT FIRST_FROM_BORDER)
+               BLOCK FIRST_FROM_BORDER (- SCENE_HEIGHT FIRST_FROM_BORDER)
                (place-image
-                BLOCK XCENTER FIRST_FROM_BORDER
+                BLOCK FIRST_FROM_BORDER FIRST_FROM_BORDER
                 BG)))
 (check-expect (tetris_render block_on_block)
               (place-image
-               BLOCK XCENTER (- SCENE_HEIGHT FIRST_FROM_BORDER)
+               BLOCK FIRST_FROM_BORDER (- SCENE_HEIGHT FIRST_FROM_BORDER)
                (place-image
-                BLOCK XCENTER (- SCENE_HEIGHT SECOND_FROM_BORDER)
+                BLOCK FIRST_FROM_BORDER (- SCENE_HEIGHT SECOND_FROM_BORDER)
                 BG)))
 (check-expect (tetris_render full_stack)
               (place-image
-               BLOCK XCENTER (- SCENE_HEIGHT NINTH_FROM_BORDER)
+               BLOCK FIRST_FROM_BORDER
+               (- SCENE_HEIGHT NINTH_FROM_BORDER)
                (place-image
-                BLOCK XCENTER (- SCENE_HEIGHT EIGHTH_FROM_BORDER)
+                BLOCK FIRST_FROM_BORDER
+                (- SCENE_HEIGHT EIGHTH_FROM_BORDER)
                 (place-image
-                 BLOCK XCENTER (- SCENE_HEIGHT SEVENTH_FROM_BORDER)
+                 BLOCK FIRST_FROM_BORDER
+                 (- SCENE_HEIGHT SEVENTH_FROM_BORDER)
                  (place-image
-                  BLOCK XCENTER (- SCENE_HEIGHT SIXTH_FROM_BORDER)
+                  BLOCK FIRST_FROM_BORDER
+                  (- SCENE_HEIGHT SIXTH_FROM_BORDER)
                   (place-image
-                   BLOCK XCENTER (- SCENE_HEIGHT FIFTH_FROM_BORDER)
+                   BLOCK FIRST_FROM_BORDER
+                   (- SCENE_HEIGHT FIFTH_FROM_BORDER)
                    (place-image
-                    BLOCK XCENTER (- SCENE_HEIGHT FOURTH_FROM_BORDER)
+                    BLOCK FIRST_FROM_BORDER
+                    (- SCENE_HEIGHT FOURTH_FROM_BORDER)
                     (place-image
-                     BLOCK XCENTER (- SCENE_HEIGHT THIRD_FROM_BORDER)
+                     BLOCK FIRST_FROM_BORDER?
+                     (- SCENE_HEIGHT THIRD_FROM_BORDER)
                      (place-image
-                      BLOCK XCENTER (- SCENE_HEIGHT SECOND_FROM_BORDER)
+                      BLOCK FIRST_FROM_BORDER
+                      (- SCENE_HEIGHT SECOND_FROM_BORDER)
                       (place-image
-                       BLOCK XCENTER (- SCENE_HEIGHT FIRST_FROM_BORDER)
+                       BLOCK FIRST_FROM_BORDER
+                       (- SCENE_HEIGHT FIRST_FROM_BORDER)
                        (place-image
-                        BLOCK XCENTER FIRST_FROM_BORDER BG)))))))))))
+                        BLOCK FIRST_FROM_BORDER
+                        FIRST_FROM_BORDER BG)))))))))))
 (check-expect (tetris_render full_row)
               (place-image
                BLOCK (- SCENE_WIDTH NINTH_FROM_BORDER)
                (- SCENE_HEIGHT FIRST_FROM_BORDER)
-               (place-image BLOCK
-                            (- SCENE_WIDTH EIGHTH_FROM_BORDER)
-                            (- SCENE_HEIGHT FIRST_FROM_BORDER)
-                (place-image BLOCK
-                             (- SCENE_WIDTH SEVENTH_FROM_BORDER)
-                             (- SCENE_HEIGHT FIRST_FROM_BORDER)
-                 (place-image BLOCK
-                              (- SCENE_WIDTH SIXTH_FROM_BORDER)
-                              (- SCENE_HEIGHT FIRST_FROM_BORDER)
-                  (place-image BLOCK
-                               (- SCENE_WIDTH FIFTH_FROM_BORDER)
-                               (- SCENE_HEIGHT FIRST_FROM_BORDER)
-                   (place-image BLOCK
-                                (- SCENE_WIDTH FOURTH_FROM_BORDER)
-                                (- SCENE_HEIGHT FIRST_FROM_BORDER)
-                    (place-image BLOCK
-                                 (- SCENE_WIDTH THIRD_FROM_BORDER)
-                                 (- SCENE_HEIGHT FIRST_FROM_BORDER)
-                     (place-image BLOCK
-                                  (- SCENE_WIDTH SECOND_FROM_BORDER)
-                                  (- SCENE_HEIGHT FIRST_FROM_BORDER)
-                      (place-image BLOCK
-                                   (- SCENE_WIDTH FIRST_FROM_BORDER)
-                                   (- SCENE_HEIGHT FIRST_FROM_BORDER)
-                       (place-image BLOCK
-                                    FIRST_FROM_BORDER
-                                    (- SCENE_HEIGHT FIRST_FROM_BORDER)
-                                    BG)))))))))))
+               (place-image
+                BLOCK (- SCENE_WIDTH EIGHTH_FROM_BORDER)
+                (- SCENE_HEIGHT FIRST_FROM_BORDER)
+                (place-image
+                 BLOCK (- SCENE_WIDTH SEVENTH_FROM_BORDER)
+                 (- SCENE_HEIGHT FIRST_FROM_BORDER)
+                 (place-image
+                  BLOCK (- SCENE_WIDTH SIXTH_FROM_BORDER)
+                  (- SCENE_HEIGHT FIRST_FROM_BORDER)
+                  (place-image
+                   BLOCK
+                   (- SCENE_WIDTH FIFTH_FROM_BORDER)
+                   (- SCENE_HEIGHT FIRST_FROM_BORDER)
+                   (place-image
+                    BLOCK
+                    (- SCENE_WIDTH FOURTH_FROM_BORDER)
+                    (- SCENE_HEIGHT FIRST_FROM_BORDER)
+                    (place-image
+                     BLOCK
+                     (- SCENE_WIDTH THIRD_FROM_BORDER)
+                     (- SCENE_HEIGHT FIRST_FROM_BORDER)
+                     (place-image
+                      BLOCK
+                      (- SCENE_WIDTH SECOND_FROM_BORDER)
+                      (- SCENE_HEIGHT FIRST_FROM_BORDER)
+                      (place-image
+                       BLOCK
+                       (- SCENE_WIDTH FIRST_FROM_BORDER)
+                       (- SCENE_HEIGHT FIRST_FROM_BORDER)
+                       (place-image
+                        BLOCK
+                        FIRST_FROM_BORDER
+                        (- SCENE_HEIGHT FIRST_FROM_BORDER)
+                        BG)))))))))))
 
 (define (tetris_render tet)
   (draw_blocks (tetris-block tet) (tetris-landscape tet)))
@@ -223,38 +252,37 @@ Outline:
 ; Updates the location of the falling block per tick
 (check-expect (time_step first_block_spawn)
               (make-tetris
-               (make-posn XCENTER
+               (make-posn FIRST_FROM_BORDER
                           (+ (posn-y (tetris-block first_block_spawn))
-                             FALL_SLOW))
-               '() FALL_SLOW))
+                             FALL_RATE))
+               '()))
 (check-expect (time_step first_block_landed)
               (make-tetris
-               (make-posn XCENTER FIRST_FROM_BORDER)
+               (make-posn FIRST_FROM_BORDER FIRST_FROM_BORDER)
                (list
-                (make-posn XCENTER (- SCENE_HEIGHT FIRST_FROM_BORDER)))
-               FALL_SLOW))
+                (make-posn FIRST_FROM_BORDER
+                           (- SCENE_HEIGHT FIRST_FROM_BORDER)))))
 (check-expect (time_step block_on_block)
               (make-tetris
-               (make-posn XCENTER FIRST_FROM_BORDER)
+               (make-posn FIRST_FROM_BORDER FIRST_FROM_BORDER)
                (list
-                (make-posn XCENTER (- SCENE_HEIGHT SECOND_FROM_BORDER))
-                (make-posn XCENTER (- SCENE_HEIGHT FIRST_FROM_BORDER)))
-               FALL_SLOW))
+                (make-posn FIRST_FROM_BORDER
+                           (- SCENE_HEIGHT SECOND_FROM_BORDER))
+                (make-posn FIRST_FROM_BORDER
+                           (- SCENE_HEIGHT FIRST_FROM_BORDER)))))
 
 (define (time_step tet)
   (cond
     [(collision_bottom? (tetris-block tet) (tetris-landscape tet))
      (make-tetris
       (make-posn FIRST_FROM_BORDER FIRST_FROM_BORDER)
-      (cons (tetris-block tet) (tetris-landscape tet))
-      (tetris-speed tet))]
+      (cons (tetris-block tet) (tetris-landscape tet)))]
     [else
      (make-tetris
       (make-posn
        (posn-x (tetris-block tet))
-       (+ (posn-y (tetris-block tet)) (tetris-speed tet)))
-      (tetris-landscape tet)
-      (tetris-speed tet))]))
+       (+ (posn-y (tetris-block tet)) FALL_RATE))
+      (tetris-landscape tet))]))
 
 ; Block Landscape -> Boolean
 ; Has the falling block landed on top of another block or the
@@ -452,7 +480,7 @@ Outline:
 (define (tetris_main tet)
   (big-bang tet
     [to-draw tetris_render]
-    [on-tick time_step FALL_RATE]
+    [on-tick time_step TICK_RATE]
     [on-key alter_movement]))
 
 (tetris_main (make-tetris
