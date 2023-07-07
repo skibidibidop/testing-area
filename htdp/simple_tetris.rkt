@@ -74,24 +74,19 @@ Outline:
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
 (define first_block_spawn
-  (make-tetris (make-posn XCENTER FIRST_FROM_BORDER)
-               '() FALL_SLOW))
+  (make-tetris (make-posn XCENTER FIRST_FROM_BORDER) '())
 (define first_block_dropping
-  (make-tetris (make-posn XCENTER YCENTER)
-               '() FALL_SLOW))
+  (make-tetris (make-posn XCENTER YCENTER) '()))
 (define first_block_landed
-  (make-tetris (make-posn XCENTER (- SCENE_HEIGHT HALF_BLOCK_SIZE))
-               '() FALL_SLOW))
+  (make-tetris (make-posn XCENTER (- SCENE_HEIGHT HALF_BLOCK_SIZE)) '()))
 (define next_block_spawn
   (make-tetris (make-posn XCENTER FIRST_FROM_BORDER)
                (list (make-posn XCENTER
-                                (- SCENE_HEIGHT FIRST_FROM_BORDER)))
-               FALL_SLOW))
+                                (- SCENE_HEIGHT FIRST_FROM_BORDER)))))
 (define block_on_block
   (make-tetris (make-posn XCENTER (- SCENE_HEIGHT SECOND_FROM_BORDER))
                (list (make-posn XCENTER
-                                (- SCENE_HEIGHT FIRST_FROM_BORDER)))
-               FALL_SLOW))
+                                (- SCENE_HEIGHT FIRST_FROM_BORDER)))))
 ; Blocks are added to the beginning of the list to avoid having to
 ; reverse the list
 (define full_stack
@@ -104,9 +99,7 @@ Outline:
                      (make-posn XCENTER (- SCENE_HEIGHT FOURTH_FROM_BORDER))
                      (make-posn XCENTER (- SCENE_HEIGHT THIRD_FROM_BORDER))
                      (make-posn XCENTER (- SCENE_HEIGHT SECOND_FROM_BORDER))
-                     (make-posn XCENTER (- SCENE_HEIGHT FIRST_FROM_BORDER)))
-               FALL_SLOW))
-                                        
+                     (make-posn XCENTER (- SCENE_HEIGHT FIRST_FROM_BORDER)))))
 (define full_row
   (make-tetris (make-posn FIRST_FROM_BORDER (- SCENE_HEIGHT FIRST_FROM_BORDER))
                (list (make-posn (- SCENE_WIDTH NINTH_FROM_BORDER)
@@ -126,13 +119,11 @@ Outline:
                      (make-posn (- SCENE_WIDTH SECOND_FROM_BORDER)
                                 (- SCENE_HEIGHT FIRST_FROM_BORDER))
                      (make-posn (- SCENE_WIDTH FIRST_FROM_BORDER)
-                                (- SCENE_HEIGHT FIRST_FROM_BORDER)))
-               FALL_SLOW))
+                                (- SCENE_HEIGHT FIRST_FROM_BORDER)))))
 (define max_left
-  (make-tetris (make-posn FIRST_FROM_BORDER YCENTER) '() FALL_SLOW))
+  (make-tetris (make-posn FIRST_FROM_BORDER YCENTER) '()))
 (define max_right
-  (make-tetris (make-posn (- SCENE_WIDTH FIRST_FROM_BORDER) YCENTER)
-               '() FALL_SLOW))
+  (make-tetris (make-posn (- SCENE_WIDTH FIRST_FROM_BORDER) YCENTER) '()))
 
 ; Tetris -> Image
 ; Turns tetris instance to an image
