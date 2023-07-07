@@ -38,8 +38,7 @@ Outline:
            (square BLOCK_SIZE "outline" "black")))
 (define BG (empty-scene SCENE_WIDTH SCENE_HEIGHT))
 
-(define FALL_SLOW (* SCALER 0.1))
-(define FALL_FAST (* SCALER 0.2))
+(define FALL_RATE 0.5)
 (define GO_LEFT (* BLOCK_SIZE -1))
 (define GO_RIGHT BLOCK_SIZE)
 
@@ -55,11 +54,10 @@ Outline:
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
-(define-struct tetris [block landscape speed])
+(define-struct tetris [block landscape])
 ; (make-tetris Block Landscape)
-; Interp.: (make-tetris b0 (list b1 b2 ...) FALL_SLOW) represents the
-; falling block (b0), resting blocks (list b1 b2 ...), and the falling block's
-; fall speed (FALL_SLOW) in pixels/tick
+; Interp.: (make-tetris b0 (list b1 b2 ...)) represents the
+; falling block (b0) and resting blocks (list b1 b2 ...)
 
 ; A Landscape is one of:
 ; - '()
@@ -71,9 +69,7 @@ Outline:
 ; A Direction is one of:
 ; - "left"
 ; - "right"
-; - "up"
-; - "down"
-; Interp.: represents key events (left/right/down arrow pressed)
+; Interp.: represents key events (left/right arrows pressed)
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
@@ -297,8 +293,10 @@ Outline:
      (= (- SCENE_HEIGHT (posn-y block))
         HALF_BLOCK_SIZE)]
     [else
-     (or (= (- (posn-y (first lscape)) (posn-y block))
-            BLOCK_SIZE)
+     (or (and (= (- (posn-y (first lscape)) (posn-y block))
+                 BLOCK_SIZE)
+              (< (abs (- (posn-x block) (posn-x (first lscape))))
+                 BLOCK_SIZE))
          (collision_bottom? block (rest lscape)))]))
 
 ; Tetris Direction -> Tetris
@@ -463,7 +461,7 @@ Outline:
 (define (tetris_main tet)
   (big-bang tet
     [to-draw tetris_render]
-    [on-tick time_step]
+    [on-tick time_step FALL_RATE]
     [on-key alter_movement]))
 
 (tetris_main (make-tetris
