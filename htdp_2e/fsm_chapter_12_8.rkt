@@ -24,3 +24,15 @@ Outline:
 ; An FSM_state is a Color
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
+
+; Any -> Boolean
+; Is Any an FSM_state
+(check-expect (state=? "red") #true)
+(check-expect (state=? "green") #true)
+(check-expect (state=? #true) #false)
+(check-expect (state=? 3) #false)
+(check-expect (state=? "z") #false)
+(check-expect (state=? (make-transition "blue" "red")) #false)
+(check-expect (state=? (list (make-transition "yellow" "green"))) #false)
+
+(define (state=? in) #false)
