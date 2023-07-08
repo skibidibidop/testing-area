@@ -10,6 +10,14 @@ Outline:
 |#
 
 (require 2htdp/image)
+(require 2htdp/universe)
+
+(define SCALER 10)
+
+(define SCN_WIDTH (* SCALER 10))
+(define SCN_HEIGHT (* SCALER 10))
+
+(define BG (empty-scene SCN_WIDTH SCN_HEIGHT))
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
@@ -17,6 +25,8 @@ Outline:
 ; (make-transition FSM_state FSM_state)
 ; Interp.: (make-transition "green" "yellow"), represents the current state
 ; ("green") and the state to transition to ("yellow") in reaction to keystrokes
+
+; An FSM_state is a Color
 
 ; An FSM is one of:
 ; - '()
@@ -28,7 +38,7 @@ Outline:
         (make-transition "green" "yellow")
         (make-transition "yellow" "red")))
 
-; An FSM_state is a Color
+; A State_v1 is an FSM_state
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
@@ -45,9 +55,22 @@ Outline:
 (define (state=? in)
   (image-color? in))
 
+; State_1 -> Image
+; Renders a world state as an image
+(define (render_v1 s)
+  empty-image)
+
+; State_1 KeyEvent -> State_1
+; Finds the next state from ke and cs
+(define (find_next_state_v1 cs ke)
+  cs)
+
+
+; MAIN /////////////////////////////////////////////////////////////////////////
+
 ; FSM -> ???
 ; Match the keys pressed with the given FSM
-(define (simulate an_fsm)
-  (big-bang an_fsm
-    [to-draw ...]
-    [on-key ...]))
+(define (simulate_v1 fsm0)
+  (big-bang initial_state
+    [to-draw render_v1]
+    [on-key find_next_state_v1]))
