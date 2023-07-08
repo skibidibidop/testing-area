@@ -5,8 +5,10 @@ Date: July 8, 2023
 Chapter 12.8 Finite State Machines
 
 Outline:
-
+- (state=?)
 |#
+
+(require 2htdp/image)
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
@@ -35,4 +37,5 @@ Outline:
 (check-expect (state=? (make-transition "blue" "red")) #false)
 (check-expect (state=? (list (make-transition "yellow" "green"))) #false)
 
-(define (state=? in) #false)
+(define (state=? in)
+  (image-color? in))
