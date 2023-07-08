@@ -14,10 +14,7 @@ Outline:
 
 (define SCALER 10)
 
-(define SCN_WIDTH (* SCALER 10))
-(define SCN_HEIGHT (* SCALER 10))
-
-(define BG (empty-scene SCN_WIDTH SCN_HEIGHT))
+(define BOX_SIZE (* SCALER 10))
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
@@ -33,14 +30,21 @@ Outline:
 ; - (cons Transition FSM)
 ; Interp.: represents the transitions that a finite state machine can take
 ; from one state to another in reaction to keystrokes
+
+; A State_v1 is an FSM_state
+
+(define-struct fs [fsm current])
+; A State_v2 is a structure:
+; (make-fs FSM FSM_state)
+
 (define fsm_traffic
   (list (make-transition "red" "green")
         (make-transition "green" "yellow")
         (make-transition "yellow" "red")))
 
-; A State_v1 is an FSM_state
-
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
+
+
 
 ; Any -> Boolean
 ; Is Any an FSM_state
@@ -55,22 +59,27 @@ Outline:
 (define (state=? in)
   (image-color? in))
 
-; State_1 -> Image
+; State_v2 -> Image
 ; Renders a world state as an image
-(define (render_v1 s)
-  empty-image)
+(check-expect (state_as_colored_square
+               (make-fs fsm_traffic "red"))
+               (square BOX_SIZE "solid" "red"))
+(define (state_as_colored_square an_fsm)
+  (square BOX_SIZE "solid" (fs-current an_fsm)))
 
-; State_1 KeyEvent -> State_1
+; State_v2 KeyEvent -> State_v2
 ; Finds the next state from ke and cs
-(define (find_next_state_v1 cs ke)
+(define (find_next_state cs ke)
   cs)
 
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
-; FSM -> ???
+; FSM FSM_state -> State_v2
 ; Match the keys pressed with the given FSM
-(define (simulate_v1 fsm0)
-  (big-bang initial_state
-    [to-draw render_v1]
-    [on-key find_next_state_v1]))
+(define (simulate_v2 an_fsm s0)
+  (big-bang (make-fs an_fsm s0)
+    [to-draw state_as_colored_square]
+    [on-key find_next_state]))
+
+(simulate_v2 fsm_traffic "red")
