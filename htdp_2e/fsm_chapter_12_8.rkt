@@ -6,7 +6,9 @@ Chapter 12.8 Finite State Machines
 
 Outline:
 - (state=?)
-- (simulate)
+- (state_as_colored_square)
+- (find_nxt_state)
+- (simulate_v2)
 |#
 
 (require 2htdp/image)
@@ -64,13 +66,25 @@ Outline:
 (check-expect (state_as_colored_square
                (make-fs fsm_traffic "red"))
                (square BOX_SIZE "solid" "red"))
+
 (define (state_as_colored_square an_fsm)
   (square BOX_SIZE "solid" (fs-current an_fsm)))
 
 ; State_v2 KeyEvent -> State_v2
-; Finds the next state from ke and cs
-(define (find_next_state cs ke)
-  cs)
+; Finds the next state
+(check-expect
+ (find_next_state (make-fsm fsm_traffic "red") "n")
+ (make-fs fsm_traffic "green"))
+(check-expect
+ (find_next_state (make-fsm fsm_traffic "red") "a")
+ (make-fs fsm_traffic "green"))
+(check-expect
+ (find_next_state (make-fsm fsm_traffic "green") "q")
+ (make-fs fsm_traffic "yellow"))
+
+(define (find_next_state an_fsm ke)
+  (...(fs-fsm an_fsm)
+      (fs-current an_fsm)...))
 
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
