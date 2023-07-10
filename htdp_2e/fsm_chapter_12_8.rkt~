@@ -1,6 +1,3 @@
-;; The first three lines of this file were inserted by DrRacket. They record metadata
-;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-beginner-reader.ss" "lang")((modname fsm_chapter_12_8) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: July 8, 2023
@@ -86,9 +83,8 @@ Outline:
  (make-fs fsm_traffic "yellow"))
 
 (define (find_next_state an_fsm ke)
-  (make-fs
-   ((fs-fsm an_fsm)
-    (find (fs-fsm an_fsm) (fs-current an_fsm)))))
+  (...(fs-fsm an_fsm)
+      (fs-current an_fsm)...))
 
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
