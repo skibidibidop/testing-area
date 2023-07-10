@@ -90,6 +90,16 @@ Outline:
    ((fs-fsm an_fsm)
     (find (fs-fsm an_fsm) (fs-current an_fsm)))))
 
+; FSM FSM_state -> FSM_state
+; Finds the state representing current in transitions
+; and retrieves the next field
+(check-expect (find fsm_traffic "red") "green")
+(check-expect (find fsm_traffic "green") "yellow")
+(check-expect (find fsm_traffic "black") "not found: black")
+
+(define (find transitions current)
+  current)
+
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
