@@ -76,19 +76,19 @@ Outline:
 ; State_v2 KeyEvent -> State_v2
 ; Finds the next state
 (check-expect
- (find_next_state (make-fsm fsm_traffic "red") "n")
+ (find_next_state (make-fs fsm_traffic "red") "n")
  (make-fs fsm_traffic "green"))
 (check-expect
- (find_next_state (make-fsm fsm_traffic "red") "a")
+ (find_next_state (make-fs fsm_traffic "red") "a")
  (make-fs fsm_traffic "green"))
 (check-expect
- (find_next_state (make-fsm fsm_traffic "green") "q")
+ (find_next_state (make-fs fsm_traffic "green") "q")
  (make-fs fsm_traffic "yellow"))
 
 (define (find_next_state an_fsm ke)
   (make-fs
-   ((fs-fsm an_fsm)
-    (find (fs-fsm an_fsm) (fs-current an_fsm)))))
+   (fs-fsm an_fsm)
+   (find (fs-fsm an_fsm) (fs-current an_fsm))))
 
 ; FSM FSM_state -> FSM_state
 ; Finds the state representing current in transitions
@@ -98,7 +98,14 @@ Outline:
 (check-expect (find fsm_traffic "black") "not found: black")
 
 (define (find transitions current)
-  current)
+  (cond
+    [(empty? transitions) "not found: black"]
+    [else
+     (cond
+       [(string=? (transition-current (first transitions)) current)
+        (transition-next (first transitions))]
+       [else
+        (find (rest transitions) current)])]))
 
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
