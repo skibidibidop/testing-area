@@ -29,4 +29,8 @@ Finger exercises for III Abstractions
 ; Use the contains? function to define functions that search for
 ; "atom" "basic", and "zoo", respectively.
 
-; 
+(define list_235 (list "basic"))
+
+(contains? "atom" list_235)
+(contains? "basic" list_235)
+(contains? "zoo" list_235)
