@@ -8,14 +8,8 @@ Date: July 11, 2023
 Exercise 238
 Abstract the given functions into a single function. Both consume non-empty
 lists of numbers (Nelon) and produce a single number.
-
 Define inf-1 and sup-1 in terms of the abstract function. Test with the given
-lists. Why are these functions slow on some of the long lists?
-
-Modify the original functions with the use of (max), which picks the larger
-of two numbers, and (min), which picks the smaller one. Then, abstract again,
-define inf-2 and sup-2, and test them with the same inputs again. Why are
-these versions so much faster?
+lists.
 |#
 
 (define given_list1
