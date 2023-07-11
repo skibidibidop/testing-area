@@ -70,3 +70,14 @@ design a function that subtracts 2 from each number on a given list.
 
 (define (add_5 n nl)
   (add_to_all 5 nl))
+
+; Num_list -> Num_list
+; Subtracts 2 from all members of Num_list nl
+(check-expect (sub_2 nlist) (list -2 3 1 5))
+
+(define (sub_2 nl)
+  (cond
+    [(empty? nl) '()]
+    [else
+     (cons (- (first nl) 2)
+           (sub_2 (rest nl)))]))
