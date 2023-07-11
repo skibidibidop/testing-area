@@ -46,3 +46,14 @@ design a function that subtracts 2 from each number on a given list.
      (cons
       (+ (first l) 5)
       (plus5 (rest l)))]))
+
+; Number Num_list -> Num_list
+; Add Number n to all members of Num_list nlist
+(define (add_to_all n nlist)
+  (cond
+    [(empty? nlist) '()]
+    [else
+     (cons
+      (+ n (first nlist))
+      (add-to_all n (rest nlist)))]))
+
