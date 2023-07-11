@@ -8,14 +8,5 @@ Date: July 11, 2023
 Finger exercises for III Abstractions
 |#
 
-; DATA DEFINITION //////////////////////////////////////////////////////////////
-
-; A Los is one of:
-; '()
-; (cons String Los)
-; Interp.: a list of Strings
-
-; Exercise 235 /////////////////////////////////////////////////////////////////
-; Use the contains? function to define functions that search for "atom" "basic",
-; and "zoo", respectively.
-
+; Exercise 235: Use the contains? function to define functions that search for
+; "atom" "basic", and "zoo", respectively.
