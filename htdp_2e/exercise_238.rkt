@@ -31,3 +31,25 @@ these versions so much faster?
 ; Interp.: a non-empty list of Numbers
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
+
+; Nelon -> Number
+; Determines the smallest Number n on Nelon l
+(define (inf l)
+  (cond
+    [(empty? (rest l)) (first l)]
+    [else
+     (if (< (first l)
+            (inf (rest l)))
+         (first l)
+         (inf (rest l)))]))
+
+; Nelon -> Number
+; Determines the largest Number n on Nelon l
+(define (sup l)
+  (cond
+    [(empty? (rest l)) (first l)]
+    [else
+     (if (> (first l)
+            (sup (rest l)))
+         (first l)
+         (sup (rest l)))]))
