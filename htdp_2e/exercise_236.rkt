@@ -21,8 +21,12 @@ design a function that subtracts 2 from each number on a given list.
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
+(define nlist (list 0 5 3 7))
+
 ; Num_list -> Num_list
 ; Adds 1 to each item on l
+(check-expect (add1* nlist) (list 1 6 4 8))
+
 (define (add1* l)
   (cond
     [(empty? l) '()]
@@ -33,9 +37,11 @@ design a function that subtracts 2 from each number on a given list.
 
 ; Num_list -> Num_list
 ; Adds 5 to each item on l
+(check-expect (plus5 nlist) (list 5 10 8 12))
+
 (define (plus5 l)
   (cond
-    [(empty?) '()]
+    [(empty? l) '()]
     [else
      (cons
       (+ (first l) 5)
