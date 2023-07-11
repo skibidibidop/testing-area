@@ -6,7 +6,10 @@ Author: Mark Beltran
 Date: July 11, 2023
 
 Exercise 236
-Create test suites for the given functions
+Create test suites for the given functions, then abstract over them. Define
+the functions in terms of the abstraction as one-liners and use the existing
+test suites to confirm that the revised definitions work properly. Finally,
+design a function that subtracts 2 from each number on a given list.
 |#
 
 ; DATA DEFINITIONS /////////////////////////////////////////////////////////////
