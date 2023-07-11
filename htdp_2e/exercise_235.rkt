@@ -5,7 +5,9 @@
 Author: Mark Beltran
 Date: July 11, 2023
 
-Finger exercises for III Abstractions
+Exercise 235
+Use the contains? function to define functions that search for "atom" "basic",
+and "zoo", respectively.
 |#
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
@@ -24,10 +26,6 @@ Finger exercises for III Abstractions
     [else
      (or (string=? s (first l))
          (contains? s (rest l)))]))
-
-; Exercise 235 /////////////////////////////////////////////////////////////////
-; Use the contains? function to define functions that search for
-; "atom" "basic", and "zoo", respectively.
 
 (define list_235 (list "basic"))
 
