@@ -10,10 +10,9 @@ Finger exercises for III Abstractions
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
-; A Los is one of:
+; A string_list is one of:
 ; '()
-; (cons String Los)
-; Interp.: a list of Strings
+; (cons String String_list)
 
 ; Exercise 235 /////////////////////////////////////////////////////////////////
 ; Use the contains? function to define functions that search for "atom" "basic",
