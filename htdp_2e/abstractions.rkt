@@ -31,6 +31,23 @@ Finger exercises for III Abstractions
 
 (define list_235 (list "basic"))
 
-(contains? "atom" list_235)
-(contains? "basic" list_235)
-(contains? "zoo" list_235)
+; String_list -> Boolean
+; Does String_list l contain "atom"
+(check-expect (contains_atom? "atom" list_235) #false)
+
+(define (contains_atom? s l)
+  (contains? "atom" l))
+
+; String_list -> Boolean
+; Does String_list l contain "basic"
+(check-expect (contains_basic? "basic" list_235) #true)
+
+(define (contains_basic? s l)
+  (contains? "basic" l))
+
+; String_list -> Boolean
+; Does String_list l contain "zoo"
+(check-expect (contains_zoo? "zoo" list_235) #false)
+
+(define (contains_zoo? s l)
+  (contains? "zoo" l))
