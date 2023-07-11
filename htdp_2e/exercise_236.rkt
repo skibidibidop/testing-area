@@ -48,12 +48,25 @@ design a function that subtracts 2 from each number on a given list.
       (plus5 (rest l)))]))
 
 ; Number Num_list -> Num_list
-; Add Number n to all members of Num_list nlist
-(define (add_to_all n nlist)
+; Add Number n to all members of Num_list nl
+(check-expect (add_to_all 3 nlist) (list 3 8 6 10))
+
+(define (add_to_all n nl)
   (cond
-    [(empty? nlist) '()]
+    [(empty? nl) '()]
     [else
      (cons
-      (+ n (first nlist))
-      (add-to_all n (rest nlist)))]))
+      (+ n (first nl))
+      (add_to_all n (rest nl)))]))
 
+; Number Num_list -> Num_list
+(check-expect (add_1 1 nlist) (list 1 6 4 8))
+
+(define (add_1 n nl)
+  (add_to_all 1 nl))
+
+; Number Num_list -> Num_list
+(check-expect (add_5 5 nlist) (list 5 10 8 12))
+
+(define (add_5 n nl)
+  (add_to_all 5 nl))
