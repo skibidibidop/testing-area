@@ -18,3 +18,22 @@ Create test suites for the given functions
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
+; Num_list -> Num_list
+; Adds 1 to each item on l
+(define (add1* l)
+  (cond
+    [(empty? l) '()]
+    [else
+     (cons
+      (add1 (first l))
+      (add1* (rest l)))]))
+
+; Num_list -> Num_list
+; Adds 5 to each item on l
+(define (plus5 l)
+  (cond
+    [(empty?) '()]
+    [else
+     (cons
+      (+ (first l) 5)
+      (plus5 (rest l)))]))
