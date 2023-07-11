@@ -14,7 +14,19 @@ Finger exercises for III Abstractions
 ; '()
 ; (cons String String_list)
 
-; Exercise 235 /////////////////////////////////////////////////////////////////
-; Use the contains? function to define functions that search for "atom" "basic",
-; and "zoo", respectively.
+; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
+; String String_list -> Boolean
+; Is String s in String_list l
+(define (contains? s l)
+  (cond
+    [(empty? l) #false]
+    [else
+     (or (string=? s (first l))
+         (contains? s (rest l)))]))
+
+; Exercise 235 /////////////////////////////////////////////////////////////////
+; Use the contains? function to define functions that search for
+; "atom" "basic", and "zoo", respectively.
+
+; 
