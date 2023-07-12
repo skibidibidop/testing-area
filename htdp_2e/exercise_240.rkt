@@ -7,3 +7,32 @@ Date: July 12, 2023
 
 Exercise 240
 |#
+
+; DATA DEFINITIONS /////////////////////////////////////////////////////////////
+
+(define-struct layer [stuff])
+; (make-layer Any)
+
+; An LStr is one of:
+; - String
+; - (make-layer LStr)
+(define lstr_samp1 "hi!")
+(define lstr_samp2 (make-layer "hello"))
+
+; An LNum is one of:
+; - Number
+; - (make-layer LNum)
+(define lnum_samp1 2)
+(define lnum_samp2 (make-layer 4))
+
+; A [CL X] is one of:
+; - X
+; - (make-layer X)
+
+; A [CL String] is one of:
+; - String
+; - (make-layer String)
+
+; A [CL Number] is one of:
+; - Number
+; - (make-layer Number)
