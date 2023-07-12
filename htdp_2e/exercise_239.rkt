@@ -8,3 +8,21 @@ Date: July 12, 2023
 Exercise 239
 |#
 
+; DATA DEFINITION //////////////////////////////////////////////////////////////
+
+; A [List X Y] is a structure:
+; (cons X (cons Y '()))
+
+; A [List Number Number] is a structure:
+; (cons Number (cons Number '()))
+(define le_num_num (list 1 2))
+
+; A [List Number 1String] is a structure:
+; (cons Number (cons 1String '()))
+(define le_num_str (list 1 "hi"))
+
+; A [List String Boolean] is a structure:
+; (cons String (cons Boolean '()))
+(define le_str_bool (list "hi" #false))
+
+; FUNCTIONS ////////////////////////////////////////////////////////////////////
