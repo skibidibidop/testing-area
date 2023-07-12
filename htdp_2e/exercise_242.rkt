@@ -28,3 +28,7 @@ Exercise 242
 ; - '()
 ; - (cons [Maybe String] [List_of [Maybe String]])
 ; Either an empty list or a list of [Maybe String]
+
+; What does the following signature mean?
+
+; String 
