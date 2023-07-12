@@ -53,3 +53,25 @@ these versions so much faster?
             (sup (rest l)))
          (first l)
          (sup (rest l)))]))
+
+; Function Nelon -> Number
+; Depending on the inputted function op, determines the greatest/least number in
+; Nelon l
+(define (boundaries op l)
+  (cond
+    [(empty? (rest l)) (first l)]
+    [else
+     (if (op (first l)
+             (boundaries op (rest l)))
+         (first l)
+         (boundaries op (rest l)))]))
+
+(check-expect (inf_1 given_list1) 1)
+(check-expect (inf_1 given_list1) 1)
+(define (inf_1 l)
+  (boundaries < l))
+
+(check-expect (sup_1 given_list1) 25)
+(check-expect (sup_1 given_list2) 25)
+(define (sup_1 l)
+  (boundaries > l))
