@@ -8,14 +8,3 @@ Date: July 12, 2023
 Exercise 241
 |#
 
-; DATA DEFINITIONS /////////////////////////////////////////////////////////////
-
-; A NEList_of_temperatures is one of:
-; - (cons CTemperature '())
-; - (cons CTemperature NEList_of_temperatures)
-; Interp.: Non-empty list of Celsius temperatures
-
-; A NEList_of_booleans is one of:
-; - (cons Boolean '())
-; - (cons Boolean NEList_of_booleans)
-; Interp.: Non-empty list of Booleans
