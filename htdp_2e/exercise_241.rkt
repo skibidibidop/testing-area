@@ -19,3 +19,8 @@ Exercise 241
 ; - (cons Boolean '())
 ; - (cons Boolean NEList_of_booleans)
 ; Interp.: Non-empty list of Booleans
+
+; A [NEList_of X] is one of:
+; - (cons X '())
+; - (cons X [NEList_of X])
+; Interp.: Non-empty list of X
