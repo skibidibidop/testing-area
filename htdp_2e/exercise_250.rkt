@@ -42,3 +42,9 @@ Exercise 250
     [else
      (cons (op n)
            (tabulate op (sub1 n)))]))
+
+(define (tab_sqr n)
+  (tabulate sqr n))
+
+(define (tab_tan n)
+  (tabulate tan n))
