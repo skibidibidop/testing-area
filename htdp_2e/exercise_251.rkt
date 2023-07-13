@@ -16,4 +16,20 @@ Exercise 251
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
-; [List_of Number] 
+; [List_of Number] -> Number
+; Computes the sum of the numbers on l
+(define (sum l)
+  (cond
+    [(empty? l) 0]
+    [else
+     (+ (first l)
+        (sum (rest l)))]))
+
+; [List_of Number] -> Number
+; Computes the product of the numbers on l
+(define (product l)
+  (cond
+    [(empty? l) 1]
+    [else
+     (* (first l)
+        (product (rest l)))]))
