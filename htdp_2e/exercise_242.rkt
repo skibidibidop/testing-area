@@ -1,6 +1,3 @@
-;; The first three lines of this file were inserted by DrRacket. They record metadata
-;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-intermediate-reader.ss" "lang")((modname exercise_242) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: July 12, 2023
@@ -31,4 +28,12 @@ Exercise 242
 
 ; What does the following signature mean?
 
-; String 
+; String [List_of String] -> [Maybe [List_of String]]
+; Returns the remainder of [List_of String] lost starting with String s
+; #false otherwise
+(check-expect (occurs "a" (list "b" "a" "d" "e"))
+              (list "d" "e"))
+(check-expect (occurs "a" (list "b" "c" "d")) #false)
+
+(define (occurs s los)
+  los)
