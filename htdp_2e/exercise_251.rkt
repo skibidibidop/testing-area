@@ -33,3 +33,13 @@ Exercise 251
     [else
      (* (first l)
         (product (rest l)))]))
+
+; [List_of Number] -> Number
+; Computes the result of op on all numbers on l, with mt as the result
+; from an empty list
+(define (fold1 op mt l)
+  (cond
+    [(empty? l) mt]
+    [else
+     (op (first l)
+         (fold1 op mt (rest l)))]))
