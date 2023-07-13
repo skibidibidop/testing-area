@@ -10,7 +10,9 @@ Exercise 250
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
-
+; A [List_of ITEM] is one of:
+; '()
+; (cons ITEM [List_of ITEM]
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
@@ -31,3 +33,7 @@ Exercise 250
     [else
      (cons (sqrt n)
            (tab_sqrt (sub1 n)))]))
+
+; Number -> [List_of Number]
+; Tabulate op between n and 0 (inclusive) in a list
+(define (tabulate op n)
