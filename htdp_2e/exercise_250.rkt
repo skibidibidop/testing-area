@@ -7,3 +7,27 @@ Date: July 13, 2023
 
 Exercise 250
 |#
+
+; DATA DEFINITION //////////////////////////////////////////////////////////////
+
+
+
+; FUNCTIONS ////////////////////////////////////////////////////////////////////
+
+; Number -> [List_of Number]
+; Tabulates sin between n and 0 (inclusive) in a list
+(define (tab_sin n)
+  (cond
+    [(= n 0) (list (sin 0))]
+    [else
+     (cons (sin n)
+           (tab_sin (sub1 n)))]))
+
+; Number -> [List_of Number]
+; Tabulates sqrt between n and 0 (inclusive) in a list
+(define (tab_sqrt n)
+  (cond
+    [(= n 0) (list (sqrt 0))]
+    [else
+     (cons (sqrt n)
+           (tab_sqrt (sub1 n)))]))
