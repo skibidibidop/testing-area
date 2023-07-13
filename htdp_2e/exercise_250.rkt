@@ -37,3 +37,8 @@ Exercise 250
 ; Number -> [List_of Number]
 ; Tabulate op between n and 0 (inclusive) in a list
 (define (tabulate op n)
+  (cond
+    [(= n 0) (list (op 0))]
+    [else
+     (cons (op n)
+           (tabulate op (sub1 n)))]))
