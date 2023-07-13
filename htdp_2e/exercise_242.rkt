@@ -36,4 +36,9 @@ Exercise 242
 (check-expect (occurs "a" (list "b" "c" "d")) #false)
 
 (define (occurs s los)
-  los)
+  (cond
+    [(empty? los) #false]
+    [else
+     (if (string=? s (first los))
+         (rest los)
+         (occurs s (rest los)))]))
