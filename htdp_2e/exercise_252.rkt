@@ -47,4 +47,11 @@ Exercise 252
    (posn-x p) (pons-y p)
    img))
 
-; 
+; [List_of ITEM] -> ???
+; Performs op on each member of List l and outputs emp if list is empty
+(define (fold2 op emp l)
+  (cond
+    [(empty? l) empty]
+    [else
+     (op (first l)
+         (fold2 (rest l)))]))
