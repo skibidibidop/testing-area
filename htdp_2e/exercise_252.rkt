@@ -44,7 +44,7 @@ Exercise 252
 (define (place_dot p img)
   (place-image
    DOT
-   (posn-x p) (pons-y p)
+   (posn-x p) (posn-y p)
    img))
 
 ; [List_of ITEM] -> ???
