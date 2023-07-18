@@ -34,3 +34,5 @@ Exercise 31.
               (letter (read-file in-fst)
                       (read-file in-lst)
                       (read-file in-signature))))
+
+(main "first.txt" "last.txt" "sign.txt" "output.txt")
