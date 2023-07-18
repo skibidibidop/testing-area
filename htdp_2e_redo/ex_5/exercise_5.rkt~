@@ -10,14 +10,10 @@ Exercise 5.
 
 (require 2htdp/image)
 
-(define SCALER 100)
+(define SCALER 10)
 
-(define SWIDTH (* SCALER 4))
-(define SHEIGHT (* SCALER 2))
-(define XCENTER (/ SWIDTH 2))
-(define YCENTER (/ SHEIGHT 2))
-
-(define BG (empty-scene SWIDTH SHEIGHT))
+(define SWIDTH (* SCALER 15))
+(define SHEIGHT (* SCALER 10))
 
 (define LEFT_SIDE
   (triangle/sas SCALER
@@ -29,17 +25,3 @@ Exercise 5.
                 SCALER
                 SCALER
                 "solid" "brown"))
-(define BASE
-  (rectangle (* SCALER 2) SCALER  "solid" "brown"))
-
-(define SIDE_SIZE (/ (image-width LEFT_SIDE) 2))
-(define BOAT_HEIGHT (- SHEIGHT SIDE_SIZE))
-
-(place-images
- (list LEFT_SIDE
-       BASE
-       RIGHT_SIDE)
- (list (make-posn SIDE_SIZE BOAT_HEIGHT)
-       (make-posn XCENTER BOAT_HEIGHT)
-       (make-posn (- SWIDTH SIDE_SIZE) BOAT_HEIGHT))
- BG)
