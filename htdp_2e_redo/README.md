@@ -1,0 +1,1 @@
+Re-doing all exercises, no skips!
