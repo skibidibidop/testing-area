@@ -35,7 +35,7 @@ way across the scene.
 (define HALF_GAUGE (/ (image-width HAP_GAUGE) 2))
 (define MIN_GAUGE 0)
 
-(define SAD_RATE 0.1)
+(define SAD_RATE (* SCALER 0.1))
 
 (define HAP_UP_SML (/ MAX_GAUGE 5))
 (define HAP_UP_BIG (/ MAX_GAUGE 3))
