@@ -19,39 +19,46 @@ to right on the world canvas, three pixels per clock tick.
 (define XCENTER (/ SWIDTH 2))
 (define YCENTER (/ SHEIGHT 2))
 
-(define BODY (rectangle (/ SWIDTH 4) (/ SHEIGHT 2) "solid" "red"))
-(define WHEEL (circle (* WHEEL_RADIUS 2) "solid" "black"))
-(define BG (empty-scene SWIDTH SHEIGHT))
+(define CAR_WIDTH (/ SWIDTH 4))
+(define CAR_HEIGHT (/ SHEIGHT 2.2))
 
-(define BODY_YPOS (- SHEIGHT (/ (image-height BODY) 1.8)))
-(define WHEEL_YPOS (- SHEIGHT WHEEL_RADIUS))
+(define BODY (rectangle CAR_WIDTH (/ SHEIGHT 2) "solid" "red"))
+(define WHEEL (circle (* WHEEL_RADIUS 2) "solid" "black"))
+(define CAR_BG (empty-scene CAR_WIDTH CAR_HEIGHT))
+(define CAR_XCENTER (/ CAR_WIDTH 2))
+(define WHEEL_YPOS (- CAR_HEIGHT WHEEL_RADIUS))
+
+(define CAR
+  (place-images
+   (list WHEEL WHEEL BODY)
+   (list (make-posn (- CAR_XCENTER WHEEL_DIST) WHEEL_YPOS)
+         (make-posn (+ CAR_XCENTER WHEEL_DIST) WHEEL_YPOS)
+         (make-posn CAR_XCENTER (- CAR_HEIGHT
+                                   (/ (image-height BODY) 1.8))))
+   CAR_BG))
+
+(define CAR_YPOS (- SHEIGHT
+                    (/ (image-height CAR) 2)))
+
+(define BG (empty-scene SWIDTH SHEIGHT))
 
 (define MOVE_SPEED 3) ; Pixels/tick
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
-; A WorldState is a Number
-; Interp.: the car's x-coordinate
+; A WorldState is a Number.
+; interpretation the number of pixels between the left
+; border of the scene and the car
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
 ; WorldState -> Image
 ; Renders image of car on the given x-coordinate
-(check-expect (render 15)
-              (place-images
-               (list WHEEL WHEEL BODY)
-               (list (make-posn (+ (- XCENTER WHEEL_DIST) 15) WHEEL_YPOS)
-                     (make-posn (+ (+ XCENTER WHEEL_DIST) 15) WHEEL_YPOS)
-                     (make-posn (+ XCENTER 15) BODY_YPOS))
-               BG))
+(check-expect (render 0)
+              (place-image CAR 0 CAR_YPOS BG))
 
 (define (render ws)
-  (place-images
-   (list WHEEL WHEEL BODY)
-   (list (make-posn (+ (- XCENTER WHEEL_DIST) ws) WHEEL_YPOS)
-         (make-posn (+ (+ XCENTER WHEEL_DIST) ws) WHEEL_YPOS)
-         (make-posn (+ XCENTER ws) BODY_YPOS))
-   BG))
+  (place-image CAR ws CAR_YPOS BG))
 
 ; WorldState -> WorldState
 ; Updates WorldState per tick
@@ -66,4 +73,4 @@ to right on the world canvas, three pixels per clock tick.
     [to-draw render]
     [on-tick time_step]))
 
-(main -100)
+(main 0)
