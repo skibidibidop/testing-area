@@ -30,12 +30,15 @@ way across the scene.
 (define HAP_GAUGE (rectangle SCN_WIDTH SCN_HEIGHT "solid" "red"))
 (define BG (empty-scene SCN_WIDTH SCN_HEIGHT))
 
-(define HALF_WIDTH_GAUGE (/ (image-width HAP_GAUGE) 2))
 
-(define MAX_GAUGE SCN_WIDTH)
+(define MAX_GAUGE (image-width HAP_GAUGE))
+(define HALF_GAUGE (/ (image-width HAP_GAUGE) 2))
 (define MIN_GAUGE 0)
 
 (define SAD_RATE 0.1)
+
+(define HAP_UP_SML (/ MAX_GAUGE 5))
+(define HAP_UP_BIG (/ MAX_GAUGE 3))
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
@@ -48,19 +51,20 @@ way across the scene.
 ; Happiness -> Image
 ; Draws HAP_GAUGE on BG, with HAP_GAUGE's position based on hpy
 (check-expect (render 0)
-              (place-image HAP_GAUGE (- 0 HALF_WIDTH_GAUGE) SCN_YCENTER BG))
+              (place-image HAP_GAUGE (- 0 HALF_GAUGE) SCN_YCENTER BG))
 
 (define (render hpy)
-  (place-image HAP_GAUGE (- hpy HALF_WIDTH_GAUGE) SCN_YCENTER BG))
+  (place-image HAP_GAUGE (- hpy HALF_GAUGE) SCN_YCENTER BG))
 
 ; Happiness -> Happiness
 ; Decreases hpy by SAD_RATE per tick without allowing it to fall below MIN_GAUGE
-(check-expect (time_step 0) 0)
+(check-expect (time_step 0) MIN_GAUGE)
 (check-expect (time_step 50) (- 50 SAD_RATE))
 (check-expect (time_step MAX_GAUGE) (- MAX_GAUGE SAD_RATE))
 
 (define (time_step hpy)
   (cond
-    [(<= hpy 0) 0]
+    [(<= hpy MIN_GAUGE) MIN_GAUGE]
     [else
      (- hpy SAD_RATE)]))
+
