@@ -46,3 +46,16 @@ What is the most appropriate initial state? Ask your engineering friends.
   (place-image
    (circle BULB_RADIUS "solid" lstate)
    XCENTER YCENTER BULB_CONTAINER))
+
+; Light_state -> Light_state
+; Updates Light_state per tick
+(check-expect (time_step "red") "yellow")
+(check-expect (time_step "yellow") "green")
+(check-expect (time_step "green") "red")
+
+(define (time_step lstate)
+  (cond
+    [(string=? lstate "red") "yellow"]
+    [(string=? lstate "yellow") "green"]
+    [(string=? lstate "green") "red"]
+    [else lstate]))
