@@ -12,20 +12,12 @@ What is the most appropriate initial state? Ask your engineering friends.
 (require 2htdp/universe)
 
 (define SCALER 10)
-(define SCN_WIDTH (* SCALER 10))
-(define SCN_HEIGHT (* SCALER 10))
-(define SCN_XCENTER (/ SCN_WIDTH 2))
-(define SCN_YCENTER (/ SCN_HEIGHT 2))
 
-(define BG (empty-scene SCN_WIDTH SCN_HEIGHT))
 (define BULB_CONTAINER (circle (* SCALER 5) "outline" "black"))
-(define BULB (circle (* SCALER 5) "solid" "red"))
-(define TLIGHT
-  (place-images
-   (list BULB_CONTAINER BULB)
-   (list (make-posn SCN_XCENTER SCN_YCENTER)
-         (make-posn SCN_XCENTER SCN_YCENTER))
-   BG))
+(define BULB_RADIUS (* SCALER 4.8))
+
+(define XCENTER (/ (image-width BULB_CONTAINER) 2))
+(define YCENTER (/ (image-height BULB_CONTAINER) 2))
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
@@ -37,3 +29,20 @@ What is the most appropriate initial state? Ask your engineering friends.
 ; "yellow" for slow down, "green" for go.
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
+
+; Light_state -> Image
+; Draws BULB on BULB_CONTAINER based on lstate
+(check-expect (render "red") (place-image
+                              (circle BULB_RADIUS "solid" "red")
+                              XCENTER YCENTER BULB_CONTAINER))
+(check-expect (render "yellow") (place-image
+                                 (circle BULB_RADIUS "solid" "yellow")
+                                 XCENTER YCENTER BULB_CONTAINER))
+(check-expect (render "green") (place-image
+                                (circle BULB_RADIUS "solid" "green")
+                                XCENTER YCENTER BULB_CONTAINER))
+
+(define (render lstate)
+  (place-image
+   (circle BULB_RADIUS "solid" lstate)
+   XCENTER YCENTER BULB_CONTAINER))
