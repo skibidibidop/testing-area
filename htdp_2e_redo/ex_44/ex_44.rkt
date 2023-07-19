@@ -72,7 +72,9 @@ them fail.
 (check-expect (hyper 42 10 20 "move") 42)
 
 (define (hyper x-position-of-car x-mouse y-mouse me)
-  x-position-of-car)
+  (cond
+    [(string=? "button-down" me) x-mouse]
+    [else x-position-of-car]))
 
 ; WorldState -> WorldState
 (define (main state)
