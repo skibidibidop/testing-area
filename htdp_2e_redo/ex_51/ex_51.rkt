@@ -11,7 +11,7 @@ What is the most appropriate initial state? Ask your engineering friends.
 (require 2htdp/image)
 (require 2htdp/universe)
 
-(define SCALER 10)
+(define SCALER 20)
 
 (define BULB_CONTAINER (circle (* SCALER 5) "outline" "black"))
 (define BULB_RADIUS (* SCALER 4.8))
@@ -59,3 +59,12 @@ What is the most appropriate initial state? Ask your engineering friends.
     [(string=? lstate "yellow") "green"]
     [(string=? lstate "green") "red"]
     [else lstate]))
+
+; MAIN /////////////////////////////////////////////////////////////////////////
+
+(define (main state)
+  (big-bang state
+    [to-draw render]
+    [on-tick time_step 0.5]))
+
+(main "red")
