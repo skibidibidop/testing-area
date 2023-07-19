@@ -21,6 +21,8 @@ reappears on the left. You may wish to read up on the modulo function.
 (define CAT (circle (* SCALER 2) "outline" "black"))
 (define BG (empty-scene SCN_WIDTH SCN_HEIGHT))
 
+(define MOVE_SPEED 3) ; Pixels per tick
+
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
 (define-struct catpos [x y])
@@ -40,3 +42,12 @@ reappears on the left. You may wish to read up on the modulo function.
                (catpos-x cpos)
                (catpos-y cpos)
                BG))
+
+; Catpos -> Catpos
+; Updates the position of CAT per tick
+(check-expect (time_step (make-catpos 30 90))
+              (make-catpos 33 90))
+
+(define (time_step cpos)
+  (make-catpos (+ (catpos-x cpos) MOVE_SPEED)
+               (catpos-y cpos)))
