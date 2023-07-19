@@ -16,3 +16,29 @@ Develop your favorite image of an automobile so that WHEEL-RADIUS
 remains the single point of control.
 |#
 
+(require 2htdp/image)
+
+(define WHEEL_RADIUS 10)
+(define WHEEL_DIST (* WHEEL_RADIUS 2.5))
+
+(define SWIDTH (* WHEEL_RADIUS 10))
+(define SHEIGHT (* WHEEL_RADIUS 10))
+(define XCENTER (/ SWIDTH 2))
+(define YCENTER (/ SHEIGHT 2))
+
+(define BG (empty-scene SWIDTH SHEIGHT))
+
+(define BODY (rectangle SWIDTH (/ SHEIGHT 2) "solid" "red"))
+(define WHEEL (circle (* WHEEL_RADIUS 2) "solid" "black"))
+
+(define WHEEL_YPOS (- SHEIGHT WHEEL_RADIUS))
+
+(place-images
+ (list WHEEL
+       WHEEL
+       BODY)
+ (list (make-posn (- XCENTER WHEEL_DIST) WHEEL_YPOS)
+       (make-posn (+ XCENTER WHEEL_DIST) WHEEL_YPOS)
+       (make-posn XCENTER (- SHEIGHT
+                             (/ (image-height BODY) 2))))
+ BG)
