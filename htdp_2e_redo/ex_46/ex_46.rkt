@@ -45,10 +45,12 @@ the HelpDesk, and use a cond expression to select cat images.
 ; Catpos -> Image
 ; Draws CAT on BG with its position based on cpos
 (check-expect (render (make-catpos 30 90))
-              (place-image CAT 30 90 BG))
+              (place-image CAT2 30 90 BG))
 
 (define (render cpos)
-  (place-image CAT
+  (place-image (if (odd? (catpos-x cpos))
+                   CAT
+                   CAT2)
                (catpos-x cpos)
                (catpos-y cpos)
                BG))
