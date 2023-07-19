@@ -14,12 +14,15 @@ reappears on the left. You may wish to read up on the modulo function.
 
 (define SCALER 10)
 (define SCN_WIDTH (* SCALER 50))
-(define SCN_HEIGHT (* SCALER 30))
+(define SCN_HEIGHT (* SCALER 20))
 (define XCENTER (/ SCN_WIDTH 2))
 (define YCENTER (/ SCN_WIDTH 2))
 
 (define CAT (circle (* SCALER 2) "outline" "black"))
 (define BG (empty-scene SCN_WIDTH SCN_HEIGHT))
+
+(define CAT_YPOS (- SCN_HEIGHT
+                    (/ (image-height CAT) 2)))
 
 (define MOVE_SPEED 3) ; Pixels per tick
 
@@ -51,3 +54,12 @@ reappears on the left. You may wish to read up on the modulo function.
 (define (time_step cpos)
   (make-catpos (+ (catpos-x cpos) MOVE_SPEED)
                (catpos-y cpos)))
+
+
+; Catpos -> Catpos
+(define (main state)
+  (big-bang state
+    [to-draw render]
+    [on-tick time_step]))
+
+(main (make-catpos 0 CAT_YPOS))
