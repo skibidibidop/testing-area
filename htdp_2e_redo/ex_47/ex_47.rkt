@@ -17,3 +17,27 @@ angle with a black frame. For a happiness level of 0, the red bar should be
 gone; for the maximum happiness level of 100, the bar should go all the
 way across the scene.
 |#
+
+(require 2htdp/image)
+(require 2htdp/universe)
+
+(define SCALER 10)
+(define SCN_WIDTH (* SCALER 50))
+(define SCN_HEIGHT SCALER)
+(define SCN_XCENTER (/ SCN_WIDTH 2))
+(define SCN_YCENTER (/ SCN_HEIGHT 2))
+
+(define HAP_GAUGE (rectangle SCN_WIDTH SCN_HEIGHT "solid" "red"))
+(define BG (empty-scene SCN_WIDTH SCN_HEIGHT))
+
+; DATA DEFINITION //////////////////////////////////////////////////////////////
+
+; A Happiness is a Number
+; Interp.: the number of pixels from the left border of the scene to the right
+; edge of the happiness gauge
+
+; FUNCTIONS ////////////////////////////////////////////////////////////////////
+
+; Happiness -> Image
+; Draws HAP_GAUGE on BG, with HAP_GAUGE's position based on hpy
+(check-expect 
