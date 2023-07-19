@@ -81,14 +81,26 @@ way across the scene.
 (check-expect (change_mood HALF_GAUGE "down") (+ HALF_GAUGE HAP_UP_SML))
 (check-expect (change_mood MAX_GAUGE "up") MAX_GAUGE)
 (check-expect (change_mood (- MAX_GAUGE 1) "down") MAX_GAUGE)
+(check-expect (change_mood 0 " ") 0)
 
 (define (change_mood hpy ke)
   (cond
-    [(or (>= (+ hpy HAP_UP_BIG) MAX_GAUGE)
-         (>= (+ hpy HAP_UP_SML) MAX_GAUGE))
+    [(and (key=? ke "up")
+          (>= (+ hpy HAP_UP_BIG) MAX_GAUGE))
      MAX_GAUGE]
-    [else
-     (cond
-       [(key=? ke "up") (+ hpy HAP_UP_BIG)]
-       [(key=? ke "down") (+ hpy HAP_UP_SML)]
-       [else hpy])]))
+    [(and (key=? ke "down")
+          (>= (+ hpy HAP_UP_SML) MAX_GAUGE))
+     MAX_GAUGE]
+    [(key=? ke "up") (+ hpy HAP_UP_BIG)]
+    [(key=? ke "down") (+ hpy HAP_UP_SML)]
+    [else hpy]))
+
+; MAIN /////////////////////////////////////////////////////////////////////////
+
+(define (main state)
+  (big-bang state
+    [to-draw render]
+    [on-tick time_step]
+    [on-key change_mood]))
+
+(main MAX_GAUGE)
