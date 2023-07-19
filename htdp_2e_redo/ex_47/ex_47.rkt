@@ -46,6 +46,12 @@ way across the scene.
 ; Interp.: the number of pixels from the left border of the scene to the right
 ; edge of the happiness gauge
 
+; A Boost is one of:
+; - "up"
+; - "down"
+; Interp.: Increases Happiness by 1/5 of max if the down key is pressed, and
+; by 1/3 of max if up key is pressed.
+
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
 ; Happiness -> Image
@@ -68,3 +74,5 @@ way across the scene.
     [else
      (- hpy SAD_RATE)]))
 
+; Happiness Boost -> Happiness
+; Increases hpy by
