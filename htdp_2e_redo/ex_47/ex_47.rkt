@@ -49,8 +49,8 @@ way across the scene.
 ; A Boost is one of:
 ; - "up"
 ; - "down"
-; Interp.: Increases Happiness by 1/5 of max if the down key is pressed, and
-; by 1/3 of max if up key is pressed.
+; Interp.: represents happiness boost amount. "up" for HAP_UP_BIG, and
+; "down" for HAP_UP_SML
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
@@ -75,4 +75,20 @@ way across the scene.
      (- hpy SAD_RATE)]))
 
 ; Happiness Boost -> Happiness
-; Increases hpy by
+; Increases hpy if up or down key is pressed by HAP_UP_BIG or
+; HAP_UP_SML, respectively.
+(check-expect (change_mood 0 "up") (+ 0 HAP_UP_BIG))
+(check-expect (change_mood HALF_GAUGE "down") (+ HALF_GAUGE HAP_UP_SML))
+(check-expect (change_mood MAX_GAUGE "up") MAX_GAUGE)
+(check-expect (change_mood (- MAX_GAUGE 1) "down") MAX_GAUGE)
+
+(define (change_mood hpy ke)
+  (cond
+    [(or (>= (+ hpy HAP_UP_BIG) MAX_GAUGE)
+         (>= (+ hpy HAP_UP_SML) MAX_GAUGE))
+     MAX_GAUGE]
+    [else
+     (cond
+       [(key=? ke "up") (+ hpy HAP_UP_BIG)]
+       [(key=? ke "down") (+ hpy HAP_UP_SML)]
+       [else hpy])]))
