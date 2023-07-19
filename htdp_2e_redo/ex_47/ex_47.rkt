@@ -32,6 +32,11 @@ way across the scene.
 
 (define HALF_WIDTH_GAUGE (/ (image-width HAP_GAUGE) 2))
 
+(define MAX_GAUGE SCN_WIDTH)
+(define MIN_GAUGE 0)
+
+(define SAD_RATE 0.1)
+
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
 ; A Happiness is a Number
@@ -47,3 +52,15 @@ way across the scene.
 
 (define (render hpy)
   (place-image HAP_GAUGE (- hpy HALF_WIDTH_GAUGE) SCN_YCENTER BG))
+
+; Happiness -> Happiness
+; Decreases hpy by SAD_RATE per tick without allowing it to fall below MIN_GAUGE
+(check-expect (time_step 0) 0)
+(check-expect (time_step 50) (- 50 SAD_RATE))
+(check-expect (time_step MAX_GAUGE) (- MAX_GAUGE SAD_RATE))
+
+(define (time_step hpy)
+  (cond
+    [(<= hpy 0) 0]
+    [else
+     (- hpy SAD_RATE)]))
