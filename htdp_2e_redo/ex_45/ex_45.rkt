@@ -26,6 +26,10 @@ reappears on the left. You may wish to read up on the modulo function.
 
 (define MOVE_SPEED 3) ; Pixels per tick
 
+(define OUT_OF_BOUNDS (+ SCN_WIDTH
+                         (/ (image-width CAT) 2)))
+(define STARTING_POS (/ (image-width CAT) 2))
+
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
 (define-struct catpos [x y])
@@ -52,9 +56,13 @@ reappears on the left. You may wish to read up on the modulo function.
               (make-catpos 33 90))
 
 (define (time_step cpos)
-  (make-catpos (+ (catpos-x cpos) MOVE_SPEED)
-               (catpos-y cpos)))
-
+  (make-catpos
+   (cond
+     [(>= (catpos-x cpos) OUT_OF_BOUNDS)
+      STARTING_POS]
+     [else
+      (+ (catpos-x cpos) MOVE_SPEED)])
+     (catpos-y cpos)))
 
 ; Catpos -> Catpos
 (define (main state)
