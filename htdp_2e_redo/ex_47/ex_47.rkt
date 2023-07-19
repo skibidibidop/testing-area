@@ -30,6 +30,8 @@ way across the scene.
 (define HAP_GAUGE (rectangle SCN_WIDTH SCN_HEIGHT "solid" "red"))
 (define BG (empty-scene SCN_WIDTH SCN_HEIGHT))
 
+(define HALF_WIDTH_GAUGE (/ (image-width HAP_GAUGE) 2))
+
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
 ; A Happiness is a Number
@@ -40,4 +42,8 @@ way across the scene.
 
 ; Happiness -> Image
 ; Draws HAP_GAUGE on BG, with HAP_GAUGE's position based on hpy
-(check-expect 
+(check-expect (render 0)
+              (place-image HAP_GAUGE (- 0 HALF_WIDTH_GAUGE) SCN_YCENTER BG))
+
+(define (render hpy)
+  (place-image HAP_GAUGE (- hpy HALF_WIDTH_GAUGE) SCN_YCENTER BG))
