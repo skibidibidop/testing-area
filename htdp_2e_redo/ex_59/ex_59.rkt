@@ -33,7 +33,16 @@ traffic light FSA.
 
 ; Traffic_light -> Traffic_light
 ; Yields the next state, given the current state cs
-(define (tl_next cs) cs)
+(check-expect (tl_next "red") "green")
+(check-expect (tl_next "green") "yellow")
+(check-expect (tl_next "yellow") "red")
+
+(define (tl_next cs)
+  (cond
+    [(string=? cs "red") "green"]
+    [(string=? cs "green") "yellow"]
+    [(string=? cs "yellow") "red"]
+    [else cs]))
 
 ; Traffic_light -> Image
 ; Renders the current state cs as an Image
@@ -61,7 +70,7 @@ traffic light FSA.
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
-; TrafficLight -> TrafficLight
+; Traffic_Light -> Traffic_Light
 ; simulates a clock-based American traffic light
 (define (tl_sim state)
   (big-bang state
