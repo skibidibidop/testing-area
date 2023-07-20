@@ -1,0 +1,42 @@
+#|
+Author: Mark Beltran
+Date: July 20, 2023
+
+Tax Land sample problem
+
+< $1,000: no tax
+$1,000 to $9,999: 5% tax
+>= $10,000: 8% tax
+
+Exercise 58. Introduce constant definitions that separate the intervals
+for low prices and luxury prices from the others so that the legislators in
+Tax Land can easily raise the taxes even more.
+|#
+
+(require 2htdp/universe)
+
+(define CHEAP_LIM 1000)
+(define MID_LIM 9999)
+(define LUXURY_START 10000)
+(define FIVE_PCENT 0.05)
+(define EIGHT_PCENT 0.08)
+
+; A Price falls into on of these intervals:
+; -- 0 through 999
+; -- 1000 to 10000
+; -- above 10000
+; Interpretation: the price of an item
+
+; Price -> Number
+; Computes the tax for p
+(check-expect (sales_tax 0) 0)
+(check-expect (sales_tax 545) (* 0 545))
+(check-expect (sales_tax 1000) (* FIVE_PCENT 1000))
+(check-expect (sales_tax 5689) (* FIVE_PCENT 5689))
+(check-expect (sales_tax 9999) (* FIVE_PCENT 9999))
+(check-expect (sales_tax 10000) (* EIGHT_PCENT 10000))
+(check-expect (sales_tax 12341) (* EIGHT_PCENT 12341))
+(define (sales_tax p)
+  (cond[(< p CHEAP_LIM) 0]
+       [(<= CHEAP_LIM p MID_LIM) (* FIVE_PCENT p)]
+       [(>= p LUXURY_START) (* EIGHT_PCENT p)]))
