@@ -9,16 +9,19 @@ traffic light FSA.
 (require 2htdp/image)
 (require 2htdp/universe)
 
-(define SCALER 10)
+(define SCALER 100)
 (define BULB_RAD SCALER)
-(define BULB_OUTLINE_RAD (* SCALER 1.2))
+(define BULB_OUTLINE_RAD (* SCALER 1.1))
 
 (define BULB_OUTLINE (circle BULB_OUTLINE_RAD "outline" "black"))
 
-(define CENTER (/ BULB_OUTLINE_RAD 2))
-(define DIAMETER (* SCALER 2))
+(define SCN_WIDTH (* SCALER 5))
+(define SCN_HEIGHT (* SCALER 5))
 
-(define BG (empty-scene DIAMETER DIAMETER))
+(define XCENTER (/ SCN_WIDTH 2))
+(define YCENTER (/ SCN_HEIGHT 2))
+
+(define BG (empty-scene SCN_WIDTH SCN_HEIGHT))
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
@@ -50,24 +53,24 @@ traffic light FSA.
 (check-expect (tl_render "red")
               (place-image
                (circle BULB_RAD "solid" "red")
-               CENTER CENTER
-               (place-image BULB_OUTLINE CENTER CENTER BG)))
+               XCENTER YCENTER
+               (place-image BULB_OUTLINE XCENTER YCENTER BG)))
 (check-expect (tl_render "yellow")
               (place-image
                (circle BULB_RAD "solid" "yellow")
-               CENTER CENTER
-               (place-image BULB_OUTLINE CENTER CENTER BG)))
+               XCENTER YCENTER
+               (place-image BULB_OUTLINE XCENTER YCENTER BG)))
 (check-expect (tl_render "green")
               (place-image
                (circle BULB_RAD "solid" "green")
-               CENTER CENTER
-               (place-image BULB_OUTLINE CENTER CENTER BG)))
+               XCENTER YCENTER
+               (place-image BULB_OUTLINE XCENTER YCENTER BG)))
 
 (define (tl_render cs)
   (place-image
    (circle BULB_RAD "solid" cs)
-   CENTER CENTER
-   (place-image BULB_OUTLINE CENTER CENTER BG)))
+   XCENTER YCENTER
+   (place-image BULB_OUTLINE XCENTER YCENTER BG)))
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
