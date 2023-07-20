@@ -36,13 +36,14 @@ traffic light FSA.
 (check-expect (tl_next "red") "green")
 (check-expect (tl_next "green") "yellow")
 (check-expect (tl_next "yellow") "red")
+(check-expect (tl_next "black") "red")
 
 (define (tl_next cs)
   (cond
     [(string=? cs "red") "green"]
     [(string=? cs "green") "yellow"]
     [(string=? cs "yellow") "red"]
-    [else cs]))
+    [else "red"]))
 
 ; Traffic_light -> Image
 ; Renders the current state cs as an Image
