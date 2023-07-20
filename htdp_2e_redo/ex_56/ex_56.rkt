@@ -107,13 +107,13 @@ the rocket is out of sight.
 ; Terminates the program if the rocket is fully out of the scene
 (check-expect (escaped? "resting") #false)
 (check-expect (escaped? -3) #false)
-(check-expect (escaped? (- 0 CENTER)) #true)
+(check-expect (escaped? 0) #true)
 
 (define (escaped? x)
   (cond
     [(string? x) #false]
     [else
-     (<= x (- 0 CENTER))]))
+     (= x 0)]))
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
