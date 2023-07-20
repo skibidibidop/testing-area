@@ -49,24 +49,26 @@ the rocket is out of sight.
                            10 (* 3/4 WIDTH)
                            (place-image ROCKET 10 (- HEIGHT CENTER) BACKG)))
 (check-expect (show 53)
-              (place-image ROCKET 10 53 BACKG))
+              (place-image ROCKET 10 (- 53 CENTER) BACKG))
+(check-expect (show HEIGHT)
+              (place-image ROCKET 10 (- HEIGHT CENTER) BACKG))
 
 (define (show x)
   (cond
     [(string? x)
-     (show_aux (- HEIGHT CENTER))]
+     (show_aux HEIGHT)]
     [(<= -3 x -1)
      (place-image (text (number->string x) 20 "red")
                   10 (
                       * 3/4 WIDTH)
-                  (show_aux (- HEIGHT CENTER)))]
+                  (show_aux HEIGHT))]
     [(>= x 0)
      (show_aux x)]))
 
 ; Number -> Image
 ; Draws ROCKET on BACKG, with its x-coordinate based on pos
 (define (show_aux pos)
-  (place-image ROCKET 10 pos BACKG))
+  (place-image ROCKET 10 (- pos CENTER) BACKG))
 
 ; LRCD KeyEvent -> LRCD
 ; starts the countdown when space bar is pressed,
