@@ -5,6 +5,11 @@
 Author: Mark Beltran
 Date: July 20, 2023
 
+(define (distance-to-0 ap)
+  (sqrt
+   (+ (sqr (posn-x ap))
+      (sqr (posn-y ap)))))
+
 Exercise 63. Evaluate the following expressions:
 
 • (distance-to-0 (make-posn 3 4))
