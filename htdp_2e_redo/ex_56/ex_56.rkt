@@ -43,32 +43,30 @@ the rocket is out of sight.
 ; LRCD -> Image
 ; renders the state as a resting or flying rocket
 (check-expect (show "resting")
-              (place-image ROCKET 10 HEIGHT BACKG))
+              (place-image ROCKET 10 (- HEIGHT CENTER) BACKG))
 (check-expect (show -2)
               (place-image (text "-2" 20 "red")
                            10 (* 3/4 WIDTH)
-                           (place-image ROCKET 10 HEIGHT BACKG)))
+                           (place-image ROCKET 10 (- HEIGHT CENTER) BACKG)))
 (check-expect (show 53)
               (place-image ROCKET 10 53 BACKG))
 
 (define (show x)
   (cond
     [(string? x)
-     (show_aux HEIGHT)]
+     (show_aux (- HEIGHT CENTER))]
     [(<= -3 x -1)
      (place-image (text (number->string x) 20 "red")
                   10 (
                       * 3/4 WIDTH)
-                  (show_aux HEIGHT))]
+                  (show_aux (- HEIGHT CENTER)))]
     [(>= x 0)
-     (show_aux 10)]))
+     (show_aux x)]))
 
 ; Number -> Image
 ; Draws ROCKET on BACKG, with its x-coordinate based on pos
 (define (show_aux pos)
-  (place-image ROCKET
-               10 (- pos CENTER)
-               BACKG))
+  (place-image ROCKET 10 pos BACKG))
 
 ; LRCD KeyEvent -> LRCD
 ; starts the countdown when space bar is pressed,
@@ -92,3 +90,11 @@ the rocket is out of sight.
 ; if it is moving already
 (define (fly x)
 x)
+
+; MAIN /////////////////////////////////////////////////////////////////////////
+
+; LRCD -> LRCD
+(define (main1 s)
+  (big-bang s
+    [to-draw show]
+    [on-key launch]))
