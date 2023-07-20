@@ -20,3 +20,21 @@ by hand. Show all steps. Assume that sqr performs its computation in a
 single step. Check the results with DrRacket’s stepper.
 |#
 
+; (distance-to-0 (make-posn 3 4))
+; Get the square of 3. 9
+; Get the square of 4. 16
+; Add these two. 25
+; Get the square root. 5
+
+; (distance-to-0 (make-posn 6 (* 2 4)))
+; Get the square of 6. 36
+; Get the square of 8. 64
+; Add these two. 100
+; Get the square root. 10
+
+; (+ (distance-to-0 (make-posn 12 5)) 10)
+; Get the square of 12. 144
+; Get the square of 5. 25
+; Add these two. 169
+; Get the square root. 13
+; Add 10. 23
