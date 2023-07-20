@@ -1,3 +1,6 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-intermediate-reader.ss" "lang")((modname ex_60) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: July 20, 2023
@@ -17,6 +20,10 @@ It greatly simplifies the definition of tl-next:
 Reformulate tl-next’s tests for tl-next-numeric.
 Does the tl-next function convey its intention more clearly than the
 tl-next-numeric function? If so, why? If not, why not?
+
+In my opinion, tl-next is more readable than tl-next-numeric. We
+don't have to associate a number with a color, we just know that the
+string "red" means that the light will be red.
 |#
 
 (require 2htdp/image)
@@ -39,41 +46,35 @@ tl-next-numeric function? If so, why? If not, why not?
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
 ; A Traffic_light is one of:
-; - "red"
-; - "yellow"
-; - "green"
-; Interp.: represents a traffic light state. "red" for stop, "yellow" for
-; slow down, and "green" for go.
+; - 0
+; - 1
+; - 2
+; Interp.: represents a traffic light state. 0 for stop, 1 for go, and 2
+; for slow down
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
 ; Traffic_light -> Traffic_light
 ; Yields the next state, given the current state cs
-(check-expect (tl_next "red") "green")
-(check-expect (tl_next "green") "yellow")
-(check-expect (tl_next "yellow") "red")
-(check-expect (tl_next "black") "red")
+(check-expect (tl_next 0) 1)
+(check-expect (tl_next 1) 2)
+(check-expect (tl_next 2) 0)
 
-(define (tl_next cs)
-  (cond
-    [(string=? cs "red") "green"]
-    [(string=? cs "green") "yellow"]
-    [(string=? cs "yellow") "red"]
-    [else "red"]))
+(define (tl_next cs)(modulo (+ cs 1) 3))
 
 ; Traffic_light -> Image
 ; Renders the current state cs as an Image
-(check-expect (tl_render "red")
+(check-expect (tl_render 0)
               (place-image
                (circle BULB_RAD "solid" "red")
                XCENTER YCENTER
                (place-image BULB_OUTLINE XCENTER YCENTER BG)))
-(check-expect (tl_render "yellow")
+(check-expect (tl_render 2)
               (place-image
                (circle BULB_RAD "solid" "yellow")
                XCENTER YCENTER
                (place-image BULB_OUTLINE XCENTER YCENTER BG)))
-(check-expect (tl_render "green")
+(check-expect (tl_render 1)
               (place-image
                (circle BULB_RAD "solid" "green")
                XCENTER YCENTER
@@ -81,7 +82,11 @@ tl-next-numeric function? If so, why? If not, why not?
 
 (define (tl_render cs)
   (place-image
-   (circle BULB_RAD "solid" cs)
+   (circle BULB_RAD "solid"
+           (cond [(= cs 0) "red"]
+                 [(= cs 1) "green"]
+                 [(= cs 2) "yellow"]
+                 [else "red"]))
    XCENTER YCENTER
    (place-image BULB_OUTLINE XCENTER YCENTER BG)))
 
