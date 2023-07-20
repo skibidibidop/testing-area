@@ -90,8 +90,18 @@ the rocket is out of sight.
 ; LRCD -> LRCD
 ; raises the rocket by YDELTA,
 ; if it is moving already
+(check-expect (fly "resting") "resting")
+(check-expect (fly -3) -2)
+(check-expect (fly -2) -1)
+(check-expect (fly -1) HEIGHT)
+(check-expect (fly 10) (- 10 YDELTA))
+(check-expect (fly 22) (- 22 YDELTA))
+
 (define (fly x)
-x)
+  (cond
+    [(string? x) x]
+    [(<= -3 x -1) (if (= x -1) HEIGHT (+ x 1))]
+    [(>= x 0) (- x YDELTA)]))
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
@@ -99,4 +109,10 @@ x)
 (define (main1 s)
   (big-bang s
     [to-draw show]
+    [on-key launch]))
+
+(define (main2 s)
+  (big-bang s
+    [to-draw show]
+    [on-tick fly 0.5]
     [on-key launch]))
