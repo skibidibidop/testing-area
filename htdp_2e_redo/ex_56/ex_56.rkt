@@ -103,6 +103,18 @@ the rocket is out of sight.
     [(<= -3 x -1) (if (= x -1) HEIGHT (+ x 1))]
     [(>= x 0) (- x YDELTA)]))
 
+; LRCD -> Boolean
+; Terminates the program if the rocket is fully out of the scene
+(check-expect (escaped? "resting") #false)
+(check-expect (escaped? -3) #false)
+(check-expect (escaped? (- 0 CENTER)) #true)
+
+(define (escaped? x)
+  (cond
+    [(string? x) #false]
+    [else
+     (<= x (- 0 CENTER))]))
+
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
 ; LRCD -> LRCD
@@ -114,5 +126,6 @@ the rocket is out of sight.
 (define (main2 s)
   (big-bang s
     [to-draw show]
-    [on-tick fly 0.5]
-    [on-key launch]))
+    [on-key launch]
+    [on-tick fly 0.1]
+    [stop-when escaped?]))
