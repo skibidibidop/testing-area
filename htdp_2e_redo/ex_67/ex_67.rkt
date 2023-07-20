@@ -12,6 +12,13 @@ very beginning of this chapter. The ball’s location is a single
 number, namely the distance of pixels from the top. Its constant
 speed is the number of pixels it moves per clock tick. Its velocity
 is the speed plus the direction in which it moves.
+
+Exercise 67. Here is another way to represent bouncing balls:
+(define SPEED 3)
+(define-struct balld [location direction])
+(make-balld 10 "up")
+
+Interpret this code fragment and create other instances of balld.
 |#
 
 (define-struct ball [loc vel])
@@ -19,3 +26,15 @@ is the speed plus the direction in which it moves.
 ; Interp.: (make-ball 10 -3), represents:
 ; the ball's location, 10 pixels from the top
 ; the ball's velocity, moving upward 3 pixels per tick
+
+(define SPEED 3)
+(define-struct balld [location direction])
+; Interp.: (make-balld 10 "up"), represents:
+; the ball's location, 10 pixels from the top
+; the ball's current direction "up"
+
+; Since balld-direction only contains the balls direction and
+; not its velocity, we have to define a constant for speed.
+
+(make-balld 20 "down")
+(make-balld 15 "up")
