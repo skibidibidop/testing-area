@@ -17,8 +17,13 @@ as a guide to the design of render.
 (require 2htdp/image)
 
 (define SCALER 1)
+(define SWIDTH (* SCALER 200))
+(define SHEIGHT (* SCALER 20))
 
-(define BG (empty-scene (* SCALER 200) (* SCALER 20)))
+(define BG (empty-scene SWIDTH SHEIGHT))
+(define XCENTER (/ SWIDTH 2))
+(define YCENTER (/ SHEIGHT 2))
+  
 (define CURSOR (rectangle SCALER (* SCALER 20) "solid" "red"))
 (define FONT_SIZE (* SCALER 16))
 (define FONT_COLOR "black")
@@ -42,8 +47,16 @@ as a guide to the design of render.
 ; Editor -> Image
 ; Produces an Image based on the data from the provided Editor
 (check-expect (render (make-editor " " " "))
-              (place-image (beside
-                            (text " " FONT_SIZE FONT_COLOR)
-                            (text " " FONT_SIZE FONT_COLOR))
+              (overlay/align "left" "center"
+                             (beside
+                              (text " " FONT_SIZE FONT_COLOR)
+                              (text " " FONT_SIZE FONT_COLOR))
+                             BG))
 
-
+(define (render ed)
+  (overlay/align "left" "center"
+                 (beside
+                  (text (editor-pre ed) FONT_SIZE FONT_COLOR)
+                  (text (editor-post ed) FONT_SIZE FONT_COLOR))
+                 BG))
+                           
