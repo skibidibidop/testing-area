@@ -46,6 +46,15 @@ gaining experience.
 
 ; A Non_neg_int is a non-negative integer
 
+; A Valid_key is one of:
+; "a" to "z"
+; "A" to "Z"
+; "left"
+; "right"
+; "\b"
+; special characters (!, ?, *, ,, (, ), etc.)
+
+
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
 ; Editor -> Image
@@ -69,6 +78,27 @@ gaining experience.
                                    (editor-index ed))
                         FONT_SIZE FONT_COLOR))
                  BG))
-                  
+
+; Editor Valid_key -> Editor
+; Updates Editor ed based on Valid_key vk
+(define empty_ed (make-editor "" 0))
+(define multi_ed (make-editor "!a2:" 1))
+
+(check-expect (edit empty_ed "a")     (make-editor "a" 1))
+(check-expect (edit empty_ed "B")     (make-editor "B" 1))
+(check-expect (edit empty_ed "left")  empty_ed)
+(check-expect (edit empty_ed "right") empty_ed)
+(check-expect (edit empty_ed "\b")    empty_ed)
+(check-expect (edit empty_ed "!")     (make-editor "!" 1))
+(check-expect (edit empty_ed "\t")    empty_ed)
+(check-expect (edit multi_ed "c")     (make-editor "!ca2:" 2))
+(check-expect (edit multi_ed "D")     (make-editor "!Da2:" 2))
+(check-expect (edit multi_ed "left")  (make-editor "!a2:" 0))
+(check-expect (edit multi_ed "right") (make-editor "!a2:" 2))
+(check-expect (edit multi_ed "\b")    (make-editor "a2:" 0))
+(check-expect (edit multi_ed "*")     (make-editor "!*a2:" 2))
+(check-expect (edit multi_ed "\r")    multi_ed)
+
+(define (edit ed vk) ed)
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
