@@ -185,5 +185,13 @@ solve the exercises in chapter 2.1.
      (substring str SECOND_POS)]))
 
 ; String -> 1String
-;
-(define (get_last str) str) 
+; Returns the last 1String of String str
+(check-expect (get_last "") "")
+(check-expect (get_last "d") "d")
+(check-expect (get_last "D&") "&")
+              
+(define (get_last str)
+  (cond
+    [(string=? str "") ""]
+    [else
+     (string-ith str (- (string-length str) 1))]))
