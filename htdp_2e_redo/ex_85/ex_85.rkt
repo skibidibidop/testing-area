@@ -58,6 +58,7 @@ two exercises for the to-draw and on-key clauses, respectively.
               (overlay/align "left" "center"
                              (beside
                               (text " " FONT_SIZE FONT_COLOR)
+                              CURSOR
                               (text " " FONT_SIZE FONT_COLOR))
                              BG))
 
@@ -65,6 +66,7 @@ two exercises for the to-draw and on-key clauses, respectively.
   (overlay/align "left" "center"
                  (beside
                   (text (editor-pre ed) FONT_SIZE FONT_COLOR)
+                  CURSOR
                   (text (editor-post ed) FONT_SIZE FONT_COLOR))
                  BG))
 
