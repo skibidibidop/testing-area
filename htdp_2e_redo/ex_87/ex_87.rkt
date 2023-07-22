@@ -15,6 +15,10 @@ the complexity of each. Of course, getting good at this is a question of
 gaining experience.
 |#
 
+; This is unnecessarily complicated. I won't bother debugging since
+; I feel that my progress has been too slow. I understand that the point of
+; this exercise is to show me that good data representation is crucial. 
+
 (require 2htdp/universe)
 (require 2htdp/image)
 
@@ -116,7 +120,9 @@ gaining experience.
 
 (define (bckspc ed)
   (cond
-    [(string=? (editor-text ed) "") (make-editor "" 0)]
+    [(or (string=? (editor-text ed) "")
+         (= (editor-index ed) 0))
+     ed]
     [else
      (make-editor
       (string-append
@@ -146,9 +152,19 @@ gaining experience.
     [else
      (make-editor (editor-text ed) (+ (editor-index ed) 1))]))
 
-;
-;
-(define (ins_char ed vk) ed)
+; Editor Valid_key -> Editor
+; Inserts Valid_key to the left of the cursor
+(check-expect (ins_char empty_ed "a") (make-editor "a" 1))
+(check-expect (ins_char empty_ed "&") (make-editor "&" 1))
+(check-expect (ins_char multi_ed "^") (make-editor "!^a2:" 2))
+
+(define (ins_char ed vk)
+  (make-editor
+   (string-append
+    (substring (editor-text ed) FIRST_POS (editor-index ed))
+    vk
+    (substring (editor-text ed) (editor-index ed)))
+   (+ (editor-index ed) 1)))
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
