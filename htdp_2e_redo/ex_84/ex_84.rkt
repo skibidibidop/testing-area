@@ -45,6 +45,7 @@ solve the exercises in chapter 2.1.
 (define FONT_COLOR "black")
 
 (define FIRST_POS 0)
+(define SECOND_POS 1)
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
@@ -172,9 +173,17 @@ solve the exercises in chapter 2.1.
      (string-ith str FIRST_POS)]))
 
 ; String -> String
-;
-(define (del_first str) str)
+; Removes the first 1String of String str
+(check-expect (del_first "") "")
+(check-expect (del_first "c") "")
+(check-expect (del_first "C*") "*")
+
+(define (del_first str)
+  (cond
+    [(string=? str "") ""]
+    [else
+     (substring str SECOND_POS)]))
 
 ; String -> 1String
 ;
-(define (get_last str) str)
+(define (get_last str) str) 
