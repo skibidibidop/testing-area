@@ -30,6 +30,8 @@ your canvas.
 (define FIRST_POS 0)
 (define SECOND_POS 1)
 
+(define CHAR_LIM 22)
+
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
 (define-struct editor [pre post])
@@ -130,7 +132,9 @@ your canvas.
       (string-append (get_last (editor-pre ed)) (editor-post ed)))]
     [(and (= (string-length vk) 1)
           (not (key=? vk "\t"))
-          (not (key=? vk "\r")))
+          (not (key=? vk "\r"))
+          (< (string-length (string-append (editor-pre ed) (editor-post ed)))
+             CHAR_LIM))
      (make-editor
       (string-append (editor-pre ed) vk) (editor-post ed))]
     [else ed]))
