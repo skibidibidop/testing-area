@@ -29,16 +29,16 @@ solve the exercises in chapter 2.1.
 (require 2htdp/universe)
 (require 2htdp/image)
 
-(define SCALER 1)
-(define SWIDTH (* SCALER 200))
+(define SCALER  1)
+(define SWIDTH  (* SCALER 200))
 (define SHEIGHT (* SCALER 20))
 
-(define BG (empty-scene SWIDTH SHEIGHT))
+(define BG      (empty-scene SWIDTH SHEIGHT))
 (define XCENTER (/ SWIDTH 2))
 (define YCENTER (/ SHEIGHT 2))
   
-(define CURSOR (rectangle SCALER (* SCALER 20) "solid" "red"))
-(define FONT_SIZE (* SCALER 16))
+(define CURSOR     (rectangle SCALER (* SCALER 20) "solid" "red"))
+(define FONT_SIZE  (* SCALER 16))
 (define FONT_COLOR "black")
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
@@ -54,6 +54,14 @@ solve the exercises in chapter 2.1.
 (overlay/align "left" "center"
                (text "hello world" 11 "black")
                (empty-scene 200 20))
+
+; A Valid_key is one of:
+; "a" to "z"
+; "A" to "Z"
+; "left"
+; "right"
+; "\b"
+; special characters (!, ?, *, ,, (, ), etc.)
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
@@ -72,4 +80,47 @@ solve the exercises in chapter 2.1.
                   (text (editor-pre ed) FONT_SIZE FONT_COLOR)
                   (text (editor-post ed) FONT_SIZE FONT_COLOR))
                  BG))
-                           
+
+; Editor Valid_key -> Editor
+; Updates Editor ed based on Valid_key vk
+(define empty_both  (make-editor "" ""))
+(define spaces_only (make-editor " " " "))
+(define single_pre  (make-editor "a" ""))
+(define single_post (make-editor "" "b"))
+(define multi_both  (make-editor "ghi" "!jk"))
+
+(check-expect (edit empty_both "z")      (make-editor "z" ""))
+(check-expect (edit empty_both "F")      (make-editor "F" ""))
+(check-expect (edit empty_both "left")   empty_both)
+(check-expect (edit empty_both "right")  empty_both)
+(check-expect (edit empty_both "*")      (make-editor "*" ""))
+(check-expect (edit empty_both "\b")     empty_both)
+(check-expect (edit empty_both "\r")     empty_both)
+(check-expect (edit spaces_only "u")     (make-editor " u" " "))
+(check-expect (edit spaces_only "I")     (make-editor " I" " "))
+(check-expect (edit spaces_only "left")  (make-editor "" "  "))
+(check-expect (edit spaces_only "right") (make-editor "  " ""))
+(check-expect (edit spaces_only "(")     (make-editor " (" " "))
+(check-expect (edit spaces_only "\b")    (make-editor "" " "))
+(check-expect (edit spaces_only "\t")    spaces_only)
+(check-expect (edit single_pre "r")      (make-editor "ar" ""))
+(check-expect (edit single_pre "S")      (make-editor "aS" ""))
+(check-expect (edit single_pre "left")   (make-editor "" "a"))
+(check-expect (edit single_pre "right")  (make-editor "a" ""))
+(check-expect (edit single_pre "&")      (make-editor "a&" ""))
+(check-expect (edit single_pre "\b")     (make-editor "" ""))
+(check-expect (edit single_pre "\t")     single_pre)
+(check-expect (edit single_post "l")     (make-editor "l" "b"))
+(check-expect (edit single_post "left")  single_post)
+(check-expect (edit single_post "right") (make-editor "b" ""))
+(check-expect (edit single_post "#")     (make-editor "#" "b"))
+(check-expect (edit single_post "\b")    single_post)
+(check-expect (edit single_post "\r")    single_post)
+(check-expect (edit multi_both "j")      (make-editor "ghij" "!jk"))
+(check-expect (edit multi_both "C")      (make-editor "ghiC" "!jk"))
+(check-expect (edit multi_both "left")   (make-editor "gh" "i!jk"))
+(check-expect (edit multi_both "right")  (make-editor "ghi!" "jk"))
+(check-expect (edit multi_both "@")      (make-editor "ghi@" "!jk"))
+(check-expect (edit 
+
+(define (edit ed vk) ed)
