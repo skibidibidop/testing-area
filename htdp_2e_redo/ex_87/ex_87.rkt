@@ -102,3 +102,9 @@ gaining experience.
 (define (edit ed vk) ed)
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
+
+; Editor -> Editor
+(define (run edit_this)
+  (big-bang edit_this
+    [to-draw render]
+    [on-key edit]))
