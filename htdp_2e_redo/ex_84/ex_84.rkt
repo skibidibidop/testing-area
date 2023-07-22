@@ -127,4 +127,23 @@ solve the exercises in chapter 2.1.
 (check-expect (edit multi_both "\b")     (make-editor "gh" "!jk"))
 (check-expect (edit multi_both "\t")     multi_both)
 
-(define (edit ed vk) ed)
+(define (edit ed vk)
+  (cond
+    [(key=? vk "\b")
+     (make-editor
+      (del_last (editor-pre ed)) (editor-post ed))]
+    [(key=? vk "right")
+     (make-editor
+      (string-append (editor-pre ed) (get_first (editor-post ed)))
+      (del_first (editor-post ed)))]
+    [(key=? vk "left")
+     (make-editor
+      (del_last (editor-pre ed))
+      (string-append (get_last (editor-pre ed)) (editor-post ed)))]
+    [(and (not (key=? vk "\t")) (not (key=? vk "\r")))
+     (make-editor
+      (string-append (editor-pre ed) vk) (editor-post ed))]
+    [else ed]))
+
+;
+(define (del_last)
