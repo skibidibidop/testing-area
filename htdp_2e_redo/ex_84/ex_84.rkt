@@ -151,4 +151,20 @@ solve the exercises in chapter 2.1.
 (check-expect (del_last "a") "")
 (check-expect (del_last "A!") "A")
 
-(define (del_last str) str)
+(define (del_last str)
+  (cond
+    [(string=? str "") ""]
+    [else
+     (substring str 0 (- (string-length str) 1))]))
+
+; String -> 1String
+;
+(define (get_first str) str)
+
+; String -> String
+;
+(define (del_first str) str)
+
+; String -> 1String
+;
+(define (get_last str) str)
