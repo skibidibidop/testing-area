@@ -124,7 +124,9 @@ two exercises for the to-draw and on-key clauses, respectively.
      (make-editor
       (del_last (editor-pre ed))
       (string-append (get_last (editor-pre ed)) (editor-post ed)))]
-    [(and (not (key=? vk "\t")) (not (key=? vk "\r")))
+    [(and (= (string-length vk) 1)
+          (not (key=? vk "\t"))
+          (not (key=? vk "\r")))
      (make-editor
       (string-append (editor-pre ed) vk) (editor-post ed))]
     [else ed]))
