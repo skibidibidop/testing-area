@@ -101,6 +101,12 @@ gaining experience.
 
 (define (edit ed vk)
   (cond
+    [(and (string=? (editor-text ed) "")
+          (or (string-alphabetic? vk)
+              (string-numeric? vk)
+              (= (string-length vk) 1)
+              (string=? vk " ")))
+     (make-editor vk 1)]
     [(and (key=? vk "\b")
           (not (string=? (editor-text ed) "")))
      (make-editor
@@ -109,7 +115,8 @@ gaining experience.
                   (- (editor-index ed) 1))
        (substring (editor-text ed) (editor-index ed)))
       (- (editor-index ed) 1))]
-    [else ed]))
+    [(and (key=? vk "left")
+          (not (string=? (editor-text ed) "")
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
