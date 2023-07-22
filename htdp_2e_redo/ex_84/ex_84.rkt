@@ -44,6 +44,8 @@ solve the exercises in chapter 2.1.
 (define FONT_SIZE  (* SCALER 16))
 (define FONT_COLOR "black")
 
+(define FIRST_POS 0)
+
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
 (define-struct editor [pre post])
@@ -155,11 +157,19 @@ solve the exercises in chapter 2.1.
   (cond
     [(string=? str "") ""]
     [else
-     (substring str 0 (- (string-length str) 1))]))
+     (substring str FIRST_POS (- (string-length str) 1))]))
 
 ; String -> 1String
-;
-(define (get_first str) str)
+; Returns the first 1String of String str
+(check-expect (get_first "") "")
+(check-expect (get_first "b") "b")
+(check-expect (get_first "B?") "B")
+              
+(define (get_first str)
+  (cond
+    [(string=? str "") ""]
+    [else
+     (string-ith str FIRST_POS)]))
 
 ; String -> String
 ;
