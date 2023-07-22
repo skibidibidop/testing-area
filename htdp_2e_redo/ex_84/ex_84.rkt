@@ -1,3 +1,6 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-intermediate-reader.ss" "lang")((modname ex_84) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: July 21, 2023
@@ -21,7 +24,7 @@ turned all of them into tests.
 Hint: Think of this function as consuming KeyEvents, a collection that
 is specified as an enumeration. It uses auxiliary functions to deal with the
 Editor structure. Keep a wish list handy; you will need to design additional
-functions for most of these auxiliary functions, such as stringfirst,
+functions for most of these auxiliary functions, such as string-first,
 string-rest, string-last, and string-remove-last. If you haven’t done so,
 solve the exercises in chapter 2.1.
 |#
@@ -121,6 +124,7 @@ solve the exercises in chapter 2.1.
 (check-expect (edit multi_both "left")   (make-editor "gh" "i!jk"))
 (check-expect (edit multi_both "right")  (make-editor "ghi!" "jk"))
 (check-expect (edit multi_both "@")      (make-editor "ghi@" "!jk"))
-(check-expect (edit 
+(check-expect (edit multi_both "\b")     (make-editor "gh" "!jk"))
+(check-expect (edit multi_both "\t")     multi_both)
 
 (define (edit ed vk) ed)
