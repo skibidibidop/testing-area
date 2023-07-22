@@ -131,14 +131,20 @@ gaining experience.
 
 (define (to_left ed)
   (cond
-    [(string=? (editor-text ed) "")
-     (make-editor "" 0)]
+    [(string=? (editor-text ed) "") (make-editor "" 0)]
     [else
      (make-editor (editor-text ed) (- (editor-index ed) 1))]))
 
 ; Editor -> Editor
-;
-(define (to_right ed) ed)
+; Moves the cursor 1 character to the right
+(check-expect (to_right empty_ed) empty_ed)
+(check-expect (to_right multi_ed) (make-editor "!a2:" 2))
+
+(define (to_right ed)
+  (cond
+    [(string=? (editor-text ed) "") (make-editor "" 0)]
+    [else
+     (make-editor (editor-text ed) (+ (editor-index ed) 1))]))
 
 ;
 ;
