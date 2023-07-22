@@ -145,5 +145,10 @@ solve the exercises in chapter 2.1.
       (string-append (editor-pre ed) vk) (editor-post ed))]
     [else ed]))
 
-;
-(define (del_last)
+; String -> String
+; Removes the last 1String of String str
+(check-expect (del_last "") "")
+(check-expect (del_last "a") "")
+(check-expect (del_last "A!") "A")
+
+(define (del_last str) str)
