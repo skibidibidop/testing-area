@@ -176,3 +176,13 @@ two exercises for the to-draw and on-key clauses, respectively.
     [(string=? str "") ""]
     [else
      (string-ith str (- (string-length str) 1))]))
+
+; MAIN /////////////////////////////////////////////////////////////////////////
+
+; Editor -> Editor
+(define (run to_edit)
+  (big-bang to_edit
+    [to-draw render]
+    [on-key edit]))
+
+(run (make-editor "" ""))
