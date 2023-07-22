@@ -99,7 +99,17 @@ gaining experience.
 (check-expect (edit multi_ed "*")     (make-editor "!*a2:" 2))
 (check-expect (edit multi_ed "\r")    multi_ed)
 
-(define (edit ed vk) ed)
+(define (edit ed vk)
+  (cond
+    [(and (key=? vk "\b")
+          (not (string=? (editor-text ed) "")))
+     (make-editor
+      (string-append
+       (substring (editor-text ed) FIRST_POS
+                  (- (editor-index ed) 1))
+       (substring (editor-text ed) (editor-index ed)))
+      (- (editor-index ed) 1))]
+    [else ed]))
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
