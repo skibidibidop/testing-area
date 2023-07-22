@@ -98,13 +98,13 @@ gaining experience.
 
 (define (edit ed vk)
   (cond
-    [(key=? vk "\b") (bckspc ed)]
-    [(key=? vk "left") (to_left ed)]
+    [(key=? vk "\b")    (bckspc ed)]
+    [(key=? vk "left")  (to_left ed)]
     [(key=? vk "right") (to_right ed)]
     [(or (string-alphabetic? vk)
-         (string-numeric? vk)
+         (string-numeric?    vk)
          (string=? vk " ")
-         (and (= (string-length vk) 1)
+         (and (=   (string-length vk) 1)
               (not (string-whitespace? vk))))
      (ins_char ed vk)]
     [else ed]))
@@ -124,11 +124,19 @@ gaining experience.
        (substring (editor-text ed) (editor-index ed)))
       (- (editor-index ed) 1))]))
 
-;
-;
-(define (to_left ed) ed)
+; Editor -> Editor
+; Moves the cursor 1 character to the left
+(check-expect (to_left empty_ed) empty_ed)
+(check-expect (to_left multi_ed) (make-editor "!a2:" 0))
 
-;
+(define (to_left ed)
+  (cond
+    [(string=? (editor-text ed) "")
+     (make-editor "" 0)]
+    [else
+     (make-editor (editor-text ed) (- (editor-index ed) 1))]))
+
+; Editor -> Editor
 ;
 (define (to_right ed) ed)
 
