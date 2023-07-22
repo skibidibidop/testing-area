@@ -1,6 +1,3 @@
-;; The first three lines of this file were inserted by DrRacket. They record metadata
-;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-intermediate-reader.ss" "lang")((modname ex_87) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: July 22, 2023
@@ -101,22 +98,35 @@ gaining experience.
 
 (define (edit ed vk)
   (cond
-    [(and (string=? (editor-text ed) "")
-          (or (string-alphabetic? vk)
-              (string-numeric? vk)
-              (= (string-length vk) 1)
-              (string=? vk " ")))
-     (make-editor vk 1)]
-    [(and (key=? vk "\b")
-          (not (string=? (editor-text ed) "")))
-     (make-editor
-      (string-append
-       (substring (editor-text ed) FIRST_POS
-                  (- (editor-index ed) 1))
-       (substring (editor-text ed) (editor-index ed)))
-      (- (editor-index ed) 1))]
-    [(and (key=? vk "left")
-          (not (string=? (editor-text ed) "")
+    [(key=? vk "\b") (bckspc ed)]
+    [(key=? vk "left") (to_left ed)]
+    [(key=? vk "right") (to_right ed)]
+    [(or (string-alphabetic? vk)
+         (string-numeric? vk)
+         (string=? vk " ")
+         (and (= (string-length vk) 1)
+              (not (string-whitespace? vk))))
+     (ins_char ed vk)]
+    [else ed]))
+
+; Editor -> Editor
+; Removes the 1String to the left of the cursor
+(check-expect (bckspc empty_ed) empty_ed)
+(check-expect (bckspc multi_ed) (make-editor "a2:" 0))
+
+(define (bckspc ed) ed)
+
+;
+;
+(define (to_left ed) ed)
+
+;
+;
+(define (to_right ed) ed)
+
+;
+;
+(define (ins_char ed vk) ed)
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
