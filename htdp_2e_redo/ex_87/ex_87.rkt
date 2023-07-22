@@ -114,7 +114,15 @@ gaining experience.
 (check-expect (bckspc empty_ed) empty_ed)
 (check-expect (bckspc multi_ed) (make-editor "a2:" 0))
 
-(define (bckspc ed) ed)
+(define (bckspc ed)
+  (cond
+    [(string=? (editor-text ed) "") (make-editor "" 0)]
+    [else
+     (make-editor
+      (string-append
+       (substring (editor-text ed) FIRST_POS (- (editor-index ed) 1))
+       (substring (editor-text ed) (editor-index ed)))
+      (- (editor-index ed) 1))]))
 
 ;
 ;
