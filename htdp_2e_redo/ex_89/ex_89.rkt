@@ -62,6 +62,8 @@ the world.
 (define (time_step vc) vc)
 
 ; VCat Valid_key -> VCat
+; Increases the cat's happiness based on the key pressed
+(define (change_mood vc) vc)
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
