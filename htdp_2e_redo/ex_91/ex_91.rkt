@@ -46,13 +46,18 @@ when it reaches either end of the scene.
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
-(define-struct vcat [x h])
-; (make-vcat Number Happiness)
-; Interp.: (make-vcat 30 50) represents the cat's x-coordinate and happiness
+(define-struct vcat [x h d])
+; (make-vcat Number Happiness Direction)
+; Interp.: (make-vcat 30 50 "left") represents the cat's x-coordinate
+; happiness, and movement direction
 
 ; A Happiness is a Number
 ; Interp.: represents the distance in pixels between the left border and the
 ; center of the HGAUGE
+
+; A Direction is one of:
+; "left"
+; "right"
 
 ; A Valid_key is one of:
 ; "up"
