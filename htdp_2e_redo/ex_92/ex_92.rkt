@@ -42,10 +42,15 @@ Start with a data definition, VCham, for representing chameleons.
 (define CHAM (rectangle (* SCALER 50) (* SCALER 20) "outline" "green"))
 (define CHAM_YPOS (- SCN_HEIGHT
                      (/ (image-height CHAM) 2)))
+(define CHAM_MAX_XPOS (- SCN_WIDTH
+                         (/ (image-width CHAM) 2)))
+(define CHAM_START_XPOS (image-width CHAM))
 
 (define BG (empty-scene SCN_WIDTH SCN_HEIGHT))
 
 (define SAD_RATE (* SCALER 1))
+
+(define MOVE_SPEED (* SCALER 3))
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
@@ -93,9 +98,17 @@ Start with a data definition, VCham, for representing chameleons.
          (make-posn (vcham-h vc) HGAUGE_YPOS))
    BG))
 
-;
-;
-(define (time_step vc) vc)
+; VCham -> VCham
+; Updates VCham vc per tick
+(check-expect (time_step (make-vcham 30 MAX_HAP "red"))
+              (make-vcham (+ 30 MOVE_SPEED) (- MAX_HAP SAD_RATE) "red"))
+(check-expect (time_step (make-vcham CHAM_MAX_XPOS MAX_HAP "red"))
+              (make-vcham CHAM_START_POS (- MAX_HAP SAD_RATE) "red"))
+(check-expect (time_step (make-vcham CHAM_MAX_XPOS MIN_HAP "green"))
+              (make-vcham CHAM_START_POS MIN_HAP "green"))
+
+(define (time_step vc)
+  (
 
 ;
 ;
