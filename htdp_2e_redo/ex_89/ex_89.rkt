@@ -30,8 +30,10 @@ the world.
 (define HGAUGE (rectangle SCN_WIDTH GAUGE_HEIGHT "solid" "red"))
 (define MAX_HAP SCN_XCENTER)
 (define MIN_HAP (- 0 SCN_XCENTER))
+(define HAP_UP_SML (/ SCN_WIDTH 5))
+(define HAP_UP_BIG (/ SCN_WIDTH 3))
 
-(define CAT (circle (* SCALER 10) "solid" "brown"))
+(define CAT (circle (* SCALER 20) "solid" "brown"))
 (define CAT_SIZE (image-width CAT))
 (define CAT_RAD (/ CAT_SIZE 2))
 (define CAT_YPOS (- SCN_HEIGHT CAT_RAD))
@@ -42,7 +44,7 @@ the world.
 
 (define MOVE_SPEED (* SCALER 3))
 
-(define SAD_RATE (* SCALER 0.1))
+(define SAD_RATE (* SCALER 0.5))
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
@@ -58,8 +60,8 @@ the world.
 ; "up"
 ; "down"
 ; Interp.:
-; "up" to pet the cat, increases its happiness by 1/5 of HGAUGE
-; "down" to feed the cat, increases its happiness by 1/3 of HGAUGE
+; "up" to pet the cat, increases its happiness by HAP_UP_SML
+; "down" to feed the cat, increases its happiness by HAP_UP_BIG
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
@@ -96,7 +98,40 @@ the world.
 
 ; VCat Valid_key -> VCat
 ; Increases the cat's happiness based on the key pressed
-(define (change_mood vc) vc)
+(check-expect (change_mood (make-vcat CAT_MAX_XPOS MAX_HAP) "up")
+              (make-vcat CAT_MAX_XPOS MAX_HAP))
+(check-expect (change_mood (make-vcat CAT_MAX_XPOS MAX_HAP) "down")
+              (make-vcat CAT_MAX_XPOS MAX_HAP))
+(check-expect (change_mood (make-vcat CAT_MAX_XPOS MAX_HAP) "left")
+              (make-vcat CAT_MAX_XPOS MAX_HAP))
+(check-expect (change_mood (make-vcat CAT_MAX_XPOS (+ MIN_HAP 1)) "up")
+              (make-vcat CAT_MAX_XPOS (+ (+ MIN_HAP 1) HAP_UP_SML)))
+(check-expect (change_mood (make-vcat CAT_MAX_XPOS (+ MIN_HAP 1)) "down")
+              (make-vcat CAT_MAX_XPOS (+ (+ MIN_HAP 1) HAP_UP_BIG)))
+(check-expect (change_mood (make-vcat CAT_MAX_XPOS (+ MIN_HAP 1)) "right")
+              (make-vcat CAT_MAX_XPOS (+ MIN_HAP 1)))
+(check-expect (change_mood (make-vcat CAT_MAX_XPOS (- MAX_HAP 1)) "up")
+              (make-vcat CAT_MAX_XPOS MAX_HAP))
+(check-expect (change_mood (make-vcat CAT_MAX_XPOS (- MAX_HAP 1)) "down")
+              (make-vcat CAT_MAX_XPOS MAX_HAP))
+(check-expect (change_mood (make-vcat CAT_MAX_XPOS (- MAX_HAP 1)) "a")
+              (make-vcat CAT_MAX_XPOS (- MAX_HAP 1)))
+
+(define (change_mood vc vk)
+  (cond
+    [(and (or (key=? vk "up")
+              (key=? vk "down"))
+          (or (>= (+ (vcat-h vc) HAP_UP_SML) MAX_HAP)
+              (>= (+ (vcat-h vc) HAP_UP_BIG) MAX_HAP)))
+     (make-vcat (vcat-x vc) MAX_HAP)]
+    [else
+     (make-vcat (vcat-x vc)
+                (cond
+                  [(key=? vk "up")
+                   (+ (vcat-h vc) HAP_UP_SML)]
+                  [(key=? vk "down")
+                   (+ (vcat-h vc) HAP_UP_BIG)]
+                  [else (vcat-h vc)]))]))
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
@@ -105,3 +140,5 @@ the world.
     [to-draw render]
     [on-tick time_step]
     [on-key change_mood]))
+
+(happy_cat (make-vcat CAT_START_XPOS MAX_HAP))
