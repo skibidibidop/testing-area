@@ -17,7 +17,8 @@ the world.
 (require 2htdp/image)
 (require 2htdp/universe)
 
-(define SCALER 1)
+(define SCALER 1) ; single point of control
+
 (define SCN_WIDTH (* SCALER 250))
 (define SCN_HEIGHT (* SCALER 100))
 (define SCN_XCENTER (/ SCN_WIDTH 2))
@@ -34,8 +35,14 @@ the world.
 (define CAT_SIZE (image-width CAT))
 (define CAT_RAD (/ CAT_SIZE 2))
 (define CAT_YPOS (- SCN_HEIGHT CAT_RAD))
+(define CAT_START_XPOS CAT_RAD)
+(define CAT_MAX_XPOS (- SCN_WIDTH CAT_RAD))
 
 (define BG (empty-scene SCN_WIDTH SCN_HEIGHT))
+
+(define MOVE_SPEED (* SCALER 3))
+
+(define SAD_RATE (* SCALER 0.1))
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
@@ -76,6 +83,11 @@ the world.
 
 ; VCat -> VCat
 ; Updates VCat vc per tick
+(check-expect (time_step (make-cat 30 MAX_HAP))
+              (make-cat (+ 30 MOVE_SPEED) (- MAX_HAP SAD_RATE)))
+(check-expect (time_step (make-cat CAT_MAX_XPOS MAX_HAP))
+              (make-cat CAT_START_XPOS (- MAX_HAP SAD_RATE)))
+
 (define (time_step vc) vc)
 
 ; VCat Valid_key -> VCat
