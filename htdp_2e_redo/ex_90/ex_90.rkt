@@ -44,7 +44,7 @@ the world.
 
 (define MOVE_SPEED (* SCALER 3))
 
-(define SAD_RATE (* SCALER 0.5))
+(define SAD_RATE (* SCALER 1))
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
@@ -135,9 +135,13 @@ the world.
 
 ; VCat -> Boolean
 ; Returns #true if happiness is depleted
+(check-expect (sad? (make-vcat 30 MAX_HAP)) #false)
+(check-expect (sad? (make-vcat 30 MIN_HAP)) #true)
+(check-expect (sad? (make-vcat 30 (+ MIN_HAP 1))) #false)
+(check-expect (sad? (make-vcat 30 (- MAX_HAP 1))) #false)
 
-
-(define (sad? vc) #false)
+(define (sad? vc)
+  (<= (vcat-h vc) MIN_HAP))
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
