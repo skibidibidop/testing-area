@@ -91,16 +91,18 @@ when it reaches either end of the scene.
 (check-expect (time_step (make-vcat 30 MAX_HAP MOVE_L))
               (make-vcat (+ 30 MOVE_L) (- MAX_HAP SAD_RATE) MOVE_L))
 (check-expect (time_step (make-vcat CAT_MAX_XPOS MAX_HAP MOVE_R))
-              (make-vcat CAT_MAX_XPOS (- MAX_HAP SAD_RATE) MOVE_L))
+              (make-vcat (- CAT_MAX_XPOS MOVE_SPEED)
+                         (- MAX_HAP SAD_RATE)
+                         MOVE_L))
 
 (define (time_step vc)
   (cond
     [(>= (vcat-x vc) CAT_MAX_XPOS)
-     (make-vcat CAT_MAX_XPOS
+     (make-vcat (- CAT_MAX_XPOS MOVE_SPEED)
                 (- (vcat-h vc) SAD_RATE)
                 MOVE_L)]
     [(<= (vcat-x vc) CAT_START_XPOS)
-     (make-vcat CAT_START_XPOS
+     (make-vcat (+ CAT_START_XPOS MOVE_SPEED)
                 (- (vcat-h vc) SAD_RATE)
                 MOVE_R)]
     [else
@@ -109,33 +111,43 @@ when it reaches either end of the scene.
                (vcat-d vc))]))
 
 ; VCat Valid_key -> VCat
-; Increases the cat's happiness based on the key pressed
-(check-expect (change_mood (make-vcat CAT_MAX_XPOS MAX_HAP) "up")
-              (make-vcat CAT_MAX_XPOS MAX_HAP))
-(check-expect (change_mood (make-vcat CAT_MAX_XPOS MAX_HAP) "down")
-              (make-vcat CAT_MAX_XPOS MAX_HAP))
-(check-expect (change_mood (make-vcat CAT_MAX_XPOS MAX_HAP) "left")
-              (make-vcat CAT_MAX_XPOS MAX_HAP))
-(check-expect (change_mood (make-vcat CAT_MAX_XPOS (+ MIN_HAP 1)) "up")
-              (make-vcat CAT_MAX_XPOS (+ (+ MIN_HAP 1) HAP_UP_SML)))
-(check-expect (change_mood (make-vcat CAT_MAX_XPOS (+ MIN_HAP 1)) "down")
-              (make-vcat CAT_MAX_XPOS (+ (+ MIN_HAP 1) HAP_UP_BIG)))
-(check-expect (change_mood (make-vcat CAT_MAX_XPOS (+ MIN_HAP 1)) "right")
-              (make-vcat CAT_MAX_XPOS (+ MIN_HAP 1)))
-(check-expect (change_mood (make-vcat CAT_MAX_XPOS (- MAX_HAP 1)) "up")
-              (make-vcat CAT_MAX_XPOS MAX_HAP))
-(check-expect (change_mood (make-vcat CAT_MAX_XPOS (- MAX_HAP 1)) "down")
-              (make-vcat CAT_MAX_XPOS MAX_HAP))
-(check-expect (change_mood (make-vcat CAT_MAX_XPOS (- MAX_HAP 1)) "a")
-              (make-vcat CAT_MAX_XPOS (- MAX_HAP 1)))
+; Updates VCat based on key pressed
+(check-expect (change_mood (make-vcat CAT_MAX_XPOS MAX_HAP MOVE_R) "up")
+              (make-vcat CAT_MAX_XPOS MAX_HAP MOVE_R))
+(check-expect (change_mood (make-vcat CAT_MAX_XPOS MAX_HAP MOVE_R) "down")
+              (make-vcat CAT_MAX_XPOS MAX_HAP MOVE_R))
+(check-expect (change_mood (make-vcat CAT_MAX_XPOS MAX_HAP MOVE_R) "left")
+              (make-vcat CAT_MAX_XPOS MAX_HAP MOVE_L))
+(check-expect (change_mood
+               (make-vcat CAT_MAX_XPOS (+ MIN_HAP 1) MOVE_R) "up")
+              (make-vcat CAT_MAX_XPOS (+ (+ MIN_HAP 1) HAP_UP_SML) MOVE_R))
+(check-expect (change_mood
+               (make-vcat CAT_MAX_XPOS (+ MIN_HAP 1) MOVE_L) "down")
+              (make-vcat CAT_MAX_XPOS (+ (+ MIN_HAP 1) HAP_UP_BIG) MOVE_L))
+(check-expect (change_mood
+               (make-vcat CAT_MAX_XPOS (+ MIN_HAP 1) MOVE_R) "right")
+              (make-vcat CAT_MAX_XPOS (+ MIN_HAP 1) MOVE_R))
+(check-expect (change_mood
+               (make-vcat CAT_MAX_XPOS (- MAX_HAP 1) MOVE_R) "up")
+              (make-vcat CAT_MAX_XPOS MAX_HAP MOVE_R))
+(check-expect (change_mood
+               (make-vcat CAT_MAX_XPOS (- MAX_HAP 1) MOVE_L) "down")
+              (make-vcat CAT_MAX_XPOS MAX_HAP MOVE_L))
+(check-expect (change_mood
+               (make-vcat CAT_MAX_XPOS (- MAX_HAP 1) MOVE_L) "a")
+              (make-vcat CAT_MAX_XPOS (- MAX_HAP 1) MOVE_L))
 
 (define (change_mood vc vk)
   (cond
+    [(key=? vk "left")
+     (make-vcat (vcat-x vc) (vcat-h vc) MOVE_L)]
+    [(key=? vk "right")
+     (make-vcat (vcat-x vc) (vcat-h vc) MOVE_R)]
     [(and (or (key=? vk "up")
               (key=? vk "down"))
           (or (>= (+ (vcat-h vc) HAP_UP_SML) MAX_HAP)
               (>= (+ (vcat-h vc) HAP_UP_BIG) MAX_HAP)))
-     (make-vcat (vcat-x vc) MAX_HAP)]
+     (make-vcat (vcat-x vc) MAX_HAP (vcat-d vc))]
     [else
      (make-vcat (vcat-x vc)
                 (cond
@@ -143,14 +155,15 @@ when it reaches either end of the scene.
                    (+ (vcat-h vc) HAP_UP_SML)]
                   [(key=? vk "down")
                    (+ (vcat-h vc) HAP_UP_BIG)]
-                  [else (vcat-h vc)]))]))
+                  [else (vcat-h vc)])
+                (vcat-d vc))]))
 
 ; VCat -> Boolean
 ; Returns #true if happiness is depleted
-(check-expect (sad? (make-vcat 30 MAX_HAP)) #false)
-(check-expect (sad? (make-vcat 30 MIN_HAP)) #true)
-(check-expect (sad? (make-vcat 30 (+ MIN_HAP 1))) #false)
-(check-expect (sad? (make-vcat 30 (- MAX_HAP 1))) #false)
+(check-expect (sad? (make-vcat 30 MAX_HAP MOVE_L)) #false)
+(check-expect (sad? (make-vcat 30 MIN_HAP MOVE_R)) #true)
+(check-expect (sad? (make-vcat 30 (+ MIN_HAP 1) MOVE_L)) #false)
+(check-expect (sad? (make-vcat 30 (- MAX_HAP 1) MOVE_R)) #false)
 
 (define (sad? vc)
   (<= (vcat-h vc) MIN_HAP))
@@ -164,4 +177,4 @@ when it reaches either end of the scene.
     [on-key change_mood]
     [stop-when sad?]))
 
-(happy_cat (make-vcat CAT_START_XPOS MAX_HAP))
+(happy_cat (make-vcat CAT_START_XPOS MAX_HAP MOVE_R))
