@@ -27,6 +27,9 @@ the world.
 (define HGAUGE_YCENTER (/ GAUGE_HEIGHT 2))
 (define HGAUGE (rectangle SCN_WIDTH GAUGE_HEIGHT "solid" "red"))
 (define HGAUGE_BG (empty-scene SCN_WIDTH GAUGE_HEIGHT))
+(define HGAUGE_START SCN_XCENTER)
+
+(define BG (empty-scene SCN_WIDTH SCN_HEIGHT))
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
@@ -42,6 +45,16 @@ the world.
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
+; VCat -> Image
+; Renders an Image based on data from VCat vc
+(define (render vc) BG)
+
 
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
+
+(define (happy_cat state)
+  (big-bang state
+    [to-draw render]
+    [on-tick time_step]
+    [on-key change_mood]))
