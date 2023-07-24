@@ -103,13 +103,18 @@ Start with a data definition, VCham, for representing chameleons.
 (check-expect (time_step (make-vcham 30 MAX_HAP "red"))
               (make-vcham (+ 30 MOVE_SPEED) (- MAX_HAP SAD_RATE) "red"))
 (check-expect (time_step (make-vcham CHAM_MAX_XPOS MAX_HAP "red"))
-              (make-vcham CHAM_START_POS (- MAX_HAP SAD_RATE) "red"))
+              (make-vcham CHAM_START_XPOS (- MAX_HAP SAD_RATE) "red"))
 (check-expect (time_step (make-vcham CHAM_MAX_XPOS MIN_HAP "green"))
-              (make-vcham CHAM_START_POS MIN_HAP "green"))
+              (make-vcham CHAM_START_XPOS MIN_HAP "green"))
 
 (define (time_step vc)
-  (
-
+  (make-vcham (cond
+                [(>= (vcham-x vc) CHAM_MAX_XPOS) CHAM_START_XPOS]
+                [else (+ (vcham-x vc) MOVE_SPEED)])
+              (cond
+                [(<= (vcham-h vc) MIN_HAP) MIN_HAP]
+                [else (- (vcham-h vc) SAD_RATE)])
+              (vcham-c vc)))
 ;
 ;
 (define (change_mood vc vk) vc)
