@@ -25,10 +25,15 @@ the world.
 
 (define GAUGE_HEIGHT (* SCALER 10))
 (define HGAUGE_YCENTER (/ GAUGE_HEIGHT 2))
+(define HGAUGE_YPOS HGAUGE_YCENTER)
 (define HGAUGE (rectangle SCN_WIDTH GAUGE_HEIGHT "solid" "red"))
-(define HGAUGE_BG (empty-scene SCN_WIDTH GAUGE_HEIGHT))
 (define MAX_HAP SCN_XCENTER)
 (define MIN_HAP (- 0 SCN_XCENTER))
+
+(define CAT (circle (* SCALER 10) "solid" "brown"))
+(define CAT_SIZE (image-width CAT))
+(define CAT_RAD (/ CAT_SIZE 2))
+(define CAT_YPOS (- SCN_HEIGHT CAT_RAD))
 
 (define BG (empty-scene SCN_WIDTH SCN_HEIGHT))
 
@@ -55,7 +60,19 @@ the world.
 
 ; VCat -> Image
 ; Renders an Image based on data from VCat vc
-(define (render vc) BG)
+(check-expect (render (make-cat 30 MAX_HAP))
+              (place-images
+               (list CAT HGAUGE)
+               (list (make-posn 30 CAT_YPOS)
+                     (make-posn MAX_HAP HGAUGE_YPOS))
+               BG))
+
+(define (render vc)
+  (place-images
+   (list CAT HGAUGE)
+   (list (make-posn (cat-x vc) CAT_YPOS)
+         (make-posn (cat-h vc) HGAUGE_YPOS))
+   BG))
 
 ; VCat -> VCat
 ; Updates VCat vc per tick
