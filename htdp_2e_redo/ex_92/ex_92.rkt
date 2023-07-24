@@ -40,6 +40,8 @@ Start with a data definition, VCham, for representing chameleons.
 (define HAP_UP (* SCALER 2))
 
 (define CHAM (rectangle (* SCALER 50) (* SCALER 20) "outline" "green"))
+(define CHAM_YPOS (- SCN_HEIGHT
+                     (/ (image-height CHAM) 2)))
 
 (define BG (empty-scene SCN_WIDTH SCN_HEIGHT))
 
@@ -76,8 +78,20 @@ Start with a data definition, VCham, for representing chameleons.
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
 ; VCham -> Image
-;
-(define (render vc) BG)
+; Renders an image based on data in VCham vc
+(check-expect (render (make-vcham 30 MAX_HAP "green"))
+              (place-images
+               (list CHAM HGAUGE)
+               (list (make-posn 30 CHAM_YPOS)
+                     (make-posn MAX_HAP HGAUGE_YPOS))
+               BG))
+
+(define (render vc)
+  (place-images
+   (list CHAM HGAUGE)
+   (list (make-posn (vcham-x vc) CHAM_YPOS)
+         (make-posn (vcham-h vc) HGAUGE_YPOS))
+   BG))
 
 ;
 ;
