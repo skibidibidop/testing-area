@@ -21,3 +21,76 @@ reuse functions from the latter when possible.
 Start with a data definition, VCham, for representing chameleons.
 |#
 
+(require 2htdp/image)
+(require 2htdp/universe)
+
+(define SCALER 1) ; single point of control
+
+(define SCN_WIDTH (* SCALER 250))
+(define SCN_HEIGHT (* SCALER 100))
+(define SCN_XCENTER (/ SCN_WIDTH 2))
+(define SCN_YCENTER (/ SCN_HEIGHT 2))
+
+(define GAUGE_HEIGHT (* SCALER 10))
+(define HGAUGE_YCENTER (/ GAUGE_HEIGHT 2))
+(define HGAUGE_YPOS HGAUGE_YCENTER)
+(define HGAUGE (rectangle SCN_WIDTH GAUGE_HEIGHT "solid" "red"))
+(define MAX_HAP SCN_XCENTER)
+(define MIN_HAP (- 0 SCN_XCENTER))
+(define HAP_UP (* SCALER 2))
+
+(define CHAM (rectangle (* SCALER 50) (* SCALER 20) "outline" "green"))
+
+(define BG (empty-scene SCN_WIDTH SCN_HEIGHT))
+
+(define SAD_RATE (* SCALER 1))
+
+; DATA DEFINITION //////////////////////////////////////////////////////////////
+
+(define-struct vcham [x h c])
+; (make-vcham  Number Happiness Color)
+; Interp.: (make-vcham pos hap col) represents the chameleon's
+; x-coordinate (pos), happiness level (hap), and color (col)
+
+; A Happiness is a Number
+; Interp.: the distance in pixels between the center of HGAUGE and
+; the left border
+
+; A Color is one of:
+; "red"
+; "blue"
+; "green"
+; Interp.: all possible colors of the chameleon
+
+; A Valid_key is one of:
+; "r"
+; "g"
+; "b"
+; "down"
+; Interp.:
+; "r" changes the chameleon's color to red
+; "g" changes the chameleon's color to green
+; "b" changes the chameleon's color to blue
+; "down" increases the chameleon's happiness by HAP_UP
+
+; FUNCTIONS ////////////////////////////////////////////////////////////////////
+
+; VCham -> Image
+;
+(define (render vc) BG)
+
+;
+;
+(define (time_step vc) vc)
+
+;
+;
+(define (change_mood vc vk) vc)
+
+; MAIN /////////////////////////////////////////////////////////////////////////
+
+(define (cham state)
+  (big-bang state
+    [to-draw render]
+    [on-tick time_step]
+    [on-key change_mood]))
