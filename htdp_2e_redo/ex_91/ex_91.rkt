@@ -41,6 +41,8 @@ when it reaches either end of the scene.
 (define BG (empty-scene SCN_WIDTH SCN_HEIGHT))
 
 (define MOVE_SPEED (* SCALER 3))
+(define MOVE_L (* MOVE_SPEED -1))
+(define MOVE_R MOVE_SPEED)
 
 (define SAD_RATE (* SCALER 1))
 
@@ -70,7 +72,7 @@ when it reaches either end of the scene.
 
 ; VCat -> Image
 ; Renders an Image based on data from VCat vc
-(check-expect (render (make-vcat 30 MAX_HAP))
+(check-expect (render (make-vcat 30 MAX_HAP MOVE_R))
               (place-images
                (list CAT HGAUGE)
                (list (make-posn 30 CAT_YPOS)
@@ -86,18 +88,25 @@ when it reaches either end of the scene.
 
 ; VCat -> VCat
 ; Updates VCat vc per tick
-(check-expect (time_step (make-vcat 30 MAX_HAP))
-              (make-vcat (+ 30 MOVE_SPEED) (- MAX_HAP SAD_RATE)))
-(check-expect (time_step (make-vcat CAT_MAX_XPOS MAX_HAP))
-              (make-vcat CAT_START_XPOS (- MAX_HAP SAD_RATE)))
+(check-expect (time_step (make-vcat 30 MAX_HAP MOVE_L))
+              (make-vcat (+ 30 MOVE_L) (- MAX_HAP SAD_RATE) MOVE_L))
+(check-expect (time_step (make-vcat CAT_MAX_XPOS MAX_HAP MOVE_R))
+              (make-vcat CAT_MAX_XPOS (- MAX_HAP SAD_RATE) MOVE_L))
 
 (define (time_step vc)
   (cond
     [(>= (vcat-x vc) CAT_MAX_XPOS)
-     (make-vcat CAT_START_XPOS (- (vcat-h vc) SAD_RATE))]
+     (make-vcat CAT_MAX_XPOS
+                (- (vcat-h vc) SAD_RATE)
+                MOVE_L)]
+    [(<= (vcat-x vc) CAT_START_XPOS)
+     (make-vcat CAT_START_XPOS
+                (- (vcat-h vc) SAD_RATE)
+                MOVE_R)]
     [else
-     (make-vcat (+ (vcat-x vc) MOVE_SPEED)
-               (- (vcat-h vc) SAD_RATE))]))
+     (make-vcat (+ (vcat-x vc) (vcat-d vc))
+               (- (vcat-h vc) SAD_RATE)
+               (vcat-d vc))]))
 
 ; VCat Valid_key -> VCat
 ; Increases the cat's happiness based on the key pressed
