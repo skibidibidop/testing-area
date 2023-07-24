@@ -5,13 +5,8 @@
 Author: Mark Beltran
 Date: July 23, 2023
 
-Exercise 89. Design the happy-cat world program, which manages
-a walking cat and its happiness level. Let’s assume that the cat starts out
-with perfect happiness.
-
-Hints (1) Reuse the functions from the world programs in chapter 3.7.
-(2) Use structure type from the preceding exercise to represent the state of
-the world.
+Exercise 90. Modify the happy-cat program from the preceding exer-
+cises so that it stops whenever the cat’s happiness falls to 0.
 |#
 
 (require 2htdp/image)
