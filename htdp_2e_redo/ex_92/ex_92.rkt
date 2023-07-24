@@ -44,11 +44,11 @@ Start with a data definition, VCham, for representing chameleons.
                      (/ (image-height CHAM) 2)))
 (define CHAM_MAX_XPOS (- SCN_WIDTH
                          (/ (image-width CHAM) 2)))
-(define CHAM_START_XPOS (image-width CHAM))
+(define CHAM_START_XPOS (/ (image-width CHAM) 2))
 
 (define BG (empty-scene SCN_WIDTH SCN_HEIGHT))
 
-(define SAD_RATE (* SCALER 1))
+(define SAD_RATE (* SCALER 0.1))
 
 (define MOVE_SPEED (* SCALER 3))
 
@@ -93,7 +93,8 @@ Start with a data definition, VCham, for representing chameleons.
 
 (define (render vc)
   (place-images
-   (list CHAM HGAUGE)
+   (list (rectangle (* SCALER 50) (* SCALER 20) "outline" (vcham-c vc))
+         HGAUGE)
    (list (make-posn (vcham-x vc) CHAM_YPOS)
          (make-posn (vcham-h vc) HGAUGE_YPOS))
    BG))
@@ -147,8 +148,11 @@ Start with a data definition, VCham, for representing chameleons.
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
+; VCham -> VCham
 (define (cham state)
   (big-bang state
     [to-draw render]
     [on-tick time_step]
     [on-key change_mood]))
+
+(cham (make-vcham CHAM_START_XPOS MAX_HAP "red"))
