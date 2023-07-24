@@ -27,7 +27,8 @@ the world.
 (define HGAUGE_YCENTER (/ GAUGE_HEIGHT 2))
 (define HGAUGE (rectangle SCN_WIDTH GAUGE_HEIGHT "solid" "red"))
 (define HGAUGE_BG (empty-scene SCN_WIDTH GAUGE_HEIGHT))
-(define HGAUGE_START SCN_XCENTER)
+(define MAX_HAP SCN_XCENTER)
+(define MIN_HAP (- 0 SCN_XCENTER))
 
 (define BG (empty-scene SCN_WIDTH SCN_HEIGHT))
 
@@ -43,6 +44,13 @@ the world.
 
 ; A VCat is a Cat
 
+; A Valid_key is one of:
+; "up"
+; "down"
+; Interp.:
+; "up" to pet the cat, increases its happiness by 1/5 of HGAUGE
+; "down" to feed the cat, increases its happiness by 1/3 of HGAUGE
+
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
 ; VCat -> Image
@@ -52,6 +60,8 @@ the world.
 ; VCat -> VCat
 ; Updates VCat vc per tick
 (define (time_step vc) vc)
+
+; VCat Valid_key -> VCat
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
