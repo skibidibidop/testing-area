@@ -19,6 +19,11 @@ including an interpretation.
 (define SCN_XCENTER (/ SCN_WIDTH 2))
 (define SCN_YCENTER (/ SCN_HEIGHT 2))
 
+(define GAUGE_HEIGHT (* SCALER 10))
+(define HGAUGE_YCENTER (/ GAUGE_HEIGHT 2))
+(define HGAUGE (rectangle SCN_WIDTH GAUGE_HEIGHT "solid" "red"))
+(define HGAUGE_BG (empty-scene SCN_WIDTH GAUGE_HEIGHT))
+
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
 (define-struct cat [x h])
@@ -28,6 +33,8 @@ including an interpretation.
 ; A Happiness is a Number
 ; Interp.: represents the distance in pixels between the left border and the
 ; center of the HGAUGE
+
+; A VCat is a Cat
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
