@@ -49,7 +49,9 @@ the world.
 ; Renders an Image based on data from VCat vc
 (define (render vc) BG)
 
-
+; VCat -> VCat
+; Updates VCat vc per tick
+(define (time_step vc) vc)
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
