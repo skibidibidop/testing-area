@@ -129,7 +129,21 @@ Start with a data definition, VCham, for representing chameleons.
 (check-expect (change_mood (make-vcham 30 MIN_HAP "red") "down")
               (make-vcham 30 (+ MIN_HAP HAP_UP) "red"))
 
-(define (change_mood vc vk) vc)
+(define (change_mood vc vk)
+  (make-vcham (vcham-x vc)
+              (cond
+                [(and (key=? vk "down")
+                      (>= (+ (vcham-h vc) HAP_UP) MAX_HAP))
+                 MAX_HAP]
+                [(and (key=? vk "down")
+                      (< (+ (vcham-h vc) HAP_UP) MAX_HAP))
+                 (+ (vcham-h vc) HAP_UP)]
+                [else (vcham-h vc)])
+              (cond
+                [(key=? vk "r") "red"]
+                [(key=? vk "g") "green"]
+                [(key=? vk "b") "blue"]
+                [else (vcham-c vc)])))
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
