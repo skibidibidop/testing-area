@@ -115,8 +115,20 @@ Start with a data definition, VCham, for representing chameleons.
                 [(<= (vcham-h vc) MIN_HAP) MIN_HAP]
                 [else (- (vcham-h vc) SAD_RATE)])
               (vcham-c vc)))
-;
-;
+; VCham Valid_key -> VCham
+; Changes the chameleon's color or happiness level
+; depending on Valid_key vk
+(check-expect (change_mood (make-vcham 30 MAX_HAP "red") "r")
+              (make-vcham 30 MAX_HAP "red"))
+(check-expect (change_mood (make-vcham 30 MAX_HAP "red") "g")
+              (make-vcham 30 MAX_HAP "green"))
+(check-expect (change_mood (make-vcham 30 MAX_HAP "red") "b")
+              (make-vcham 30 MAX_HAP "blue"))
+(check-expect (change_mood (make-vcham 30 MAX_HAP "red") "down")
+              (make-vcham 30 MAX_HAP "red"))
+(check-expect (change_mood (make-vcham 30 MIN_HAP "red") "down")
+              (make-vcham 30 (+ MIN_HAP HAP_UP) "red"))
+
 (define (change_mood vc vk) vc)
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
