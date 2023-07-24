@@ -46,15 +46,13 @@ the world.
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
-(define-struct cat [x h])
-; (make-cat Number Happiness)
-; Interp.: (make-cat 30 50) represents the cat's x-coordinate and happiness
+(define-struct vcat [x h])
+; (make-vcat Number Happiness)
+; Interp.: (make-vcat 30 50) represents the cat's x-coordinate and happiness
 
 ; A Happiness is a Number
 ; Interp.: represents the distance in pixels between the left border and the
 ; center of the HGAUGE
-
-; A VCat is a Cat
 
 ; A Valid_key is one of:
 ; "up"
@@ -67,7 +65,7 @@ the world.
 
 ; VCat -> Image
 ; Renders an Image based on data from VCat vc
-(check-expect (render (make-cat 30 MAX_HAP))
+(check-expect (render (make-vcat 30 MAX_HAP))
               (place-images
                (list CAT HGAUGE)
                (list (make-posn 30 CAT_YPOS)
@@ -77,18 +75,24 @@ the world.
 (define (render vc)
   (place-images
    (list CAT HGAUGE)
-   (list (make-posn (cat-x vc) CAT_YPOS)
-         (make-posn (cat-h vc) HGAUGE_YPOS))
+   (list (make-posn (vcat-x vc) CAT_YPOS)
+         (make-posn (vcat-h vc) HGAUGE_YPOS))
    BG))
 
 ; VCat -> VCat
 ; Updates VCat vc per tick
-(check-expect (time_step (make-cat 30 MAX_HAP))
-              (make-cat (+ 30 MOVE_SPEED) (- MAX_HAP SAD_RATE)))
-(check-expect (time_step (make-cat CAT_MAX_XPOS MAX_HAP))
-              (make-cat CAT_START_XPOS (- MAX_HAP SAD_RATE)))
+(check-expect (time_step (make-vcat 30 MAX_HAP))
+              (make-vcat (+ 30 MOVE_SPEED) (- MAX_HAP SAD_RATE)))
+(check-expect (time_step (make-vcat CAT_MAX_XPOS MAX_HAP))
+              (make-vcat CAT_START_XPOS (- MAX_HAP SAD_RATE)))
 
-(define (time_step vc) vc)
+(define (time_step vc)
+  (cond
+    [(>= (vcat-x vc) CAT_MAX_XPOS)
+     (make-vcat CAT_START_XPOS (- (vcat-h vc) SAD_RATE))]
+    [else
+     (make-vcat (+ (vcat-x vc) MOVE_SPEED)
+               (- (vcat-h vc) SAD_RATE))]))
 
 ; VCat Valid_key -> VCat
 ; Increases the cat's happiness based on the key pressed
