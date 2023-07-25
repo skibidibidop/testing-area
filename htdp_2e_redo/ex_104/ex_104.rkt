@@ -1,6 +1,3 @@
-;; The first three lines of this file were inserted by DrRacket. They record metadata
-;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-intermediate-reader.ss" "lang")((modname ex_104) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: July 25, 2023
@@ -11,3 +8,19 @@ representation of each vehicle must describe the number of passengers that
 it can carry, its license plate number, and its fuel consumption (miles per
 gallon). Develop a template for functions that consume vehicles.
 |#
+
+; DATA DEFINITION //////////////////////////////////////////////////////////////
+
+(define-struct vehicle [seats, plate, fuel_cons])
+; (make-vehicle Seat_limit String Fuel_consumption)
+; Interp.: (make-vehicle pass, lp, c) represents a vehicle's
+; maximum number of passengers (pass), license plate number (lp),
+; and fuel consumption (lp) in miles per gallon
+
+; A Seat_limit is a PositiveInteger
+; Interp.: the maximum number of passengers
+
+; A Fuel_consumption is a Number
+; Interp.: a vehicle's fuel consumption in miles per gallon
+
+; FUNCTIONS ////////////////////////////////////////////////////////////////////
