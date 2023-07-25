@@ -157,4 +157,8 @@ in the main function of exercise 100.
 (define (missile-render m im)
   (place-image MISSILE (posn-x m) (posn-y m) BG))
 
+; SIGS -> Boolean
+; Has the UFO landed or has the missile hit the UFO
+(define (si-game-over? s) #false)
+
 ; MAIN /////////////////////////////////////////////////////////////////////////
