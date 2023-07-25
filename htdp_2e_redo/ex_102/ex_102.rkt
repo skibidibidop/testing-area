@@ -86,3 +86,10 @@ game for this second data definition.
      (place-image MISSILE (posn-x m) (posn-y m) s)]))
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
+
+(define (main state)
+  (big-bang state
+    [to-draw   render]
+    [on-tick   time_step]
+    [on-key    control]
+    [stop-when game_over?]))
