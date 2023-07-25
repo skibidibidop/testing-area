@@ -24,3 +24,10 @@ gallon). Develop a template for functions that consume vehicles.
 ; Interp.: a vehicle's fuel consumption in miles per gallon
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
+
+; Vehicle -> ???
+; Template for a function that consumes Vehicles
+(define (fn_for_vehicles v)
+  (...(vehicle-seats v)...
+      (vehcile-plate v)...
+      (vehicle-fuel_cons v)...))
