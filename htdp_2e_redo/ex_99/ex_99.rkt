@@ -66,6 +66,7 @@ consumes an element of SIGS and produces another one.
 (define TANK_MOVSPD 3)
 (define UFO_MOVSPD  1)
 (define MSL_MOVSPD  3)
+(define UFO_SPAZZ_LIM 10)
 
 (define FONT_SIZE (* SCALER 30))
 (define FONT_COLOR "red")
@@ -205,16 +206,33 @@ consumes an element of SIGS and produces another one.
 ; SIGS -> SIGS
 ; Updates SIGS s every tick
 (define (si-move s)
-  (si-move-proper s (random ...)))
-
-; Number -> Number
-; Produces a number in the interval [0,n),
-; possibly a different one each time it is called
-(define (random n) ...)
+  (si-move-proper s (random UFO_SPAZZ_LIM)))
 
 ; SIGS Number -> SIGS
 ; Moves the space-invader objects predictably by delta
 (define (si-move-proper w delta)
-  w)
+  (cond
+    [(aim? w)
+     (make-aim
+      (make-posn
+       (if (= (% delta 2) 0)
+           (+ (posn-x (aim-ufo w)) delta)
+          (- (posn-x (aim-ufo w)) delta))
+       (+ (posn-y (aim-ufo w)) UFO_MOVSPD))
+      (make-tank (+ (tank-loc (aim-tank w))
+                    (tank-vel (aim-tank w)))
+                 (tank-vel w)))]
+    [(fired? w)
+     (make-fired
+      (make-posn
+       (if (= (% delta 2) 0)
+           (+ (posn-x (fired-ufo w)) delta)
+           (- (posn-x (fired-ufo w)) delta))
+       (+ (posn-y (fired-ufo w)) UFO_MOVSPD))
+      (make-tank (+ (tank-loc (fired-tank w))
+                    (tank-vel (fired-tank w))))
+      (make-posn (posn-x (fired-missile w))
+                 (- (posn-y (fired-missile w))
+                    MSL_MOVSPD)))]))
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
