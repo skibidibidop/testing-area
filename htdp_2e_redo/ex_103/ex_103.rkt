@@ -26,9 +26,32 @@ for the animal.
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
-(define-struct spider [legs size])
-; (make-spider Number Number)
-; Interp.: (make-spider l s) represents the spider's remaining legs (l)
-; and its cage size (s)
+(define-struct zoo_animal [leg size len gir cute])
+; (make-zoo_animal Entry Entry Entry Entry Cuteness)
+; Interp.: (make-zoo_animal leg s len gir c) represents a zoo animal's
+; remaining legs (leg), cage size (s), length (l), girth (g), and cuteness
+; level (c).
+
+; An Entry is one of:
+; #false
+; Number
+; Interp.: represents any input that requires a size measurement
+
+; A Cuteness is one of:
+; #false
+; "low"
+; "medium"
+; "high"
+
+(define SPIDER (make-zoo_animal 8 50 #false #false #false))
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
+
+; Zoo_animal Number -> Boolean
+; Returns #true if the Zoo_animal z can fit in its designated cage size c
+(check-expect (fits? SPIDER 50) #true)
+(check-expect (fits? SPIDER 45) #false)
+(check-expect (fits? SPIDER 100) #true)
+
+(define (fits? z c)
+  (<= (zoo_animal-size z) c))
