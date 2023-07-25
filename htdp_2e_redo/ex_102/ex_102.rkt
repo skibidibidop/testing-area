@@ -29,7 +29,6 @@ game for this second data definition.
 
 (define UFO_RAD     (* SCALER 30))
 (define UFO        (circle UFO_RAD "solid" "dark purple"))
-(define UFO_XPOS    SCN_XCENTER)
 (define UFO_LANDING_YPOS (- SCN_HEIGHT UFO_RAD))
 
 (define MISSILE_SIDE_SIZE (* SCALER 10))
@@ -65,28 +64,51 @@ game for this second data definition.
 ; Interp.: #false means the missile is in the tank;
 ; Posn says the missile is at that location
 
+; SIGS.v2s for testing
+(define AIM_STATE   (make-sigs (make-posn SCN_XCENTER UFO_RAD)
+                               (make-tank SCN_XCENTER TANK_GO_RIGHT)
+                               #false))
+(define FIRED_STATE (make-sigs (make-posn SCN_XCENTER (* UFO_RAD 5))
+                               (make-tank SCN_XCENTER TANK_GO_LEFT)
+                               (make-posn SCN_XCENTER TANK_YPOS)))
+
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
-; MissileOrNot Image -> Image
-; adds an image of missile m to scene s
-(define UFO_AND_TANK
-  (place-images (list UFO TANK)
-                (list (make-posn 30 40)
-                      (make-posn SCN_XCENTER TANK_YPOS))
-                BG))
+; SIGS.v2 -> Image
+; Renders image based on SIGS.v2 s
+(check-expect (render AIM_STATE)
+              (place-images
+               (list UFO TANK)
+               (list (make-posn SCN_XCENTER UFO_RAD)
+                     (make-posn SCN_XCENTER TANK_YPOS))
+               BG))
+(check-expect (render FIRED_STATE)
+              (place-images
+               (list UFO TANK MISSILE)
+               (list (make-posn SCN_XCENTER (* UFO_RAD 5))
+                     (make-posn SCN_XCENTER TANK_YPOS)
+                     (make-posn SCN_XCENTER TANK_YPOS))
+              BG))
 
-(check-expect (render #false UFO_AND_TANK) UFO_AND_TANK)
-(check-expect (render (make-posn SCN_XCENTER 10) UFO_AND_TANK)
-              (place-image MISSILE SCN_XCENTER 10 UFO_AND_TANK))
-
-(define (render m s)
-  (cond
-    [(boolean? m) s]
-    [(posn? m)
-     (place-image MISSILE (posn-x m) (posn-y m) s)]))
+(define (render s)
+   (cond
+     [(boolean? (sigs-missile s))
+      (place-images
+       (list UFO TANK)
+       (list (sigs-ufo s)
+             (make-posn (tank-loc (sigs-tank s)) TANK_YPOS))
+       BG)]
+     [else
+      (place-images
+       (list UFO TANK MISSILE)
+       (list (sigs-ufo s)
+             (make-posn (tank-loc (sigs-tank s)) TANK_YPOS)
+             (sigs-missile s))
+       BG)]))
 
 ; SIGS.v2 -> SIGS.v2
-;
+; Updates SIGS.v2 s per tick
+
 (define (time_step s) s)
 
 ; SIGS.v2 KeyEvent -> SIGS.v2
