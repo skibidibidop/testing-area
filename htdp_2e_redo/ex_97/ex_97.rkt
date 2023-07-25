@@ -46,6 +46,8 @@ with this one:
 
 When do the two expressions produce the same result?
 
+They will produce the same result if given the same coordinates
+for the tank and the UFO. An abstraction can be created.
 |#
 
 (require 2htdp/image)
@@ -113,6 +115,23 @@ When do the two expressions produce the same result?
 
 ; SIGS -> Image
 ; renders the given game state on top of BACKGROUND
+(check-expect
+ (si-render (make-aim (make-posn 20 30)
+                      (make-tank 40 3)))
+ (place-image
+  TANK 40 TANK_YPOS
+  (place-image UFO 20 30 BG)))
+(check-expect
+ (si-render (make-fired (make-posn 20 30)
+                        (make-tank 40 3)
+                        (make-posn 40 40)))
+ (place-image
+  TANK 40 TANK_YPOS
+  (place-image
+   UFO 20 30
+   (place-image
+    MISSILE 40 40 BG))))
+               
 (define (si-render s)
   (cond
     [(aim? s)
@@ -127,14 +146,26 @@ When do the two expressions produce the same result?
 
 ; Tank Image -> Image
 ; adds t to the given image im
-(define (tank-render t im) im)
+(check-expect (tank-render (make-tank 50 -3) BG)
+              (place-image TANK 50 TANK_YPOS BG))
+
+(define (tank-render t im)
+  (place-image TANK (tank-loc t) TANK_YPOS im))
 
 ; UFO Image -> Image
 ; adds u to the given image im
-(define (ufo-render u im) im)
+(check-expect (ufo-render (make-posn 50 60) BG)
+              (place-image UFO 50 60 BG))
+
+(define (ufo-render u im)
+  (place-image UFO (posn-x u) (posn-y u) BG))
 
 ; Missile Image -> Image
 ; adds m to the given image im
-(define (missile-render m im) im)
+(check-expect (missile-render (make-posn 40 20) BG)
+              (place-image MISSILE 40 20 BG))
+
+(define (missile-render m im)
+  (place-image MISSILE (posn-x m) (posn-y m) BG))
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
