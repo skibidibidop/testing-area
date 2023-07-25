@@ -204,11 +204,17 @@ consumes an element of SIGS and produces another one.
 
 ; SIGS -> SIGS
 ; Updates SIGS s every tick
-(define (si-move s) s)
+(define (si-move s)
+  (si-move-proper s (random ...)))
 
 ; Number -> Number
-; produces a number in the interval [0,n),
+; Produces a number in the interval [0,n),
 ; possibly a different one each time it is called
 (define (random n) ...)
+
+; SIGS Number -> SIGS
+; Moves the space-invader objects predictably by delta
+(define (si-move-proper w delta)
+  w)
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
