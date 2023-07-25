@@ -68,23 +68,15 @@ Exercise 101. Turn the examples in figure 35 into test cases.
 
 ; MissileOrNot Image -> Image
 ; adds an image of missile m to scene s
-(check-expect (make-sigs (make-posn 30 40)
-                         (make-tank SCN_XCENTER TANK_GO_RIGHT)
-                         #false)
-              (place-images
-               (list UFO TANK)
-               (list (make-posn 30 40)
-                     (make-posn SCN_XCENTER TANK_YPOS))
-               BG))
-(check-expect (make-sigs (make-posn 30 40)
-                         (make-tank SCN_XCENTER TANK_GO_RIGHT)
-                         (make-posn SCN_XCENTER 10))
-              (place-images
-               (list UFO TANK MISSILE)
-               (list (make-posn 30 40)
-                     (make-posn SCN_XCENTER TANK_GO_RIGHT)
-                     (make-posn SCN_XCENTER 10))
-               BG))
+(define UFO_AND_TANK
+  (place-images (list UFO TANK)
+                (list (make-posn 30 40)
+                      (make-posn SCN_XCENTER TANK_YPOS))
+                BG))
+
+(check-expect (missile-render.v2 #false UFO_AND_TANK) UFO_AND_TANK)
+(check-expect (missile-render.v2 (make-posn SCN_XCENTER 10) UFO_AND_TANK)
+              (place-image MISSILE SCN_XCENTER 10 UFO_AND_TANK))
 
 (define (missile-render.v2 m s)
   s)
