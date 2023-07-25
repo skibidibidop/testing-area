@@ -108,7 +108,25 @@ game for this second data definition.
 
 ; SIGS.v2 -> SIGS.v2
 ; Updates SIGS.v2 s per tick
-
+(check-random (time_step AIM_STATE)
+              (make-sigs (make-posn
+                          (+ SCN_XCENTER (random UFO_SPAZZ_LIM))
+                          (+ UFO_RAD UFO_MOVSPD))
+                         (make-tank
+                          (+ SCN_XCENTER TANK_GO_RIGHT)
+                          TANK_GO_RIGHT)
+                          #false))
+(check-random (time_step FIRED_STATE)
+              (make-sigs (make-posn
+                          (+ SCN_XCENTER (random UFO_SPAZZ_LIM))
+                          (+ (* UFO_RAD 5) UFO_MOVSPD))
+                         (make-tank
+                          (+ SCN_XCENTER TANK_GO_LEFT)
+                          TANK_GO_LEFT)
+                         (make-posn
+                          SCN_XCENTER
+                          (+ TANK_YPOS MSL_MOVSPD))))
+                          
 (define (time_step s) s)
 
 ; SIGS.v2 KeyEvent -> SIGS.v2
