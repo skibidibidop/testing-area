@@ -33,9 +33,6 @@ game for this second data definition.
 
 (define MISSILE_SIDE_SIZE (* SCALER 10))
 (define MISSILE (triangle MISSILE_SIDE_SIZE "solid" "red"))
-(define MISSILE_START_YPOS (- SCN_HEIGHT
-                              (+ TANK_HEIGHT
-                                 (/ MISSILE_SIDE_SIZE 2))))
 
 (define TANK_MOVSPD 3)
 (define TANK_GO_RIGHT TANK_MOVSPD)
@@ -173,8 +170,35 @@ game for this second data definition.
                [else (sigs-missile s)])))
 
 ; SIGS.v2 -> Boolean
-;
-(define (game_over? s) #false)
+; Did the missile hit the UFO or has the UFO landed
+(check-expect (game_over? AIM_STATE) #false)
+(check-expect (game_over? FIRED_STATE) #false)
+(check-expect (game_over?
+               (make-sigs (make-posn SCN_XCENTER UFO_LANDING_YPOS)
+                          (make-tank SCN_XCENTER TANK_YPOS)
+                          #false))
+              #true)
+(check-expect (game_over?
+               (make-sigs  (make-posn SCN_XCENTER UFO_RAD)
+                           (make-tank SCN_XCENTER TANK_YPOS)
+                           (make-posn SCN_XCENTER
+                                      (+ UFO_RAD
+                                         (/ (image-height MISSILE) 2)))))
+              #true)
+
+(define (game_over? s)
+  (cond
+    [(>= (posn-y (sigs-ufo s)) UFO_LANDING_YPOS) #true]
+    [(boolean? (sigs-missile s)) #false]
+    [else
+     (and (<= (abs
+               (- (posn-x (sigs-ufo s))
+                  (posn-x (sigs-missile s))))
+              UFO_RAD)
+          (<= (abs
+               (- (posn-y (sigs-ufo s))
+                  (posn-y (sigs-missile s))))
+              UFO_RAD))]))
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
