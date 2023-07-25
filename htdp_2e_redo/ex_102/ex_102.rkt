@@ -107,7 +107,7 @@ game for this second data definition.
 ; Updates SIGS.v2 s per tick
 (check-random (time_step AIM_STATE)
               (make-sigs (make-posn
-                          (+ SCN_XCENTER (random UFO_SPAZZ_LIM))
+                          (+ SCN_XCENTER (rand_jump UFO_SPAZZ_LIM))
                           (+ UFO_RAD UFO_MOVSPD))
                          (make-tank
                           (+ SCN_XCENTER TANK_GO_RIGHT)
@@ -115,7 +115,7 @@ game for this second data definition.
                           #false))
 (check-random (time_step FIRED_STATE)
               (make-sigs (make-posn
-                          (+ SCN_XCENTER (random UFO_SPAZZ_LIM))
+                          (+ SCN_XCENTER (rand_jump UFO_SPAZZ_LIM))
                           (+ (* UFO_RAD 5) UFO_MOVSPD))
                          (make-tank
                           (+ SCN_XCENTER TANK_GO_LEFT)
@@ -126,7 +126,7 @@ game for this second data definition.
                           
 (define (time_step s)
   (make-sigs (make-posn
-              (+ (posn-x (sigs-ufo s)) (random UFO_SPAZZ_LIM))
+              (+ (posn-x (sigs-ufo s)) (rand_jump UFO_SPAZZ_LIM))
               (+ (posn-y (sigs-ufo s)) UFO_MOVSPD))
              (make-tank
               (+ (tank-loc (sigs-tank s)) (tank-vel (sigs-tank s)))
@@ -137,6 +137,14 @@ game for this second data definition.
                 (make-posn
                  (posn-x (sigs-missile s))
                  (+ (posn-y (sigs-missile s)) MSL_MOVSPD))])))
+
+; Number -> Number
+; Returns negative number if randomly generted number is odd,
+; otherwise returns a positive number
+(define (rand_jump n)
+  (cond
+    [(= (modulo (random n) 2) 0) (random n)]
+    [else (* (random n) -1)]))
 
 ; SIGS.v2 KeyEvent -> SIGS.v2
 ; Updates SIGS.v2 s based on KeyEvent ke
@@ -208,3 +216,5 @@ game for this second data definition.
     [on-tick   time_step]
     [on-key    control]
     [stop-when game_over?]))
+
+(main AIM_STATE)
