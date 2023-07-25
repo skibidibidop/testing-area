@@ -142,7 +142,22 @@ game for this second data definition.
                  (+ (posn-y (sigs-missile s)) MSL_MOVSPD))])))
 
 ; SIGS.v2 KeyEvent -> SIGS.v2
-;
+; Updates SIGS.v2 s based on KeyEvent ke
+(check-expect (control AIM_STATE "left")
+              (make-sigs (sigs-ufo AIM_STATE)
+                         (make-tank SCN_XCENTER TANK_GO_LEFT)
+                         #false))
+(check-expect (control AIM_STATE " ")
+              (make-sigs (sigs-ufo AIM_STATE)
+                         (sigs-tank AIM_STATE)
+                         (make-posn SCN_XCENTER TANK_YPOS)))
+(check-expect (control FIRED_STATE "right")
+              (make-sigs (sigs-ufo FIRED_STATE)
+                         (make-tank SCN_XCENTER TANK_GO_RIGHT)
+                         (sigs-missile FIRED_STATE)))
+(check-expect (control FIRED_STATE "left") FIRED_STATE)
+(check-expect (control FIRED_STATE " ") FIRED_STATE)
+
 (define (control s ke) s)
 
 ; SIGS.v2 -> Boolean
