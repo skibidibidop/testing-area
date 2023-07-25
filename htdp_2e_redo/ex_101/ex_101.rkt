@@ -11,24 +11,81 @@ Exercise 101. Turn the examples in figure 35 into test cases.
 (require 2htdp/image)
 (require 2htdp/universe)
 
+(define SCALER 1) ; Single point of control
+
+(define SCN_WIDTH   (* SCALER 200))
+(define SCN_HEIGHT  (* SCALER 400))
+(define SCN_XCENTER (/ SCN_WIDTH 2))
+(define SCN_YCENTER (/ SCN_HEIGHT 2))
+
+(define BG          (empty-scene SCN_WIDTH SCN_HEIGHT))
+
+(define TANK_WIDTH  (* SCALER 50))
+(define TANK_HEIGHT (* SCALER 10))
+(define TANK        (rectangle TANK_WIDTH TANK_HEIGHT
+                               "solid" "light steel blue"))
+(define TANK_YPOS   (- SCN_HEIGHT (/ TANK_HEIGHT 2)))
+
+(define UFO_RAD     (* SCALER 30))
+(define UFO        (circle UFO_RAD "solid" "dark purple"))
+(define UFO_XPOS    SCN_XCENTER)
+(define UFO_LANDING_YPOS (- SCN_HEIGHT UFO_RAD))
+
+(define MISSILE_SIDE_SIZE (* SCALER 10))
+(define MISSILE (triangle MISSILE_SIDE_SIZE "solid" "red"))
+(define MISSILE_START_YPOS (- SCN_HEIGHT
+                              (+ TANK_HEIGHT
+                                 (/ MISSILE_SIDE_SIZE 2))))
+
+(define TANK_MOVSPD 3)
+(define TANK_GO_RIGHT TANK_MOVSPD)
+(define TANK_GO_LEFT (* TANK_MOVSPD -1))
+(define UFO_MOVSPD  1)
+(define MSL_MOVSPD  -3)
+(define UFO_SPAZZ_LIM 10)
+
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
 (define-struct sigs [ufo tank missile])
 ; A SIGS.v2 (short for SIGS version 2) is a structure:
 ; (make-sigs UFO Tank MissileOrNot)
-; interpretation represents the complete state of a
-; space invader game
+; Interp.: represents the complete state of a space invader game
+
+; A UFO is a Posn
+; Interp.: represents the x and y coordinates of the UFO
+
+(define-struct tank [loc vel])
+; (make-tank Number Number)
+; Interp.: (make-tank x v), contains the tank's x-coordinate and velocity
 
 ; A MissileOrNot is one of:
 ; -- #false
 ; -- Posn
-; interpretation#false means the missile is in the tank;
+; Interp.: #false means the missile is in the tank;
 ; Posn says the missile is at that location
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
 ; MissileOrNot Image -> Image
 ; adds an image of missile m to scene s
+(check-expect (make-sigs (make-posn 30 40)
+                         (make-tank SCN_XCENTER TANK_GO_RIGHT)
+                         #false)
+              (place-images
+               (list UFO TANK)
+               (list (make-posn 30 40)
+                     (make-posn SCN_XCENTER TANK_YPOS))
+               BG))
+(check-expect (make-sigs (make-posn 30 40)
+                         (make-tank SCN_XCENTER TANK_GO_RIGHT)
+                         (make-posn SCN_XCENTER 10))
+              (place-images
+               (list UFO TANK MISSILE)
+               (list (make-posn 30 40)
+                     (make-posn SCN_XCENTER TANK_GO_RIGHT)
+                     (make-posn SCN_XCENTER 10))
+               BG))
+
 (define (missile-render.v2 m s)
   s)
 
