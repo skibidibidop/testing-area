@@ -27,4 +27,9 @@ Exercise 101. Turn the examples in figure 35 into test cases.
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
+; MissileOrNot Image -> Image
+; adds an image of missile m to scene s
+(define (missile-render.v2 m s)
+  s)
+
 ; MAIN /////////////////////////////////////////////////////////////////////////
