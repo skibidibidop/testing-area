@@ -73,7 +73,7 @@ which uses big-bang to spawn the game-playing window. Enjoy!
 (define TANK_GO_RIGHT TANK_MOVSPD)
 (define TANK_GO_LEFT (* TANK_MOVSPD -1))
 (define UFO_MOVSPD  1)
-(define MSL_MOVSPD  3)
+(define MSL_MOVSPD  -3)
 (define UFO_SPAZZ_LIM 10)
 
 (define FONT_SIZE (* SCALER 30))
@@ -126,38 +126,23 @@ which uses big-bang to spawn the game-playing window. Enjoy!
 (define (si-render s)
   (cond
     [(aim? s)
-     (tank-render (aim-tank s)
-                  (ufo-render (aim-ufo s) BG))]
+     (place-images
+      (list UFO TANK)
+      (list (make-posn
+             (posn-x (aim-ufo s)) (posn-y (aim-ufo s)))
+            (make-posn
+             (tank-loc (aim-tank s)) TANK_YPOS))
+      BG)]
     [(fired? s)
-     (tank-render
-      (fired-tank s)
-      (ufo-render (fired-ufo s)
-                  (missile-render (fired-missile s)
-                                  BG)))]))
-
-; Tank Image -> Image
-; adds t to the given image im
-(check-expect (tank-render (make-tank 50 -3) BG)
-              (place-image TANK 50 TANK_YPOS BG))
-
-(define (tank-render t im)
-  (place-image TANK (tank-loc t) TANK_YPOS im))
-
-; UFO Image -> Image
-; adds u to the given image im
-(check-expect (ufo-render (make-posn 50 60) BG)
-              (place-image UFO 50 60 BG))
-
-(define (ufo-render u im)
-  (place-image UFO (posn-x u) (posn-y u) BG))
-
-; Missile Image -> Image
-; adds m to the given image im
-(check-expect (missile-render (make-posn 40 20) BG)
-              (place-image MISSILE 40 20 BG))
-
-(define (missile-render m im)
-  (place-image MISSILE (posn-x m) (posn-y m) BG))
+     (place-images
+      (list UFO TANK MISSILE)
+      (list (make-posn
+             (posn-x (fired-ufo s)) (posn-y (fired-ufo s)))
+            (make-posn
+             (tank-loc (fired-tank s)) TANK_YPOS)
+            (make-posn
+             (posn-x (fired-missile s)) (posn-y (fired-missile s))))
+      BG)]))
 
 ; SIGS -> Boolean
 ; Has the UFO landed or has the missile hit the UFO
@@ -223,35 +208,75 @@ which uses big-bang to spawn the game-playing window. Enjoy!
     [(aim? w)
      (make-aim
       (make-posn
-       (if (= (% delta 2) 0)
+       (if (= (modulo delta 2) 0)
            (+ (posn-x (aim-ufo w)) delta)
-          (- (posn-x (aim-ufo w)) delta))
+           (- (posn-x (aim-ufo w)) delta))
        (+ (posn-y (aim-ufo w)) UFO_MOVSPD))
       (make-tank (+ (tank-loc (aim-tank w))
                     (tank-vel (aim-tank w)))
-                 (tank-vel w)))]
+                 (tank-vel (aim-tank w))))]
     [(fired? w)
      (make-fired
       (make-posn
-       (if (= (% delta 2) 0)
+       (if (= (modulo delta 2) 0)
            (+ (posn-x (fired-ufo w)) delta)
            (- (posn-x (fired-ufo w)) delta))
        (+ (posn-y (fired-ufo w)) UFO_MOVSPD))
       (make-tank (+ (tank-loc (fired-tank w))
-                    (tank-vel (fired-tank w))))
+                    (tank-vel (fired-tank w)))
+                 (tank-vel (fired-tank w)))
       (make-posn (posn-x (fired-missile w))
-                 (- (posn-y (fired-missile w))
+                 (+ (posn-y (fired-missile w))
                     MSL_MOVSPD)))]))
 
 ; SIGS KeyEvent -> SIGS
-; Updates SIGS s based on KeyEven ke
+; Updates SIGS s based on KeyEvent ke
 (define aim_state (make-aim
                    (make-posn UFO_XPOS UFO_RAD)
-                   (make-tank SCN_XCENTER TANK_YPOS)))
+                   (make-tank SCN_XCENTER TANK_GO_RIGHT)))
 (define fired_state (make-fired
                      (make-posn UFO_XPOS UFO_RAD)
-                     (make-
-(define (si-control s ke) s)
+                     (make-tank SCN_XCENTER TANK_GO_RIGHT)
+                     (make-posn SCN_XCENTER SCN_YCENTER)))
+
+(define (si-control s ke)
+  (cond
+    [(and (aim? s)
+          (or (key=? ke "left")
+              (key=? ke "right")))
+     (make-aim (aim-ufo s)
+               (make-tank (tank-loc (aim-tank s))
+                          (cond
+                            [(key=? ke "left") TANK_GO_LEFT]
+                            [(key=? ke "right") TANK_GO_RIGHT])))]
+    [(and (aim? s)
+          (key=? ke " "))
+     (make-fired (aim-ufo s)
+                 (aim-tank s)
+                 (make-posn (tank-loc (aim-tank s))
+                            TANK_YPOS))]
+    [(fired? s)
+     (cond
+       [(key=? ke " ") s]
+       [else
+        (make-fired (fired-ufo s)
+                    (make-tank (tank-loc (fired-tank s))
+                               (cond
+                                 [(key=? ke "left") TANK_GO_LEFT]
+                                 [(key=? ke "right") TANK_GO_RIGHT]
+                                 [else (tank-vel (fired-tank s))]))
+                    (fired-missile s))])]
+    [else s]))
 
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
+
+; SIGS -> SIGS
+(define (si-main state)
+  (big-bang state
+    [to-draw   si-render]
+    [on-tick   si-move]
+    [on-key    si-control]
+    [stop-when si-game-over? si-render-move]))
+
+(si-main aim_state)
