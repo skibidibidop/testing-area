@@ -75,15 +75,27 @@ game for this second data definition.
                       (make-posn SCN_XCENTER TANK_YPOS))
                 BG))
 
-(check-expect (missile-render.v2 #false UFO_AND_TANK) UFO_AND_TANK)
-(check-expect (missile-render.v2 (make-posn SCN_XCENTER 10) UFO_AND_TANK)
+(check-expect (render #false UFO_AND_TANK) UFO_AND_TANK)
+(check-expect (render (make-posn SCN_XCENTER 10) UFO_AND_TANK)
               (place-image MISSILE SCN_XCENTER 10 UFO_AND_TANK))
 
-(define (missile-render.v2 m s)
+(define (render m s)
   (cond
     [(boolean? m) s]
     [(posn? m)
      (place-image MISSILE (posn-x m) (posn-y m) s)]))
+
+; SIGS.v2 -> SIGS.v2
+;
+(define (time_step s) s)
+
+; SIGS.v2 KeyEvent -> SIGS.v2
+;
+(define (control s ke) s)
+
+; SIGS.v2 -> Boolean
+;
+(define (game_over? s) #false)
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
