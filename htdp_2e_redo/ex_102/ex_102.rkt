@@ -158,7 +158,19 @@ game for this second data definition.
 (check-expect (control FIRED_STATE "left") FIRED_STATE)
 (check-expect (control FIRED_STATE " ") FIRED_STATE)
 
-(define (control s ke) s)
+(define (control s ke)
+  (make-sigs (sigs-ufo s)
+             (make-tank
+              (tank-loc (sigs-tank s))
+              (cond
+                [(key=? ke "left") TANK_GO_LEFT]
+                [(key=? ke "right") TANK_GO_RIGHT]
+                [else (tank-vel (sigs-tank s))]))
+             (cond
+               [(and (key=? ke " ")
+                     (boolean? (sigs-missile s)))
+                (make-posn (tank-loc (sigs-tank s)) TANK_YPOS)]
+               [else (sigs-missile s)])))
 
 ; SIGS.v2 -> Boolean
 ;
