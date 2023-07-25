@@ -23,3 +23,12 @@ Design the fits? function, which consumes a zoo animal and a de-
 scription of a cage. It determines whether the cage’s volume is large enough
 for the animal.
 |#
+
+; DATA DEFINITION //////////////////////////////////////////////////////////////
+
+(define-struct spider [legs size])
+; (make-spider Number Number)
+; Interp.: (make-spider l s) represents the spider's remaining legs (l)
+; and its cage size (s)
+
+; FUNCTIONS ////////////////////////////////////////////////////////////////////
