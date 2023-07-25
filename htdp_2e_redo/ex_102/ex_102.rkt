@@ -127,7 +127,19 @@ game for this second data definition.
                           SCN_XCENTER
                           (+ TANK_YPOS MSL_MOVSPD))))
                           
-(define (time_step s) s)
+(define (time_step s)
+  (make-sigs (make-posn
+              (+ (posn-x (sigs-ufo s)) (random UFO_SPAZZ_LIM))
+              (+ (posn-y (sigs-ufo s)) UFO_MOVSPD))
+             (make-tank
+              (+ (tank-loc (sigs-tank s)) (tank-vel (sigs-tank s)))
+              (tank-vel (sigs-tank s)))
+             (cond
+               [(boolean? (sigs-missile s)) #false]
+               [else
+                (make-posn
+                 (posn-x (sigs-missile s))
+                 (+ (posn-y (sigs-missile s)) MSL_MOVSPD))])))
 
 ; SIGS.v2 KeyEvent -> SIGS.v2
 ;
