@@ -28,8 +28,22 @@ least twice as fast as the UFO descends. Finally, the UFO and
 the missile collide if their reference points are close enough, for
 whatever you think “close enough” means.
 
-Exercise 95. Explain why the three instances are generated according to
+Exercise 95. Explain why the three instances below are generated according to
 the first or second clause of the data definition.
+
+(make-aim (make-posn 20 10) (make-tank 28 -3))
+
+(make-fired (make-posn 20 10)
+            (make-tank 28 -3)
+            (make-posn 28 (- HEIGHT TANK-HEIGHT)))
+
+(make-fired (make-posn 20 100)
+            (make-tank 100 3)
+            (make-posn 22 103))
+
+Three instances are generated to demonstrate significant cases of the state
+of the space invaders game. They highlight when to use the structures aim and
+fired.
 |#
 
 (require 2htdp/image)
