@@ -47,6 +47,7 @@ in the main function of exercise 100.
 (define SCN_WIDTH   (* SCALER 200))
 (define SCN_HEIGHT  (* SCALER 400))
 (define SCN_XCENTER (/ SCN_WIDTH 2))
+(define SCN_YCENTER (/ SCN_HEIGHT 2))
 
 (define BG          (empty-scene SCN_WIDTH SCN_HEIGHT))
 
@@ -59,6 +60,7 @@ in the main function of exercise 100.
 (define UFO_RAD     (* SCALER 30))
 (define UFO        (circle UFO_RAD "solid" "dark purple"))
 (define UFO_XPOS    SCN_XCENTER)
+(define UFO_LANDING_YPOS (- SCN_HEIGHT UFO_RAD))
 
 (define MISSILE_SIDE_SIZE (* SCALER 10))
 (define MISSILE (triangle MISSILE_SIDE_SIZE "solid" "red"))
@@ -70,12 +72,8 @@ in the main function of exercise 100.
 (define UFO_MOVSPD  1)
 (define MSL_MOVSPD  3)
 
-(define INIT_STATE
-  (place-images
-   (list UFO TANK)
-   (list (make-posn UFO_XPOS UFO_RAD)
-         (make-posn SCN_XCENTER TANK_YPOS))
-   BG))
+(define FONT_SIZE (* SCALER 30))
+(define FONT_COLOR "red")
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
@@ -159,6 +157,54 @@ in the main function of exercise 100.
 
 ; SIGS -> Boolean
 ; Has the UFO landed or has the missile hit the UFO
-(define (si-game-over? s) #false)
+(check-expect (si-game-over?
+               (make-aim (make-posn 30 40)
+                         (make-tank 30 TANK_YPOS)))
+              #false)
+(check-expect (si-game-over?
+               (make-aim (make-posn 30 UFO_LANDING_YPOS)
+                         (make-tank 80 TANK_YPOS)))
+              #true)
+(check-expect (si-game-over?
+               (make-fired (make-posn 30 40)
+                           (make-tank 30 TANK_YPOS)
+                           (make-posn 30 70)))
+              #true)
+(check-expect (si-game-over?
+               (make-fired (make-posn 30 UFO_LANDING_YPOS)
+                           (make-tank 80 TANK_YPOS)
+                           (make-posn 30 70)))
+              #true)
+(check-expect (si-game-over?
+               (make-fired (make-posn 30 40)
+                           (make-tank 80 TANK_YPOS)
+                           (make-posn 50 80)))
+              #false)
+
+(define (si-game-over? s)
+  (cond
+    [(aim? s)
+     (>= (posn-y (aim-ufo s)) UFO_LANDING_YPOS)]
+    [(fired? s)
+     (cond
+       [(>= (posn-y (fired-ufo s)) UFO_LANDING_YPOS) #true]
+       [(and (<= (abs
+                  (- (posn-x (fired-ufo s))
+                     (posn-x (fired-missile s))))
+                 UFO_RAD)
+             (<= (abs
+                  (- (posn-y (fired-ufo s))
+                     (posn-y (fired-missile s))))
+                 UFO_RAD))
+        #true]
+       [else #false])]))
+
+; SIGS -> Image
+; Displays "Game over!" if si-game-over?
+(define (si-render-move s)
+  (place-image
+   (text "Game over!" FONT_SIZE FONT_COLOR)
+   SCN_XCENTER SCN_YCENTER
+   BG))
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
