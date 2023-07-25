@@ -81,6 +81,29 @@ assuming a 200 x 200 canvas.
          (make-posn SCN_XCENTER TANK_YPOS))
    BG))
 
+(define state_aim
+  (place-images
+   (list UFO TANK)
+   (list (make-posn 20 10)
+         (make-posn 28 TANK_YPOS))
+   BG))
+
+(define state_fired
+  (place-images
+   (list UFO TANK MISSILE)
+   (list (make-posn 20 10)
+         (make-posn 28 TANK_YPOS)
+         (make-posn 28 (- SCN_HEIGHT TANK_HEIGHT)))
+   BG))
+
+(define state_near
+  (place-images
+   (list UFO TANK MISSILE)
+   (list (make-posn 20 100)
+         (make-posn 100 TANK_YPOS)
+         (make-posn 22 135)) ; changed 103 to 135 since my UFO is too big
+   BG))
+
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
 ; A SIGS is one of:
@@ -107,3 +130,7 @@ assuming a 200 x 200 canvas.
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
+
+state_aim
+state_fired
+state_near
