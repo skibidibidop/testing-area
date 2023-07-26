@@ -168,7 +168,21 @@ Choose one of the alternatives and design the appropriate program.
                            (- HAP_MAX SAD_RATE)
                            "red")))
 
-(define (time_step z) z)
+(define (time_step z)
+  (make-zoo
+   (make-vcat  (cond
+                 [(>= (vcat-loc (zoo-cat z)) CAT_MAX_XPOS)
+                  CAT_START_XPOS]
+                 [else (+ (vcat-loc (zoo-cat z))
+                          CAT_MOVE)])
+               (- (vcat-hap (zoo-cat z)) SAD_RATE))
+   (make-vcham (cond
+                 [(<= (vcham-loc (zoo-cham z)) CHAM_MAX_XPOS)
+                  CHAM_START_XPOS]
+                 [else (+ (vcham-loc (zoo-cham z))
+                          CHAM_MOVE)])
+               (- (vcham-hap (zoo-cham z)) SAD_RATE)
+               (vcham-col (zoo-cham z)))))
 
 ; Zoo KeyEvent -> Zoo
 ; Updates Zoo z based on KeyEvent k
