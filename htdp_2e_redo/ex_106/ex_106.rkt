@@ -202,7 +202,39 @@ It remains impossible to change the color of a cat or to pet a chameleon.
 (check-expect (control CHAM_SAD "g")
               (make-vcham SCN_XCENTER HAP_MIN "green"))
 
-(define (control va ke) va)
+(define (control va ke)
+  (cond
+    [(vcat? va)
+     (make-vcat (vcat-loc va)
+                (cond
+                  [(and (key=? ke "up")
+                        (>= (+ (vcat-hap va) HAP_UP_PET)
+                            HAP_MAX))
+                   HAP_MAX]
+                  [(and (key=? ke "down")
+                        (>= (+ (vcat-hap va) HAP_UP_FEED)
+                            HAP_MAX))
+                   HAP_MAX]
+                  [(key=? ke "up")
+                   (+ (vcat-hap va) HAP_UP_PET)]
+                  [(key=? ke "down")
+                   (+ (vcat-hap va) HAP_UP_FEED)]
+                  [else (vcat-hap va)]))]
+    [(vcham? va)
+     (make-vcham (vcham-loc va)
+                 (cond
+                   [(and (key=? ke "down")
+                         (>= (+ (vcham-hap va) HAP_UP_FEED)
+                             HAP_MAX))
+                    HAP_MAX]
+                   [(key=? ke "down")
+                    (+ (vcham-hap va) HAP_UP_FEED)]
+                   [else (vcham-hap va)])
+                 (cond
+                   [(key=? ke "r") "red"]
+                   [(key=? ke "g") "green"]
+                   [(key=? ke "b") "blue"]
+                   [else (vcham-col va)]))]))
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
