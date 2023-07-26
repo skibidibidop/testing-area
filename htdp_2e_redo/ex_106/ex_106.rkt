@@ -243,7 +243,12 @@ It remains impossible to change the color of a cat or to pet a chameleon.
 (check-expect (sad? CAT_BORDER) #false)
 (check-expect (sad? CHAM_BORDER) #true)
 
-(define (sad? va) #false)
+(define (sad? va)
+  (cond
+    [(vcat? va)
+     (<= (vcat-hap va) HAP_MIN)]
+    [(vcham? va)
+     (<= (vcham-hap va) HAP_MIN)]))
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
