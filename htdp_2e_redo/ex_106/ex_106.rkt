@@ -62,7 +62,7 @@ It remains impossible to change the color of a cat or to pet a chameleon.
 (define HAP_UP_FEED (/ HAP_WIDTH 3))
 
 (define MOVSPD (* SCALER 3))
-(define SAD_RATE (* SCALER 1))
+(define SAD_RATE (* SCALER 2))
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
@@ -236,10 +236,19 @@ It remains impossible to change the color of a cat or to pet a chameleon.
                    [(key=? ke "b") "blue"]
                    [else (vcham-col va)]))]))
 
+; VAnimal -> Boolean
+; Is the VAnimal va depleted of happiness
+(define (sad? va) #false)
+
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
 (define (main state)
   (big-bang state
     [to-draw render]
     [on-tick time_step]
-    [on-key control]))
+    [on-key control]
+    [stop-when sad?]))
+
+(main CAT_FULL)
+
+; (main CHAM_FULL)
