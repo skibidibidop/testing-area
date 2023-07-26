@@ -1,6 +1,3 @@
-;; The first three lines of this file were inserted by DrRacket. They record metadata
-;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-intermediate-reader.ss" "lang")((modname ex_107) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: July 26, 2023
@@ -206,7 +203,49 @@ Choose one of the alternatives and design the appropriate program.
                (zoo-cat ZOO_START)
                (make-vcham SCN_XCENTER HAP_MAX "green")))
 
-(define (control z k) z)
+(define (control z k)
+  (make-zoo
+   (make-vcat (vcat-loc (zoo-cat z))
+              (cond
+                [(and (key=? k "up")
+                      (too_happy? (vcat-hap (zoo-cat z)) k))
+                 HAP_MAX]
+                [(and (key=? k "down")
+                      (too_happy? (vcat-hap (zoo-cat z)) k))
+                 HAP_MAX]
+                [(key=? k "up")
+                 (+ (vcat-hap (zoo-cat z)) HAP_UP_PET)]
+                [(key=? k "down")
+                 (+ (vcat-hap (zoo-cat z)) HAP_UP_FEED)]
+                [else (vcat-hap (zoo-cat z))]))
+   (make-vcham (vcham-loc (zoo-cham z))
+               (cond
+                 [(and (key=? k "down")
+                       (too_happy? (vcham-hap (zoo-cham z)) k))
+                  HAP_MAX]
+                 [(key=? k "down")
+                  (+ (vcham-hap (zoo-cham z)) HAP_UP_FEED)]
+                 [else (vcham-hap (zoo-cham z))])
+               (cond
+                 [(key=? k "r") "red"]
+                 [(key=? k "g") "green"]
+                 [(key=? k "b") "blue"]
+                 [else (vcham-col (zoo-cham z))]))))
+
+; Number KeyEvent -> Boolean
+; Will the happiness level go above HAP_MAX if current happiness
+; is increased by HAP_UP_PET OR HAP_UP_FEED, depending on
+; KeyEvent k
+(check-expect (too_happy? HAP_MAX "up") #true)
+(check-expect (too_happy? HAP_MAX "r") #false)
+(check-expect (too_happy? HAP_MIN "down") #false)
+(check-expect (too_happy? HAP_MIN "g") #false)
+
+(define (too_happy? n k)
+  (cond
+    [(key=? k "up")  (>= (+ n HAP_UP_PET) HAP_MAX)]
+    [(key=? k "down") (>= (+ n HAP_UP_FEED) HAP_MAX)]
+    [else #false]))
 
 ; Zoo -> Boolean
 ; Does any animal have no happiness left
