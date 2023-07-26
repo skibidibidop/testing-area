@@ -121,7 +121,20 @@ It remains impossible to change the color of a cat or to pet a chameleon.
                      (make-posn HAP_MIN HAP_YPOS))
                BG))
 
-(define (render va) BG)
+(define (render va)
+  (cond
+    [(vcat? va)
+     (place-images
+      (list CAT HAP_GAUGE)
+      (list (make-posn (vcat-loc va) CAT_YPOS)
+            (make-posn (vcat-hap va) HAP_YPOS))
+      BG)]
+    [(vcham? va)
+     (place-images
+      (list CHAM HAP_GAUGE)
+      (list (make-posn (vcham-loc va) CHAM_YPOS)
+            (make-posn (vcham-hap va) HAP_YPOS))
+      BG)]))
 
 ; VAnimal -> VAnimal
 ; Updates VAnimal va per tick
