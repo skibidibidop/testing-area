@@ -25,3 +25,46 @@ and colorize your animal—as applicable.
 
 It remains impossible to change the color of a cat or to pet a chameleon.
 |#
+
+(require 2htdp/image)
+(require 2htdp/universe)
+
+(define SCALER 1)
+
+(define SCN_WIDTH  (* SCALER 400))
+(define SCN_HEIGHT (* SCALER 250))
+
+(define BG (empty-scene SCN_WIDTH SCN_HEIGHT))
+
+(define CAT_RAD (* SCALER 15))
+(define CAT (circle CAT_RAD "solid" "brown"))
+
+(define CHAM_WIDTH  (* SCALER 20))
+(define CHAM_HEIGHT (* SCALER 10))
+(define CHAM (rectangle CHAM_WIDTH CHAM_HEIGHT "outline" "red"))
+
+; DATA DEFINITION //////////////////////////////////////////////////////////////
+
+; A VAnimal is one of:
+; A VCat
+; A VCham
+
+(define-struct vcat [loc hap])
+; (make-vcat Number Number)
+; Interp.: (make-vcat l h) represents the cat's x-coordinate (l) and
+; happiness level (h)
+
+(define-struct vcham [loc hap col])
+; (make-vcham Number Number Color)
+; Interp.: (make-vcham l h c) represents the chameleon's
+; x-coordinate (l), happiness level (h), and color (c)
+
+; A Color is one of:
+; "red"
+; "green"
+; "blue"
+; Interp.: represents a chameleon's color
+
+; FUNCTIONS ////////////////////////////////////////////////////////////////////
+
+; MAIN /////////////////////////////////////////////////////////////////////////
