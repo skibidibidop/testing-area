@@ -23,3 +23,46 @@ apply to the cat only—until the player hits "l".
 Choose one of the alternatives and design the appropriate program.
 |#
 
+(require 2htdp/image)
+(require 2htdp/universe)
+
+(define SCALER 1)
+
+(define SCN_WIDTH (* SCALER 400))
+(define SCN_HEIGHT (* SCALER 200))
+(define SCN_XCENTER (/ SCN_WIDTH 2))
+(define SCN_YCENTER (/ SCN_HEIGHT 2))
+
+(define BG (empty-scene SCN_WIDTH SCN_HEIGHT))
+
+(define CAT_RAD (* SCALER 25))
+(define CAT (circle CAT_RAD "solid" "brown"))
+
+(define CHAM_WIDTH (* SCALER 40))
+(define CHAM_HEIGHT (* SCALER 15))
+
+; DATA DEFINITION //////////////////////////////////////////////////////////////
+
+(define-struct zoo [cat cham])
+; (make-zoo VCat VCham)
+; Interp.: represents the current state, has data for both the cat
+; and the chameleon
+
+(define-struct vcat [loc hap])
+; (make-vcat Number Number)
+; Interp.: (make-vcat l h), represents the cat's x-coordinate (l)
+; and happiness level (h)
+
+(define-struct vcham [loc hap col])
+; (make-vcham Number Number Color)
+; Interp.: (make-vcham l h c), represents the chameleon's
+; x-coordinate (l), happiness (h), and color (c)
+
+; A Color is one of:
+; "red"
+; "green"
+; "blue"
+; Interp.: a chameleon's color
+
+; FUNCTIONS ////////////////////////////////////////////////////////////////////
+
