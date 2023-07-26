@@ -65,6 +65,35 @@ It remains impossible to change the color of a cat or to pet a chameleon.
 ; "blue"
 ; Interp.: represents a chameleon's color
 
+; A KeyEvent is one of:
+; "up"
+; "down"
+; "r"
+; "g"
+; "b"
+; Interp.: represents a way to interact with a VAnimal. "up" simulates
+; petting the cat, and "down" simulates feeding the cat or chameleon.
+; "r", "g", and "b" changes the chameleon's color to red, green, or blue,
+; respectively.
+
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
+; VAnimal -> Image
+;
+(define (render va) BG)
+
+; VAnimal -> VAnimal
+;
+(define (time_step va) va)
+
+; VAnimal KeyEvent -> VAnimal
+;
+(define (control va ke) va)
+
 ; MAIN /////////////////////////////////////////////////////////////////////////
+
+(define (main state)
+  (big-bang state
+    [to-draw render]
+    [on-tick time_step]
+    [on-key control]))
