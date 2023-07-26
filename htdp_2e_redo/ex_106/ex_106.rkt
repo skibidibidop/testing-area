@@ -238,6 +238,11 @@ It remains impossible to change the color of a cat or to pet a chameleon.
 
 ; VAnimal -> Boolean
 ; Is the VAnimal va depleted of happiness
+(check-expect (sad? CAT_FULL) #false)
+(check-expect (sad? CHAM_SAD) #true)
+(check-expect (sad? CAT_BORDER) #false)
+(check-expect (sad? CHAM_BORDER) #true)
+
 (define (sad? va) #false)
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
