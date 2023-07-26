@@ -57,12 +57,12 @@ It remains impossible to change the color of a cat or to pet a chameleon.
 (define HAP_YPOS (/ HAP_HEIGHT 2))
 (define HAP_GAUGE (rectangle HAP_WIDTH HAP_HEIGHT "solid" "red"))
 (define HAP_MAX (/ HAP_WIDTH 2))
-(define HAP_MIN (- 0 HAP_WIDTH))
+(define HAP_MIN (- 0 (/ HAP_WIDTH 2)))
 (define HAP_UP_PET (/ HAP_WIDTH 5))
 (define HAP_UP_FEED (/ HAP_WIDTH 3))
 
 (define MOVSPD (* SCALER 3))
-(define SAD_RATE (* SCALER 2))
+(define SAD_RATE (* SCALER 4))
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
@@ -143,7 +143,9 @@ It remains impossible to change the color of a cat or to pet a chameleon.
       BG)]
     [(vcham? va)
      (place-images
-      (list CHAM HAP_GAUGE)
+      (list (rectangle CHAM_WIDTH CHAM_HEIGHT
+                       "outline" (vcham-col va))
+            HAP_GAUGE)
       (list (make-posn (vcham-loc va) CHAM_YPOS)
             (make-posn (vcham-hap va) HAP_YPOS))
       BG)]))
@@ -152,12 +154,8 @@ It remains impossible to change the color of a cat or to pet a chameleon.
 ; Updates VAnimal va per tick
 (check-expect (time_step CAT_FULL)
               (make-vcat (+ SCN_XCENTER MOVSPD) (- HAP_MAX SAD_RATE)))
-(check-expect (time_step CHAM_SAD)
-              (make-vcham (+ SCN_XCENTER MOVSPD) HAP_MIN "red"))
 (check-expect (time_step CAT_BORDER)
               (make-vcat CAT_START_POS (- HAP_MAX SAD_RATE)))
-(check-expect (time_step CHAM_BORDER)
-              (make-vcham CHAM_START_POS HAP_MIN "green"))
 
 (define (time_step va)
   (cond
@@ -168,11 +166,7 @@ It remains impossible to change the color of a cat or to pet a chameleon.
          CAT_START_POS]
         [else
          (+ (vcat-loc va) MOVSPD)])
-      (cond
-        [(<= (vcat-hap va) HAP_MIN)
-        HAP_MIN]
-        [else
-         (- (vcat-hap va) SAD_RATE)]))]
+      (- (vcat-hap va) SAD_RATE))]
     [(vcham? va)
      (make-vcham
       (cond
@@ -180,11 +174,7 @@ It remains impossible to change the color of a cat or to pet a chameleon.
          CHAM_START_POS]
         [else
          (+ (vcham-loc va) MOVSPD)])
-      (cond
-        [(<= (vcham-hap va) HAP_MIN)
-         HAP_MIN]
-        [else
-         (- (vcham-hap va) HAP_MIN)])
+      (- (vcham-hap va) SAD_RATE)
       (vcham-col va))]))
 
 ; VAnimal KeyEvent -> VAnimal
@@ -259,6 +249,6 @@ It remains impossible to change the color of a cat or to pet a chameleon.
     [on-key control]
     [stop-when sad?]))
 
-(main CAT_FULL)
+;(main CAT_FULL)
 
-; (main CHAM_FULL)
+(main CHAM_FULL)
