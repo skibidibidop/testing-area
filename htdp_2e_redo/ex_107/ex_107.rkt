@@ -39,6 +39,8 @@ Choose one of the alternatives and design the appropriate program.
 (define HGAUGE_HEIGHT (* SCALER 10))
 (define HAP_MAX (/ SCN_WIDTH 2))
 (define HAP_MIN (- 0 (/ SCN_WIDTH 2)))
+(define HAP_UP_PET (/ HGAUGE_WIDTH 5))
+(define HAP_UP_FEED (/ HGAUGE_WIDTH 3))
 
 (define MOV_SPD 3)
 
@@ -186,6 +188,24 @@ Choose one of the alternatives and design the appropriate program.
 
 ; Zoo KeyEvent -> Zoo
 ; Updates Zoo z based on KeyEvent k
+(check-expect (control ZOO_START "up") ZOO_START)
+(check-expect (control ZOO_HUNGRY "up")
+              (make-zoo
+               (make-vcat SCN_XCENTER
+                          (+ HAP_MIN HAP_UP_PET))
+               (zoo-cham ZOO_HUNGRY)))
+(check-expect (control ZOO_HUNGRY "down")
+              (make-zoo
+               (make-vcat SCN_XCENTER
+                          (+ HAP_MIN HAP_UP_FEED))
+               (make-vcham SCN_XCENTER
+                           (+ HAP_MIN HAP_UP_FEED)
+                           "green")))
+(check-expect (control ZOO_START "g")
+              (make-zoo
+               (zoo-cat ZOO_START)
+               (make-vcham SCN_XCENTER HAP_MAX "green")))
+
 (define (control z k) z)
 
 ; Zoo -> Boolean
