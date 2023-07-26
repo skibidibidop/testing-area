@@ -35,11 +35,20 @@ Choose one of the alternatives and design the appropriate program.
 
 (define BG (empty-scene SCN_WIDTH SCN_HEIGHT))
 
+(define HGAUGE_WIDTH SCN_WIDTH)
+(define HGAUGE_HEIGHT (* SCALER 10))
+
 (define CAT_RAD (* SCALER 25))
 (define CAT (circle CAT_RAD "solid" "brown"))
+(define CAT_HGAUGE (rectangle HGAUGE_WIDTH HGAUGE_HEIGHT
+                              "solid" "brown"))
+(define CAT_HGAUGE_YPOS (/HGAUGE_HEIGHT 2))
 
 (define CHAM_WIDTH (* SCALER 40))
 (define CHAM_HEIGHT (* SCALER 15))
+(define CHAM_HGAUGE (rectangle HGAUGE_WIDTH HGAUGE_HEIGHT
+                               "solid" "green"))
+(define CHAM_HGAUGE_YPOS HGAUGE_HEIGHT)
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
@@ -64,5 +73,42 @@ Choose one of the alternatives and design the appropriate program.
 ; "blue"
 ; Interp.: a chameleon's color
 
+; A KeyEvent is one of:
+; "up"
+; "down"
+; "r"
+; "g"
+; "b"
+; Interp.:
+; "up"   - simulates petting, increases cat's happiness level
+; "down" - simulates feeding, increases both animals' happiness level
+; "r"    - signals the chameleon to change its color to "red"
+; "g"    - signals the chameleon to change its color to "green"
+; "b"    - signals the chameleon to change its color to "blue"
+
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
+; Zoo -> Image
+; Renders image based on data from Zoo z
+(define (render z) BG)
+
+; Zoo -> Zoo
+; Updates Zoo z per tick
+(define (time_step z) z)
+
+; Zoo KeyEvent -> Zoo
+; Updates Zoo z based on KeyEvent k
+(define (control z k) z)
+
+; Zoo -> Boolean
+; Does any animal have no happiness left
+(define (sad? z) #false)
+
+; MAIN /////////////////////////////////////////////////////////////////////////
+
+(define (cham-and-cat state)
+  (big-bang state
+    [to-draw render]
+    [on-tick time_step]
+    [on-key control]
+    [stop-when sad?]))
