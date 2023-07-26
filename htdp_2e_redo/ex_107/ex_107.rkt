@@ -249,7 +249,14 @@ Choose one of the alternatives and design the appropriate program.
 
 ; Zoo -> Boolean
 ; Does any animal have no happiness left
-(define (sad? z) #false)
+(check-expect (sad? ZOO_START) #false)
+(check-expect (sad? ZOO_HUNGRY) #true)
+(check-expect (sad? CAT_BORDER) #false)
+(check-expect (sad? CHAM_BORDER) #false)
+
+(define (sad? z)
+  (or (<= (vcat-hap (zoo-cat z)) HAP_MIN)
+      (<= (vcham-hap (zoo-cham z)) HAP_MIN)))
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
@@ -259,3 +266,5 @@ Choose one of the alternatives and design the appropriate program.
     [on-tick time_step]
     [on-key control]
     [stop-when sad?]))
+
+(cham-and-cat ZOO_START)
