@@ -157,8 +157,33 @@ It remains impossible to change the color of a cat or to pet a chameleon.
 (check-expect (time_step CHAM_BORDER)
               (make-vcham CHAM_START_POS HAP_MIN "green"))
 
-(check-expect 
-(define (time_step va) va)
+(define (time_step va)
+  (cond
+    [(vcat? va)
+     (make-vcat
+      (cond
+        [(>= (vcat-loc va) CAT_MAX_XPOS)
+         CAT_START_POS]
+        [else
+         (+ (vcat-loc va) MOVSPD)])
+      (cond
+        [(<= (vcat-hap va) HAP_MIN)
+        HAP_MIN]
+        [else
+         (- (vcat-hap va) SAD_RATE)]))]
+    [(vcham? va)
+     (make-vcham
+      (cond
+        [(>= (vcham-loc va) CHAM_MAX_XPOS)
+         CHAM_START_POS]
+        [else
+         (+ (vcham-loc va) MOVSPD)])
+      (cond
+        [(<= (vcham-hap va) HAP_MIN)
+         HAP_MIN]
+        [else
+         (- (vcham-hap va) HAP_MIN)])
+      (vcham-col va))]))
 
 ; VAnimal KeyEvent -> VAnimal
 ; Changes happiness level or color of VAnimal va depending on KeyEvent ke
