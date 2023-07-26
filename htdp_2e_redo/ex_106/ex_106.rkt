@@ -79,15 +79,15 @@ It remains impossible to change the color of a cat or to pet a chameleon.
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
 ; VAnimal -> Image
-;
+; Renders image based on data from VAnimal va
 (define (render va) BG)
 
 ; VAnimal -> VAnimal
-;
+; Updates VAnimal va per tick
 (define (time_step va) va)
 
 ; VAnimal KeyEvent -> VAnimal
-;
+; Changes happiness level or color of VAnimal va depending on KeyEvent ke
 (define (control va ke) va)
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
