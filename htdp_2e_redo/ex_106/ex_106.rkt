@@ -39,12 +39,17 @@ It remains impossible to change the color of a cat or to pet a chameleon.
 
 (define CAT_RAD (* SCALER 15))
 (define CAT_YPOS (- SCN_HEIGHT CAT_RAD))
+(define CAT_MAX_XPOS (- SCN_WIDTH CAT_RAD))
+(define CAT_START_POS CAT_RAD)
 (define CAT (circle CAT_RAD "solid" "brown"))
 
 (define CHAM_WIDTH (* SCALER 20))
 (define CHAM_HEIGHT (* SCALER 10))
 (define CHAM_YPOS (- SCN_HEIGHT
                      (/ CHAM_HEIGHT 2)))
+(define CHAM_MAX_XPOS (- SCN_WIDTH
+                         (/ CHAM_WIDTH 2)))
+(define CHAM_START_POS (/ CHAM_WIDTH 2))
 (define CHAM (rectangle CHAM_WIDTH CHAM_HEIGHT "outline" "red"))
 
 (define HAP_WIDTH SCN_WIDTH)
@@ -53,6 +58,9 @@ It remains impossible to change the color of a cat or to pet a chameleon.
 (define HAP_GAUGE (rectangle HAP_WIDTH HAP_HEIGHT "solid" "red"))
 (define HAP_MAX (/ HAP_WIDTH 2))
 (define HAP_MIN (- 0 HAP_WIDTH))
+
+(define MOVSPD (* SCALER 3))
+(define SAD_RATE (* SCALER 1))
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
@@ -87,10 +95,12 @@ It remains impossible to change the color of a cat or to pet a chameleon.
 ; "r", "g", and "b" changes the chameleon's color to red, green, or blue,
 ; respectively.
 
-(define CAT_FULL  (make-vcat SCN_XCENTER HAP_MAX))
-(define CAT_SAD   (make-vcat SCN_XCENTER HAP_MIN))
-(define CHAM_FULL (make-vcham SCN_XCENTER HAP_MAX "red"))
-(define CHAM_SAD  (make-vcham SCN_XCENTER HAP_MIN "red"))
+(define CAT_FULL    (make-vcat SCN_XCENTER HAP_MAX))
+(define CAT_SAD     (make-vcat SCN_XCENTER HAP_MIN))
+(define CAT_BORDER  (make-vcat CAT_MAX_XPOS HAP_MAX))
+(define CHAM_FULL   (make-vcham SCN_XCENTER HAP_MAX "red"))
+(define CHAM_SAD    (make-vcham SCN_XCENTER HAP_MIN "red"))
+(define CHAM_BORDER (make-vcham CHAM_MAX_XPOS HAP_MIN "green"))
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
@@ -138,6 +148,16 @@ It remains impossible to change the color of a cat or to pet a chameleon.
 
 ; VAnimal -> VAnimal
 ; Updates VAnimal va per tick
+(check-expect (time_step CAT_FULL)
+              (make-vcat (+ SCN_XCENTER MOVSPD) (- HAP_MAX SAD_RATE)))
+(check-expect (time_step CHAM_SAD)
+              (make-vcham (+ SCN_XCENTER MOVSPD) HAP_MIN "red"))
+(check-expect (time_step CAT_BORDER)
+              (make-vcat CAT_START_POS (- HAP_MAX SAD_RATE)))
+(check-expect (time_step CHAM_BORDER)
+              (make-vcham CHAM_START_POS HAP_MIN "green"))
+
+(check-expect 
 (define (time_step va) va)
 
 ; VAnimal KeyEvent -> VAnimal
