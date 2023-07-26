@@ -58,6 +58,8 @@ It remains impossible to change the color of a cat or to pet a chameleon.
 (define HAP_GAUGE (rectangle HAP_WIDTH HAP_HEIGHT "solid" "red"))
 (define HAP_MAX (/ HAP_WIDTH 2))
 (define HAP_MIN (- 0 HAP_WIDTH))
+(define HAP_UP_PET (/ HAP_WIDTH 5))
+(define HAP_UP_FEED (/ HAP_WIDTH 3))
 
 (define MOVSPD (* SCALER 3))
 (define SAD_RATE (* SCALER 1))
@@ -187,6 +189,19 @@ It remains impossible to change the color of a cat or to pet a chameleon.
 
 ; VAnimal KeyEvent -> VAnimal
 ; Changes happiness level or color of VAnimal va depending on KeyEvent ke
+(check-expect (control CAT_SAD "up")
+              (make-vcat SCN_XCENTER (+ HAP_MIN HAP_UP_PET)))
+(check-expect (control CAT_FULL "down") CAT_FULL)
+(check-expect (control CHAM_SAD "up") CHAM_SAD)
+(check-expect (control CHAM_SAD "down")
+              (make-vcham SCN_XCENTER (+ HAP_MIN HAP_UP_FEED)))
+(check-expect (control CHAM_FULL "down")
+              (make-vcham SCN_XCENTER HAP_MAX))
+(check-expect (control CAT_SAD "r") CAT_SAD)
+(check-expect (control CHAM_SAD "r") CHAM_SAD)
+(check-expect (control CHAM_SAD "g")
+              (make-vcham SCN_XCENTER HAP_MIN "green"))
+
 (define (control va ke) va)
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
