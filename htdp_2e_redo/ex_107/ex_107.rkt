@@ -63,6 +63,8 @@ Choose one of the alternatives and design the appropriate program.
 (define CHAM_START_XPOS (- SCN_WIDTH (/ CHAM_WIDTH 2)))
 (define CHAM_MOVE (* MOV_SPD -1))
 
+(define SAD_RATE (* SCALER 2))
+
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
 (define-struct zoo [cat cham])
@@ -144,6 +146,28 @@ Choose one of the alternatives and design the appropriate program.
 
 ; Zoo -> Zoo
 ; Updates Zoo z per tick
+(check-expect (time_step ZOO_START)
+              (make-zoo
+               (make-vcat (+ SCN_XCENTER CAT_MOVE)
+                          (- HAP_MAX SAD_RATE))
+               (make-vcham (+ SCN_XCENTER CHAM_MOVE)
+                           (- HAP_MAX SAD_RATE)
+                           "red")))
+(check-expect (time_step CAT_BORDER)
+              (make-zoo
+               (make-vcat CAT_START_XPOS
+                          (- HAP_MAX SAD_RATE))
+               (make-vcham (+ SCN_XCENTER CHAM_MOVE)
+                           (- HAP_MAX SAD_RATE)
+                           "blue")))
+(check-expect (time_step CHAM_BORDER)
+              (make-zoo
+               (make-vcat (+ SCN_XCENTER CAT_MOVE)
+                          (- HAP_MAX SAD_RATE))
+               (make-vcham CHAM_START_XPOS
+                           (- HAP_MAX SAD_RATE)
+                           "red")))
+
 (define (time_step z) z)
 
 ; Zoo KeyEvent -> Zoo
