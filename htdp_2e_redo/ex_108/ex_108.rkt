@@ -100,7 +100,19 @@ stick figures with the image library.
 
 ; Crossing_light KeyEvent -> Crossing_light
 ; Updates Crossing_light cl based on KeyEvent ke
-(define (control cl ke) cl)
+(check-expect (control WAIT "a") GO_START)
+(check-expect (control WAIT "!") GO_START)
+(check-expect (control WAIT "left") GO_START)
+(check-expect (control GO_START "z") GO_START)
+(check-expect (control GO_END "@") GO_END)
+(check-expect (control CD_START "/b") CD_START)
+(check-expect (control CD_END "right") CD_END)
+
+(define (control cl ke)
+  (cond
+    [(and (key-event? ke) (= cl WAIT))
+     GO_START]
+    [else cl]))
 
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
@@ -108,5 +120,7 @@ stick figures with the image library.
 (define (main state)
   (big-bang state
     [to-draw render]
-    [on-tick time_step]
+    [on-tick time_step 1]
     [on-key control]))
+
+(main WAIT)
