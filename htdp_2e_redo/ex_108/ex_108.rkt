@@ -67,7 +67,18 @@ stick figures with the image library.
 (check-expect (render GO_START)
               (place-image GO_SIGN SCN_CENTER SCN_CENTER BG))
 
-(define (render cl) BG)
+(define (render cl)
+  (place-image
+   (cond
+     [(= cl WAIT) WAIT_SIGN]
+     [(and (>= cl GO_START) (<= GO_END))
+      GO_SIGN]
+     [(and (>= cl CD_START) (<= CD_END))
+      (text (number->string cl) FONT_SIZE
+            (if (= (modulo cl 2) 0)
+                "green"
+                "orange"))])
+   SCN_CENTER SCN_CENTER BG))
 
 ; Crossing_light -> Crossing_light
 ; Updates Crossing_light cl per tick
