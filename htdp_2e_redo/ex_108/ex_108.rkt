@@ -82,6 +82,12 @@ stick figures with the image library.
 
 ; Crossing_light -> Crossing_light
 ; Updates Crossing_light cl per tick
+(check-expect (time_step WAIT) WAIT)
+(check-expect (time_step GO_START) 12)
+(check-expect (time_step GO_END) CD_START)
+(check-expect (time_step CD_START) 1)
+(check-expect (time_step CD_END) WAIT)
+
 (define (time_step cl) cl)
 
 ; Crossing_light KeyEvent -> Crossing_light
