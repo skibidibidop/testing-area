@@ -23,8 +23,14 @@ Clearly, "acbd" is one example of an acceptable string; two others are
 (define SCALER 1)
 
 (define SCN_SIZE (* SCALER 100))
+(define SCN_CENTER (/ SCN_SIZE 2))
 
 (define BG (empty-scene SCN_SIZE SCN_SIZE))
+
+(define EXP_INIT_BOX (square SCN_SIZE "solid" "white"))
+(define EXP_REST_BOX (square SCN_SIZE "solid" "yellow"))
+(define DONE_BOX     (square SCN_SIZE "solid" "green"))
+(define ERROR_BOX    (square SCN_SIZE "solid" "red"))
 
 (define EXPECTS_INITIAL 0)
 (define EXPECTS_REST    1)
@@ -48,6 +54,15 @@ Clearly, "acbd" is one example of an acceptable string; two others are
 
 ; Expecting -> Image
 ; Renders image based on Expecting ex
+(check-expect (render EXPECTS_INITIAL)
+              (place-image EXP_INIT_BOX SCN_CENTER SCN_CENTER BG))
+(check-expect (render EXPECTS_REST)
+              (place-image EXP_REST_BOX SCN_CENTER SCN_CENTER BG))
+(check-expect (render DONE)
+              (place-image DONE_BOX SCN_CENTER SCN_CENTER BG))
+(check-expect (render ERROR)
+              (place-image ERROR_BOX SCN_CENTER SCN_CENTER BG))
+              
 (define (render ex) BG)
 
 ; Expecting KeyEvent -> Expecting
@@ -60,6 +75,7 @@ Clearly, "acbd" is one example of an acceptable string; two others are
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
+; Expecting -> Expecting
 (define (main state)
   (big-bang state
     [to-draw render]
