@@ -1,3 +1,6 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-intermediate-reader.ss" "lang")((modname ex_108) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: July 27, 2023
@@ -59,6 +62,11 @@ stick figures with the image library.
 
 ; Crossing_light -> Image
 ; Renders an image based on data from Crossing_light cl
+(check-expect (render WAIT)
+              (place-image WAIT_SIGN SCN_CENTER SCN_CENTER BG))
+(check-expect (render GO_START)
+              (place-image GO_SIGN SCN_CENTER SCN_CENTER BG))
+
 (define (render cl) BG)
 
 ; Crossing_light -> Crossing_light
