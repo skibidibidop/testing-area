@@ -23,10 +23,19 @@ stick figures with the image library.
 (define SCALER 1)
 (define SCN_SIZE (* SCALER 150))
 
-(define )
+(define WAIT 10)
+(define GO_START 11)
+(define GO_END 20)
+(define CD_START 0)
+(define CD_END 9)
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
-
+; A Crossing_light is one of:
+; WAIT
+; [GO_START, GO_END]
+; [CD_START, CD_END]
+; Interp.: represents the different states of a crossing light (wait, go,
+; and countdown)
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
