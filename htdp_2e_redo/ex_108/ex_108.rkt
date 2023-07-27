@@ -88,7 +88,15 @@ stick figures with the image library.
 (check-expect (time_step CD_START) 1)
 (check-expect (time_step CD_END) WAIT)
 
-(define (time_step cl) cl)
+(define (time_step cl)
+  (cond
+    [(= cl WAIT) WAIT]
+    [(and (>= cl GO_START) (< cl GO_END))
+     (+ cl 1)]
+    [(= cl GO_END) CD_START]
+    [(and (>= cl CD_START) (< cl CD_END))
+     (+ cl 1)]
+    [else WAIT]))
 
 ; Crossing_light KeyEvent -> Crossing_light
 ; Updates Crossing_light cl based on KeyEvent ke
