@@ -22,12 +22,29 @@ stick figures with the image library.
 
 (define SCALER 1)
 (define SCN_SIZE (* SCALER 150))
+(define SCN_CENTER (/ SCN_SIZE 2))
 
-(define WAIT 10)
+(define BG (empty-scene SCN_SIZE SCN_SIZE))
+
+(define SMALL_BOX_SIZE (* SCALER 100))
+(define BIG_BOX_SIZE (* SCALER 130))
+(define BIG_BOX_CENTER (/ BIG_BOX_SIZE 2))
+
+(define ORANGE_BOX (square SMALL_BOX_SIZE "solid" "orange"))
+(define RED_BOX (square BIG_BOX_SIZE "solid" "red"))
+
+(define WAIT_SIGN (place-image ORANGE_BOX
+                               BIG_BOX_CENTER BIG_BOX_CENTER
+                               RED_BOX))
+(define GO_SIGN (square BIG_BOX_SIZE "solid" "green"))
+
+(define FONT_SIZE (* SCALER 100))
+
+(define WAIT     10)
 (define GO_START 11)
-(define GO_END 20)
+(define GO_END   20)
 (define CD_START 0)
-(define CD_END 9)
+(define CD_END   9)
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
@@ -39,3 +56,24 @@ stick figures with the image library.
 ; and countdown)
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
+
+; Crossing_light -> Image
+; Renders an image based on data from Crossing_light cl
+(define (render cl) BG)
+
+; Crossing_light -> Crossing_light
+; Updates Crossing_light cl per tick
+(define (time_step cl) cl)
+
+; Crossing_light KeyEvent -> Crossing_light
+; Updates Crossing_light cl based on KeyEvent ke
+(define (control cl ke) cl)
+
+
+; MAIN /////////////////////////////////////////////////////////////////////////
+
+(define (main state)
+  (big-bang state
+    [to-draw render]
+    [on-tick time_step]
+    [on-key control]))
