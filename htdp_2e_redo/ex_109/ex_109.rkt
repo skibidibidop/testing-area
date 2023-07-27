@@ -46,4 +46,22 @@ Clearly, "acbd" is one example of an acceptable string; two others are
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
+; Expecting -> Image
+; Renders image based on Expecting ex
+(define (render ex) BG)
+
+; Expecting KeyEvent -> Expecting
+; Updates Expecting ex based on KeyEvent ke
+(define (check_pattern ex ke) ex)
+
+; Expecting -> Boolean
+; Has the pattern been matched or is there an erronuous input
+(define (end? ex) #false)
+
 ; MAIN /////////////////////////////////////////////////////////////////////////
+
+(define (main state)
+  (big-bang state
+    [to-draw render]
+    [on-key check_pattern]
+    [stop-when end?]))
