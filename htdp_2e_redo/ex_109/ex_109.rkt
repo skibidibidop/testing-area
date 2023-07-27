@@ -63,7 +63,14 @@ Clearly, "acbd" is one example of an acceptable string; two others are
 (check-expect (render ERROR)
               (place-image ERROR_BOX SCN_CENTER SCN_CENTER BG))
               
-(define (render ex) BG)
+(define (render ex)
+  (place-image
+   (cond
+     [(= ex EXPECTS_INITIAL) EXP_INIT_BOX]
+     [(= ex EXPECTS_REST)    EXP_REST_BOX]
+     [(= ex DONE)            DONE_BOX]
+     [(= ex ERROR)           ERROR_BOX])
+   SCN_CENTER SCN_CENTER BG))
 
 ; Expecting KeyEvent -> Expecting
 ; Updates Expecting ex based on KeyEvent ke
