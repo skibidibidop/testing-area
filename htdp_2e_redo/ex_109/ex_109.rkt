@@ -100,6 +100,11 @@ Clearly, "acbd" is one example of an acceptable string; two others are
 
 ; Expecting -> Boolean
 ; Has the pattern been matched or is there an erronuous input
+(check-expect (end? EXPECTS_INITIAL) #false)
+(check-expect (end? EXPECTS_REST)    #false)
+(check-expect (end? DONE)            #true)
+(check-expect (end? ERROR)           #true)
+
 (define (end? ex) #false)
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
