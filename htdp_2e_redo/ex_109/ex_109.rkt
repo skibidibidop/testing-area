@@ -74,6 +74,13 @@ Clearly, "acbd" is one example of an acceptable string; two others are
 
 ; Expecting KeyEvent -> Expecting
 ; Updates Expecting ex based on KeyEvent ke
+(check-expect (check_pattern EXPECTS_INITIAL "a") EXPECTS_REST)
+(check-expect (check_pattern EXPECTS_REST "b")    EXPECTS_REST)
+(check-expect (check_pattern EXPECTS_REST "c")    EXPECTS_REST)
+(check-expect (check_pattern EXPECTS_REST "d")    DONE)
+(check-expect (check_pattern EXPECTS_INITIAL "b") ERROR)
+(check-expect (check_pattern EXPECTS_REST "e")    ERROR)
+
 (define (check_pattern ex ke) ex)
 
 ; Expecting -> Boolean
