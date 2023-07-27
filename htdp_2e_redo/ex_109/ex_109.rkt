@@ -105,7 +105,8 @@ Clearly, "acbd" is one example of an acceptable string; two others are
 (check-expect (end? DONE)            #true)
 (check-expect (end? ERROR)           #true)
 
-(define (end? ex) #false)
+(define (end? ex)
+  (or (= ex DONE) (= ex ERROR)))
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
