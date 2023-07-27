@@ -20,9 +20,29 @@ Clearly, "acbd" is one example of an acceptable string; two others are
 (require 2htdp/image)
 (require 2htdp/universe)
 
+(define SCALER 1)
 
+(define SCN_SIZE (* SCALER 100))
+
+(define BG (empty-scene SCN_SIZE SCN_SIZE))
+
+(define EXPECTS_INITIAL 0)
+(define EXPECTS_REST    1)
+(define DONE            2)
+(define ERROR           3)
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
+
+; An Expecting is one of:
+; EXPECTS_INITIAL
+; EXPECTS_REST
+; DONE
+; ERROR
+; Interp.:
+; EXPECTS_INITIAL - initial state
+; EXPECTS_REST    - state after initial
+; DONE            - state when a (b|c)* d regex is matched
+; ERROR           - state when a (b|c)* d regex is not matched at any point
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
