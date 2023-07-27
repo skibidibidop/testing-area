@@ -98,21 +98,12 @@ Clearly, "acbd" is one example of an acceptable string; two others are
      DONE]
     [else ERROR]))
 
-; Expecting -> Boolean
-; Has the pattern been matched or is there an erronuous input
-(check-expect (end? EXPECTS_INITIAL) #false)
-(check-expect (end? EXPECTS_REST)    #false)
-(check-expect (end? DONE)            #true)
-(check-expect (end? ERROR)           #true)
-
-(define (end? ex)
-  (or (= ex DONE) (= ex ERROR)))
-
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
 ; Expecting -> Expecting
 (define (main state)
   (big-bang state
     [to-draw render]
-    [on-key check_pattern]
-    [stop-when end?]))
+    [on-key check_pattern]))
+
+(main EXPECTS_INITIAL)
