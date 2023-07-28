@@ -89,7 +89,7 @@ editor program (chapter 5.10).
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
-; VAnimal -> Boolean
+; Any -> Boolean
 ; Is the input a VAnimal
 (check-expect (vanimal? CAT_FULL) #true)
 (check-expect (vanimal? CHAM_SAD) #true)
