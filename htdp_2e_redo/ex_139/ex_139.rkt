@@ -28,11 +28,16 @@ What does sum compute for an element of List-of-numbers?
 
 ; List-of-numbers -> Boolean
 ; Checks if all list members are positive numbers
-(check-expect (pos? '()) #false)
+(check-expect (pos? '()) #true)
 (check-expect (pos? (cons 2 '())) #true)
 (check-expect (pos? (cons 0 (cons 3 '()))) #false)
 (check-expect (pos? (cons 1 (cons 2 (cons 3 '())))) #true)
 (check-expect (pos? (cons 0 (cons -44 '()))) #false)
 
-(define (pos? ln) #false)
+(define (pos? ln)
+  (cond
+    [(empty? ln) #true]
+    [else
+     (and (> (first ln) 0)
+          (pos? (rest ln)))]))
 
