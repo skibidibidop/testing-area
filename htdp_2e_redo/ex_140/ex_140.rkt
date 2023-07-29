@@ -12,3 +12,17 @@ words, if there is any #false on the list, the function produces #false.
 Now design one-true, a function that consumes a list of Boolean val-
 ues and determines whether at least one item on the list is #true.
 |#
+
+; List-of-booleans -> Boolean
+; Checks if all list members are #true
+(check-expect (all-true '()) #true)
+(check-expect (all-true (list #true)) #true)
+(check-expect (all-true (list #true #false #true)) #false)
+(check-expect (all-true (list #false #false)) #false)
+
+(define (all-true lob)
+  (cond
+    [(empty? lob) #true]
+    [else
+     (and (first lob)
+          (all-true (rest lob)))]))
