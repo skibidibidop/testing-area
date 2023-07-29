@@ -46,6 +46,13 @@ What does sum compute for an element of List-of-numbers?
 (check-expect (checked-sum '()) 0)
 (check-expect (checked-sum (list 1 2 3)) 6)
 (check-error (checked-sum (list -1 2 3))
-              (error "Needs positive number."))
+             "Needs positive number.")
 
-(define (checked-sum ln))
+(define (checked-sum ln)
+  (cond
+    [(not (pos? ln)) (error "Needs positive number.")]
+    [else
+     (cond
+       [(empty? ln) 0]
+       [else
+        (+ (first ln) (checked-sum (rest ln)))])]))
