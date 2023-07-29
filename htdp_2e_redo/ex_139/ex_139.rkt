@@ -26,7 +26,7 @@ otherwise it signals an error. Hint Recall to use check-error.
 What does sum compute for an element of List-of-numbers?
 |#
 
-; List-of-numbers -> Boolean
+; List-of-amounts -> Boolean
 ; Checks if all list members are positive numbers
 (check-expect (pos? '()) #true)
 (check-expect (pos? (cons 2 '())) #true)
@@ -34,10 +34,18 @@ What does sum compute for an element of List-of-numbers?
 (check-expect (pos? (cons 1 (cons 2 (cons 3 '())))) #true)
 (check-expect (pos? (cons 0 (cons -44 '()))) #false)
 
-(define (pos? ln)
+(define (pos? la)
   (cond
-    [(empty? ln) #true]
+    [(empty? la) #true]
     [else
-     (and (> (first ln) 0)
-          (pos? (rest ln)))]))
+     (and (> (first la) 0)
+          (pos? (rest la)))]))
 
+; List-of-numbers -> Number
+; Produces the sum of all list members
+(check-expect (checked-sum '()) 0)
+(check-expect (checked-sum (list 1 2 3)) 6)
+(check-error (checked-sum (list -1 2 3))
+              (error "Needs positive number."))
+
+(define (checked-sum ln))
