@@ -12,7 +12,7 @@ Explain why the sentences are legal or illegal
 |#
 
 #|
-1. Illegal, no selectors.
+1. Legal.
 2. Legal, follows the format for define-struct.
 3. Illegal, can't use a function as the struct name.
 |#
