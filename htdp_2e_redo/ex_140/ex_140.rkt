@@ -26,3 +26,17 @@ ues and determines whether at least one item on the list is #true.
     [else
      (and (first lob)
           (all-true (rest lob)))]))
+
+; List-of-booleans -> Boolean
+; Checks if there is at least one #true value in the list
+(check-expect (one-true '()) #false)
+(check-expect (one-true (list #true)) #true)
+(check-expect (one-true (list #true #false #true)) #true)
+(check-expect (one-true (list #false #false)) #false)
+
+(define (one-true lob)
+  (cond
+    [(empty? lob) #false]
+    [else
+     (or (first lob)
+         (one-true (rest lob)))]))
