@@ -17,13 +17,11 @@ Use
 for the result part of the signature.
 |#
 
+(require 2htdp/image)
+
 ; A List-of-images is one of:
 ; '()
 ; (cons Image List-of-images)
-
-; An ImageOrNot is one of:
-; #false
-; Image
 
 (define SQUARE_1 (square 1 "outline" "black"))
 (define SQUARE_2 (square 2 "outline" "black"))
@@ -37,9 +35,12 @@ for the result part of the signature.
 (define ASSORTED
   (list SQUARE_1 SQUARE_2 RECT_1 CIRC_1))
 
-; List-of-images PositiveNumber -> ImageOrNot
+; List-of-images PositiveNumber -> ImageOrFalse
 ; Returns the first image in loi that is not n by n square, #false if it
 ; can't find such an image
 (check-expect (ill-sized? '() 1) #false)
-(check-expect (ill-sized? SQUARE_LIST 3) SQUARE_3)
-(check-expect (ill-sized? ASSORTED 3)
+(check-expect (ill-sized? SQUARE_LIST 3) SQUARE_1)
+(check-expect (ill-sized? ASSORTED 3) SQUARE_1)
+(check-expect (ill-sized? ASSORTED 1) SQUARE_2)
+
+(define (ill-sized? loi n) #false)
