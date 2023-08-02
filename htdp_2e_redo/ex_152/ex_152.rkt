@@ -43,4 +43,8 @@ produces a row—a horizontal arrangement—of n copies of img.
 (check-expect (row 2 CIRCLE_IMG)
               (beside CIRCLE_IMG CIRCLE_IMG empty-image))
 
-(define (row n img) empty-image)
+(define (row n img)
+  (cond
+    [(= n 0) empty-image]
+    [else
+     (beside img (row (- n 1) img))]))
