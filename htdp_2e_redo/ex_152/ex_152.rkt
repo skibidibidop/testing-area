@@ -29,7 +29,11 @@ produces a row—a horizontal arrangement—of n copies of img.
 (check-expect (col 3 CIRCLE_IMG)
               (above CIRCLE_IMG CIRCLE_IMG CIRCLE_IMG empty-image))
 
-(define (col n img) empty-image)
+(define (col n img)
+  (cond
+    [(= n 0) empty-image]
+    [else
+     (above img (col (- n 1) img))]))
 
 ; N Image -> Image
 ; Produces a row of n copies of img
