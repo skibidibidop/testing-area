@@ -28,9 +28,15 @@ hits. Where is the 10th?
 (require 2htdp/image)
 
 (define SCALER 1)
+(define SCN_WIDTH (* SCALER 80))
+(define SCN_HEIGHT (* SCALER 180))
+(define SCN_XCENTER (/ SCN_WIDTH 2))
+(define SCN_YCENTER (/ SCN_HEIGHT 2))
+
+(define BG (empty-scene (* SCALER 80) (* SCALER 180)))
 
 (define CIRCLE_IMG (circle (* SCALER 10) "outline" "red"))
-(define SQUARE_IMG (square (* SCALER 10) "solid" "black"))
+(define SQUARE_IMG (square (* SCALER 10) "outline" "black"))
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
@@ -64,4 +70,12 @@ hits. Where is the 10th?
     [else
      (beside img (row (- n 1) img))]))
 
+;
+;
+
+
 ; MAIN /////////////////////////////////////////////////////////////////////////
+
+(define GRID_COLUMN (col 18 SQUARE_IMG))
+(define GRID
+  (place-image (row 8 GRID_COLUMN) SCN_XCENTER SCN_YCENTER BG))
