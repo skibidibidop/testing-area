@@ -27,3 +27,13 @@ does the skeleton use check-within?
     [(= n 0) pi]
     [else
      (add1 (add-to-pi (- n 1)))]))
+
+; N Number -> Number
+; Adds Natrual number n to a Number x
+(check-within (add 3 4) (+ 3 4) 0.001)
+
+(define (add n x)
+  (cond
+    [(= n 0) x]
+    [else
+     [add1 (add (- n 1) x)]]))
