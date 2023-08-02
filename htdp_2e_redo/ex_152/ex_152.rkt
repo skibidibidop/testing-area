@@ -11,3 +11,14 @@ The function row consumes a natural number n and an image img. It
 produces a row—a horizontal arrangement—of n copies of img.
 |#
 
+(require 2htdp/image)
+
+(define 
+
+; N Image -> Image
+;
+(define (col n img) BG)
+
+; N Image -> Image
+;
+(define (row n img) BG)
