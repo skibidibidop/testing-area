@@ -24,3 +24,44 @@ Posns. The left-most is the clean lecture hall, the second one is after two
 balloons have hit, and the last one is a highly unlikely distribution of 10
 hits. Where is the 10th?
 |#
+
+(require 2htdp/image)
+
+(define SCALER 1)
+
+(define CIRCLE_IMG (circle (* SCALER 10) "outline" "red"))
+(define SQUARE_IMG (square (* SCALER 10) "solid" "black"))
+
+; DATA DEFINITION //////////////////////////////////////////////////////////////
+
+; FUNCTIONS ////////////////////////////////////////////////////////////////////
+
+; N Image -> Image
+; Produces a column of n copies of img
+(check-expect (col 0 CIRCLE_IMG) empty-image)
+(check-expect (col 1 SQUARE_IMG)
+              (above SQUARE_IMG empty-image))
+(check-expect (col 3 CIRCLE_IMG)
+              (above CIRCLE_IMG CIRCLE_IMG CIRCLE_IMG empty-image))
+
+(define (col n img)
+  (cond
+    [(= n 0) empty-image]
+    [else
+     (above img (col (- n 1) img))]))
+
+; N Image -> Image
+; Produces a row of n copies of img
+(check-expect (row 0 CIRCLE_IMG) empty-image)
+(check-expect (row 1 SQUARE_IMG)
+              (beside SQUARE_IMG empty-image))
+(check-expect (row 2 CIRCLE_IMG)
+              (beside CIRCLE_IMG CIRCLE_IMG empty-image))
+
+(define (row n img)
+  (cond
+    [(= n 0) empty-image]
+    [else
+     (beside img (row (- n 1) img))]))
+
+; MAIN /////////////////////////////////////////////////////////////////////////
