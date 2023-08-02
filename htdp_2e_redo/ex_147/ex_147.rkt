@@ -31,5 +31,19 @@ one-true from exercise 140.
          (one-true (rest nlob)))]))
 
 ; NEList-of-Booleans -> Boolean
-;
-(define (all-true nlob) #false)
+; Checks if all members are #true
+(check-error  (all-true '()) ERR_MSG)
+(check-expect (all-true (cons #true '())) #true)
+(check-expect (all-true (cons #false '())) #false)
+(check-expect (all-true (cons #true (cons #false '()))) #false)
+(check-expect (all-true (cons #true (cons #true '()))) #true)
+(check-expect (all-true (cons #false (cons #true '()))) #false)
+(check-expect (all-true (cons #false (cons #false '()))) #false)
+
+(define (all-true nlob)
+  (cond
+    [(empty? nlob) (error ERR_MSG)]
+    [(empty? (rest nlob)) (first nlob)]
+    [else
+     (and (first nlob)
+          (all-true (rest nlob)))]))
