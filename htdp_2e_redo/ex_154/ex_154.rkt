@@ -11,6 +11,7 @@ our example should produce
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
+(define-struct layer [color doll])
 ; An RD (short for Russian doll) is one of:
 ; -- String
 ; -- (make-layer String RD)
@@ -19,15 +20,14 @@ our example should produce
 
 ; RD -> String
 ; Produces a String of all colors in RD rus_dol
-(check-expect (colors '()) "")
-(check-expect (colors (list "red")) "red")
-(check-expect (colors (list "yellow" "green")) "yellow, green")
+(check-expect (colors (make-layer "red" "blue")) "red, blue")
+(check-expect (colors (make-layer "green"
+                                  (make-layer "yellow" "purple")))
+              "green, yellow, purple")
 
 (define (colors rus_dol)
   (cond
-    [(empty? rus_dol) ""]
-    [(empty? (rest rus_dol)) (first rus_dol)]
-    [else
-     (string-append (first rus_dol)
-                    ", "
-                    (colors (rest rus_dol)))]))
+    [(string? rus_dol) rus_dol]
+    [(layer? rus_dol)
+     (string-append
+      (layer-color rus_dol) ", " (colors (layer-doll rus_dol)))]))
