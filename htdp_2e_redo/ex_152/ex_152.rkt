@@ -1,3 +1,6 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-intermediate-reader.ss" "lang")((modname ex_152) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: August 2, 2023
@@ -13,12 +16,21 @@ produces a row—a horizontal arrangement—of n copies of img.
 
 (require 2htdp/image)
 
-(define 
+(define SCALER 1)
+
+(define CIRCLE_IMG (circle (* SCALER 10) "outline" "red"))
+(define SQUARE_IMG (square (* SCALER 10) "solid" "black"))
 
 ; N Image -> Image
-;
-(define (col n img) BG)
+; Produces a column of n copies of img
+(check-expect (col 0 CIRCLE_IMG) empty-image)
+(check-expect (col 1 SQUARE_IMG)
+              (above SQUARE_IMG empty-image))
+(check-expect (col 3 CIRCLE_IMG)
+              (above CIRCLE_IMG CIRCLE_IMG CIRCLE_IMG empty-image))
+
+(define (col n img) empty-image)
 
 ; N Image -> Image
-;
-(define (row n img) BG)
+; Produces a row of n copies of img
+(define (row n img) empty-image)
