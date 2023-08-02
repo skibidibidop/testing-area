@@ -43,4 +43,12 @@ for the result part of the signature.
 (check-expect (ill-sized? ASSORTED 3) SQUARE_1)
 (check-expect (ill-sized? ASSORTED 1) SQUARE_2)
 
-(define (ill-sized? loi n) #false)
+(define (ill-sized? loi n)
+  (cond
+    [(empty? loi) #false]
+    [else
+     (if (not (=
+               (image-width (first loi))
+               n))
+         (first loi)
+         (ill-sized? (rest loi) n))]))
