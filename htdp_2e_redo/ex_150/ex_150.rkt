@@ -13,7 +13,6 @@ is a start:
 (define (add-to-pi n)
   pi)
 
-Designing with Self-Referential Data Definitions 267
 Once you have a complete definition, generalize the function to add, which
 adds a natural number n to some arbitrary number x without using +. Why
 does the skeleton use check-within?
@@ -24,4 +23,7 @@ does the skeleton use check-within?
 (check-within (add-to-pi 3) (+ 3 pi) 0.001)
 
 (define (add-to-pi n)
-  pi)
+  (cond
+    [(= n 0) pi]
+    [else
+     (add1 (add-to-pi (- n 1)))]))
