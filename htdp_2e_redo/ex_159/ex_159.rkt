@@ -43,7 +43,15 @@ to nest it within another expression.
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
+(define-struct pair [balloon# lob])
+; A Pair is a structure (make-pair N List-of-posns)
+; A List-of-posns is one of:
+; -- '()
+; -- (cons Posn List-of-posns)
+; interpretation (make-pair n lob) means n balloons
+; must yet be thrown and added to lob
 
+; An N is a Natural Number
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
@@ -79,19 +87,49 @@ to nest it within another expression.
 (define GRID
   (place-image (row 8 GRID_COLUMN) SCN_XCENTER SCN_YCENTER BG))
 
-; Posn_list -> Image
-; Places red dots on GRID based on coordinates in Posn_list pl
-(check-expect (add-balloons '()) GRID)
-(check-expect (add-balloons (list (make-posn 5 10)))
+; Pair -> Image
+; Places red dots on GRID based on coordinates in Pair p
+(check-expect (add-balloons (make-pair 0 '())) GRID)
+(check-expect (add-balloons (make-pair 1 (list (make-posn 5 10))))
               (place-images
                (list RED_DOT)
                (list (make-posn 5 10))
                GRID))
 
-(define (add-balloons pl)
+(define (add-balloons p)
   (cond
-    [(empty? pl) GRID]
+    [(empty? (pair-lob p)) GRID]
     [else
      (place-image
-      RED_DOT (posn-x (first pl)) (posn-y (first pl))
-      (add-balloons (rest pl)))]))
+      RED_DOT
+      (posn-x (first (pair-lob p)))
+      (posn-y (first (pair-lob p)))
+      (add-balloons (make-pair
+                     (pair-balloon# p)
+                     (rest (pair-lob p)))))]))
+
+; Pair -> Pair
+; Updates Pair p per tick
+(check-expect (time_step (make-pair 0 '())) (make-pair 0 '()))
+(check-random (time_step (make-pair 3 '()))
+              (make-pair 2 (list (make-posn (random SCN_WIDTH)
+                                            (random SCN_HEIGHT)))))
+
+(define (time_step p)
+  (cond
+    [(= (pair-balloon# p) 0) p]
+    [else
+     (make-pair (- (pair-balloon# p) 1)
+                (cons
+                 (make-posn (random SCN_WIDTH) (random SCN_HEIGHT))
+                 (pair-lob p)))]))
+
+; MAIN /////////////////////////////////////////////////////////////////////////
+
+; Pair -> Pair
+(define (riot state)
+  (big-bang state
+  [to-draw add-balloons]
+  [on-tick time_step 1]))
+
+(riot (make-pair 10 '()))
