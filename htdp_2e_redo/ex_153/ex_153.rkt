@@ -72,6 +72,10 @@ hits. Where is the 10th?
     [else
      (beside img (row (- n 1) img))]))
 
+(define GRID_COLUMN (col 18 SQUARE_IMG))
+(define GRID
+  (place-image (row 8 GRID_COLUMN) SCN_XCENTER SCN_YCENTER BG))
+
 ; Posn_list -> Image
 ; Places red dots on GRID based on coordinates in Posn_list pl
 (check-expect (add-balloons '()) GRID)
@@ -82,10 +86,12 @@ hits. Where is the 10th?
                GRID))
 
 (define (add-balloons pl)
-
+  (cond
+    [(empty? pl) GRID]
+    [else
+     (place-image
+      RED_DOT (posn-x (first pl)) (posn-y (first pl))
+      (add-balloons (rest pl)))]))
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
-(define GRID_COLUMN (col 18 SQUARE_IMG))
-(define GRID
-  (place-image (row 8 GRID_COLUMN) SCN_XCENTER SCN_YCENTER BG))
