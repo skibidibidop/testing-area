@@ -37,4 +37,10 @@ produces a row—a horizontal arrangement—of n copies of img.
 
 ; N Image -> Image
 ; Produces a row of n copies of img
+(check-expect (row 0 CIRCLE_IMG) empty-image)
+(check-expect (row 1 SQUARE_IMG)
+              (beside SQUARE_IMG empty-image))
+(check-expect (row 2 CIRCLE_IMG)
+              (beside CIRCLE_IMG CIRCLE_IMG empty-image))
+
 (define (row n img) empty-image)
