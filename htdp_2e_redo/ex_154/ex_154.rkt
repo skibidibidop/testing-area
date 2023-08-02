@@ -1,6 +1,3 @@
-;; The first three lines of this file were inserted by DrRacket. They record metadata
-;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-intermediate-reader.ss" "lang")((modname ex_154) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: August 2, 2023
@@ -11,3 +8,26 @@ our example should produce
 
 "yellow, green, red"
 |#
+
+; DATA DEFINITION //////////////////////////////////////////////////////////////
+
+; An RD (short for Russian doll) is one of:
+; -- String
+; -- (make-layer String RD)
+
+; FUNCTIONS ////////////////////////////////////////////////////////////////////
+
+; RD -> String
+; Produces a String of all colors in RD rus_dol
+(check-expect (colors '()) "")
+(check-expect (colors (list "red")) "red")
+(check-expect (colors (list "yellow" "green")) "yellow, green")
+
+(define (colors rus_dol)
+  (cond
+    [(empty? rus_dol) ""]
+    [(empty? (rest rus_dol)) (first rus_dol)]
+    [else
+     (string-append (first rus_dol)
+                    ", "
+                    (colors (rest rus_dol)))]))
