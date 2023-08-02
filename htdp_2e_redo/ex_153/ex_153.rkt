@@ -38,6 +38,8 @@ hits. Where is the 10th?
 (define CIRCLE_IMG (circle (* SCALER 10) "outline" "red"))
 (define SQUARE_IMG (square (* SCALER 10) "outline" "black"))
 
+(define RED_DOT (circle (* SCALER 2) "solid" "red"))
+
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
@@ -70,8 +72,16 @@ hits. Where is the 10th?
     [else
      (beside img (row (- n 1) img))]))
 
-;
-;
+; Posn_list -> Image
+; Places red dots on GRID based on coordinates in Posn_list pl
+(check-expect (add-balloons '()) GRID)
+(check-expect (add-balloons (list (make-posn 5 10)))
+              (place-images
+               (list RED_DOT)
+               (list (make-posn 5 10))
+               GRID))
+
+(define (add-balloons pl)
 
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
