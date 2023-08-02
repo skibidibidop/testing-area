@@ -17,6 +17,9 @@ Also check whether it is possible to double the size of the shot without
 changing anything else or to change its color to black.
 |#
 
+; The properties are easy enough to change, but it might be better
+; if there is a single point of control to change all sizes to scale
+
 (require 2htdp/image)
 (require 2htdp/universe)
 
@@ -91,5 +94,3 @@ changing anything else or to change its color to black.
     [to-draw to-image]))
 
 (main '())
-
-; re-commit to change commit description
