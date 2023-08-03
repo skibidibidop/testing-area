@@ -15,6 +15,8 @@ file into lines and words.
 (2) Read up on explode again.
 |#
 
+(require 2htdp/batch-io)
+
 ; 1String -> String
 ; converts the given 1String to a 3-letter numeric String
 (check-expect (encode-letter "z") (code1 "z"))
@@ -37,3 +39,37 @@ file into lines and words.
 
 (define (code1 c)
   (number->string (string->int c)))
+
+; What an annoying exercise
+
+;
+;
+(define (string-from-lls lls)
+  (cond
+    [(empty? lls) "\n"]
+    [else
+     (string-append (string-from-ls (first lls))
+                    (string-from-lls (rest lls)))]))
+
+;
+;
+(define (string-from-ls ls)
+  (cond
+    [(empty? ls) ""]
+    [else
+     (string-append (first ls)
+                    (string-from-ls (rest ls)))]))
+
+;
+;
+(define (encode-string ls)
+  (cond
+    [(empty? ls) (encode-letter " ")]
+    [else
+     (string-append (encode-letter (first ls))
+                    (encode-string (rest ls)))]))
+
+(write-file
+ "ttt_encoded.txt"
+ (encode-string
+  (explode (string-from-lls (read-words/line "ttt.txt")))))
