@@ -11,3 +11,31 @@ strings, called new and old, and a list of strings. It produces a new list of
 strings by substituting all occurrences of old with new.
 |#
 
+; DATA DEFINITION //////////////////////////////////////////////////////////////
+
+; A List-of-toydesc is one of:
+; '()
+; (cons Toy_desc List-of-toydesc)
+; Interp.: a list of Toy_descs
+
+; A Toy_desc is a String
+; Interp.: a one-word string describing a toy
+
+; FUNCTIONS ////////////////////////////////////////////////////////////////////
+
+; List-of-toydesc -> List-of-toydesc
+; Replaces all occurrences of "robot" with "r2d2"
+(check-expect (subst-robot '()) '())
+(check-expect (subst-robot (list "hard" "square")) (list "hard" "square"))
+(check-expect (subst-robot (list "hard" "robot" "square" "robot"))
+              (list "hard" "r2d2" "square" "r2d2"))
+
+(define (subst-robot lotd)
+  (cond
+    [(empty? lotd) '()]
+    [else
+     (cons
+      (cond
+        [(string=? (first lotd) "robot") "r2d2"]
+        [else (first lotd)])
+      (subst-robot (rest lotd)))]))
