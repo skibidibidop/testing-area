@@ -37,4 +37,9 @@ the list is sorted.
 (check-expect (search-sorted 1 (list 1 2 3 4)) #true)
 (check-expect (search-sorted 1 (list 2 3 4 5)) #false)
 
-(define (search-sorted n lon) #false)
+(define (search-sorted n lon)
+  (cond
+    [(empty? lon) #false]
+    [(> n (first lon)) (search-sorted n (rest lon))]
+    [(= n (first lon)) #true]
+    [else #false]))
