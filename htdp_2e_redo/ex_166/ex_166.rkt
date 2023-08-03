@@ -51,5 +51,12 @@ to lists of revised paychecks.
               (list (make-paycheck "EMP0001" (* 12 80))
                     (make-paycheck "EMP0002" (* 40 40))))
 
-(define (wagev3 wr) '())
-
+(define (wagev3 wr)
+  (cond
+    [(empty? wr) '()]
+    [else
+     (cons
+      (make-paycheck (work-employee (first wr))
+                     (* (work-rate (first wr))
+                        (work-hours (first wr))))
+      (wagev3 (rest wr)))]))
