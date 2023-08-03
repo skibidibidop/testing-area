@@ -21,3 +21,28 @@ Start by determining how many items each list and each nested list con-
 tains. Use check-expect to express your answers; this ensures that your
 abbreviations are really the same as the long-hand.
 |#
+
+; 1
+(list "a" "b" "c" "d")
+
+; 2
+(list
+ (list 1 2))
+
+; 3
+(list
+ "a"
+ (list
+  (list 1)
+  (list #false)))
+
+; 4
+(list
+ (list "a" 2)
+ (list "hello"))
+
+; 5
+(list
+ (list 1 2)
+ (list
+  (list 2)))
