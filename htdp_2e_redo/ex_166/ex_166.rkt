@@ -54,6 +54,14 @@ to lists of revised paychecks.
 ; Interp.: (make-work2 i r h) combines an employee's Einfo (i), hourly rate
 ; (r), and hours worked (h)
 
+; A LoW2 (short for List-of-work2) is one of:
+; '()
+; (cons Work2 List-of-work2)
+
+; A LoP2 (short for List-of-paycheck2) is one of:
+; '()
+; (cons Paycheck2 List-of-paycheck2)
+
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
 ; LoW -> LoP
@@ -75,4 +83,26 @@ to lists of revised paychecks.
                      (* (work-rate (first wr))
                         (work-hours (first wr))))
       (wagev3 (rest wr)))]))
+
+; LoW2 -> LoP2
+; Produces a List-of-paycheck2 out of a List-of-work2
+(check-expect (wagev4 '()) '())
+(check-expect (wagev4
+               (list (make-work2
+                      (make-einfo 1 "EMP0001" 40 "A")
+                      12 80)))
+              (list
+               (make-paycheck2 1 "EMP0001" (* 12 80))))
+
+(define (wagev4 wr)
+  (cond
+    [(empty? wr) '()]
+    [else
+     (cons
+      (make-paycheck2
+       (einfo-eid  (work2-info (first wr)))
+       (einfo-name (work2-info (first wr)))
+       (* (work2-rate (first wr))
+          (work2-hrs  (first wr))))
+      (wagev4 (rest wr)))]))
 
