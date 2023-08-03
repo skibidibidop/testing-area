@@ -39,6 +39,21 @@ to lists of revised paychecks.
 ; '()
 ; (cons Paycheck LoP)
 
+(define-struct einfo [eid name age blood])
+; (make-einfo Number String Number String
+; Interp.: (make-einfo id n a b) contains an employee's ID number (id),
+; name (n), age (a), and blood type (b)
+
+(define-struct paycheck2 [eid name amt])
+; (make-paycheck2 Number String Number)
+; Interp.: (make-paycheck2 id n s) combines an employee's ID number (id),
+; name (n), and salary (s)
+
+(define-struct work2 [info rate hrs])
+; (make-work2 Einfo Number Number)
+; Interp.: (make-work2 i r h) combines an employee's Einfo (i), hourly rate
+; (r), and hours worked (h)
+
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
 ; LoW -> LoP
@@ -60,3 +75,4 @@ to lists of revised paychecks.
                      (* (work-rate (first wr))
                         (work-hours (first wr))))
       (wagev3 (rest wr)))]))
+
