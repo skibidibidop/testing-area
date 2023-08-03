@@ -26,6 +26,22 @@ to lists of revised paychecks.
 ; (make-paycheck String Number)
 ; Interp.: (make-paycheck n s), contains a person's name (n) and salary (s)
 
+(define-struct work [employee rate hours])
+; (make-work String Number Number)
+; Interp.: (make-work n r h) combines the name n with the pay rate r and the
+; number of hours h
+
+; A LoW (short for List-of-works) is one of:
+; '()
+; (cons Work LoW)
+
+; A LoP (short for List-of-paychecks) is one of:
+; '()
+; (cons Paycheck LoP)
+
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
+; LoW -> LoP
+; Produces a List-of-paychecks out of a List-of-works
+(define (wage*.v3 
 
