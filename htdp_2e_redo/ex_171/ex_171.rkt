@@ -16,4 +16,51 @@ sent Piet Hein’s poem as an instance of the definition where each line is
 represented as a list of strings, one per word, and the entire poem is a list
 of such line representations. You may use read-words/line to confirm
 your choice.
+
+TTT
+Put up in a place
+where it's easy to see
+the cryptic admonishment
+T.T.T.
+When you feel how depressingly
+slowly you climb,
+it's well to remember that
+Things Take Time.
+
+Piet Hein
 |#
+
+; DATA DEFINITION //////////////////////////////////////////////////////////////
+
+; A List-of-string is one of:
+; '()
+; (cons String List-of-string)
+
+(define poem1
+  (list "TTT"
+        "Put up in a place"
+        "where it's easy to see"
+        "the cryptic admonishment"
+        "T.T.T."
+        "When you feel how depressingly"
+        "slowly you climb,"
+        "it's well to remember that"
+        "Things Take Time."
+        "Piet Hein"))
+
+; A List-of-list-of-strings is one of:
+; '()
+; (cons List-of-strings List-of-list-of-strings)
+
+(define poem2
+  (list
+   (list "TTT")
+   (list "Put" "up" "in" "a" "place")
+   (list "where" "it's" "easy" "to" "see")
+   (list "the" "cryptic" "admonishment")
+   (list "T.T.T.")
+   (list "When" "you" "feel" "how" "depressingly")
+   (list "slowly" "you" "climb")
+   (list "it's" "well" "to" "remember" "that")
+   (list "Things" "Take" "Time.")
+   (list "Piet" "Hein")))
