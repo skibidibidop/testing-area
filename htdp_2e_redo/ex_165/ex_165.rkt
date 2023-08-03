@@ -39,3 +39,20 @@ strings by substituting all occurrences of old with new.
         [(string=? (first lotd) "robot") "r2d2"]
         [else (first lotd)])
       (subst-robot (rest lotd)))]))
+
+; String String List-of-strings
+; Replaces all occurrences of old with new in String los
+(check-expect (substitute "hey" "there" '()) '())
+(check-expect (substitute "hey" "there"
+                          (list "hey" "there" "hello" "there"))
+              (list "hey" "hey" "hello" "hey"))
+
+(define (substitute new old los)
+  (cond
+    [(empty? los) '()]
+    [else
+     (cons
+      (cond
+        [(string=? (first los) old) new]
+        [else (first los)])
+      (substitute new old (rest los)))]))
