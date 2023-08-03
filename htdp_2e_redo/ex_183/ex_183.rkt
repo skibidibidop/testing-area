@@ -17,3 +17,24 @@ Reformulate each of the following expressions using only cons or only
 list. Use check-expect to check your answers.
 |#
 
+(check-expect (cons "a" (list 0 #false))
+              (list "a" 0 #false))
+
+(check-expect (list (cons 1 (cons 13 '())))
+              (list
+               (list 1 13)))
+
+(check-expect (cons (list 1 (list 13 '())) '())
+              (list
+               (list 1
+                     (list 13 '()))))
+
+(check-expect (list '() '() (cons 1 '()))
+              (list '()
+                    '()
+                    (list 1)))
+
+(check-expect (cons "a" (cons (list 1) (list #false '())))
+              (list "a"
+                    (list 1)
+                    #false '()))
