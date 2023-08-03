@@ -48,7 +48,18 @@ latter into a list of Euro amounts.
      (cons (* (first lusd) USD_EUR)
            (convert-euro (rest lusd)))]))
 
-;
-;
-(
+; Number List-of-USD -> List-of-EUR
+; Converts a list of USD to a list of EUR amounts based on the provided
+; exchange rate xrate
+(check-expect (convert-euro* 0.97 '()) '())
+(check-within (convert-euro* 0.97 (list 10)) (list (* 10 0.97)) 0.001)
+(check-within (convert-euro* 0.97 (list 100 200))
+              (list (* 100 0.97) (* 200 0.97)) 0.001)
+
+(define (convert-euro* xrate lusd)
+  (cond
+    [(empty? lusd) '()]
+    [else
+     (cons (* xrate (first lusd))
+           (convert-euro* xrate (rest lusd)))]))
   
