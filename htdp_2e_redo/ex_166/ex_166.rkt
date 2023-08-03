@@ -20,4 +20,12 @@ design wage*.v4, a function that maps lists of revised work records
 to lists of revised paychecks.
 |#
 
+; DATA DEFINITION //////////////////////////////////////////////////////////////
+
+(define-struct paycheck [name amt])
+; (make-paycheck String Number)
+; Interp.: (make-paycheck n s), contains a person's name (n) and salary (s)
+
+; FUNCTIONS ////////////////////////////////////////////////////////////////////
+
 
