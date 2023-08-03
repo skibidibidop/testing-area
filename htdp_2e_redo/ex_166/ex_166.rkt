@@ -43,5 +43,13 @@ to lists of revised paychecks.
 
 ; LoW -> LoP
 ; Produces a List-of-paychecks out of a List-of-works
-(define (wage*.v3 
+(check-expect (wagev3 '()) '())
+(check-expect (wagev3 (list (make-work "EMP0001" 12 80)))
+              (list (make-paycheck "EMP0001" (* 12 80))))
+(check-expect (wagev3 (list (make-work "EMP0001" 12 80)
+                            (make-work "EMP0002" 40 40)))
+              (list (make-paycheck "EMP0001" (* 12 80))
+                    (make-paycheck "EMP0002" (* 40 40))))
+
+(define (wagev3 wr) '())
 
