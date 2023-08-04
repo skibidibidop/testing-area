@@ -13,4 +13,25 @@ the end, up through all items in s. For example, (list "b" "c" "d") is
 a suffix of itself and (list "a" "b" "c" "d").
 |#
 
-; Putting this on hold for now
+; DATA DEFINITION //////////////////////////////////////////////////////////////
+
+; A Prefix is one of:
+; '()
+; (cons 1String Prefix)
+; Interp.: a list of 1Strings
+
+; FUNCTIONS ////////////////////////////////////////////////////////////////////
+
+; Prefix -> List-of-prefix
+; Generates a list of all Prefixes from Prefix l
+(check-expect (prefix '()) '())
+(check-expect (prefix (list "q")) (list "q"))
+(check-expect (prefix (list "q" "w"))
+              (list (list "q")
+                    (list "q" "w")))
+(check-expect (prefix (list "q" "w" "e"))
+              (list (list "q")
+                    (list "q" "w")
+                    (list "q" "w" "e")))
+
+(define (prefix l) '())
