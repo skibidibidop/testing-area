@@ -22,6 +22,23 @@ a suffix of itself and (list "a" "b" "c" "d").
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
+; Input
+;  (list a b c)
+; Reverse Prefix
+;  (list c b a)
+; Put in list, take rest recursively to generate List-of-prefix
+;   (list (list c b a)
+;         (list b a)
+;         (list a))
+; Reverse each Prefix in List-of-prefix
+;   (list (list a b c)
+;         (list a b)
+;         (list a))
+; Reverse the List-of-prefix
+;   (list (list a)
+;         (list a b)
+;         (list a b c))
+
 ; Prefix -> List-of-prefix
 ; Generates a list of all Prefixes from Prefix l
 (check-expect (prefix '()) '())
@@ -34,4 +51,12 @@ a suffix of itself and (list "a" "b" "c" "d").
                     (list "q" "w")
                     (list "q" "w" "e")))
 
-(define (prefix l) '())
+(define (prefix l)
+  (reverse
+   (get-prefixes
+    (reverse l))))
+
+; Prefix -> List-of-prefix
+(define (get-prefixes l)
+  (cond
+    [(empty? l) '()]
