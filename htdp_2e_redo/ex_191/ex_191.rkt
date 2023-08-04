@@ -18,7 +18,7 @@ given scene.
 (define SCN_WIDTH  (* SCALER 50))
 (define SCN_HEIGHT (* SCALER 50))
 
-(define BG (empty-scene SCN_WIDTH SCN_HEIGHT))
+(define MT (empty-scene SCN_WIDTH SCN_HEIGHT))
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
@@ -26,9 +26,47 @@ given scene.
 ; (list Posn Posn Posn)
 ; (cons Posn Polygon)
 
+(define triangle-p (list (make-posn 20 10)
+                         (make-posn 20 20)
+                         (make-posn 30 20)))
+(define square-p (list (make-posn 10 10)
+                       (make-posn 20 10)
+                       (make-posn 20 20)
+                       (make-posn 10 20)))
+
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
 ; Image Polygon -> Image
 ; Renders the given polygon p into img
+(check-expect (render-poly MT triangle-p)
+              (scene+line
+               (scene+line
+                (scene+line MT 20 10 20 20 "red")
+                20 20 30 20 "red")
+               30 20 20 10 "red"))
+(check-expect (render-poly MT square-p)
+              (scene+line
+               (scene+line
+                (scene+line
+                 (scene+line MT 10 10 20 10 "red")
+                 20 10 20 20 "red")
+                20 20 10 20 "red")
+               10 20 10 10 "red"))
+
 (define (render-poly img p)
-  img)
+  (cond
+    [(empty? (rest (rest (rest p))))
+     (render-line
+      (render-line
+       (render-line MT (first p) (second p))
+       (second p) (third p))
+      (third p) (first p))]
+    [else
+     (render-line (render-poly img (rest p))
+                  (first p)
+                  (second p))]))
+
+; Image Posn Posn -> Image
+; draws a red line from Posn p to Posn q into im
+(define (render-line im p q)
+  im)
