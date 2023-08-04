@@ -1,6 +1,3 @@
-;; The first three lines of this file were inserted by DrRacket. They record metadata
-;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-intermediate-reader.ss" "lang")((modname ex_192) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: August 4, 2023
@@ -8,18 +5,23 @@ Date: August 4, 2023
 Sample Problem: Design a function that draws connections between
 a given bunch of dots and into a given scene.
 
-Exercise 192. Argue why it is acceptable to use last on Polygons. Also
-argue why you may adapt the template for connect-dots to last:
+Exercise 192. Argue why it is acceptable to use last on Polygons.
+
+; Because the first point will also serve as the last point to connect to.
+
+Also argue why you may adapt the template for connect-dots to last:
 
 (define (last p)
   (cond
     [(empty? (rest p)) (... (first p) ...)]
     [else (... (first p) ... (last (rest p)) ...)]))
 
+; This can be used for non-empty lists. The last member will always be
+; the first of the final list.
+
 Finally, develop examples for last, turn them into tests, and ensure that
 the definition of last in figure 73 works on your examples.
 |#
-
 
 (require 2htdp/image)
 
@@ -52,13 +54,13 @@ the definition of last in figure 73 works on your examples.
 
 ; Image Polygon -> Image
 ; Renders the given polygon p into img
-(check-expect (render-poly MT triangle-p)
+(check-expect (render-polygon MT triangle-p)
               (scene+line
                (scene+line
                 (scene+line MT 20 10 20 20 "red")
                 20 20 30 20 "red")
                30 20 20 10 "red"))
-(check-expect (render-poly MT square-p)
+(check-expect (render-polygon MT square-p)
               (scene+line
                (scene+line
                 (scene+line
@@ -66,19 +68,6 @@ the definition of last in figure 73 works on your examples.
                  20 10 20 20 "red")
                 20 20 10 20 "red")
                10 20 10 10 "red"))
-
-(define (render-poly img p)
-  (cond
-    [(empty? (rest (rest (rest p))))
-     (render-line
-      (render-line
-       (render-line MT (first p) (second p))
-       (second p) (third p))
-      (third p) (first p))]
-    [else
-     (render-line (render-poly img (rest p))
-                  (first p)
-                  (second p))]))
 
 ; Image Polygon -> Image
 ; adds an image of p to img
@@ -93,7 +82,7 @@ the definition of last in figure 73 works on your examples.
               (scene+line
                (scene+line MT 20 20 30 20 "red")
                20 10 20 20 "red"))
-(check-expect (render-poly MT square-p)
+(check-expect (connect-dots MT square-p)
               (scene+line
                (scene+line
                 (scene+line MT 10 10 20 10 "red")
@@ -108,3 +97,17 @@ the definition of last in figure 73 works on your examples.
       (connect-dots img (rest p))
       (first p)
       (second p))]))
+
+; Image Posn Posn -> Image
+; renders a line from p to q into img
+(define (render-line img p q)
+  (scene+line
+   img
+   (posn-x p) (posn-y p) (posn-x q) (posn-y q)
+   "red"))
+
+; NELoP -> Posn
+; extracts the last item from p
+(define (last p)
+  (first p))
+
