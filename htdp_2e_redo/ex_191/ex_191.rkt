@@ -26,6 +26,10 @@ given scene.
 ; (list Posn Posn Posn)
 ; (cons Posn Polygon)
 
+; An NELoP is one of:
+; -- (cons Posn '())
+; -- (cons Posn NELoP)
+
 (define triangle-p (list (make-posn 20 10)
                          (make-posn 20 20)
                          (make-posn 30 20)))
@@ -67,6 +71,25 @@ given scene.
                   (second p))]))
 
 ; Image Posn Posn -> Image
-; draws a red line from Posn p to Posn q into im
-(define (render-line im p q)
-  im)
+; renders a line from p to q into img
+(define (render-line img p q)
+  (scene+line
+   img
+   (posn-x p) (posn-y p) (posn-x q) (posn-y q)
+   "red"))
+
+; Image NELoP -> Image
+; connects the dots in p by rendering lines in img
+(check-expect (connect-dots MT triangle-p)
+              (scene+line
+               (scene+line MT 20 20 30 20 "red")
+               20 10 20 20 "red"))
+(check-expect (render-poly MT square-p)
+              (scene+line
+               (scene+line
+                (scene+line MT 10 10 20 10 "red")
+                20 10 20 20 "red")
+               20 20 10 20 "red"))
+
+(define (connect-dots img p)
+  MT)
