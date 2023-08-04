@@ -80,13 +80,12 @@ the definition of last in figure 73 works on your examples.
                   (first p)
                   (second p))]))
 
-; Image Posn Posn -> Image
-; renders a line from p to q into img
-(define (render-line img p q)
-  (scene+line
-   img
-   (posn-x p) (posn-y p) (posn-x q) (posn-y q)
-   "red"))
+; Image Polygon -> Image
+; adds an image of p to img
+(define (render-polygon img p)
+  (render-line (connect-dots img p)
+               (first p)
+               (last p)))
 
 ; Image NELoP -> Image
 ; connects the dots in p by rendering lines in img
@@ -102,4 +101,10 @@ the definition of last in figure 73 works on your examples.
                20 20 10 20 "red"))
 
 (define (connect-dots img p)
-  MT)
+  (cond
+    [(empty? (rest p)) img]
+    [else
+     (render-line
+      (connect-dots img (rest p))
+      (first p)
+      (second p))]))
