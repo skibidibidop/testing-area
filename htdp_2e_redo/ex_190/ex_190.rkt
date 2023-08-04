@@ -42,7 +42,7 @@ a suffix of itself and (list "a" "b" "c" "d").
 ; Prefix -> List-of-prefix
 ; Generates a list of all Prefixes from Prefix l
 (check-expect (prefix '()) '())
-(check-expect (prefix (list "q")) (list "q"))
+(check-expect (prefix (list "q")) (list (list "q")))
 (check-expect (prefix (list "q" "w"))
               (list (list "q")
                     (list "q" "w")))
@@ -60,3 +60,6 @@ a suffix of itself and (list "a" "b" "c" "d").
 (define (get-prefixes l)
   (cond
     [(empty? l) '()]
+    [else
+     (cons (reverse l)
+           (get-prefixes (rest l)))]))
