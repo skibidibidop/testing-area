@@ -42,10 +42,28 @@ pass the test cases.
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
+#| ORIGINAL render-polygon
 ; Image Polygon -> Image
 ; adds an image of p to MT
 (define (render-polygon img p)
   (render-line (connect-dots img p) (first p) (last p)))
+|#
+
+; Image Polygon -> Image
+(define (render-poly2 img p)
+  (connect-dots img (cons (last p) p)))
+
+; Image Polygon -> Image
+(define (render-poly3 img p)
+  (connect-dots img (add-at-end p (first p))))
+
+; Polygon Posn -> Polygon
+; creates a new list by adding s to the end of l
+(define (add-at-end lp pos)
+  (cond
+    [(empty? lp) (cons pos '())]
+    [else
+     (cons (first lp) (add-at-end (rest lp) pos))]))
 
 ; Image NELoP -> Image
 ; connects the Posns in p in an image
