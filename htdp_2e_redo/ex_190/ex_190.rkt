@@ -41,17 +41,17 @@ a suffix of itself and (list "a" "b" "c" "d").
 
 ; Prefix -> List-of-prefix
 ; Generates a list of all Prefixes from Prefix l
-(check-expect (prefix '()) '())
-(check-expect (prefix (list "q")) (list (list "q")))
-(check-expect (prefix (list "q" "w"))
+(check-expect (prefixes '()) '())
+(check-expect (prefixes (list "q")) (list (list "q")))
+(check-expect (prefixes (list "q" "w"))
               (list (list "q")
                     (list "q" "w")))
-(check-expect (prefix (list "q" "w" "e"))
+(check-expect (prefixes (list "q" "w" "e"))
               (list (list "q")
                     (list "q" "w")
                     (list "q" "w" "e")))
 
-(define (prefix l)
+(define (prefixes l)
   (reverse
    (get-prefixes
     (reverse l))))
@@ -63,3 +63,27 @@ a suffix of itself and (list "a" "b" "c" "d").
     [else
      (cons (reverse l)
            (get-prefixes (rest l)))]))
+
+; Input
+;  (list a b c)
+; Take rest recursively to generate List-of-suffix
+;  (list (list a b c)
+;        (list b c)
+;        (list c))
+;
+
+; List-of-1String -> List-of-list-of-1String
+; Generates a list of all suffixes from List-of-list-of-1String
+(check-expect (suffixes '()) '())
+(check-expect (suffixes (list "a")) (list (list "a")))
+(check-expect (suffixes (list "a" "b" "c"))
+              (list (list "a" "b" "c")
+                    (list "b" "c")
+                    (list "c")))
+
+(define (suffixes l)
+  (cond
+    [(empty? l) '()]
+    [else
+     (cons l
+           (suffixes (rest l)))]))
