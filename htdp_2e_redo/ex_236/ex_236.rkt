@@ -40,3 +40,15 @@ revised definitions work properly. Finally, design a function that subtracts
       (+ (first l) 5)
       (plus5 (rest l)))]))
 
+; Number List -> List
+; Adds num n to all members of l
+(check-expect (add_num 1 '()) '())
+(check-expect (add_num 2 (list 0 1)) (list 2 3))
+
+(define (add_num n l)
+  (cond
+    [(empty? l) '()]
+    [else
+     (cons (+ n (first l))
+           (add_num n (rest l)))]))
+
