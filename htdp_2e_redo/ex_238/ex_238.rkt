@@ -56,3 +56,17 @@ Why are these versions so much faster?
 
 ; //////////////////////////////////////////////////////////////////////////////
 
+; (Number Number -> Boolean) Nelon -> Number
+(check-expect (extract > (list 1)) 1)
+(check-expect (extract < (list 2)) 2)
+(check-expect (extract > (list 3 5 2)) 5)
+(check-expect (extract < (list 8 0 2)) 0)
+
+(define (extract bool_op l)
+  (cond
+    [(empty? (rest l)) (first l)]
+    [else
+     (if (bool_op (first l)
+                  (extract bool_op (rest l)))
+         (first l)
+         (extract bool_op (rest l)))]))
