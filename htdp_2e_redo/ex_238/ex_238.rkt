@@ -26,6 +26,7 @@ Why are these versions so much faster?
 (define ASC_LIST
   (list 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25))
 
+#|
 ; FUNCTIONS FROM FIGURE 89 /////////////////////////////////////////////////////
 
 ; Nelon -> Number
@@ -55,6 +56,7 @@ Why are these versions so much faster?
          (sup (rest l)))]))
 
 ; //////////////////////////////////////////////////////////////////////////////
+|#
 
 ; (Number Number -> Boolean) Nelon -> Number
 (check-expect (extract > (list 1)) 1)
@@ -70,3 +72,67 @@ Why are these versions so much faster?
                   (extract bool_op (rest l)))
          (first l)
          (extract bool_op (rest l)))]))
+
+#|
+; Nelon -> Number
+(check-expect (inf-1 DESC_LIST) 1)
+(check-expect (inf-1 ASC_LIST)  1)
+
+(define (inf-1 l)
+  (extract < l))
+
+; Nelon -> Number
+(check-expect (sup-1 DESC_LIST) 25)
+(check-expect (sup-1 ASC_LIST)  25)
+
+(define (sup-1 l)
+  (extract > l))
+|#
+
+; MODIFIED ORIGINAL FUNCTIONS //////////////////////////////////////////////////
+
+; Nelon -> Number
+; determines the smallest
+; number on l
+(define (inf l)
+  (cond
+    [(empty? (rest l))
+     (first l)]
+    [else
+     (min (first l)
+          (inf (rest l)))]))
+
+; Nelon -> Number
+; determines the largest
+; number on l
+(define (sup l)
+  (cond
+    [(empty? (rest l))
+     (first l)]
+    [else
+     (max (first l)
+          (sup (rest l)))]))
+
+; //////////////////////////////////////////////////////////////////////////////
+
+; (Number Number -> Number) Nelon -> Number
+(define (extract2 op l)
+  (cond
+    [(empty? (rest l)) (first l)]
+    [else
+     (op (first l)
+         (extract2 op (rest l)))]))
+
+; Nelon -> Number
+(check-expect (inf-2 DESC_LIST) 1)
+(check-expect (inf-2 ASC_LIST)  1)
+
+(define (inf-2 l)
+  (extract2 min l))
+
+; Nelon -> Number
+(check-expect (sup-2 DESC_LIST) 25)
+(check-expect (sup-2 ASC_LIST)  25)
+
+(define (sup-2 l)
+  (extract2 max l))
