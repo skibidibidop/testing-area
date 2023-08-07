@@ -20,3 +20,20 @@ Instantiate this definition to describe the following classes of data:
 Also make one concrete example for each of these three data definitions.
 |#
 
+; pairs of Numbers
+; A [List Number Number] is a structure:
+; (cons Number (cons Number '()))
+(define num_pair
+  (cons 1 (cons 2 '())))
+
+; pairs of Numbers and 1Strings
+; A [List Number 1String] is a structure:
+; (cons Number (cons 1String '()))
+(define num_1str
+  (cons 3 (cons "a" '())))
+
+; pairs of Strings and Booleans
+; A [List String Boolean] is a structure:
+; (cons String (cons Boolean '()))
+(define str_bool
+  (cons "hey" (cons #false '())))
