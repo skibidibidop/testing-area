@@ -46,3 +46,8 @@ the first easily definable idea for which you cannot define a function.
   (and (= (fn_a CONS_1) (fn_b CONS_1))
        (= (fn_a CONS_2) (fn_b CONS_2))
        (= (fn_a CONS_3) (fn_b CONS_3))))
+
+; (Number -> Number) (Number -> Number) Number -> Boolean
+; Determines if functions fn_x and fn_y are equal given a Number in
+(define (function=? fn_x fn_y in) #false)
+  
