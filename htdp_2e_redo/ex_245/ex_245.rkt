@@ -18,3 +18,7 @@ not, explain why and consider the implication that you have encountered
 the first easily definable idea for which you cannot define a function.
 |#
 
+; (Number -> Number) (Number -> Number) -> Boolean
+; Determines if the 2 given functions return the same results given 1.2,
+; 3, and -5.775.
+(define (function=at-1.2-3-and-5.775? fn_a fn_b) #false)
