@@ -14,3 +14,17 @@ Exercise 244. Argue why the following sentences are now legal:
 Explain your reasoning.
 |#
 
+; All (f)s are defined are functions
+
+(define (f x) (x 10))
+; x can be a primitive operator or a new function
+
+(define (f x) (x f))
+; The f on the left is the function's name
+; while the f on the right is a variable. Legal
+; since this is saying that x should be applied
+; to whatever f (on the right) contains
+
+(define (f x y) (x 'a y 'b))
+; Legal because x can be a function/primitive operation
+; and y can be any value that x can be applied to
