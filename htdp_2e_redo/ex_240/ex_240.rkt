@@ -26,3 +26,22 @@ the abstract definition to get back the originals.
 
 (define-struct layer [stuff])
 
+; LStr example
+(define lstr1 (make-layer "aaa"))
+
+; LNum example
+(define lnum1 (make-layer
+               (make-layer 3)))
+
+; Abstraction
+; A [Layer-of ITEM] is one of:
+; ITEM
+; (make-layer [Layer-of ITEM])
+
+; A [Layer-of String] is one of:
+; String
+; (make-layer [Layer-of String]
+
+; A [Layer-of Number] is one of:
+; Number
+; (make-layer [Layer-of Number]
