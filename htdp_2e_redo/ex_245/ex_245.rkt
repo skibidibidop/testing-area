@@ -32,6 +32,9 @@ the first easily definable idea for which you cannot define a function.
 (define (mult10 x)
   (* x MOD))
 
+(define (div10 x)
+  (/ x MOD))
+
 ; (Number -> Number) (Number -> Number) -> Boolean
 ; Determines if the 2 given functions return the same results given 1.2,
 ; 3, and -5.775.
@@ -49,5 +52,10 @@ the first easily definable idea for which you cannot define a function.
 
 ; (Number -> Number) (Number -> Number) Number -> Boolean
 ; Determines if functions fn_x and fn_y are equal given a Number in
-(define (function=? fn_x fn_y in) #false)
+(check-expect (function=? add10 sub10 10) #false)
+(check-expect (function=? sub10 mult10 10) #false)
+(check-expect (function=? mult10 div10 0) #true)
+
+(define (function=? fn_x fn_y in)
+  (= (fn_x in) (fn_y in)))
   
