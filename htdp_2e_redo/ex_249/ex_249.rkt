@@ -16,3 +16,8 @@ window and use the stepper to find out how running this program works:
 
 The stepper displays functions as lambda expressions; see chapter 17.
 |#
+
+(define (f x) x)
+(cons f '())
+(f f)
+(cons f (cons 10 (cons (f 10) '())))
