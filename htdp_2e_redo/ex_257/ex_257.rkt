@@ -10,13 +10,6 @@ recipes that you know, but they are not going to be like the ones that ISL
 provides. For example, the design of your own foldl function requires a
 use of the list reverse function:
 
-(see below)
-
-Design build-l*st, which works just like build-list. Hint Recall
-the add-at-end function from exercise 193. Note on Design Part VI cov-
-ers the concepts needed to design these functions from scratch.
-|#
-
 ; [X Y] [X Y -> Y] Y [List-of X] -> Y
 ; f*oldl works just like foldl
 (check-expect (f*oldl cons '() '(a b c))
@@ -26,3 +19,9 @@ ers the concepts needed to design these functions from scratch.
 
 (define (f*oldl f e l)
   (foldr f e (reverse l)))
+
+Design build-l*st, which works just like build-list. Hint Recall
+the add-at-end function from exercise 193. Note on Design Part VI cov-
+ers the concepts needed to design these functions from scratch.
+|#
+
