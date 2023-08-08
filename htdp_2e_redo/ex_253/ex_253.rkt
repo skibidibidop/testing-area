@@ -15,3 +15,19 @@ Exercise 253. Each of these signatures describes a class of functions:
 
 Describe these collections with at least one example from ISL.
 |#
+
+; [Number -> Boolean]
+(inexact? x)
+
+; [Boolean String -> Boolean]
+(equal? x y)
+
+; [Number Number Number -> Number]
+(string-append a b c)
+
+; [Number -> [List-of Number]]
+(list n)
+
+; [[List-of Number] -> Boolean]
+(member? ln)
+
