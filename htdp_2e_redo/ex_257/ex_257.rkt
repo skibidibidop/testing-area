@@ -25,3 +25,17 @@ the add-at-end function from exercise 193. Note on Design Part VI cov-
 ers the concepts needed to design these functions from scratch.
 |#
 
+; [X] N [N -> X] -> [List-of X]
+; constructs a list by applying f to 0, 1, ¨ ¨ ¨, (sub1 n)
+; (build-list n f) == (list (f 0) ... (f (- n 1)))
+; (define (build-list n f) ...)
+
+; [A] N [N -> A] -> [List-of A]
+; Makes a list by applying f to 0, 1, ..., (sub1 n)
+(check-expect (build-l*st 3 add1) (list 1 2 3))
+
+(define (build-l*st n f)
+   (cond
+     [(= n 0) '()]
+     [else
+      (map f (build-list n *))]))
