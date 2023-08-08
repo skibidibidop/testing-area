@@ -16,3 +16,12 @@ Exercise 256. Explain the following abstract function:
 Use it on concrete examples in ISL. Can you articulate an analogous pur-
 pose statement for argmin?
 |#
+
+; The input for this function:
+;  A function from X to Number
+;  A non-empty list of X
+; The output of this function:
+;  X
+
+; I don't get this at all, where did i come from?? What does "maximizes f"
+; mean?! I'll return to this later.
