@@ -31,6 +31,16 @@ tions in figure 93.
      (* (first l)
         (product (rest l)))]))
 
-;
-;
-(define (foldl))
+; (Number -> Number) [List-of Number] Number -> Number 
+; Computes the result of applying (op) to all members of (l),
+; with the base case (base)
+(check-expect (fold1 + (list 0 1 2) 0) 3)
+(check-expect (fold1 + '() 0) 0)
+(check-expect (fold1 - (list 3 5 2) 0) 0)
+
+(define (fold1 op l base)
+  (cond
+    [(empty? l) base]
+    [else
+     (op (first l)
+         (fold1 op (rest l) base))]))
