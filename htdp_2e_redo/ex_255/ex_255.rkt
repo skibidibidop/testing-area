@@ -17,3 +17,15 @@ Then abstract over the two signatures, following the above steps. Also
 show that the generalized signature can be instantiated to describe the sig-
 nature of the map1 function above.
 |#
+
+; Signature for map-n
+; [List-of Number] (Number -> Number) -> [List-of Number]
+
+; Signature for map-s
+; [List-of String] (String -> String) -> [List-of String]
+
+; Abstraction for the two signatures above
+; [List-of A] (A -> A) -> [List-of A]
+
+; Signature for map1
+; [List-of Number] (Number -> Number) -> [List-of Number]
