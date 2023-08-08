@@ -19,3 +19,19 @@ Then abstract over the two signatures, following the above steps. Also
 show that the generalized signature can be instantiated to describe the sig-
 nature of a sort function for lists of IRs.
 |#
+
+; Signature for sort-n
+; [List-of Number] (Number Number -> Boolean) -> [List-of Number]
+
+; Signature for sort-s
+; [List-of String] (String String -> Boolean) -> [List-of String]
+
+; Abstraction for the 2 signatures above
+; [List-of A] (A A -> Boolean) -> [List-of A]
+
+(define-struct ir [name price])
+; An IR is a structure:
+; (make-ir String Number)
+
+; Signature for a sort function for lists of IRs
+; [List-of IR] (IR IR -> Boolean) -> [List-of IR]
