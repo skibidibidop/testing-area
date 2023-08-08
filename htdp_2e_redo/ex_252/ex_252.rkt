@@ -15,11 +15,15 @@ to the preceding exercise. The comparison yields interesting insights into
 abstract signatures.
 |#
 
+(require 2htdp/image)
+
 ; graphical constants:
 (define emt
   (empty-scene 100 100))
 (define dot
   (circle 3 "solid" "red"))
+
+; Functions from figure 94:
 
 ; [List-of Number] -> Number
 (define (product l)
@@ -39,9 +43,18 @@ abstract signatures.
       (first l)
       (image* (rest l)))]))
 
+; Aux for (image*):
 ; Posn Image -> Image
 (define (place-dot p img)
   (place-image
    dot
    (posn-x p) (posn-y p)
    img))
+
+; (X -> Y) [List-of X] Y -> Y
+(define (fold2 op l base)
+  (cond
+    [(empty? l) base]
+    [else
+     (op (first l)
+         (fold2 op (rest l) base))]))
