@@ -36,3 +36,20 @@ define a tabulation function for sqr and tan.
 
 ; Abstraction:
 
+; (Number -> Number) Number -> [List-of Number]
+; Tabulates function/operation op between n and 0
+(check-expect (tabulate sqr 3) (list 9 4 1 0))
+
+(define (tabulate op n)
+  (cond
+    [(= n 0) (list (op 0))]
+    [else
+     (cons
+      (op n)
+      (tabulate op (sub1 n)))]))
+
+(define (sqr-tab x)
+  (tabulate sqr x))
+
+(define (tan-tab x)
+  (tabulate tan x))
