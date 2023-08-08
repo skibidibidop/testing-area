@@ -1,7 +1,9 @@
-;; The first three lines of this file were inserted by DrRacket. They record metadata
-;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-intermediate-reader.ss" "lang")((modname ex_258) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: August 8, 2023
+
+Exercise 258. Use a local expression to organize the functions for
+drawing a polygon in figure 73. If a globally defined function is widely
+useful, do not make it local.
+|#
 
