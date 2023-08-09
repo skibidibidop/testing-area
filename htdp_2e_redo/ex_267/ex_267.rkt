@@ -13,3 +13,26 @@ Finally, try your hand at translate, a function that translates a list of
 Posns into a list of lists of pairs of numbers.
 |#
 
+(define USD_PER_EUR 1.06)
+
+; DATA DEFINITION //////////////////////////////////////////////////////////////
+
+; A USD is a Number representing an amount of money in US Dollars.
+
+; An EUR is a Number representing an amoutn of money in Euros.
+
+; FUNCTIONS ////////////////////////////////////////////////////////////////////
+
+; [List-of USD] -> [List-of EUR]
+; Converts a list of USD amounts to a list of EUR amounts
+(check-expect (convert_to_eur '()) '())
+(check-expect (convert_to_eur (list 3 10 100))
+              (list (* 3   USD_PER_EUR)
+                    (* 10  USD_PER_EUR)
+                    (* 100 USD_PER_EUR)))
+
+(define (convert_to_eur lusd)
+  (local
+    [(define (convert usd)
+       (* USD_PER_EUR usd))]
+    (map convert lusd)))
