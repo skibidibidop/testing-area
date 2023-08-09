@@ -51,3 +51,19 @@ Posns into a list of lists of pairs of numbers.
        (* (- tf FAHR_CONST1)
           FAHR_CONST2))]
     (map convert ltf)))
+
+; [List-of Posn] -> [List-of [List-of Number]]
+; Converts a list of Posns to a list of paired numbers, with each pair
+; in a separate list
+(check-expect (translate '()) '())
+(check-expect (translate (list (make-posn 10 20)
+                               (make-posn 40 50)))
+              (list (list 10 20)
+                    (list 40 50)))
+
+(define (translate lposn)
+  (local
+    [(define (posn-to-list p)
+       (cons (posn-x p)
+             (cons (posn-y p) '())))]
+    (map posn-to-list lposn)))
