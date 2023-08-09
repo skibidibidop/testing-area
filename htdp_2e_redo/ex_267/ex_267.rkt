@@ -14,6 +14,8 @@ Posns into a list of lists of pairs of numbers.
 |#
 
 (define USD_PER_EUR 1.06)
+(define FAHR_CONST1 32)
+(define FAHR_CONST2 (/ 5 9))
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
@@ -36,3 +38,16 @@ Posns into a list of lists of pairs of numbers.
     [(define (convert usd)
        (* USD_PER_EUR usd))]
     (map convert lusd)))
+
+; [List-of TFahr] -> [List-of TCels]
+; Converts a list of temperature readings in Fahrenheit to Celsius
+(check-expect (convertFC '()) '())
+(check-expect (convertFC (list 32 212 392))
+              (list 0 100 200))
+
+(define (convertFC ltf)
+  (local
+    [(define (convert tf)
+       (* (- tf FAHR_CONST1)
+          FAHR_CONST2))]
+    (map convert ltf)))
