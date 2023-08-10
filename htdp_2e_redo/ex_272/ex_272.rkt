@@ -24,6 +24,8 @@ Also define a function that stacks a list of images vertically.
 (2) Check for above in the libraries.
 |#
 
+(require 2htdp/image)
+
 ; [List-of Any] [List-of Any] -> [List-of Any]
 ; Appends two lists together using the fold function
 (check-expect (append-from-fold '() '()) '())
@@ -75,3 +77,39 @@ Also define a function that stacks a list of images vertically.
 
 (define (list_prod ln)
   (foldl * MUL_BASE ln))
+
+; With one of the fold functions, you can define a function that horizon-
+; tally composes a list of Images.
+
+; [List-of Images] -> Image
+; Puts Images in list beside each other on a given background
+(check-expect (horiz '()) empty-image)
+(check-expect (horiz (list (square 20 "outline" "red")
+                           (square 20 "outline" "black")
+                           (square 20 "outline" "red")
+                           (square 20 "outline" "blue")))
+              (beside (square 20 "outline" "red")
+                      (square 20 "outline" "black")
+                      (square 20 "outline" "red")
+                      (square 20 "outline" "blue")
+                      empty-image))
+
+(define (horiz lim)
+  (foldr beside empty-image lim))
+
+; [List-of Images] -> Image
+; Puts Images in list on top of each other on a given background
+(check-expect (verti '()) empty-image)
+(check-expect (verti (list (square 20 "outline" "red")
+                           (square 20 "outline" "black")
+                           (square 20 "outline" "red")
+                           (square 20 "outline" "blue")))
+              (above (square 20 "outline" "red")
+                     (square 20 "outline" "black")
+                     (square 20 "outline" "red")
+                     (square 20 "outline" "blue")
+                     empty-image))
+
+(define (verti lim)
+  (foldr above empty-image lim))
+
