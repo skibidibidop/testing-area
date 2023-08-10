@@ -45,5 +45,11 @@ Finally, define tabulate from exercise 250 using build-list.
 (define (list_fraction n)
   (local
     [(define (inc_denominator d)
-       (* 1 (/ 1 (add1 d))))]
+       (/ 1 (add1 d)))]
   (build-list n inc_denominator)))
+
+; 4. creates the list of the first n even numbers;
+
+; Number -> [List-of Number]
+; Generates a list of the first n even numbers
+; (check-expect (
