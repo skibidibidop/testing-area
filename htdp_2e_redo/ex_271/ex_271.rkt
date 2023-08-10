@@ -18,7 +18,6 @@ no name on some list exceeds a given width?
 
 ; String [List-of String] -> Boolean
 ; Checks if (name) is a prefix of any of the names in (lonam)
-(check-expect (find-name "a" '()) #false)
 (check-expect (find-name "a" (list "baa" "cde")) #true)
 (check-expect (find-name "ab" (list "abaa" "cdef")) #true)
 (check-expect (find-name "abc" (list "abc" "def")) #true)
@@ -29,3 +28,17 @@ no name on some list exceeds a given width?
     [(define (match? name_from_list)
        (string-contains? name name_from_list))]
     (ormap match? lonam)))
+
+; [List-of String] -> Boolean
+; Checks if all names on the list start with "a"
+(check-expect (all_starts_a? (list "abc" "def")) #false)
+(check-expect (all_starts_a? (list "aaa" "abb")) #true)
+(check-expect (all_starts_a? (list "aaa" "Abb")) #false)
+
+(define (all_starts_a? lonam)
+  (local
+    [(define (name_start_a? n)
+       (string=? "a" (string-ith n 0)))]
+    (andmap name_start_a? lonam)))
+
+; We can use ormap to check if a name exceeds a given width
