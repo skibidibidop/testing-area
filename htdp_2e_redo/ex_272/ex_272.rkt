@@ -26,3 +26,15 @@ Hints
 Also define a function that stacks a list of images vertically.
 (2) Check for above in the libraries.
 |#
+
+; [List-of Any] [List-of Any] -> [List-of Any]
+; Appends two lists together using the fold function
+(check-expect (append-from-fold '() '()) '())
+(check-expect (append-from-fold (list 1 2) '())
+              (list 1 2))
+(check-expect (append-from-fold '() (list 3 4))
+              (list 3 4))
+(check-expect (append-from-fold (list 1 2) (list 3 4))
+              (list 1 2 3 4))
+
+(define (append-from-fold list1 list2) '())
