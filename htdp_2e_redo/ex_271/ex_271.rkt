@@ -15,3 +15,17 @@ of names that start with the letter "a".
 Should you use ormap or andmap to define a function that ensures that
 no name on some list exceeds a given width?
 |#
+
+; String [List-of String] -> Boolean
+; Checks if (name) is a prefix of any of the names in (lonam)
+(check-expect (find-name "a" '()) #false)
+(check-expect (find-name "a" (list "baa" "cde")) #true)
+(check-expect (find-name "ab" (list "abaa" "cdef")) #true)
+(check-expect (find-name "abc" (list "abc" "def")) #true)
+(check-expect (find-name "z" (list "abc" "def")) #false)
+
+(define (find-name name lonam)
+  (local
+    [(define (match? name_from_list)
+       (string-contains? name name_from_list))]
+    (ormap match? lonam)))
