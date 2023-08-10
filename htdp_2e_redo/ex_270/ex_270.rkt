@@ -12,3 +12,15 @@ Exercise 270. Use build-list to define a function that
 
 Finally, define tabulate from exercise 250 using build-list.
 |#
+
+; 1. creates the list (list 0 ... (- n 1)) for any natural number n;
+
+; Number -> [List-of Number]
+; Generates a list from 0 to (- n 1)
+(check-expect (list_to_1less 0) '())
+(check-expect (list_to_1less 10)
+              (list 0 1 2 3 4 5 6 7 8 9))
+
+(define (list_to_1less n)
+  (build-list n identity))
+
