@@ -65,3 +65,14 @@ Finally, define tabulate from exercise 250 using build-list.
     [(define (mult2 a)
        (* a 2))]
     (build-list n mult2)))
+
+; Number -> [List-of [List-of Number]]
+; Generates a diagonal square of 0s and 1s
+(define (identityM n)
+ (local
+   [(define (gen_row i)
+      (local
+        [(define (one_or_zero j)
+           (if (= i j) 1 0))]
+      (build-list n one_or_zero)))]
+   (build-list n gen_row)))
