@@ -37,4 +37,11 @@ Also define a function that stacks a list of images vertically.
 (check-expect (append-from-fold (list 1 2) (list 3 4))
               (list 1 2 3 4))
 
-(define (append-from-fold list1 list2) '())
+(define (append-from-fold list1 list2)
+  (local
+    [(define (add_to_list element l)
+       (cond
+         [(empty? element) l]
+         [else
+          (cons element l)]))]
+    (foldr add_to_list list2 list1)))
