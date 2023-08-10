@@ -52,4 +52,9 @@ Finally, define tabulate from exercise 250 using build-list.
 
 ; Number -> [List-of Number]
 ; Generates a list of the first n even numbers
-; (check-expect (
+(check-expect (evens 0) '())
+(check-expect (evens 1) (list 0))
+(check-expect (evens 2) (list 0 2))
+(check-expect (evens 5) (list 0 2 4 6 8))
+
+(define (evens n))
