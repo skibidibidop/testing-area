@@ -28,6 +28,8 @@ selects all those from the second one that are also on the first.
         (make-ir "Item2" "#2" 40 200)
         (make-ir "Item3" "#3" 3 10)
         (make-ir "Item4" "#4" 50 70)))
+(define NAMES1 (list "Name1" "Name2" "Name3" "Name4"))
+(define NAMES2 (list "Name3" "Name4" "Name5" "Name6"))
 
 ; Number [List-of Ir] -> [List-of Ir]
 ; Creates a list of Irs whose sale price is below Number ua
@@ -60,3 +62,17 @@ selects all those from the second one that are also on the first.
     [(define (not-ty? an-ir)
        (not (string=? (ir-name an-ir) ty)))]
     (filter not-ty? lir)))
+
+; [List-of String] [List-of String] -> [List-of String]
+; Creates a list of names that are in both the provided lists
+(check-expect (selection NAMES1 '()) '())
+(check-expect (selection NAMES2 '()) '())
+(check-expect (selection NAMES1 NAMES2) (list "Name3" "Name4"))
+
+(define (selection ln1 ln2)
+  (local
+    [; String -> Boolean
+     (define (in-list? a-name)
+       (member? a-name ln2))]
+  (filter in-list? ln1)))
+         
