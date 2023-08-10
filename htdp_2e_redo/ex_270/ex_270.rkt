@@ -76,3 +76,24 @@ Finally, define tabulate from exercise 250 using build-list.
            (if (= i j) 1 0))]
       (build-list n one_or_zero)))]
    (build-list n gen_row)))
+
+; Finally, define tabulate from exercise 250 using build-list.
+
+; (Number -> Number) Number -> [List-of Number]
+; Tabulates function/operation op between n and 0
+(check-expect (tabulate sqr 3) (list 9 4 1 0))
+
+(define (tabulate op n)
+  (cond
+    [(= n 0) (list (op 0))]
+    [else
+     (cons
+      (op n)
+      (tabulate op (sub1 n)))]))
+
+; (Number -> Number) Number -> [List-of Number]
+; The tabulate function but using build-list
+(check-expect (tabulate2 sqr 3) (list 0 1 4 9))
+
+(define (tabulate2 op n)
+  (build-list (+ n 1) op))
