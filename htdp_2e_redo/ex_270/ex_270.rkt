@@ -1,3 +1,6 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-intermediate-reader.ss" "lang")((modname ex_270) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: August 10, 2023
@@ -57,4 +60,8 @@ Finally, define tabulate from exercise 250 using build-list.
 (check-expect (evens 2) (list 0 2))
 (check-expect (evens 5) (list 0 2 4 6 8))
 
-(define (evens n))
+(define (evens n)
+  (local
+    [(define (mult2 a)
+       (* a 2))]
+    (build-list n mult2)))
