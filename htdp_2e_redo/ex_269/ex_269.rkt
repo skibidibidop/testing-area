@@ -44,3 +44,19 @@ selects all those from the second one that are also on the first.
      (define (in_range? an-ir)
        (< (ir-sell an-ir) ua))]
     (filter in_range? lir)))
+
+; String [List-of Ir] -> [List-of Ir]
+; Removes any item in the provided list of inventory records with the name
+; String ty
+(check-expect (recall "Item1" '()) '())
+(check-expect (recall "Item2" IR_LIST)
+              (list (make-ir "Item1" "#1" 10 20)
+                    (make-ir "Item3" "#3" 3 10)
+                    (make-ir "Item4" "#4" 50 70)))
+(check-expect (recall "Hey" IR_LIST) IR_LIST)
+
+(define (recall ty lir)
+  (local
+    [(define (not-ty? an-ir)
+       (not (string=? (ir-name an-ir) ty)))]
+    (filter not-ty? lir)))
