@@ -1,6 +1,3 @@
-;; The first three lines of this file were inserted by DrRacket. They record metadata
-;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-intermediate-reader.ss" "lang")((modname ex_272) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: August 10, 2023
@@ -45,3 +42,36 @@ Also define a function that stacks a list of images vertically.
          [else
           (cons element l)]))]
     (foldr add_to_list list2 list1)))
+
+; foldl instead of foldr reverses the first list and then appends
+; list2 to the reveresed list
+(define (append-from-fold2 list1 list2)
+  (local
+    [(define (add_to_list element l)
+       (cond
+         [(empty? element) l]
+         [else
+          (cons element l)]))]
+    (foldl add_to_list list2 list1)))
+
+; Now use one of the fold functions to define functions that compute the
+; sum and the product, respectively, of a list of numbers.
+
+(define ADD_BASE 0)
+(define MUL_BASE 1)
+
+; [List-of Number] -> Number
+; Returns the sum of all the numbers in the list
+(check-expect (list_sum '()) ADD_BASE)
+(check-expect (list_sum (list 1 5 2 4)) 12)
+
+(define (list_sum ln)
+  (foldl + ADD_BASE ln))
+
+; [List-of Number] -> Number
+; Returns the product of all the numbers in the list
+(check-expect (list_prod '()) MUL_BASE)
+(check-expect (list_prod (list 1 2 3 4)) 24)
+
+(define (list_prod ln)
+  (foldl * MUL_BASE ln))
