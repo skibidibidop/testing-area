@@ -33,3 +33,17 @@ Finally, define tabulate from exercise 250 using build-list.
 
 (define (one_to_n n)
   (build-list n add1))
+
+; 3. creates the list (list 1 1/2 ... 1/n) for any natural number n;
+
+; Number -> [List-of Number]
+; Generates a list from 1 to 1/n (list 1 1/2 ... 1/n)
+(check-expect (list_fraction 0) '())
+(check-expect (list_fraction 5)
+              (list 1 1/2 1/3 1/4 1/5))
+
+(define (list_fraction n)
+  (local
+    [(define (inc_denominator d)
+       (* 1 (/ 1 (add1 d))))]
+  (build-list n inc_denominator)))
