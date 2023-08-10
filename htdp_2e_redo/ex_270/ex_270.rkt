@@ -24,3 +24,12 @@ Finally, define tabulate from exercise 250 using build-list.
 (define (list_to_1less n)
   (build-list n identity))
 
+; 2. creates the list (list 1 ... n) for any natural number n;
+
+; Number -> [List-of Number]
+; Generates a list from 1 to n
+(check-expect (one_to_n 0) '())
+(check-expect (one_to_n 3) (list 1 2 3))
+
+(define (one_to_n n)
+  (build-list n add1))
