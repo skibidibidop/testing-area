@@ -19,7 +19,13 @@ Posns into a list of lists of pairs of numbers.
 
 ; An EUR is an amount in Euros
 
+; A TFahr is a temperature reading in degrees Fahrenheit
+
+; A TCels is a temperature reading in degrees Celsius
+
 (define USD_TO_EUR 1.6)
+(define FAHR_CONST1 32)
+(define FAHR_CONST2 (/ 5 9))
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
@@ -36,3 +42,17 @@ Posns into a list of lists of pairs of numbers.
    (lambda (a_usd)
      (* USD_TO_EUR a_usd))
    lusd))
+
+; [List-of TFahr] -> [List-of TCels]
+; Converts a list of temperature readings in degrees Fahrenheit to
+; a list of temperature readings in degrees Celsius
+(check-expect (convertFC '()) '())
+(check-expect (convertFC (list 212 428))
+              (list 100 220))
+
+(define (convertFC lf)
+  (map
+   (lambda (a_fahr)
+     (* (- a_fahr FAHR_CONST1)
+        FAHR_CONST2))
+   lf))
