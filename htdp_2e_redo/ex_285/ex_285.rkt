@@ -27,6 +27,10 @@ Posns into a list of lists of pairs of numbers.
 (define FAHR_CONST1 32)
 (define FAHR_CONST2 (/ 5 9))
 
+(define-struct pair [num1 num2])
+; (make-pair Number Number)
+; Interp.: (make-pair n1 n2), a pair of two Numbers
+
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
 ; [List-of USD] -> [List-of EUR]
@@ -56,3 +60,21 @@ Posns into a list of lists of pairs of numbers.
      (* (- a_fahr FAHR_CONST1)
         FAHR_CONST2))
    lf))
+
+; [List-of Posn] -> [List-of Pair]
+; Converts a list of Posns to a list of Pairs
+(check-expect (translate '()) '())
+(check-expect (translate (list (make-posn 30 40)))
+              (list (make-pair 30 40)))
+(check-expect (translate (list (make-posn 20 80)
+                               (make-posn 10 100)
+                               (make-posn -45 37)))
+              (list (make-pair 20 80)
+                    (make-pair 10 100)
+                    (make-pair -45 37)))
+
+(define (translate lposn)
+  (map
+   (lambda (a_posn)
+     (make-pair (posn-x a_posn) (posn-y a_posn)))
+   lposn))
