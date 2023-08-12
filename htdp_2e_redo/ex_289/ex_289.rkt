@@ -26,3 +26,15 @@ no name on some list exceeds some given width?
      (string-contains? n str_from_lstr))
    ln))
 
+; [List-of String] -> Boolean
+; Checks if all Strings in provided list of String start with
+; the letter "a"
+(check-expect (all_start_a (list "hey" "aaa")) #false)
+(check-expect (all_start_a (list "aaa" "abb" "acc")) #true)
+
+(define (all_start_a ls)
+  (andmap
+   (lambda (a_str)
+     (string=? "a" (string-ith a_str 0)))
+   ls))
+
