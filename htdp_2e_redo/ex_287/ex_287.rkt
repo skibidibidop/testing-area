@@ -39,3 +39,18 @@ selects all those from the second one that are also on the first.
    (lambda (an_ir)
      (< (ir-price an_ir) ua))
    lir))
+
+; String [List-of InventoryRecord] -> [List-of InventoryRecord]
+; Removes all InventoryRecords with ir-name ty
+(check-expect (recall "item1" '()) '())
+(check-expect (recall "item2" (list (make-ir "item1" 30)
+                                    (make-ir "item2" 40)
+                                    (make-ir "item3" 10)))
+              (list (make-ir "item1" 30)
+                    (make-ir "item3" 10)))
+
+(define (recall ty lir)
+  (filter
+   (lambda (an_ir)
+     (not (string=? (ir-name an_ir) ty)))
+   lir))
