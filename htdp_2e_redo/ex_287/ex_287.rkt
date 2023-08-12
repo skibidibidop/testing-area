@@ -54,3 +54,17 @@ selects all those from the second one that are also on the first.
    (lambda (an_ir)
      (not (string=? (ir-name an_ir) ty)))
    lir))
+
+; [List-of String] [List-of String] -> [List-of String]
+; Creates a list of names which are members of the first and second list
+(check-expect (selection '() (list "hi" "hello")) '())
+(check-expect (selection (list "hey" "there") '()) '())
+(check-expect (selection (list "hey" "there") (list "hi" "hello")) '())
+(check-expect (selection (list "hi" "there") (list "hello" "there"))
+              (list "there"))
+
+(define (selection l1 l2)
+  (filter
+   (lambda (a_string)
+     (member? a_string l2))
+  l1))
