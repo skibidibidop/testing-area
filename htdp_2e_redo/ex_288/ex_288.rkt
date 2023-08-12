@@ -17,8 +17,20 @@ Also define tabulate with lambda.
 (check-expect (list_from_zero 0) '())
 (check-expect (list_from_zero 3) (list 0 1 2))
 
-; Number -> [List-of Number]
+; N -> [List-of N]
 (define (list_from_zero n)
   (build-list
    n
-   (lambda (x) (identity x))))
+   (lambda (a) (identity a))))
+
+; 2. creates the list (list 1 ... n) for any natural number n;
+(check-expect (list_from_one 0) '())
+(check-expect (list_from_one 4) (list 1 2 3 4))
+
+; N -> [List-of N]
+(define (list_from_one n)
+  (build-list
+   n
+   (lambda (a) (add1 a))))
+
+; 
