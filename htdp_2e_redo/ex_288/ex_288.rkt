@@ -33,4 +33,13 @@ Also define tabulate with lambda.
    n
    (lambda (a) (add1 a))))
 
+; 3. creates the list (list 1 1/2 ... 1/n) for any natural number n;
+(check-expect (list_increasing_denominator 0) '())
+(check-expect (list_increasing_denominator 3) (list 1 1/2 1/3))
+
+(define (list_increasing_denominator n)
+  (build-list
+   n
+   (lambda (a) (/ 1 (add1 a)))))
+
 ; 
