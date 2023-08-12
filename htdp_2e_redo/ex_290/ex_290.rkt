@@ -20,3 +20,12 @@ composes a list of Images. Hints (1) Look up beside and emptyimage. Can you
 use the other fold function? Also define a function that stacks a list of
 images vertically. (2) Check for above in the libraries.
 |#
+
+; [List-of X] [List-of X] -> [List-of X]
+; 
+(define (append-from-fold l1 l2)
+  (foldr
+   (lambda (from_l)
+     (cons from_l l2)
+     base
+   (reverse l1)))
