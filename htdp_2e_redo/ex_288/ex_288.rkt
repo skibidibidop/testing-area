@@ -42,4 +42,23 @@ Also define tabulate with lambda.
    n
    (lambda (a) (/ 1 (add1 a)))))
 
-; 
+; 4. creates the list of the first n even numbers; and
+(check-expect (list_evens 0) '())
+(check-expect (list_evens 3) (list 0 2 4))
+
+(define (list_evens n)
+  (build-list
+   n
+   (lambda (a) (* a 2))))
+
+; 5. creates a diagonal square of 0s and 1s; see exercise 262.
+(check-expect (gen_diag 1) (list (list 1)))
+(check-expect (gen_diag 2) (list (list 1 0)
+                                 (list 0 1)))
+
+(define (gen_diag n)
+  (build-list n
+   (lambda (a)
+     (build-list n
+      (lambda (b)
+        (if (= b a) 1 0))))))
