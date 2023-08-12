@@ -6,6 +6,13 @@ Exercise 287. Use filter to define eliminate-exp. The function
 consumes a number, ua, and a list of inventory records (containing name
 and price), and it produces a list of all those structures whose acquisition
 price is below ua.
+
+Then use filter to define recall, which consumes the name of an
+inventory item, called ty, and a list of inventory records and which produces
+a list of inventory records that do not use the name ty.
+
+In addition, define selection, which consumes two lists of names and
+selects all those from the second one that are also on the first.
 |#
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
