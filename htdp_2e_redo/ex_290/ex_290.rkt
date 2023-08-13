@@ -1,3 +1,6 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname ex_290) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: August 12, 2023
@@ -15,8 +18,8 @@ foldr with foldl?
 Now use one of the fold functions to define functions that compute the
 sum and the product, respectively, of a list of numbers.
 
-With one of the fold functions, you can define a function that horizontally
-composes a list of Images. Hints (1) Look up beside and emptyimage. Can you
+With one of the fold functions, you can define a function that horizontally
+composes a list of Images. Hints (1) Look up beside and empty-image. Can you
 use the other fold function? Also define a function that stacks a list of
 images vertically. (2) Check for above in the libraries.
 |#
