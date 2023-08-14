@@ -27,7 +27,7 @@ images vertically. (2) Check for above in the libraries.
 ; 
 
 ; [List-of X] [List-of X] -> [List-of X]
-;
+; Combines l1 and l2 into a single list
 (check-expect (append-from-fold '() '()) '())
 (check-expect (append-from-fold '() (list 3 4)) (list 3 4))
 (check-expect (append-from-fold (list 1 2) '()) (list 1 2))
@@ -39,3 +39,12 @@ images vertically. (2) Check for above in the libraries.
      (cons a_member a_list))
    l2
    l1))
+
+; [List-of Number] -> Number
+; Computes the sum of all members of l1
+(check-expect (sum_members '()) 0)
+(check-expect (sum_members (list 1)) 1)
+(check-expect (sum_members (list 1 2)) 3)
+
+(define (sum_members l1)
+  (foldl + 0 l1))
