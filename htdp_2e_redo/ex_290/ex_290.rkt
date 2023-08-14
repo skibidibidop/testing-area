@@ -73,3 +73,16 @@ images vertically. (2) Check for above in the libraries.
      (beside an_img bg))
    empty-image
    limg))
+
+; [List-of Image] -> Image
+; Vertically composes a list of Images
+(check-expect (ver_img '()) empty-image)
+(check-expect (ver_img (list SQ_OUT SQ_SOLID SQ_OUT SQ_SOLID))
+              (above SQ_OUT SQ_SOLID SQ_OUT SQ_SOLID))
+
+(define (ver_img limg)
+  (foldr
+   (lambda (an_img bg)
+     (above an_img bg))
+   empty-image
+   limg))
