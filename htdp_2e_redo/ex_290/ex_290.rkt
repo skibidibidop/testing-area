@@ -24,7 +24,10 @@ use the other fold function? Also define a function that stacks a list of
 images vertically. (2) Check for above in the libraries.
 |#
 
-; 
+(require 2htdp/image)
+
+(define SQ_SOLID (square 10 "solid" "red"))
+(define SQ_OUT (square 10 "outline" "red"))
 
 ; [List-of X] [List-of X] -> [List-of X]
 ; Combines l1 and l2 into a single list
@@ -57,3 +60,16 @@ images vertically. (2) Check for above in the libraries.
 
 (define (mult_members ln)
   (foldl * 1 ln))
+
+; [List-of Image] -> Image
+; Horizontally composes a list of Images
+(check-expect (hor_img '()) empty-image)
+(check-expect (hor_img (list SQ_OUT SQ_SOLID SQ_OUT SQ_SOLID))
+              (beside SQ_OUT SQ_SOLID SQ_OUT SQ_SOLID empty-image))
+
+(define (hor_img limg)
+  (foldr
+   (lambda (an_img bg)
+     (beside an_img bg))
+   empty-image
+   limg))
