@@ -46,5 +46,14 @@ images vertically. (2) Check for above in the libraries.
 (check-expect (sum_members (list 1)) 1)
 (check-expect (sum_members (list 1 2)) 3)
 
-(define (sum_members l1)
-  (foldl + 0 l1))
+(define (sum_members ln)
+  (foldl + 0 ln))
+
+; [List-of Number] -> Number
+; Computes the product of all members of l
+(check-expect (mult_members '()) 1)
+(check-expect (mult_members (list 1)) 1)
+(check-expect (mult_members (list 1 2)) 2)
+
+(define (mult_members ln)
+  (foldl * 1 ln))
