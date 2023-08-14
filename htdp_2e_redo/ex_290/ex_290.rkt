@@ -24,6 +24,8 @@ use the other fold function? Also define a function that stacks a list of
 images vertically. (2) Check for above in the libraries.
 |#
 
+; 
+
 ; [List-of X] [List-of X] -> [List-of X]
 ;
 (check-expect (append-from-fold '() '()) '())
@@ -31,4 +33,9 @@ images vertically. (2) Check for above in the libraries.
 (check-expect (append-from-fold (list 1 2) '()) (list 1 2))
 (check-expect (append-from-fold (list 1 2) (list 3 4)) (list 1 2 3 4))
 
-(define (append-from-fold l1 l2) '())
+(define (append-from-fold l1 l2)
+  (foldr
+   (lambda (a_member a_list)
+     (cons a_member a_list))
+   l2
+   l1))
