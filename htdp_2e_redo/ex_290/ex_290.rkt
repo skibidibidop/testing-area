@@ -25,10 +25,10 @@ images vertically. (2) Check for above in the libraries.
 |#
 
 ; [List-of X] [List-of X] -> [List-of X]
-; 
-(define (append-from-fold l1 l2)
-  (foldr
-   (lambda (from_l)
-     (cons from_l l2)
-     base
-   (reverse l1)))
+;
+(check-expect (append-from-fold '() '()) '())
+(check-expect (append-from-fold '() (list 3 4)) (list 3 4))
+(check-expect (append-from-fold (list 1 2) '()) (list 1 2))
+(check-expect (append-from-fold (list 1 2) (list 3 4)) (list 1 2 3 4))
+
+(define (append-from-fold l1 l2) '())
