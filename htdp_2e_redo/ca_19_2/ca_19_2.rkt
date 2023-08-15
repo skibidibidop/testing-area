@@ -47,3 +47,27 @@ family forest contains a child with "blue" in the eyes field.
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
+; FF -> Boolean
+; does the forest contain any child with "blue" eyes
+(check-expect (blue-eyed-child-in-forest? ff1) #false)
+(check-expect (blue-eyed-child-in-forest? ff2) #true)
+(check-expect (blue-eyed-child-in-forest? ff3) #true)
+
+(define (blue-eyed-child-in-forest? a-forest)
+  (cond
+    [(empty? a-forest) #false]
+    [else
+     (or (blue-eyed-child? (first a-forest))
+         (blue-eyed-child-in-forest? (rest a-forest)))]))
+
+; FT -> Boolean
+; does an-ftree contain a child
+; structure with "blue" in the eyes field
+(check-expect (blue-eyed-child? Carl) #false)
+(check-expect (blue-eyed-child? Gustav) #true)
+(define (blue-eyed-child? an-ftree)
+  (cond
+    [(no-parent? an-ftree) #false]
+    [else (or (string=? (child-eyes an-ftree) "blue")
+              (blue-eyed-child? (child-father an-ftree))
+              (blue-eyed-child? (child-mother an-ftree)))]))
