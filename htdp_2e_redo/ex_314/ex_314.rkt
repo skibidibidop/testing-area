@@ -1,3 +1,13 @@
-;; The first three lines of this file were inserted by DrRacket. They record metadata
-;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname ex_314) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+#|
+Author: Mark Beltran
+Date: August 16, 2023
+
+Exercise 314. Reformulate the data definition for FF with the List-of
+abstraction. Now do the same for the blue-eyed-child-in-forest?
+function. Finally, define blue-eyed-child-in-forest? using one of
+the list abstractions from the preceding chapter.
+|#
+
+; DATA DEFINITION //////////////////////////////////////////////////////////////
+
+; FUNCTIONS ////////////////////////////////////////////////////////////////////
