@@ -10,8 +10,6 @@ the list abstractions from the preceding chapter.
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
-; An FF (short for Family Forest) is a [List-of FT]
-
 (define-struct no-parent [])
 
 (define NP (make-no-parent))
@@ -20,6 +18,11 @@ the list abstractions from the preceding chapter.
 ; An FT (short for Family Tree) is one of:
 ; NP
 ; (make-child FT FT String N String)
+
+; A [List-of FT] is one of:
+; '()
+; (cons FT [List-of FT])
+; Interp.: represents a family forest
 
 ; Oldest Generation:
 (define Carl (make-child NP NP "Carl" 1926 "green"))
@@ -34,4 +37,42 @@ the list abstractions from the preceding chapter.
 ; Youngest Generation:
 (define Gustav (make-child Fred Eva "Gustav" 1988 "brown"))
 
+(define ff1 (list Carl Bettina))
+(define ff2 (list Fred Eva))
+(define ff3 (list Fred Eva Carl))
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
+
+; [List-of FT] -> Boolean
+; does the forest contain any child with "blue" eyes
+(check-expect (blue-eyed-child-in-forest? ff1) #false)
+(check-expect (blue-eyed-child-in-forest? ff2) #true)
+(check-expect (blue-eyed-child-in-forest? ff3) #true)
+
+(define (blue-eyed-child-in-forest? a-forest)
+  (cond
+    [(empty? a-forest) #false]
+    [else
+     (or (blue-eyed-child? (first a-forest))
+         (blue-eyed-child-in-forest? (rest a-forest)))]))
+
+; FT -> Boolean
+; does an-ftree contain a child
+; structure with "blue" in the eyes field
+(check-expect (blue-eyed-child? Carl) #false)
+(check-expect (blue-eyed-child? Gustav) #true)
+
+(define (blue-eyed-child? an-ftree)
+  (cond
+    [(no-parent? an-ftree) #false]
+    [else (or (string=? (child-eyes an-ftree) "blue")
+              (blue-eyed-child? (child-father an-ftree))
+              (blue-eyed-child? (child-mother an-ftree)))]))
+
+; [List-of FT] -> Boolean
+; Redefines (blue-eyed-child-in-forest?) with ormap
+(check-expect (becif2? ff1) #false)
+(check-expect (becif2? ff2) #true)
+(check-expect (becif2? ff3) #true)
+
+(define (becif2? lft)
+  (ormap blue-eyed-child? lft))
