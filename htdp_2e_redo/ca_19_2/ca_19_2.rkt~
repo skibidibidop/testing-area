@@ -28,22 +28,8 @@ family forest contains a child with "blue" in the eyes field.
 ; Interp.: a family forest represents several families and their
 ; ancestor trees
 
-; Oldest Generation:
-(define Carl (make-child NP NP "Carl" 1926 "green"))
-(define Bettina (make-child NP NP "Bettina" 1926 "green"))
-
-; Middle Generation:
-(define Adam (make-child Carl Bettina "Adam" 1950 "hazel"))
-(define Dave (make-child Carl Bettina "Dave" 1955 "black"))
-(define Eva (make-child Carl Bettina "Eva" 1965 "blue"))
-(define Fred (make-child NP NP "Fred" 1966 "pink"))
-
-; Youngest Generation:
-(define Gustav (make-child Fred Eva "Gustav" 1988 "brown"))
-
 (define ff1 (list Carl Bettina))
 (define ff2 (list Fred Eva))
 (define ff3 (list Fred Eva Carl))
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
-
