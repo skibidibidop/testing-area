@@ -34,3 +34,19 @@ Hint: Use append to concatenate the lists resulting from the recursive calls.
 (define Gustav (make-child Fred Eva "Gustav" 1988 "brown"))
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
+
+; FT -> [List-of String]
+; Returns a list of all eye colors in an_ftree
+(check-expect (eye_colors Carl)   (list "green"))
+(check-expect (eye_colors Adam)   (list "hazel" "green" "green"))
+(check-expect (eye_colors Fred)   (list "pink"))
+(check-expect (eye_colors Gustav) (list "brown" "pink" "blue" "green" "green"))
+
+(define (eye_colors an_ftree)
+  (cond
+    [(no-parent? an_ftree) '()]
+    [else
+     (append
+      (cons (child-eyes an_ftree) '())
+      (eye_colors (child-father an_ftree))
+      (eye_colors (child-mother an_ftree)))]))
