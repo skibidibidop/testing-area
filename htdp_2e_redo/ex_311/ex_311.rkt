@@ -32,3 +32,26 @@ the family tree.
 (define Gustav (make-child Fred Eva "Gustav" 1988 "brown"))
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
+
+; FT Number -> Number
+; Returns the average age of all child structures in an_ftree
+(check-expect (average_age Carl 1930) 4)
+(check-expect (average_age Fred 1976) 10)
+(check-expect (average_age Adam 1960) 26)
+(check-expect (average_age Gustav 1990) 35.8)
+
+(define (average_age an_ftree year)
+  (local [(define (total_age ta_ftree)
+            (cond
+              [(no-parent? ta_ftree) 0]
+              [else
+               (+ (total_age (child-father ta_ftree))
+                  (total_age (child-mother ta_ftree))
+                  (- year (child-date ta_ftree)))]))
+          (define (count_persons cp_ftree)
+            (cond
+              [(no-parent? cp_ftree) 0]
+              [else
+               (+ (count_persons (child-father cp_ftree))
+                  (count_persons (child-mother cp_ftree)) 1)]))]
+    (/ (total_age an_ftree) (count_persons an_ftree))))
