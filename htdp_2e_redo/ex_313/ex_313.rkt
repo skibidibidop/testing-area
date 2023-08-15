@@ -38,23 +38,30 @@ proper ancestor, not the given child itself, has blue eyes.
 
 ; FT -> Boolean
 ; Returns #true if an ancestor of the child has blue eyes
-(check-expect (blue_eyed_ancestor Eva) #false)
-(check-expect (blue_eyed_ancestor Gustav) #true)
+(check-expect (blue_eyed_ancestor? Eva) #false)
+(check-expect (blue_eyed_ancestor? Gustav) #true)
 
 ; Now suppose a friend comes up with this solution:
-(define (blue-eyed-ancestor? an-ftree)
+(define (blue_eyed_ancestor? an_ftree)
   (cond
-    [(no-parent? an-ftree) #false]
+    [(or (no-parent? an_ftree)
+         (no-parent? (child-father an_ftree))
+         (no-parent? (child-mother an_ftree)))
+     #false]
     [else
      (or
-      (blue-eyed-ancestor?
-       (child-father an-ftree))
-      (blue-eyed-ancestor?
-       (child-mother an-ftree)))]))
+      (blue_eyed_ancestor? (child-father an_ftree))
+      (blue_eyed_ancestor? (child-mother an_ftree))
+      (string=? (child-eyes (child-father an_ftree))
+                "blue")
+      (string=? (child-eyes (child-mother an_ftree))
+                "blue"))]))
 
 #|
 Explain why this function fails one of its tests. What is the result of (blue-
 eyed-ancestor? A) no matter which A you choose? Can you fix your
 friend’s solution?
 |#
+
+; The original solution will result to #false no matter which Ancestor is picked.
 
