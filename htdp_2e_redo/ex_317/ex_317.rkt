@@ -34,22 +34,21 @@ the traversal process.
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
-; Any -> Boolean
-; Is a an Atom
-(check-expect (atom? "hi!") #true)
-(check-expect (atom? 1000) #true)
-(check-expect (atom? 'z) #true)
-(check-expect (atom? (make-posn 1 2)) #false)
-
-(define (atom? a)
-  (or (string? a)
-      (number? a)
-      (symbol? a)))
-
 ; S-expr Symbol -> Number
 ; Counts all occurrences of sy in sexp
 (check-expect (count 'world 'hello) 0)
 (check-expect (count '(world hello) 'hello) 1)
 (check-expect (count '(((world) hello) hello) 'hello) 2)
 
-(define (count sexp sy) 0)
+(define (count sexp sy)
+  (local
+    [; Any -> Boolean
+     ; Is a an Atom
+     (define (atom? a)
+       (or (string? a)
+           (number? a)
+           (symbol? a)))
+
+     ;
+     ;
+     (
