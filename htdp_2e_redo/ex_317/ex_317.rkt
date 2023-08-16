@@ -49,6 +49,22 @@ the traversal process.
            (number? a)
            (symbol? a)))
 
-     ;
-     ;
-     (
+     ; Atom -> N
+     ; Counts all occurrences of sy in at
+     (define (count-atom at)
+       (cond
+         [(symbol? at)
+          (if (symbol=? at sy) 1 0)]
+         [else 0]))
+
+     ; SL -> N
+     ; Counts all occurrences of sy in sl
+     (define (count-sl sl)
+       (cond
+         [(empty? sl) 0]
+         [else
+          (+ (count (first sl))
+             (count-sl (rest sl)))]))
+
+    (cond
+      [(atom? sexp) (count-atom
