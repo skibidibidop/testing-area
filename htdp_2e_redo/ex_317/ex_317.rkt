@@ -46,3 +46,10 @@ the traversal process.
       (number? a)
       (symbol? a)))
 
+; S-expr Symbol -> Number
+; Counts all occurrences of sy in sexp
+(check-expect (count 'world 'hello) 0)
+(check-expect (count '(world hello) 'hello) 1)
+(check-expect (count '(((world) hello) hello) 'hello) 2)
+
+(define (count sexp sy) 0)
