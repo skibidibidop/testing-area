@@ -63,8 +63,9 @@ the traversal process.
        (cond
          [(empty? sl) 0]
          [else
-          (+ (count (first sl))
-             (count-sl (rest sl)))]))
+          (+ (count (first sl) sy)
+             (count-sl (rest sl)))]))]
 
     (cond
-      [(atom? sexp) (count-atom
+      [(atom? sexp) (count-atom sexp)]
+      [else (count-sl sexp)])))
