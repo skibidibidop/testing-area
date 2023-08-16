@@ -47,16 +47,19 @@ how many times some symbol occurs in some S-expression.
 
 (define (count sexp sy)
   (cond
-    [(atom? sexp) ...]
-    [else ...]))
+    [(atom? sexp) (count-atom sexp sy)]
+    [else (count-sl sexp sy)]))
 
 (define (count-sl sl sy)
   (cond
-    [(empty? sl) ...]
-    [else ...]))
+    [(empty? sl) 0]
+    [else
+     (+ (count (first sl) sy)
+        (count-sl (rest sl) sy))]))
 
 (define (count-atom at sy)
   (cond
-    [(number? at) ...]
-    [(string? at) ...]
-    [(symbol? at) ...]))
+    [(number? at) 0]
+    [(string? at) 0]
+    [(symbol? at)
+     (if (symbol=? at sy) 1 0)]))
