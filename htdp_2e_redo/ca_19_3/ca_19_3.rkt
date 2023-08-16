@@ -31,5 +31,17 @@ how many times some symbol occurs in some S-expression.
 (check-expect (count '(((world) hello) hello) 'hello) 2)
 
 (define (count sexp sy)
-  0)
+  (cond
+    [(atom? sexp) ...]
+    [else ...]))
 
+(define (count-sl sl sy)
+  (cond
+    [(empty? sl) ...]
+    [else ...]))
+
+(define (count-atom at sy)
+  (cond
+    [(number? at) ...]
+    [(string? at) ...]
+    [(symbol? at) ...]))
