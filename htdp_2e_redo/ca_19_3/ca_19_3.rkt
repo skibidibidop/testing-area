@@ -50,6 +50,8 @@ how many times some symbol occurs in some S-expression.
     [(atom? sexp) (count-atom sexp sy)]
     [else (count-sl sexp sy)]))
 
+; SL Symbol -> N
+; Counts all occurrences of sy in sl
 (define (count-sl sl sy)
   (cond
     [(empty? sl) 0]
@@ -57,6 +59,8 @@ how many times some symbol occurs in some S-expression.
      (+ (count (first sl) sy)
         (count-sl (rest sl) sy))]))
 
+; Atom Symbol -> N
+; Counts all occurrences of sy in at
 (define (count-atom at sy)
   (cond
     [(number? at) 0]
