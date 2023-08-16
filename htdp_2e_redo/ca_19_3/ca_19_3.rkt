@@ -1,3 +1,6 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname ca_19_3) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Code-along:
 19.3 S-expressions
@@ -23,6 +26,18 @@ how many times some symbol occurs in some S-expression.
 ; -- (cons S-expr SL)
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
+
+; Any -> Boolean
+; Is a an Atom
+(check-expect (atom? "hi!") #true)
+(check-expect (atom? 1000) #true)
+(check-expect (atom? 'z) #true)
+(check-expect (atom? (make-posn 1 2)) #false)
+
+(define (atom? a)
+  (or (string? a)
+      (number? a)
+      (symbol? a)))
 
 ; S-expr Symbol -> N
 ; Counts all occurrences of sy in sexp
