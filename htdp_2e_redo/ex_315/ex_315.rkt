@@ -47,4 +47,30 @@ the trees don’t overlap.
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
+; [List-of FT] N -> Number
+; Returns the average age of all child instances in the family forest
+(check-expect (average_age ff1 1930) 4)
+(check-expect (average_age ff2 1970) (/ 97 4))
 
+(define (average_age lft year)
+  (local
+    [(define (total_age an_ft b)
+       (cond
+         [(no-parent? an_ft) 0]
+         [else
+          (+ (total_age (child-father an_ft) b)
+             (total_age (child-mother an_ft) b)
+             (- year (child-date an_ft))
+             b)]))
+
+     (define (count_persons an_ft b)
+       (cond
+         [(no-parent? an_ft) 0]
+         [else
+          (+ (count_persons (child-father an_ft) b)
+             (count_persons (child-mother an_ft) b)
+             1 b)]))]
+    
+    (/ (foldr total_age 0 lft)
+       (foldr count_persons 0 lft))))
+  
