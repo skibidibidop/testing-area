@@ -22,6 +22,25 @@ programmers tend to recognize such opportunities.
 ; Symbol
 ; [List-of S-expr]
 
+; An N is a Natural Number
+
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
+; S-expr -> N
+; Counts all occurrences of sy in sexp
+(check-expect (count 'world 'hello) 0)
+(check-expect (count '(world hello) 'hello) 1)
+(check-expect (count '(((world) hello) hello) 'hello) 2)
 
+(define (count sexp sy)
+  (cond
+    [(list? sexp)
+     (if (empty? sexp)
+         0
+         (if (symbol=? sy (first sexp))
+             (+ (count (rest sexp) sy) 1)
+             0))]
+    [(symbol? sexp)
+     (if (symbol=? sy sexp)
+         1 0)]
+    [else 0]))
