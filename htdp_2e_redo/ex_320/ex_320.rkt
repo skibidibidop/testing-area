@@ -26,21 +26,22 @@ programmers tend to recognize such opportunities.
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
-; S-expr -> N
+; S-expr Symbol -> N
 ; Counts all occurrences of sy in sexp
 (check-expect (count 'world 'hello) 0)
 (check-expect (count '(world hello) 'hello) 1)
 (check-expect (count '(((world) hello) hello) 'hello) 2)
 
 (define (count sexp sy)
+  (local
+    [; S-expr Symbol -> Boolean
+     (define (symbol_match? exp sym)
+       (if (symbol=? sym exp) 1 0))]
+       
   (cond
+    [(empty? sexp) 0]
     [(list? sexp)
-     (if (empty? sexp)
-         0
-         (if (symbol=? sy (first sexp))
-             (+ (count (rest sexp) sy) 1)
-             0))]
-    [(symbol? sexp)
-     (if (symbol=? sy sexp)
-         1 0)]
-    [else 0]))
+     (+ (count (first sexp) sy)
+        (count (rest sexp) sy))]
+    [(symbol? sexp) (symbol_match? sexp sy)]
+    [else 0])))
