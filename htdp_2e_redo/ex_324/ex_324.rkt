@@ -62,7 +62,19 @@ What does inorder produce for a binary search tree?
 ; BT -> [List-of Number]
 ; Returns the sequence of all ssn numbers in BT as they show up from
 ; left to right when looking at a tree drawing
-(check-expect (inorder BT) (list 4 7 5 10 3))
-(check-expect (inorder BST) (list 5 10 15 20 25 30 35))
+(check-expect (inorder NONE) '())
+(check-expect (inorder BT)   (list 4 7 5 10 3))
+(check-expect (inorder BST)  (list 5 10 15 20 25 30 35))
 
-(define (inorder bt) '())
+(define (inorder bt)
+  (local
+    [; BT -> [List-of Number]
+     (define (list_ssn_left tree) ...)
+
+     ; BT -> [List-of Number]
+     (define (list_ssn_right tree) ...)]
+    
+  (append
+   (list_ssn_left bt)
+   (list (node-ssn bt))
+   (list_ssn_right bt)))
