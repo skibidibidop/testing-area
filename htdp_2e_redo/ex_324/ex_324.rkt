@@ -26,33 +26,35 @@ What does inorder produce for a binary search tree?
 ; (make-bt Number Symbol BT BT)
 
 ; 4 7 5 10 3
-(define BT (make-node 10 'a
-                      (make-node 5 'b
-                                 (make-node 7 'c
-                                            (make-node 4 'd
-                                             NONE
-                                             NONE)
-                                            NONE)
-                                 NONE)
-                      (make-node 3 'e
-                                 NONE
-                                 NONE)))
+(define BT
+  (make-node 10 'a
+             (make-node 5 'b
+                        (make-node 7 'c
+                                   (make-node 4 'd
+                                              NONE
+                                              NONE)
+                                   NONE)
+                        NONE)
+             (make-node 3 'e
+                        NONE
+                        NONE)))
 
 ; 5 10 15 20 25 30 35
-(define BST (make-node 20 'a
-                       (make-node 10 'b
-                                  (make-node 5 'c
-                                             NONE
-                                             NONE)
-                                  (make-node 15 'e
-                                             NONE
-                                             NONE))
-                       (make-node 30 'g
-                                  (make-node 25 'h
-                                             NONE
-                                             NONE)
-                                  (make-node 35 'j
-                                             NONE
-                                             NONE)))
+(define BST
+  (make-node 20 'a
+             (make-node 10 'b
+                        (make-node 5 'c
+                                   NONE
+                                   NONE)
+                        (make-node 15 'e
+                                   NONE
+                                   NONE))
+             (make-node 30 'g
+                        (make-node 25 'h
+                                   NONE
+                                   NONE)
+                        (make-node 35 'j
+                                   NONE
+                                   NONE))))
              
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
