@@ -1,9 +1,6 @@
-;; The first three lines of this file were inserted by DrRacket. They record metadata
-;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-intermediate-reader.ss" "lang")((modname ex_256) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
-Date: August 8, 2023
+Date: August 19, 2023
 
 Exercise 256. Explain the following abstract function:
 
@@ -23,5 +20,20 @@ pose statement for argmin?
 ; The output of this function:
 ;  X
 
+; August 8, 2023
 ; I don't get this at all, where did i come from?? What does "maximizes f"
 ; mean?! I'll return to this later.
+
+; August 19, 2023
+; [X] [X -> Number] [NEList-of X] -> X
+; Applies f to lx and returns the first result with the biggest value
+(check-expect (argmax add1 (list 1 2 3)) 4)
+(check-expect (argmax sub1 (list 3 4 5)) 4)
+
+(define (argmax f lx) ...)
+
+; Applies f to lx and returns the first result with the lowest value
+(check-expect (argmax add1 (list 1 2 3)) 2)
+(check-expect (argmax sub1 (list 1 2 3)) 0)
+
+(define (argmin f lx) ...)
