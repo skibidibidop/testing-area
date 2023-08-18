@@ -7,6 +7,8 @@ Then design contains-bt?, which determines whether a given number
 occurs in some given BT.
 |#
 
+; DATA DEFINITION //////////////////////////////////////////////////////////////
+
 (define-struct no-info [])
 (define NONE (make-no-info))
 
@@ -33,6 +35,8 @@ occurs in some given BT.
     87 'h NONE NONE)
    NONE))
 
+; FUNCTIONS ////////////////////////////////////////////////////////////////////
+
 ; Number BT -> Boolean
 ; Is n in bt
 (check-expect (contains-bt? 12 NONE) #false)
@@ -40,4 +44,10 @@ occurs in some given BT.
 (check-expect (contains-bt? 24 TREE_A) #true)
 (check-expect (contains-bt? 30 TREE_A) #false)
 
-(define (contains-bt? n bt) #false)
+(define (contains-bt? n bt)
+  (cond
+    [(no-info? bt) #false]
+    [else
+     (or (= n (node-ssn bt) n)
+         (contains-bt? n (node-left bt))
+         (contains-bt? n (node-right bt)))]))
