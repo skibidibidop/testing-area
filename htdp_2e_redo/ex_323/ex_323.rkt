@@ -57,7 +57,7 @@ boolean? to check the result of the natural recursion at each stage.
   (cond
     [(no-info? bt) #false]
     [else
-     (or (= n (node-ssn bt) n)
+     (or (= n (node-ssn bt))
          (contains-bt? n (node-left bt))
          (contains-bt? n (node-right bt)))]))
 
@@ -81,3 +81,6 @@ boolean? to check the result of the natural recursion at each stage.
               'b)
 
 (define (search-bt n bt)
+  (cond
+    [(no-info? bt) #false]
+    [
