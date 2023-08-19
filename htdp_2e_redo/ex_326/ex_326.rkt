@@ -116,4 +116,16 @@ Once the design is completed, use the function on tree A from figure 119.
                                                           NONE
                                                           NONE)))))
 
-(define (create-bst bst num sym) NONE)
+(define (create-bst bst num sym)
+  (cond
+    [(no-info? bst) (make-node num sym NONE NONE)]
+    [(= num (node-ssn bst)) bst]
+    [(< (node-ssn bst) num)
+     (make-node (node-ssn bst) (node-name bst)
+                (node-left bst)
+                (create-bst (node-right bst) num sym))]
+    [(> (node-ssn bst) num)
+     (make-node (node-ssn bst) (node-name bst)
+                (create-bst (node-right bst) num sym)
+                (node-right bst))]))
+                
