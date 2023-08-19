@@ -15,9 +15,14 @@ so that the function performs as few comparisons as necessary.
 (define NONE (make-no-info))
 
 (define-struct node [ssn name left right])
-; A BT (short for BinaryTree) is one of:
+; A BST (short for BinarySearchTree) is one of:
 ; NONE
-; (make-node Number Symbol BT BT)
+; (make-node Number Symbol BST BST)
+; Constraint:
+; Each node's [left] should only contain node/s with ssn values
+; less than itself or NONE
+; Each node's [right] should only contain node/s with ssn values
+; more than itself or NONE
 
 (define A_BST
   (make-node 20 'a
@@ -37,3 +42,5 @@ so that the function performs as few comparisons as necessary.
                                    NONE))))
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
+
+; Number BST -> Symbol
