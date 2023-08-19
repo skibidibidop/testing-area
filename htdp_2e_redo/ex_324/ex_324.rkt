@@ -66,15 +66,13 @@ What does inorder produce for a binary search tree?
 (check-expect (inorder BT)   (list 4 7 5 10 3))
 (check-expect (inorder BST)  (list 5 10 15 20 25 30 35))
 
-(define (inorder bt)
-  (local
-    [; BT -> [List-of Number]
-     (define (list_ssn_left tree) ...)
+(define (inorder tree)
+  (cond
+    [(no-info? tree) '()]
+    [else
+     (append
+      (inorder (node-left tree))
+      (list (node-ssn tree))
+      (inorder (node-right tree)))]))
 
-     ; BT -> [List-of Number]
-     (define (list_ssn_right tree) ...)]
-    
-  (append
-   (list_ssn_left bt)
-   (list (node-ssn bt))
-   (list_ssn_right bt)))
+; If (inorder) is provided a BST, it will produce a sorted list
