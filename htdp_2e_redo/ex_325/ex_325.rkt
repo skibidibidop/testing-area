@@ -44,3 +44,16 @@ so that the function performs as few comparisons as necessary.
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
 ; Number BST -> Symbol
+; Returns [name] of a node in bst that has [ssn] that is equal to n, and #false
+; if there is no match
+(check-expect (search-bst 20 A_BST) 'a)
+(check-expect (search-bst 5  A_BST) 'c)
+(check-expect (search-bst 35 A_BST) 'j)
+(check-expect (search-bst 50 A_BST) #false)
+
+(define (search-bst n bst)
+  (cond
+    [(no-info? bst) #false]
+    [(= (node-ssn bst) n) (node-name bst)]
+    [(< (node-ssn bst) n) (search-bst n (node-right bst))]
+    [(> (node-ssn bst) n) (search-bst n (node-left bst))]))
