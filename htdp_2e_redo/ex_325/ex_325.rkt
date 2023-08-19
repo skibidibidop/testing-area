@@ -11,4 +11,29 @@ so that the function performs as few comparisons as necessary.
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
+(define-struct no-info [])
+(define NONE (make-no-info))
+
+(define-struct node [ssn name left right])
+; A BT (short for BinaryTree) is one of:
+; NONE
+; (make-node Number Symbol BT BT)
+
+(define A_BST
+  (make-node 20 'a
+             (make-node 10 'b
+                        (make-node 5 'c
+                                   NONE
+                                   NONE)
+                        (make-node 15 'e
+                                   NONE
+                                   NONE))
+             (make-node 30 'g
+                        (make-node 25 'h
+                                   NONE
+                                   NONE)
+                        (make-node 35 'j
+                                   NONE
+                                   NONE))))
+
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
