@@ -14,14 +14,14 @@ Here is the signature:
 Use the complete function to create a BST from this sample input:
 
 '((99 o)
-(77 l)
-(24 i)
-(10 h)
-(95 g)
-(15 d)
-(89 c)
-(29 b)
-(63 a))
+  (77 l)
+  (24 i)
+  (10 h)
+  (95 g)
+  (15 d)
+  (89 c)
+  (29 b)
+  (63 a))
 
 The result is tree A in figure 119, if you follow the structural design recipe.
 If you use an existing abstraction, you may still get this tree but you may
@@ -61,8 +61,17 @@ also get an “inverted” one. Why?
                                    (make-node 99 'i
                                               NONE
                                               NONE)))))
-                        
 
+(define LIST_FOR_BST '((99 o)
+                       (77 l)
+                       (24 i)
+                       (10 h)
+                       (95 g)
+                       (15 d)
+                       (89 c)
+                       (29 b)
+                       (63 a)))
+                        
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
 ; BST Number Symbol -> BST
@@ -146,4 +155,9 @@ also get an “inverted” one. Why?
      (make-node (node-ssn bst) (node-name bst)
                 (create-bst (node-left bst) num sym)
                 (node-right bst))]))
-                
+
+; [List-of [List-of Number Symbol]] -> BST
+; Creates a BST from l
+(check-expect (create-bst-from-list LIST_FOR_BST) TREE_A)
+
+(define (create-bst-from-list l) '())
