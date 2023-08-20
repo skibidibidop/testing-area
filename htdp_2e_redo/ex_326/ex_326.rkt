@@ -1,3 +1,6 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname ex_326) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: August 19, 2023
@@ -126,6 +129,6 @@ Once the design is completed, use the function on tree A from figure 119.
                 (create-bst (node-right bst) num sym))]
     [(> (node-ssn bst) num)
      (make-node (node-ssn bst) (node-name bst)
-                (create-bst (node-right bst) num sym)
+                (create-bst (node-left bst) num sym)
                 (node-right bst))]))
                 
