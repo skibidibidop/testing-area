@@ -44,21 +44,21 @@ also get an “inverted” one. Why?
 (define TREE_A
   (make-node 63 'a
              (make-node 29 'b
-                        (make-node 15 'c
-                                   (make-node 10 'd
+                        (make-node 15 'd
+                                   (make-node 10 'h
                                               NONE
                                               NONE)
-                                   (make-node 24 'e
+                                   (make-node 24 'i
                                               NONE
                                               NONE))
                         NONE)
-             (make-node 89 'f
-                        (make-node 77 'g
+             (make-node 89 'c
+                        (make-node 77 'l
                                    NONE
                                    NONE)
-                        (make-node 95 'h
+                        (make-node 95 'g
                                    NONE
-                                   (make-node 99 'i
+                                   (make-node 99 'o
                                               NONE
                                               NONE)))))
 
@@ -74,90 +74,23 @@ also get an “inverted” one. Why?
                         
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
-; BST Number Symbol -> BST
-; Adds (make-node num sym NONE NONE) to bst
-(check-expect (create-bst TREE_A 0 'z)
-              (make-node 63 'a
-                         (make-node 29 'b
-                                    (make-node 15 'c
-                                               (make-node 10 'd
-                                                          (make-node 0 'z
-                                                                     NONE
-                                                                     NONE)
-                                                          NONE)
-                                               (make-node 24 'e
-                                                          NONE
-                                                          NONE))
-                                    NONE)
-                         (make-node 89 'f
-                                    (make-node 77 'g
-                                               NONE
-                                               NONE)
-                                    (make-node 95 'h
-                                               NONE
-                                               (make-node 99 'i
-                                                          NONE
-                                                          NONE)))))
-(check-expect (create-bst TREE_A 150 'y)
-              (make-node 63 'a
-                         (make-node 29 'b
-                                    (make-node 15 'c
-                                               (make-node 10 'd
-                                                          NONE
-                                                          NONE)
-                                               (make-node 24 'e
-                                                          NONE
-                                                          NONE))
-                                    NONE)
-                         (make-node 89 'f
-                                    (make-node 77 'g
-                                               NONE
-                                               NONE)
-                                    (make-node 95 'h
-                                               NONE
-                                               (make-node 99 'i
-                                                          NONE
-                                                          (make-node 150 'y
-                                                                     NONE
-                                                                     NONE))))))
-(check-expect (create-bst TREE_A 80 'x)
-              (make-node 63 'a
-                         (make-node 29 'b
-                                    (make-node 15 'c
-                                               (make-node 10 'd
-                                                          NONE
-                                                          NONE)
-                                               (make-node 24 'e
-                                                          NONE
-                                                          NONE))
-                                    NONE)
-                         (make-node 89 'f
-                                    (make-node 77 'g
-                                               NONE
-                                               (make-node 80 'x
-                                                          NONE
-                                                          NONE))
-                                    (make-node 95 'h
-                                               NONE
-                                               (make-node 99 'i
-                                                          NONE
-                                                          NONE)))))
-
-(define (create-bst bst num sym)
-  (cond
-    [(no-info? bst) (make-node num sym NONE NONE)]
-    [(= num (node-ssn bst)) bst]
-    [(< (node-ssn bst) num)
-     (make-node (node-ssn bst) (node-name bst)
-                (node-left bst)
-                (create-bst (node-right bst) num sym))]
-    [(> (node-ssn bst) num)
-     (make-node (node-ssn bst) (node-name bst)
-                (create-bst (node-left bst) num sym)
-                (node-right bst))]))
-
 ; [List-of [List-of Number Symbol]] -> BST
 ; Creates a BST from l
 (check-expect (create-bst-from-list LIST_FOR_BST) TREE_A)
 
-(define (create-bst-from-list l) '())
+(define (create-bst-from-list l)
+  (local
+    [(define (create-bst2 from_l b)
+       (cond
+         [(no-info? b)
+          (make-node (first from_l) (second from_l) NONE NONE)]
+         [(< (node-ssn b) (first from_l))
+          (make-node (node-ssn b) (node-name b)
+                     (node-left b)
+                     (create-bst2 from_l (node-right b)))]
+         [(> (node-ssn b) (first from_l))
+          (make-node (node-ssn b) (node-name b)
+                     (create-bst2 from_l (node-left b))
+                     (node-right b))]))]
+    
+    (foldr create-bst2 NONE l)))
