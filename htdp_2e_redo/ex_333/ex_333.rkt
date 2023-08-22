@@ -61,4 +61,7 @@ to make it easier for me to debug.
 
 ; Dir.v2 -> N
 ; Returns the number of File.v2 dir contains
+(check-expect (how-many '()) 0)
+(check-expect (how-many DIR_TREE) 7)
+
 (define (how-many dir) 0)
