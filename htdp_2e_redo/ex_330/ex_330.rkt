@@ -9,7 +9,7 @@ Exercise 330. Translate the directory tree in figure 123 into a data
 representation according to model 1.
 |#
 
-; DATA DEFINITION //////////////////////////////////////////////////////////////
+; MODEL 1 //////////////////////////////////////////////////////////////////////
 
 ; A Dir.v1 (short for directory) is one of:
 ; '()
@@ -17,6 +17,8 @@ representation according to model 1.
 ; (cons Dir.v1 Dir.v1)
 
 ; A File.v1 is a String
+
+; //////////////////////////////////////////////////////////////////////////////
 
 #|
 Directory tree from Figure 123
@@ -35,3 +37,16 @@ Directory tree from Figure 123
 ---------- read! (19)
 
 |#
+
+(list TS
+      (list "read!")
+      (list Text
+            (list "part1"
+                  "part2"
+                  "part3"))
+      (list Libs
+            (list Code
+                  (list "hang"
+                        "draw"))
+            (list Docs
+                  (list "read!"))))
