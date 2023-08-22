@@ -25,9 +25,18 @@ of our arguments.
 ; replaces all occurrences of old in sexp with new
 (check-expect (substitute '(((world) bye) bye) 'bye '42)
               '(((world) 42) 42))
+(check-expect (substitute '() 'bye '42) '())
+(check-expect (substitute "hey" "hey" "hi") "hey")
+(check-expect (substitute "hey" "hi" "hello") "hey")
 
 (define (substitute sexp old new)
-  (local (; S-expr -> S-expr
+  (local (; S-expr -> Boolean
+          (define (atom? in)
+            (or (string? in)
+                (number? in)
+                (symbol? in)))
+
+          ; S-expr -> S-expr
           (define (for-sexp sexp)
             (cond
               [(atom? sexp) (for-atom sexp)]
