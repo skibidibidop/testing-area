@@ -1,3 +1,6 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname ex_328) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: August 22, 2023
@@ -26,33 +29,23 @@ of our arguments.
 (check-expect (substitute '(((world) bye) bye) 'bye '42)
               '(((world) 42) 42))
 (check-expect (substitute '() 'bye '42) '())
-(check-expect (substitute "hey" "hey" "hi") "hey")
+(check-expect (substitute "hey" "hey" "hi") "hi")
 (check-expect (substitute "hey" "hi" "hello") "hey")
 
 (define (substitute sexp old new)
-  (local (; S-expr -> Boolean
-          (define (atom? in)
-            (or (string? in)
-                (number? in)
-                (symbol? in)))
+  (local 
+    [; S-expr -> Boolean
+     (define (atom? in)
+       (or (string? in)
+           (number? in)
+           (symbol? in)))
 
-          ; S-expr -> S-expr
-          (define (for-sexp sexp)
-            (cond
-              [(atom? sexp) (for-atom sexp)]
-              [else (for-sl sexp)]))
-          ; SL -> S-expr
-          (define (for-sl sl)
-            (cond
-              [(empty? sl) '()]
-              [else (cons (for-sexp (first sl))
-                          (for-sl (rest sl)))]))
-          ; Atom -> S-expr
-          (define (for-atom at)
-            (cond
-              [(number? at) at]
-              [(string? at) at]
-              [(symbol? at) (if (equal? at old) new at)])))
+     ; S-expr -> S-expr
+     (define (for-sexp sexp)
+       (cond
+         [(atom? sexp)
+          (if (equal? sexp old) new sexp)]
+         [else
+          (map for-sexp sexp)]))]
+    
     (for-sexp sexp)))
-
-
