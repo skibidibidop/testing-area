@@ -8,6 +8,17 @@ section, perform the edits and rerun the test suites to confirm the validity
 of our arguments.
 |#
 
+; DATA DEFINITION //////////////////////////////////////////////////////////////
+
+; An S-expr is one of:
+; Atom
+; [List-of S-expr]
+
+; An Atom is one of:
+; Number
+; String
+; Symbol
+
 ; Figure 120 ///////////////////////////////////////////////////////////////////
 
 ; S-expr Symbol Atom -> S-expr
