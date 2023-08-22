@@ -38,6 +38,7 @@ Directory tree from Figure 123
 
 |#
 
+; (Aug 22) I think this is incorrect:
 (list TS
       (list "read!")
       (list Text
@@ -50,3 +51,10 @@ Directory tree from Figure 123
                         "draw"))
             (list Docs
                   (list "read!"))))
+
+; (Aug 23) This seems more correct to me now:
+(define Docs (list "read!"))
+(define Code (list "hang" "draw"))
+(define Libs (list Code Docs))
+(define Text (list "part1" "part2" "part3"))
+(define TS   (list "read!" Text Libs))
