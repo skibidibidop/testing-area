@@ -35,4 +35,23 @@ to make it easier for me to debug.
 
 ; A File.v2 is a String.
 
-; FUNCTIONS ////////////////////////////////////////////////////////////////////
+; //////////////////////////////////////////////////////////////////////////////
+
+(define DIR_TREE
+  (make-dir
+   "TS"
+   (list "read!"
+         (make-dir
+          "Text"
+          (list "part1"
+                "part2"
+                "part3"))
+         (make-dir
+          "Libs"
+          (list (make-dir
+                 "Code"
+                 (list "hang"
+                       "draw"))
+                (make-dir
+                 "Docs"
+                 (list "write!")))))))
