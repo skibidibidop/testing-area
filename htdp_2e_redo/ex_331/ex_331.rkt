@@ -21,8 +21,42 @@ exercise 330 provides you with data examples.
 
 ; An N is a Natural Number
 
+; An Atom is one of:
+; Number
+; String
+; Symbol
+
+(define DIR_TREE
+  (list 'TS
+        (list "read!")
+        (list 'Text
+              (list "part1"
+                    "part2"
+                    "part3"))
+        (list 'Libs
+              (list 'Code
+                    (list "hang"
+                          "draw"))
+              (list 'Docs
+                    (list "read!")))))
+
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
 ; Dir.v1 -> N
 ; Returns the number of files in a given Dir.v1
-(define (how-many dir) 0)
+(check-expect (how-many '()) 0)
+(check-expect (how-many DIR_TREE) 7)
+
+(define (how-many dir)
+  (local
+    [(define (for_list l)
+       (how-many (first l)))]
+    
+    (cond
+      [(empty? dir) 0]
+      [(list? (first dir))
+       (for_list (first dir))]
+      [(string? (first dir))
+       (+ (how-many (rest dir)) 1)]
+      [else
+       (how-many (rest dir))])))
