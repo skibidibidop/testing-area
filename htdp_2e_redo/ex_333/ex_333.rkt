@@ -61,7 +61,22 @@ to make it easier for me to debug.
 
 ; Dir.v2 -> N
 ; Returns the number of File.v2 dir contains
-(check-expect (how-many '()) 0)
+(check-expect (how-many (make-dir "Empty" '())) 0)
+(check-expect (how-many (make-dir
+                         "Empty2"
+                         (list (make-dir "Empty3" '())
+                               (make-dir "Empty4" '()))))
+              0)
+
 (check-expect (how-many DIR_TREE) 7)
 
-(define (how-many dir) 0)
+(define (how-many d)
+  (local
+    [(define (count_files from_l b)
+       (cond
+         [(empty? from_l) b]
+         [(string? from_l) (+ 1 b)]
+         [(dir? from_l)
+          (+ (how-many from_l) b)]))]
+
+    (foldl count_files 0 (dir-content d))))
