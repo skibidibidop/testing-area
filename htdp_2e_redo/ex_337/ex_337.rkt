@@ -28,9 +28,100 @@ function definition(s) for the solution of exercise 336.
 ; '()
 ; (cons File.v3 File*)
 
+(define DIR_TREE
+  (make-dir.v3 "TS"
+               (list
+                (make-dir.v3 "Text"
+                             '()
+                             (list
+                              (make-file "part1" 99 "")
+                              (make-file "part2" 52 "")
+                              (make-file "part3" 17 "")))
+                (make-dir.v3 "Libs"
+                             (list
+                              (make-dir.v3 "Code"
+                                           '()
+                                           (list
+                                            (make-file "hang" 8 "")
+                                            (make-file "draw" 2 "")))
+                              (make-dir.v3 "Docs"
+                                           '()
+                                           (list
+                                            (make-file "write!" 19 ""))))
+                             '()))
+               (list
+                (make-file "read!" 10 ""))))
+
+(define DIR_TREE2
+  (make-dir.v3
+   "TS"
+   (list
+    (make-dir.v3 "Text"
+                 '()
+                 (list
+                  (make-file "part1" 99 "")
+                  (make-file "part2" 52 "")
+                  (make-file "part3" 17 "")))
+    (make-dir.v3 "Libs"
+                 (list
+                  (make-dir.v3 "Code"
+                               '()
+                               (list
+                                (make-file "hang" 8 "")
+                                (make-file "draw" 2 "")))
+                  (make-dir.v3 "Docs"
+                               (list
+                                (make-dir.v3 "Extra"
+                                             '()
+                                             (list
+                                              (make-file "hey" 3 "")
+                                              (make-file "there" 4 ""))))
+                               (list
+                                (make-file "write!" 19 ""))))
+                 '()))
+   (list
+    (make-file "read!" 10 ""))))
+
 ; DATA DEFINITION SIMPLIFICATION ///////////////////////////////////////////////
 
 ; A Dir* is a [List-of Dir.v3]
 ; A File* is a [List-of File.v3]
 
-; FUNCTIONS ////////////////////////////////////////////////////////////////////
+; EXERCISE 336 SOLUTION ////////////////////////////////////////////////////////
+
+; Dir.v3 -> N
+; Returns the number of Files.v3 in dir
+(check-expect (how-many (make-dir.v3 "Empty" '() '())) 0)
+(check-expect (how-many (make-dir.v3 "Empty dirs"
+                                     '()
+                                     (list
+                                      (make-file "A" 10 "")
+                                      (make-file "B" 12 "")))) 2)
+(check-expect (how-many (make-dir.v3 "Empty files"
+                                     (list
+                                      (make-dir.v3 "Dir1"
+                                                   '()
+                                                   '()))
+                                     '())) 0)
+(check-expect (how-many DIR_TREE) 7)
+(check-expect (how-many DIR_TREE2) 9)
+
+(define (how-many dir)
+  (local
+    [; Dir.v3 -> N
+     (define (count_files d)
+       (length (dir.v3-files d)))
+
+     ; Dir* -> N
+     (define (traverse dirs)
+       (cond
+         [(empty? dirs) 0]
+         [else
+          (+ (count_files (first dirs))
+             (traverse (dir.v3-dirs (first dirs)))
+             (traverse (rest dirs)))]))]
+
+    (+ (count_files dir)
+       (traverse (dir.v3-dirs dir)))))
+
+; FUNCTION SIMPLIFICATION //////////////////////////////////////////////////////
