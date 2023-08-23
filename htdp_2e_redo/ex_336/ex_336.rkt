@@ -1,3 +1,6 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname ex_336) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 #|
 Author: Mark Beltran
 Date: August 23, 2023
@@ -9,9 +12,6 @@ examples. Compare your result with that of exercise 333.
 Given the complexity of the data definition, contemplate how anyone
 can design correct functions. Why are you confident that how-many produces
 correct results?
-
-Modified directory tree from Figure 123. I changed read! (19) to write! (19)
-to make it easier for me to debug.
 |#
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
@@ -56,6 +56,36 @@ to make it easier for me to debug.
                (list
                 (make-file "read!" 10 ""))))
 
+(define DIR_TREE2
+  (make-dir.v3
+   "TS"
+   (list
+    (make-dir.v3 "Text"
+                 '()
+                 (list
+                  (make-file "part1" 99 "")
+                  (make-file "part2" 52 "")
+                  (make-file "part3" 17 "")))
+    (make-dir.v3 "Libs"
+                 (list
+                  (make-dir.v3 "Code"
+                               '()
+                               (list
+                                (make-file "hang" 8 "")
+                                (make-file "draw" 2 "")))
+                  (make-dir.v3 "Docs"
+                               (list
+                                (make-dir.v3 "Extra"
+                                             '()
+                                             (list
+                                              (make-file "hey" 3 "")
+                                              (make-file "there" 4 ""))))
+                               (list
+                                (make-file "write!" 19 ""))))
+                 '()))
+   (list
+    (make-file "read!" 10 ""))))
+
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
 ; Dir.v3 -> N
@@ -73,5 +103,22 @@ to make it easier for me to debug.
                                                    '()))
                                      '())) 0)
 (check-expect (how-many DIR_TREE) 7)
+(check-expect (how-many DIR_TREE2) 9)
 
-(define (how-many dir) 0)
+(define (how-many dir)
+  (local
+    [; Dir.v3 -> N
+     (define (count_files d)
+       (length (dir.v3-files d)))
+
+     ; Dir* -> N
+     (define (traverse dirs)
+       (cond
+         [(empty? dirs) 0]
+         [else
+          (+ (count_files (first dirs))
+             (traverse (dir.v3-dirs (first dirs)))
+             (traverse (rest dirs)))]))]
+
+    (+ (count_files dir)
+       (traverse (dir.v3-dirs dir)))))
