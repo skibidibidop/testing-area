@@ -43,19 +43,35 @@ to make it easier for me to debug.
                               (make-file "part3" 17 "")))
                 (make-dir.v3 "Libs"
                              (list
-                              (make-dir "Code"
-                                        '()
-                                        (list
-                                         (make-file "hang" 8 "")
-                                         (make-file "draw" 2 "")))
-                              (make-dir "Docs"
-                                        '()
-                                        (list
-                                         (make-file "write!" 19 ""))))
+                              (make-dir.v3 "Code"
+                                           '()
+                                           (list
+                                            (make-file "hang" 8 "")
+                                            (make-file "draw" 2 "")))
+                              (make-dir.v3 "Docs"
+                                           '()
+                                           (list
+                                            (make-file "write!" 19 ""))))
                              '()))
                (list
                 (make-file "read!" 10 ""))))
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
+; Dir.v3 -> N
+; Returns the number of Files.v3 in dir
+(check-expect (how-many (make-dir.v3 "Empty" '() '())) 0)
+(check-expect (how-many (make-dir.v3 "Empty dirs"
+                                     '()
+                                     (list
+                                      (make-file "A" 10 "")
+                                      (make-file "B" 12 "")))) 2)
+(check-expect (how-many (make-dir.v3 "Empty files"
+                                     (list
+                                      (make-dir.v3 "Dir1"
+                                                   '()
+                                                   '()))
+                                     '())) 0)
+(check-expect (how-many DIR_TREE) 7)
 
+(define (how-many dir) 0)
