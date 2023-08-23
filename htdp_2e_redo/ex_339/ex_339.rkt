@@ -86,5 +86,20 @@ directory tree.
 (check-expect (find? DIR_TREE2 "there") #true)
 (check-expect (find? DIR_TREE2 "wow!") #false)
 
-(define (find? d fnam) #false)
+(define (find? d fnam)
+  (local
+    [; [List-of File] -> Boolean 
+     (define (fname_in? f_list)
+       (cond
+         [(empty? f_list) #false]
+         [else
+          (or (string=? fnam (file-name (first f_list)))
+              (fname_in? (rest f_list)))]))]
+         
+  (foldl
+   (λ (a_dir base)
+     (or (find? a_dir fnam)
+         base))
+   (fname_in? (dir-files d))
+   (dir-dirs d))))
 
