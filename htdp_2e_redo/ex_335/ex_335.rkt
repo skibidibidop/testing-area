@@ -39,3 +39,29 @@ to make it easier for me to debug.
 ; A File* is one of:
 ; '()
 ; (cons File.v3 File*)
+
+; //////////////////////////////////////////////////////////////////////////////
+
+(define DIR_TREE
+  (make-dir.v3 "TS"
+               (list
+                (make-dir.v3 "Text"
+                             '()
+                             (list
+                              (make-file "part1" 99 "")
+                              (make-file "part2" 52 "")
+                              (make-file "part3" 17 "")))
+                (make-dir.v3 "Libs"
+                             (list
+                              (make-dir "Code"
+                                        '()
+                                        (list
+                                         (make-file "hang" 8 "")
+                                         (make-file "draw" 2 "")))
+                              (make-dir "Docs"
+                                        '()
+                                        (list
+                                         (make-file "write!" 19 ""))))
+                             '()))
+               (list
+                (make-file "read!" 10 ""))))
