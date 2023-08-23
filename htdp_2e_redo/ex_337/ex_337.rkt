@@ -10,7 +10,7 @@ use ISL+’s list-processing functions from figures 95 and 96 to simplify the
 function definition(s) for the solution of exercise 336.
 |#
 
-; DATA DEFINITION //////////////////////////////////////////////////////////////
+; ORIGINAL DATA DEFINITION /////////////////////////////////////////////////////
 
 (define-struct file [name size content])
 ; A File.v3 is a structure:
@@ -27,5 +27,10 @@ function definition(s) for the solution of exercise 336.
 ; A File* is one of:
 ; '()
 ; (cons File.v3 File*)
+
+; DATA DEFINITION SIMPLIFICATION ///////////////////////////////////////////////
+
+; A Dir* is a [List-of Dir.v3]
+; A File* is a [List-of File.v3]
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
