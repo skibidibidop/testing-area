@@ -125,3 +125,22 @@ function definition(s) for the solution of exercise 336.
        (traverse (dir.v3-dirs dir)))))
 
 ; FUNCTION SIMPLIFICATION //////////////////////////////////////////////////////
+
+; Dir.v3 -> N
+; Returns the number of Files.v3 in dir
+(check-expect (how-many2 (make-dir.v3 "Empty" '() '())) 0)
+(check-expect (how-many2 (make-dir.v3 "Empty dirs"
+                                     '()
+                                     (list
+                                      (make-file "A" 10 "")
+                                      (make-file "B" 12 "")))) 2)
+(check-expect (how-many2 (make-dir.v3 "Empty files"
+                                     (list
+                                      (make-dir.v3 "Dir1"
+                                                   '()
+                                                   '()))
+                                     '())) 0)
+(check-expect (how-many2 DIR_TREE) 7)
+(check-expect (how-many2 DIR_TREE2) 9)
+
+(define (how-many2 dir) 0)
