@@ -65,9 +65,26 @@ directory tree.
    (list
     (make-file "read!" 10 ""))))
 
+(define EMPTY_DIR_TREE (make-dir "Empty" '() '()))
+(define NO_DIRS
+  (make-dir
+   "No Dirs"
+   '()
+   (list
+    (make-file "f1" 5 "")
+    (make-file "f2" 32 ""))))
+
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
 ; Dir String -> Boolean
 ; Does d contain any file named fnam
+(check-expect (find? EMPTY_DIR_TREE "hi") #false)
+(check-expect (find? NO_DIRS "yo") #false)
+(check-expect (find? NO_DIRS "f2") #true)
+(check-expect (find? NO_DIRS "f1") #true)
+(check-expect (find? DIR_TREE "draw") #true)
+(check-expect (find? DIR_TREE2 "there") #true)
+(check-expect (find? DIR_TREE2 "wow!") #false)
+
 (define (find? d fnam) #false)
 
