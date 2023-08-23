@@ -11,22 +11,22 @@ and directories in a given Dir.
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
 (define DIR_TREE
-  (make-dir "TS"
+  (make-dir "TS (DIR)"
                (list
-                (make-dir "Text"
+                (make-dir "Text (DIR)"
                              '()
                              (list
                               (make-file "part1" 99 "")
                               (make-file "part2" 52 "")
                               (make-file "part3" 17 "")))
-                (make-dir "Libs"
+                (make-dir "Libs (DIR)"
                              (list
-                              (make-dir "Code"
+                              (make-dir "Code (DIR)"
                                            '()
                                            (list
                                             (make-file "hang" 8 "")
                                             (make-file "draw" 2 "")))
-                              (make-dir "Docs"
+                              (make-dir "Docs (DIR)"
                                            '()
                                            (list
                                             (make-file "write!" 19 ""))))
@@ -36,24 +36,24 @@ and directories in a given Dir.
 
 (define DIR_TREE2
   (make-dir
-   "TS"
+   "TS (DIR)"
    (list
-    (make-dir "Text"
+    (make-dir "Text (DIR)"
                  '()
                  (list
                   (make-file "part1" 99 "")
                   (make-file "part2" 52 "")
                   (make-file "part3" 17 "")))
-    (make-dir "Libs"
+    (make-dir "Libs (DIR)"
                  (list
-                  (make-dir "Code"
+                  (make-dir "Code (DIR)"
                                '()
                                (list
                                 (make-file "hang" 8 "")
                                 (make-file "draw" 2 "")))
-                  (make-dir "Docs"
+                  (make-dir "Docs (DIR)"
                                (list
-                                (make-dir "Extra"
+                                (make-dir "Extra (DIR)"
                                              '()
                                              (list
                                               (make-file "hey" 3 "")
@@ -64,10 +64,10 @@ and directories in a given Dir.
    (list
     (make-file "read!" 10 ""))))
 
-(define EMPTY_DIR_TREE (make-dir "Empty" '() '()))
+(define EMPTY_DIR_TREE (make-dir "Empty (DIR)" '() '()))
 (define NO_DIRS
   (make-dir
-   "No Dirs"
+   "No Dirs (DIR)"
    '()
    (list
     (make-file "f1" 5 "")
@@ -75,3 +75,38 @@ and directories in a given Dir.
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
+; Dir -> [List-of File]
+; Lists all file names in given directory
+(check-expect (ls DIR_TREE)
+              (list "TS (DIR)"
+                    (list "Text (DIR)"
+                          (list "part1"
+                                "part2"
+                                "part3"))
+                    (list "Libs (DIR)"
+                          (list "Code (DIR)"
+                                (list "hang"
+                                      "draw"))
+                          (list "Docs (DIR)"
+                                (list "write!")))
+                    (list "read!")))
+(check-expect (ls DIR_TREE2)
+              (list "TS (DIR)"
+                    (list "Text (DIR)"
+                          (list "part1"
+                                "part2"
+                                "part3"))
+                    (list "Libs (DIR)"
+                          (list "Code (DIR)"
+                                (list "hang"
+                                      "draw"))
+                          (list "Docs (DIR)"
+                                (list "Extra (DIR)"
+                                      (list "hey"
+                                            "there"))
+                                (list "write!")))
+                    (list "read!")))
+(check-expect (ls EMPTY_DIR_TREE) '())
+(check-expect (ls NO_DIRS) (list "f1" "f2"))
+
+(define (ls d) '())
