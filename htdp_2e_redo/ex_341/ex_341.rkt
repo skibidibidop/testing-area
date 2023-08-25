@@ -81,4 +81,9 @@ large its associated directory is.
 ; Dir -> N
 ; Returns the total size of all files in a directory tree
 ; Sub-directories cost 1 file storage unit
+(check-expect (du EMPTY_DIR_TREE) 0)
+(check-expect (du NO_DIRS) 37)
+(check-expect (du DIR_TREE) 212)
+(check-expect (du DIR_TREE2) 220)
+
 (define (du d) 0)
