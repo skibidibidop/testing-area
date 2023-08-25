@@ -83,7 +83,21 @@ large its associated directory is.
 ; Sub-directories cost 1 file storage unit
 (check-expect (du EMPTY_DIR_TREE) 0)
 (check-expect (du NO_DIRS) 37)
-(check-expect (du DIR_TREE) 212)
-(check-expect (du DIR_TREE2) 220)
+(check-expect (du DIR_TREE) 211)
+(check-expect (du DIR_TREE2) 219)
 
-(define (du d) 0)
+(define (du d)
+  (local
+    [(define (fsize_total f_list)
+       (foldl
+        (λ (a_file base)
+          (+ (file-size a_file) base))
+        0
+        f_list))]
+
+    (foldl
+     (λ (a_dir base)
+       (+ (du a_dir) base))
+     (+ (length (dir-dirs d))
+        (fsize_total (dir-files d)))
+     (dir-dirs d))))
