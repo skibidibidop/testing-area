@@ -9,6 +9,12 @@ name f; otherwise it produces #false.
 Hint: while it is tempting to first check whether the file name occurs in
 the directory tree, you have to do so for every single sub-directory. Hence
 it is better to combine the functionality of find? and find.
+
+Challenge: The find function discovers only one of the two files named
+read! in figure 123. Design find-all, which generalizes find and produces
+the list of all paths that lead to f in d. What should find-all produce when
+(find? d f) is #false? Is this part of the problem really a challenge
+compared to the basic problem?
 |#
 
 (require htdp/dir)
@@ -21,6 +27,10 @@ it is better to combine the functionality of find? and find.
 ; A MatchOrNot is one of:
 ; #false
 ; Path
+
+; A Dir* is a [List-of Dir]
+
+; A File* is a [List-of File]
 
 (define DIR_TREE
   (make-dir "TS (DIR)"
@@ -99,4 +109,37 @@ it is better to combine the functionality of find? and find.
               (list "TS (DIR)" "Libs (DIR)" "Docs (DIR)"
                     "Extra (DIR)" "there"))
 
-(define (find d f) #false)
+(define (find d f)
+  (local
+    [; Dir -> Boolean
+     ; Is f in a_dir
+     (define (find? a_dir)
+       (or (string=? f (dir-name a_dir))
+           (in_dir_list? (dir-dirs a_dir))
+           (in_file_list? (dir-files a_dir))))
+     
+     ; Dir* -> Boolean
+     (define (in_dir_list? dl)
+       (foldl
+        (λ (a_dir base)
+          (or (string=? f (dir-name a_dir))
+              base))
+        #false
+        dl))
+
+     ; File* -> Boolean
+     (define (in_file_list? fl)
+       (foldl
+        (λ (a_file base)
+          (or (string=? f (file-name a_file))
+              base))
+        #false
+        fl))
+
+     ; Print dir-name only until f is found
+     (define (print_path 
+     ]
+
+    (if (find? d)
+        (print_path d)
+        #false)))
