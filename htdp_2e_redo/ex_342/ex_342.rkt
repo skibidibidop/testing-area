@@ -18,6 +18,10 @@ it is better to combine the functionality of find? and find.
 ; A Path is a [List-of String]
 ; Interp.: directions into a directory tree
 
+; A MatchOrNot is one of:
+; #false
+; Path
+
 (define DIR_TREE
   (make-dir "TS (DIR)"
             (list
@@ -83,3 +87,16 @@ it is better to combine the functionality of find? and find.
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
+; Dir String -> MatchOrNot
+; Returns Path if f is in d, #false otherwise
+(check-expect (find EMPTY_DIR_TREE "write!") #false)
+(check-expect (find NO_DIRS "write!") #false)
+(check-expect (find NO_DIRS "f2")
+              (list "No Dirs (DIR)" "f2"))
+(check-expect (find DIR_TREE "Docs (DIR)")
+              (list "TS (DIR)" "Libs (DIR)" "Docs (DIR)"))
+(check-expect (find DIR_TREE2 "there")
+              (list "TS (DIR)" "Libs (DIR)" "Docs (DIR)"
+                    "Extra (DIR)" "there"))
+
+(define (find d f) #false)
