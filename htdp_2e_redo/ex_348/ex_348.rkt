@@ -43,4 +43,4 @@ expressions yield?
 (check-expect (eval-bool-exp (not #true)) #false)
 (check-expect (eval-bool-exp (not #false)) #true)
 
-(define (eval-bool-exp bslb) #false)
+(define (eval-bool-exp bslb) bslb)
