@@ -14,6 +14,12 @@ use the design recipe and rely on the guidelines for auxiliary functions. If you
 like the game, add other features: show a running text; equip the UFO with
 charges that can eliminate the tank; create an entire fleet of attacking UFOs;
 and above all, use your imagination.
+
+To do:
+--- Hit detection
+--- Borders for UFO
+--- Borders for tank
+--- Delete missiles outside of scene
 |#
 
 (require 2htdp/image)
@@ -49,11 +55,12 @@ and above all, use your imagination.
   (- SCN_HEIGHT TANK_YCENTER))
 
 (define MSL_IMG
-  (triangle (* SCALER 3) "outline" "red"))
+  (square SCALER "outline" "red"))
 ; MSL_IMG's starting x-coordinate will always be the center of TANK_IMG
 (define MSL_START_YPOS
-  (+ (image-height TANK_IMG)
-     (/ (image-height MSL_IMG) 2)))
+  (- SCN_HEIGHT
+     (+ (image-height TANK_IMG)
+        (/ (image-height MSL_IMG) 2))))
 
 (define MOVSPD (* SCALER 3))
 (define TANK_TO_LEFT  (* MOVSPD -1))
@@ -61,7 +68,7 @@ and above all, use your imagination.
 (define UFO_GO_LEFT  (* MOVSPD -3))
 (define UFO_GO_RIGHT (* MOVSPD 3))
 (define FALL_SPD MOVSPD)
-(define MSL_SPD (* MOVSPD 4))
+(define MSL_SPD (* MOVSPD -4))
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
@@ -106,6 +113,15 @@ and above all, use your imagination.
    (make-posn SCN_XCENTER UFO_LANDED)
    (make-tank SCN_XCENTER TANK_TO_RIGHT)
    '()))
+(define HIT_STATE
+  (make-w_state
+   (make-posn SCN_XCENTER SCN_YCENTER)
+   (make-tank SCN_XCENTER TANK_TO_LEFT)
+   (list
+    (make-posn SCN_XCENTER
+               (+ SCN_YCENTER
+                  (/ (image-height UFO_IMG) 2)
+                  (/ (image-height MSL_IMG) 2))))))
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
@@ -237,14 +253,23 @@ and above all, use your imagination.
                   MSL_START_YPOS)
        (w_state-lom ws)))]
     [else ws]))
+
+; W_state -> Boolean
+; Has the UFO landed or has it been hit by a missile
+(check-expect (game_over START_STATE) #false)
+(check-expect (game_over MID_STATE) #false)
+(check-expect (game_over LANDED) #true)
+(check-expect (game_over HIT_STATE) #true)
+
+(define (game_over ws) #false)
    
 ; MAIN /////////////////////////////////////////////////////////////////////////
-#|
+
 (define (main ws)
   (big-bang ws
     [to-draw render]
-    [on-tick time_step 0.04]))
-    ;[on-key  control]))
+    [on-tick time_step 0.1]
+    [on-key  control]
+    [stop-when game_over]))
 
 (main START_STATE)
-|#
