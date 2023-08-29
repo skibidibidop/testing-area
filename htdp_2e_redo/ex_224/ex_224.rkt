@@ -124,21 +124,22 @@ and above all, use your imagination.
                 TANK_IMG SCN_XCENTER TANK_YPOS BG)))
 
 (define (render ws)
+  (local
+    [(define (place_missiles lom)
+       (cond
+         [(empty? lom) BG]
+         [else
+          (place-image
+           MSL_IMG
+           (posn-x (first lom))
+           (posn-y (first lom))
+           (place_missiles (rest lom)))]))]
+    
   (place-image
    UFO_IMG (posn-x (w_state-u ws)) (posn-y (w_state-u ws))
    (place-image
     TANK_IMG (tank-x (w_state-t ws)) TANK_YPOS
-    (place_missiles (w_state-lom ws)))))
-
-; [List-of Missile] -> Image
-; Renders missiles
-(define (place_missiles lom)
-  (cond
-    [(empty? lom) BG]
-    [else
-     (place-image
-      MSL_IMG (posn-x (first lom)) (posn-y (first lom))
-      (place_missiles (rest lom)))]))
+    (place_missiles (w_state-lom ws))))))
 
 ; W_state -> W_state
 ; Updates the current state per tick
