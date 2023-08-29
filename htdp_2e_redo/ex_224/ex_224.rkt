@@ -214,8 +214,30 @@ and above all, use your imagination.
                 (make-posn 90 90)
                 (make-posn 80 90))))
 
-(define (control ws vk) ws)
-
+(define (control ws vk)
+  (cond
+    [(key=? vk "left")
+     (make-w_state
+      (w_state-u ws)
+      (make-tank (tank-x (w_state-t ws))
+                 TANK_TO_LEFT)
+      (w_state-lom ws))]
+    [(key=? vk "right")
+     (make-w_state
+      (w_state-u ws)
+      (make-tank (tank-x (w_state-t ws))
+                 TANK_TO_RIGHT)
+      (w_state-lom ws))]
+    [(key=? vk " ")
+     (make-w_state
+      (w_state-u ws)
+      (w_state-t ws)
+      (cons
+       (make-posn (tank-x (w_state-t ws))
+                  MSL_START_YPOS)
+       (w_state-lom ws)))]
+    [else ws]))
+   
 ; MAIN /////////////////////////////////////////////////////////////////////////
 #|
 (define (main ws)
