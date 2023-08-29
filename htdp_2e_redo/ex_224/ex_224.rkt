@@ -16,6 +16,50 @@ charges that can eliminate the tank; create an entire fleet of attacking UFOs;
 and above all, use your imagination.
 |#
 
+(require 2htdp/image)
+(require 2htdp/universe)
+
+; IMAGE CONSTANTS //////////////////////////////////////////////////////////////
+
+(define SCALER 1)
+(define SCN_WIDTH  (* SCALER 100))
+(define SCN_HEIGHT (* SCALER 200))
+(define SCN_XCENTER (/ SCN_WIDTH 2))
+(define SCN_YCENTER (/ SCN_HEIGHT 2))
+
+(define BG SCN_WIDTH SCN_HEIGHT)
+
+(define UFO_IMG
+  (circle (* SCALER 30) "solid" "purple"))
+
+(define TANK_IMG
+  (rectangle (* SCALER 10) (* SCALER 5) "solid" "light steel blue"))
+
+(define MSL_IMG
+  (triangle (* SCALER 3) "outline" "red"))
+
+(define MOVSPD (* SCALER 3))
+
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
+
+(define-struct w_state [u t lom])
+; (make-w_state UFO Tank [List-of Missile])
+; Interp.:
+; (make-w_state
+;  (make-posn 30 40)
+;  (make-tank 50 -3)
+;  (list
+;   (make-posn 20 30)
+;   (make-posn 30 40))), represents the current state
+
+; A UFO is a Posn
+; Interp.: represents the UFO_IMG's x and y coordinates
+
+(define-struct tank [x v])
+; (make-tank Number Number)
+; Interp.: (make-ufo 50 -3), represents the TANK's x-coordinate and velocity
+
+; A Missile is a Posn
+; Interp.: represents the MSL_IMG's x and y coordinates
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
