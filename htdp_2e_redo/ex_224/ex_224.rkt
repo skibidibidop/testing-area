@@ -16,7 +16,6 @@ charges that can eliminate the tank; create an entire fleet of attacking UFOs;
 and above all, use your imagination.
 
 To do:
---- Borders for UFO
 --- Borders for tank
 --- Delete missiles outside of scene
 |#
@@ -78,6 +77,9 @@ To do:
 (define UFO_LBORDER (image-width UFO_IMG))
 (define UFO_RBORDER (- SCN_WIDTH
                        (image-width UFO_IMG)))
+(define TANK_LBORDER (image-width TANK_IMG))
+(define TANK_RBORDER (- SCN_WIDTH
+                        (image-width TANK_IMG)))
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
@@ -203,10 +205,17 @@ To do:
        (+ (posn-x (w_state-u ws)) UFO_GO_LEFT)]
       [else
        (ufo_jump (posn-x (w_state-u ws)))])
-      (+ FALL_SPD (posn-y (w_state-u ws))))
-   (make-tank (+ (tank-v (w_state-t ws))
-                 (tank-x (w_state-t ws)))
-              (tank-v (w_state-t ws)))
+    (+ FALL_SPD (posn-y (w_state-u ws))))
+   (make-tank
+    (+ (tank-v (w_state-t ws))
+       (tank-x (w_state-t ws)))
+    (cond
+      [(<= (tank-x (w_state-t ws)) TANK_LBORDER)
+       TANK_TO_RIGHT]
+      [(>= (tank-x (w_state-t ws)) TANK_RBORDER)
+       TANK_TO_LEFT]
+      [else
+       (tank-v (w_state-t ws))]))
    (cond
      [(empty? (w_state-lom ws)) '()]
      [else
@@ -300,7 +309,7 @@ To do:
 (define (main ws)
   (big-bang ws
     [to-draw render]
-    [on-tick time_step 0.2]
+    [on-tick time_step 0.25]
     [on-key  control]
     [stop-when game_over render]))
 
