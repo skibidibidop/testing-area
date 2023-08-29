@@ -63,3 +63,15 @@ and above all, use your imagination.
 ; Interp.: represents the MSL_IMG's x and y coordinates
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
+
+;
+;
+(
+
+; MAIN /////////////////////////////////////////////////////////////////////////
+
+(define (main ws)
+  (big-bang ws
+    [to-draw render]
+    [on-tick time_step]
+    [on-key  control]))
