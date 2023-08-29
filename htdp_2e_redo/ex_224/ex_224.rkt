@@ -21,29 +21,44 @@ and above all, use your imagination.
 
 ; IMAGE CONSTANTS //////////////////////////////////////////////////////////////
 
-(define SCALER 1)
+(define SCALER 2)
 (define SCN_WIDTH  (* SCALER 100))
 (define SCN_HEIGHT (* SCALER 200))
 (define SCN_XCENTER (/ SCN_WIDTH 2))
 (define SCN_YCENTER (/ SCN_HEIGHT 2))
 
-(define BG SCN_WIDTH SCN_HEIGHT)
+(define BG (empty-scene SCN_WIDTH SCN_HEIGHT))
 
 (define UFO_IMG
-  (circle (* SCALER 30) "solid" "purple"))
+  (circle (* SCALER 7) "solid" "purple"))
+(define UFO_CENTER
+  (/ (image-width UFO_IMG) 2))
+(define UFO_START_XPOS SCN_XCENTER)
+(define UFO_START_YPOS UFO_CENTER)
+(define UFO_LANDED
+  (- SCN_HEIGHT UFO_CENTER))
 
 (define TANK_IMG
   (rectangle (* SCALER 10) (* SCALER 5) "solid" "light steel blue"))
+(define TANK_XCENTER
+  (/ (image-width TANK_IMG) 2))
+(define TANK_YCENTER
+  (/ (image-height TANK_IMG) 2))
+(define TANK_START_XPOS SCN_XCENTER)
+(define TANK_YPOS
+  (- SCN_HEIGHT TANK_YCENTER))
 
 (define MSL_IMG
   (triangle (* SCALER 3) "outline" "red"))
 
 (define MOVSPD (* SCALER 3))
+(define TANK_TO_LEFT  (* MOVSPD -1))
+(define TANK_TO_RIGHT MOVSPD)
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
-(define-struct w_state [u t lom])
-; (make-w_state UFO Tank [List-of Missile])
+(define-struct w_state [u t m])
+; (make-w_state UFO Tank Fire_stat)
 ; Interp.:
 ; (make-w_state
 ;  (make-posn 30 40)
@@ -62,33 +77,75 @@ and above all, use your imagination.
 ; A Missile is a Posn
 ; Interp.: represents the MSL_IMG's x and y coordinates
 
+; A Fire_stat is one of:
+; #false
+; [List-of Missile]
+
 ; A Valid_key is one of:
 ; "left"
 ; "right"
 ; " "
 
+(define START_STATE
+  (make-w_state
+   (make-posn UFO_START_XPOS  UFO_START_YPOS)
+   (make-tank TANK_START_XPOS TANK_TO_RIGHT)
+   #false))
+(define MID_STATE
+  (make-w_state
+   (make-posn SCN_XCENTER SCN_YCENTER)
+   (make-tank SCN_XCENTER TANK_TO_LEFT)
+   (list (make-posn 90 90)
+         (make-posn 80 90))))
+(define LANDED
+  (make-w_state
+   (make-posn SCN_XCENTER UFO_LANDED)
+   (make-tank SCN_XCENTER TANK_TO_RIGHT)
+   #false))
+
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
 ; W_state -> Image
 ; Renders an image based on the current state
-(define (render ...) ...)
+(check-expect (render START_STATE)
+              (place-image
+               UFO_IMG UFO_START_XPOS UFO_START_YPOS
+               (place-image
+                TANK_IMG TANK_START_XPOS TANK_YPOS BG)))
+(check-expect (render MID_STATE)
+              (place-image
+               UFO_IMG SCN_XCENTER SCN_YCENTER
+               (place-image
+                TANK_IMG SCN_XCENTER TANK_YPOS
+                (place-image
+                 MSL_IMG 90 90
+                 (place-image
+                  MSL_IMG 80 90 BG)))))
+(check-expect (render LANDED)
+              (place-image
+               UFO_IMG SCN_XCENTER UFO_LANDED
+               (place-image
+                TANK_IMG SCN_XCENTER TANK_YPOS BG)))
+
+(define (render ws) BG)
 
 ; W_state -> W_state
 ; Updates the current state per tick
-(define (time_step ...) ...)
+(define (time_step ws) ws)
 
 ; 
 ; Makes UFO_IMG jump to the left or right randomly per tick
-(define (ufo_jump ...) ...)
+(define (ufo_jump n) n)
 
 ; W_state Valid_key -> W_state
 ; Updates the current state based on the key pressed
-(define (control ...) ...)
+(define (control ws vk) ws)
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
-
+#|
 (define (main ws)
   (big-bang ws
     [to-draw render]
     [on-tick time_step]
     [on-key  control]))
+|#
