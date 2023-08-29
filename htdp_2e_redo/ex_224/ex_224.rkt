@@ -54,7 +54,10 @@ and above all, use your imagination.
 (define MOVSPD (* SCALER 3))
 (define TANK_TO_LEFT  (* MOVSPD -1))
 (define TANK_TO_RIGHT MOVSPD)
+(define UFO_GO_LEFT  (* MOVSPD -3))
+(define UFO_GO_RIGHT (* MOVSPD 3))
 (define FALL_SPD MOVSPD)
+(define MSL_SPD (* MOVSPD 4))
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
@@ -136,25 +139,53 @@ and above all, use your imagination.
            (posn-y (first lom))
            (place_missiles (rest lom)))]))]
     
-  (place-image
-   UFO_IMG (posn-x (w_state-u ws)) (posn-y (w_state-u ws))
-   (place-image
-    TANK_IMG (tank-x (w_state-t ws)) TANK_YPOS
-    (place_missiles (w_state-lom ws))))))
+    (place-image
+     UFO_IMG (posn-x (w_state-u ws)) (posn-y (w_state-u ws))
+     (place-image
+      TANK_IMG (tank-x (w_state-t ws)) TANK_YPOS
+      (place_missiles (w_state-lom ws))))))
 
 ; W_state -> W_state
 ; Updates the current state per tick
 (check-random (time_step START_STATE)
               (make-w_state
-               (make-posn (random ...) (+ UFO_START_YPOS FALL_SPD)
-;(check-expect (time_step MID_STATE) ...)
-;(check-expect (time_step LANDED) ...)
+               (make-posn (ufo_jump UFO_START_XPOS)
+                          (+ UFO_START_YPOS FALL_SPD))
+               (make-tank (+ TANK_START_XPOS TANK_TO_RIGHT)
+                          TANK_TO_RIGHT)
+               '()))
+(check-random (time_step MID_STATE)
+              (make-w_state
+               (make-posn (ufo_jump SCN_XCENTER)
+                          (+ SCN_YCENTER FALL_SPD))
+               (make-tank (+ SCN_XCENTER TANK_TO_LEFT)
+                          TANK_TO_LEFT)
+               (list
+                (make-posn 90 (+ 90 MSL_SPD))
+                (make-posn 80 (+ 90 MSL_SPD)))))
 
-(define (time_step ws) ws)
+(define (time_step ws)
+  (make-w_state
+   (make-posn (ufo_jump (posn-x (w_state-u ws)))
+              (+ FALL_SPD (posn-y (w_state-u ws))))
+   (make-tank (+ (tank-v (w_state-t ws))
+                 (tank-x (w_state-t ws)))
+              (tank-v (w_state-t ws)))
+   (cond
+     [(empty? (w_state-lom ws)) '()]
+     [else
+      (map
+       (λ (a_missile)
+         (make-posn (posn-x a_missile)
+                    (+ MSL_SPD (posn-y a_missile))))
+       (w_state-lom ws))])))
 
-; 
+; Number -> Number
 ; Makes UFO_IMG jump to the left or right randomly per tick
-(define (ufo_jump n) n)
+(define (ufo_jump n)
+  (if (even? (random n))
+      (+ n UFO_GO_RIGHT)
+      (+ n UFO_GO_LEFT)))
 
 ; W_state Valid_key -> W_state
 ; Updates the current state based on the key pressed
@@ -165,6 +196,8 @@ and above all, use your imagination.
 (define (main ws)
   (big-bang ws
     [to-draw render]
-    [on-tick time_step]
-    [on-key  control]))
+    [on-tick time_step 0.04]))
+    ;[on-key  control]))
+
+(main START_STATE)
 |#
