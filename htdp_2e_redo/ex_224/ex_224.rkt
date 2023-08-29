@@ -57,8 +57,8 @@ and above all, use your imagination.
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
-(define-struct w_state [u t m])
-; (make-w_state UFO Tank Fire_stat)
+(define-struct w_state [u t lom])
+; (make-w_state UFO Tank [List-of Missile])
 ; Interp.:
 ; (make-w_state
 ;  (make-posn 30 40)
@@ -77,10 +77,6 @@ and above all, use your imagination.
 ; A Missile is a Posn
 ; Interp.: represents the MSL_IMG's x and y coordinates
 
-; A Fire_stat is one of:
-; #false
-; [List-of Missile]
-
 ; A Valid_key is one of:
 ; "left"
 ; "right"
@@ -90,7 +86,7 @@ and above all, use your imagination.
   (make-w_state
    (make-posn UFO_START_XPOS  UFO_START_YPOS)
    (make-tank TANK_START_XPOS TANK_TO_RIGHT)
-   #false))
+   '()))
 (define MID_STATE
   (make-w_state
    (make-posn SCN_XCENTER SCN_YCENTER)
@@ -101,7 +97,7 @@ and above all, use your imagination.
   (make-w_state
    (make-posn SCN_XCENTER UFO_LANDED)
    (make-tank SCN_XCENTER TANK_TO_RIGHT)
-   #false))
+   '()))
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
@@ -127,7 +123,22 @@ and above all, use your imagination.
                (place-image
                 TANK_IMG SCN_XCENTER TANK_YPOS BG)))
 
-(define (render ws) BG)
+(define (render ws)
+  (place-image
+   UFO_IMG (posn-x (w_state-u ws)) (posn-y (w_state-u ws))
+   (place-image
+    TANK_IMG (tank-x (w_state-t ws)) TANK_YPOS
+    (place_missiles (w_state-lom ws)))))
+
+; [List-of Missile] -> Image
+; Renders missiles
+(define (place_missiles lom)
+  (cond
+    [(empty? lom) BG]
+    [else
+     (place-image
+      MSL_IMG (posn-x (first lom)) (posn-y (first lom))
+      (place_missiles (rest lom)))]))
 
 ; W_state -> W_state
 ; Updates the current state per tick
