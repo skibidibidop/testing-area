@@ -50,6 +50,10 @@ and above all, use your imagination.
 
 (define MSL_IMG
   (triangle (* SCALER 3) "outline" "red"))
+; MSL_IMG's starting x-coordinate will always be the center of TANK_IMG
+(define MSL_START_YPOS
+  (+ (image-height TANK_IMG)
+     (/ (image-height MSL_IMG) 2)))
 
 (define MOVSPD (* SCALER 3))
 (define TANK_TO_LEFT  (* MOVSPD -1))
@@ -189,6 +193,27 @@ and above all, use your imagination.
 
 ; W_state Valid_key -> W_state
 ; Updates the current state based on the key pressed
+(check-expect (control START_STATE " ")
+              (make-w_state
+               (make-posn UFO_START_XPOS UFO_START_YPOS)
+               (make-tank TANK_START_XPOS TANK_TO_RIGHT)
+               (list
+                (make-posn TANK_START_XPOS MSL_START_YPOS))))
+(check-expect (control START_STATE "left")
+              (make-w_state
+               (make-posn UFO_START_XPOS UFO_START_YPOS)
+               (make-tank TANK_START_XPOS TANK_TO_LEFT)
+               '()))
+(check-expect (control START_STATE "right") START_STATE)
+(check-expect (control MID_STATE " ")
+              (make-w_state
+               (make-posn SCN_XCENTER SCN_YCENTER)
+               (make-tank SCN_XCENTER TANK_TO_LEFT)
+               (list
+                (make-posn SCN_XCENTER MSL_START_YPOS)
+                (make-posn 90 90)
+                (make-posn 80 90))))
+
 (define (control ws vk) ws)
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
