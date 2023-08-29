@@ -62,11 +62,28 @@ and above all, use your imagination.
 ; A Missile is a Posn
 ; Interp.: represents the MSL_IMG's x and y coordinates
 
+; A Valid_key is one of:
+; "left"
+; "right"
+; " "
+
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
-;
-;
-(
+; W_state -> Image
+; Renders an image based on the current state
+(define (render ...) ...)
+
+; W_state -> W_state
+; Updates the current state per tick
+(define (time_step ...) ...)
+
+; 
+; Makes UFO_IMG jump to the left or right randomly per tick
+(define (ufo_jump ...) ...)
+
+; W_state Valid_key -> W_state
+; Updates the current state based on the key pressed
+(define (control ...) ...)
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
