@@ -26,7 +26,7 @@ To do:
 
 ; IMAGE CONSTANTS //////////////////////////////////////////////////////////////
 
-(define SCALER 2)
+(define SCALER 3)
 (define SCN_WIDTH  (* SCALER 100))
 (define SCN_HEIGHT (* SCALER 200))
 (define SCN_XCENTER (/ SCN_WIDTH 2))
@@ -35,7 +35,7 @@ To do:
 (define BG (empty-scene SCN_WIDTH SCN_HEIGHT))
 
 (define UFO_IMG
-  (circle (* SCALER 7) "solid" "purple"))
+  (square (* SCALER 7) "solid" "purple"))
 (define UFO_CENTER
   (/ (image-width UFO_IMG) 2))
 (define UFO_START_XPOS SCN_XCENTER)
@@ -75,6 +75,9 @@ To do:
 (define HIT_YLIMIT
   (+ UFO_CENTER
      (/ (image-height MSL_IMG) 2)))
+(define UFO_LBORDER (image-width UFO_IMG))
+(define UFO_RBORDER (- SCN_WIDTH
+                       (image-width UFO_IMG)))
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
@@ -192,8 +195,15 @@ To do:
 
 (define (time_step ws)
   (make-w_state
-   (make-posn (ufo_jump (posn-x (w_state-u ws)))
-              (+ FALL_SPD (posn-y (w_state-u ws))))
+   (make-posn
+    (cond
+      [(<= (posn-x (w_state-u ws)) UFO_LBORDER)
+       (+ (posn-x (w_state-u ws)) UFO_GO_RIGHT)]
+      [(>= (posn-x (w_state-u ws)) UFO_RBORDER)
+       (+ (posn-x (w_state-u ws)) UFO_GO_LEFT)]
+      [else
+       (ufo_jump (posn-x (w_state-u ws)))])
+      (+ FALL_SPD (posn-y (w_state-u ws))))
    (make-tank (+ (tank-v (w_state-t ws))
                  (tank-x (w_state-t ws)))
               (tank-v (w_state-t ws)))
