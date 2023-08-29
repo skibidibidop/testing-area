@@ -54,6 +54,7 @@ and above all, use your imagination.
 (define MOVSPD (* SCALER 3))
 (define TANK_TO_LEFT  (* MOVSPD -1))
 (define TANK_TO_RIGHT MOVSPD)
+(define FALL_SPD MOVSPD)
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
@@ -143,6 +144,12 @@ and above all, use your imagination.
 
 ; W_state -> W_state
 ; Updates the current state per tick
+(check-random (time_step START_STATE)
+              (make-w_state
+               (make-posn (random ...) (+ UFO_START_YPOS FALL_SPD)
+;(check-expect (time_step MID_STATE) ...)
+;(check-expect (time_step LANDED) ...)
+
 (define (time_step ws) ws)
 
 ; 
