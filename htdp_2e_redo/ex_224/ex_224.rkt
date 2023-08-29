@@ -16,7 +16,6 @@ charges that can eliminate the tank; create an entire fleet of attacking UFOs;
 and above all, use your imagination.
 
 To do:
---- Hit detection
 --- Borders for UFO
 --- Borders for tank
 --- Delete missiles outside of scene
@@ -69,6 +68,13 @@ To do:
 (define UFO_GO_RIGHT (* MOVSPD 3))
 (define FALL_SPD MOVSPD)
 (define MSL_SPD (* MOVSPD -4))
+
+(define HIT_XLIMIT
+  (+ UFO_CENTER
+     (/ (image-width MSL_IMG) 2)))
+(define HIT_YLIMIT
+  (+ UFO_CENTER
+     (/ (image-height MSL_IMG) 2)))
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
@@ -261,15 +267,31 @@ To do:
 (check-expect (game_over LANDED) #true)
 (check-expect (game_over HIT_STATE) #true)
 
-(define (game_over ws) #false)
+(define (game_over ws)
+  (or (>= (posn-y (w_state-u ws))
+          UFO_LANDED)
+      (foldl
+       (λ (m base)
+         (or (and
+              (<=
+               (abs
+                (- (posn-x m) (posn-x (w_state-u ws))))
+               HIT_XLIMIT)
+              (<=
+               (abs
+                (- (posn-y m) (posn-y (w_state-u ws))))
+               HIT_YLIMIT))
+             base))
+       #false
+       (w_state-lom ws))))
    
 ; MAIN /////////////////////////////////////////////////////////////////////////
 
 (define (main ws)
   (big-bang ws
     [to-draw render]
-    [on-tick time_step 0.1]
+    [on-tick time_step 0.2]
     [on-key  control]
-    [stop-when game_over]))
+    [stop-when game_over render]))
 
 (main START_STATE)
