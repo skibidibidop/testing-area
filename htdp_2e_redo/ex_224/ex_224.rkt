@@ -16,7 +16,6 @@ charges that can eliminate the tank; create an entire fleet of attacking UFOs;
 and above all, use your imagination.
 
 To do:
---- Borders for tank
 --- Delete missiles outside of scene
 |#
 
@@ -257,6 +256,11 @@ To do:
 
 (define (control ws vk)
   (cond
+    [(and
+      (or (<= (tank-x (w_state-t ws)) TANK_LBORDER)
+          (>= (tank-x (w_state-t ws)) TANK_RBORDER))
+      (key-event? vk))
+     ws]
     [(key=? vk "left")
      (make-w_state
       (w_state-u ws)
