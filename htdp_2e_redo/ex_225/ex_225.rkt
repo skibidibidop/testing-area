@@ -15,12 +15,58 @@ fires are currently burning or other factors. The purpose of the game is to
 extinguish all fires in a limited amount of time.
 
 To do:
----
+--- 
 |#
 
+(require 2htdp/image)
+(require 2htdp/universe)
+
+(define SCALER 3)
+(define SCN_WIDTH   (* SCALER 100))
+(define SCN_HEIGHT  (* SCALER 250))
+(define SCN_XCENTER (/ SCN_WIDTH 2))
+(define SCN_YCENTER (/ SCN_HEIGHT 2))
+
+(define FOREST_WIDTH  (* SCALER 95))
+(define FOREST_HEIGHT (* SCALER 245))
+
+(define FOREST
+  (place-image
+   (rectangle FOREST_WIDTH FOREST_HEIGHT "solid" "Dark Olive Green")
+   SCN_XCENTER SCN_YCENTER
+   (empty-scene SCN_WIDTH SCN_HEIGHT)))
+
+(define PLANE
+  (triangle (* SCALER 5) "solid" "Light Steel Blue"))
+(define PLANE_HALF
+  (/ (image-height PLANE) 2))
+
+(define FIRE
+  (square (* SCALER 7) "solid" "Tomato"))
+
+(define WATER
+  (square (* SCALER 4) "solid" "Deep Sky Blue"))
+(define WATER_HALF
+  (/ (image-height WATER) 2))
+
+(define GAP (* SCALER 2))
+
+(define MAX_WATER_DIST
+  (+ WATER_HALF GAP PLANE_HALF))
+
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
+
+
 
 ; FUNCTIONS ////////////////////////////////////////////////////////////////////
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
-
+#|
+; Wstate -> Wstate
+(define (main ws)
+  (big-bang ws
+    [to-draw render]
+    [on-tick ...]
+    [on-key ...]
+    [stop-when ...]))
+|#
