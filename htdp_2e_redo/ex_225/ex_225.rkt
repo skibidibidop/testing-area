@@ -154,13 +154,27 @@ To do:
       (ws-water ws)
       (gen_fires (ws-lof ws))))))
 
+; Ws -> Ws
+; Updates current state per tick
+(check-expect (time_step START_STATE)
+              (make-ws
+               SCN_XCENTER
+               #false
+               
+               
+(define (time_step ws) ws)
+
 ; MAIN /////////////////////////////////////////////////////////////////////////
 #|
 ; Wstate -> Wstate
 (define (main ws)
   (big-bang ws
-    [to-draw render]
+    [to-draw render]))
+#|
     [on-tick ...]
     [on-key ...]
     [stop-when ...]))
+|#
+
+(main START_STATE)
 |#
