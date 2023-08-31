@@ -15,7 +15,7 @@ fires are currently burning or other factors. The purpose of the game is to
 extinguish all fires in a limited amount of time.
 
 To do:
---- 
+--- Eliminate Fires that are out of bounds
 |#
 
 (require 2htdp/image)
@@ -153,16 +153,22 @@ To do:
      (gen_water
       (ws-water ws)
       (gen_fires (ws-lof ws))))))
-
+#|
 ; Ws -> Ws
 ; Updates current state per tick
 (check-expect (time_step START_STATE)
               (make-ws
                SCN_XCENTER
                #false
+               (gen_fire 
                
                
 (define (time_step ws) ws)
+|#
+
+; [List-of Fire] -> [List-of Fire]
+; Has a chance to add a Fire with random coordinates per tick
+(define (gen_fire lof) '())
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 #|
