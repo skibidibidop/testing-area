@@ -168,6 +168,20 @@ To do:
 
 ; [List-of Fire] -> [List-of Fire]
 ; Has a chance to add a Fire with random coordinates per tick
+(check-random (gen_fire '())
+              (cons
+               (make-posn
+                (random FOREST_WIDTH)
+                (random FOREST_HEIGHT))
+               '()))
+(check-random (gen_fire (list
+                         (make-posn 30 40)))
+              (list
+               (make-posn
+                (random FOREST_WIDTH)
+                (random FOREST_HEIGHT))
+               (make-posn 30 40)))
+
 (define (gen_fire lof) '())
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
