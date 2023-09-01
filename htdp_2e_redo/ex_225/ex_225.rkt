@@ -182,7 +182,23 @@ To do:
                           (make-posn 40 50)
                           (make-posn 60 80)))))
                
-(define (time_step ws) ws)
+(define (time_step ws)
+  (local
+    [(define (move_shot w)
+       (cond
+         [(boolean? w) w]
+         [(>= (- PLANE_YPOS (posn-y w))
+              MAX_WATER_DIST)
+          #false]
+         [else
+          (make-posn
+           (posn-x w)
+           (- (posn-y w) WATER_SPD))]))]
+    
+    (make-ws
+     (ws-plane ws)
+     (move_shot (ws-water ws))
+     (gen_fire (ws-lof ws)))))
 
 
 ; [List-of Fire] -> [List-of Fire]
