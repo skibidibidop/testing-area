@@ -57,10 +57,13 @@ To do:
 (define WATER_HALF
   (/ (image-height WATER) 2))
 
-(define SHOT_GAP (* SCALER 2))
+(define SHOT_GAP (* SCALER 3))
+(define WATER_SPD (* SCALER 1))
 
 (define MAX_WATER_DIST
   (+ WATER_HALF SHOT_GAP PLANE_HALF))
+
+(define COIN 3)
 
 ; DATA DEFINITION //////////////////////////////////////////////////////////////
 
@@ -153,36 +156,57 @@ To do:
      (gen_water
       (ws-water ws)
       (gen_fires (ws-lof ws))))))
-#|
+
 ; Ws -> Ws
 ; Updates current state per tick
-(check-expect (time_step START_STATE)
+(check-random (time_step START_STATE)
               (make-ws
                SCN_XCENTER
                #false
-               (gen_fire 
-               
+               (gen_fire '()))) 
+(check-random (time_step FIREY_STATE)
+              (make-ws
+               SCN_XCENTER
+               #false
+               (gen_fire (list
+                          (make-posn 40 50)
+                          (make-posn 60 80)))))
+(check-random (time_step SHOOTING_STATE)
+              (make-ws
+               SCN_XCENTER
+               (make-posn SCN_XCENTER
+                          (- (- PLANE_YPOS
+                                (+ PLANE_HALF WATER_HALF))
+                             WATER_SPD))
+               (gen_fire (list
+                          (make-posn 40 50)
+                          (make-posn 60 80)))))
                
 (define (time_step ws) ws)
-|#
+
 
 ; [List-of Fire] -> [List-of Fire]
 ; Has a chance to add a Fire with random coordinates per tick
-(check-random (gen_fire '())
-              (cons
-               (make-posn
-                (random FOREST_WIDTH)
-                (random FOREST_HEIGHT))
-               '()))
-(check-random (gen_fire (list
-                         (make-posn 30 40)))
-              (list
-               (make-posn
-                (random FOREST_WIDTH)
-                (random FOREST_HEIGHT))
-               (make-posn 30 40)))
-
-(define (gen_fire lof) '())
+(define (gen_fire lof)
+  (local
+    [(define spawn_fire?
+       (= (modulo (random COIN) 2)
+          0))]
+    
+    (cond
+      [(empty? lof)
+       (list
+        (make-posn
+         (random FOREST_WIDTH)
+         (random FOREST_HEIGHT)))]
+      [else
+       (if spawn_fire?
+           (cons
+            (make-posn
+             (random FOREST_WIDTH)
+             (random FOREST_HEIGHT))
+            lof)
+           lof)])))
 
 ; MAIN /////////////////////////////////////////////////////////////////////////
 #|
